@@ -1,8 +1,0 @@
-Man Page
-========
-
-To see 42sh(1) manpage:
-man -i /path/to/doc/42sh.man
-
-## manpage generated with md2man: https://github.com/sunaku/md2man ##
-
