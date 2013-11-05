@@ -1,0 +1,42 @@
+.TH 42sh 1 "General Commands Manual"
+.SH NAME
+.PP
+42sh \- The ROOTS SHell
+.SH SYNOPSIS
+.PP
+\fB\fC42sh\fR [options] [file]
+.SH DESCRIPTION
+.PP
+\fB\fC42sh\fR is probably the best SHell on the Internet. \fB\fC42sh\fR is an equivalent of
+\&'bash \-posix' meaning that it is intended to be a conformant implementation of
+the SHell and Utilies portion of the IEEE POSIX specification.
+.SH OPTIONS
+.PP
+\fB\fC-c\fR \fIstring\fP
+  If the \-c option is present, then the commands are read from \fIstring\fP\&.
+  If there are more than one argument, each following argument present after
+\fIstring\fP are assigned to the positional parameter starting at $0.
+.TP
+\fB\fC-i\fR
+If the \-i option is present, then \fB\fC42sh\fR will be in interactive mode.
+.PP
+\fB\fC-foo\fR 42
+.PP
+\fB\fC-bar\fR 42
+.SH SHELL GRAMMAR
+.PP
+Not implemented yet.
+.SH AUTHOR
+.PP
+Remi `halfr` Audebert
+.PP
+Nassim `Nass` Eddequiouaq
+.PP
+Adrien `schischi` Schildknecht
+.PP
+Paul `Dettorer` Hervot
+.PP
+Antoine `Serialk` Pietri
+.SH SEE ALSO
+.PP
+.BR bash (1)
