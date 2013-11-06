@@ -1,4 +1,4 @@
-.PHONY: all clean export
+.PHONY: all clean check export
 
 all:
 	mkdir -p build
@@ -7,6 +7,9 @@ all:
 
 clean:
 	$(RM) -r build
+
+check:
+	cd check && ./run_tests.py
 
 export:
 	git archive HEAD --prefix=audebe_r-42sh/ \
