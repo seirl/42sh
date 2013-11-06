@@ -8,7 +8,7 @@ all:
 clean:
 	$(RM) -r build
 
-check:
+check: all
 	cd check && ./run_tests.py
 
 export:
