@@ -6,20 +6,33 @@ import os.path
 import unittest
 import subprocess
 
-class QDTestCase(unittest.TestCase):
-    def setUp(self):
-        self.program_name = "../42sh"
-
-    def start_shell(self, args):
-        self._shell = subprocess.Popen([self.program_name] + args,
-                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
-
 class QDTestSuite(unittest.TestSuite):
     def __init__(self, category, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.category = category
+
+class QDTestCase(unittest.TestCase):
+    def __init__(self, category, test_name, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.category = category
+        self.test_name = test_name
+
+    def setUp(self):
+        self.program_name = "../42sh"
+
+    def get_test_name(self):
+        return self.category + '_' + self.test_name
+
+    def start_shell(self, args):
+        self._shell = subprocess.Popen(["valgrind",
+            "--xml=yes",
+            "--xml-file={}.memcheck".format(self.get_test_name()),
+            "--log-file={}.log".format(self.get_test_name()),
+            self.program_name] + args,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
 
 def load_test_case(directory, test_filename):
     """Return a TestCase generated from the file test_file, expected to contain
@@ -42,12 +55,18 @@ def load_test_case(directory, test_filename):
             retval = test.get('retval', 0)
             self.assertEqual(self._shell.returncode, retval)
 
+        category = os.path.basename(directory)
+        test_class_name = "Test{}{}".format(
+                category.title(),
+                test_filename.title())
         test_method_name = 'test_' + test_filename
+        test_class_methods = {test_method_name: test_it}
+        test_case_class = type(test_class_name,
+                (QDTestCase, ),
+                test_class_methods,)
 
-        new_test_case = type("Test" + test_filename, (QDTestCase, ),
-            {test_method_name: test_it})(test_method_name)
-
-        return new_test_case
+        return test_case_class(methodName=test_method_name, category=category,
+                test_name=test_filename.rstrip(".test"))
 
 def load_test_suite(directory, filenames):
     """Return a TestSuite for the directory ``directory``."""
