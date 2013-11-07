@@ -1,5 +1,11 @@
-all:
+all: imgs/overview.png
 	pdflatex -shell-escape report.tex
+
+imgs:
+	mkdir -p imgs
+
+imgs/overview.png: | imgs
+	wget http://halfr.net/pub/42sh/overview.png -O $@
 
 p: all
 	zathura report.pdf
