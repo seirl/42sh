@@ -1,0 +1,51 @@
+\section{Project overview}
+
+\subsection{42sh}
+
+42sh is a POSIX compliant shell.
+
+\subsection{Build system}
+
+We will use CMake as the build system.
+
+\subsection{Test suite}
+
+The test suite will written in Python3.3. It will add to the python standard library
+unit test framework (unitttest) the functionalities for our use case:
+
+\begin{itemize}
+    \item Loading test case from files
+    \item Grouping test cases in categories
+    \item Displaying test results for each category
+\end{itemize}
+
+\begin{minted}[linenos,
+               frame=lines,]{bash}
+    42sh$ make check
+    cd check && ./run_tests.py
+
+    Category: hello
+
+    hello/00_hello ... ok
+    hello/01_hello ... ok
+
+    Ran: 2 Failure: 0 Errors: 0 Rate: 100%
+
+    Category: basic
+
+    basic/00_hello ... ok
+    basic/01_hello ... ok
+
+    Ran: 2 Failure: 0 Errors: 0 Rate: 100%
+\end{minted}
+
+\subsection{Communication}
+
+The developpers will comunicate over IRC for day to day communication.
+
+\subsection{Continuous integration}
+
+Every commit will start a build of the project on multiple systems (operating
+system, architecture, etc) and the test suite will be ran.
+
+A bot will announce every commit over the IRC channel.
