@@ -1,0 +1,55 @@
+\begin{sidewaysfigure}[ftbp]
+    \hspace*{-1.5in}
+    \begin{ganttchart}
+        [
+            vgrid={*5{black,dotted}},hgrid,inline,
+            title label anchor/.style={below=-1.6ex},
+            title left shift=.05,
+            title right shift=-.05,
+            title height=1,
+            %bar/.style={fill=red!50},
+            incomplete/.style={fill=white},
+            progress label text={},
+            bar height=0.7,
+            y unit chart=5mm,x unit=8mm
+        ]{4}{31}
+        %labels
+        \gantttitle{42sh}{28} \\
+        \gantttitle{week 1}{7}
+        \gantttitle{week 2}{7}
+        \gantttitle{week 3}{7}
+        \gantttitle{week 4}{7} \\
+        \gantttitlelist[title/.style={fill=green!25}]{4,5,6,7,8}{1}
+        \gantttitlelist[title/.style={fill=red!25}]{9,10}{1}
+        \gantttitlelist[title/.style={fill=green!25}]{11,...,15}{1}
+        \gantttitlelist[title/.style={fill=red!25}]{16,17}{1}
+        \gantttitlelist[title/.style={fill=green!25}]{18,...,22}{1}
+        \gantttitlelist[title/.style={fill=red!25}]{23,24}{1}
+        \gantttitlelist[title/.style={fill=green!25}]{25,...,29}{1}
+        \gantttitlelist[title/.style={fill=red!25}]{30,01}{1}\\
+        %tasks
+        \ganttgroup{Doc}{4}{8} \\
+        \ganttbar{SCL}{4}{6} \\
+        \ganttbar{Man page}{5}{8} \\
+        \ganttbar{Report}{6}{8} \\
+        \ganttbar{Slides}{6}{8} \\ \\
+        \ganttmilestone{v0.1}{8} \\ \\
+        \ganttgroup{Bootstrap}{7}{10} \\
+        \ganttbar{Jenkins}{8}{12} \\
+        \ganttbar{Test suite}{7}{12} \\
+        \ganttbar{Makefile}{7}{10} \\
+        \ganttgroup{Shell}{8}{31} \\
+        \ganttbar{Lexer}{8}{10} \\
+        \ganttbar{Parser}{10}{14} \\
+        \ganttbar{Execution}{10}{14} \\
+        \ganttbar{Readline}{8}{15} \\
+        \ganttbar{Builtins}{8}{15} \\
+        \ganttbar{Getopt}{11}{12} \\
+        \ganttmilestone{v0.5}{15} \\
+        \ganttmilestone{v0.8}{23} \\
+        \ganttmilestone{v0.9}{25} \\
+        \ganttmilestone{v1.0}{31} \\
+        %relations
+    \end{ganttchart}
+    \caption{Organisation}
+\end{sidewaysfigure}

@@ -1,0 +1,32 @@
+\documentclass[a4paper,11pt,final]{article}
+
+\usepackage[english,francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage[french]{varioref}
+\usepackage{pgfgantt}
+\usepackage{rotating}
+
+\newcommand{\reporttitle}{42sh v0.1}
+\newcommand{\reportauthor}{Adrien \textsc{Schildknecht}}
+\newcommand{\reportsubject}{A nice title, isn't it ?}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\setlength{\parskip}{1ex}
+
+\hypersetup{
+    pdftitle={\reporttitle},
+    pdfauthor={\reportauthor},
+    pdfsubject={\reportsubject}
+}
+
+\begin{document}
+  \include{title}
+  \cleardoublepage
+  \tableofcontents
+  \sloppy
+  \include{gantt}
+\end{document}
+
