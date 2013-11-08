@@ -1,4 +1,4 @@
-all: imgs/overview.png
+all: imgs/overview.png imgs/topdown.png
 	pdflatex -shell-escape report.tex
 
 imgs:
@@ -6,6 +6,9 @@ imgs:
 
 imgs/overview.png: | imgs
 	wget http://halfr.net/pub/42sh/overview.png -O $@
+
+imgs/topdown.png: topdown.dot | imgs
+	dot -Tpng topdown.dot > imgs/topdown.png
 
 p: all
 	zathura report.pdf
