@@ -11,11 +11,8 @@ static int lex_eof(s_string *stream, s_token **tok)
 
 static int lex_newline(s_string *stream, s_token **tok)
 {
-    char c = string_getc(stream);
-    if (c == '\n')
+    if (string_eat_pattern(stream, "\n");
         *tok = token_create(T_NEWLINE, NULL);
-    else
-        string_ungetc(stream);
 }
 
 static int lex_comment(s_string *stream, s_token **tok)
@@ -28,6 +25,19 @@ static int lex_comment(s_string *stream, s_token **tok)
         *tok = token_create(T_NEWLINE, NULL);
     }
     string_ungetc(stream);
+}
+
+static int lex_operator(s_string *stream, s_token **tok)
+{
+#define X(Type, Str)                          \
+    if (string_eat_pattern(stream, Str))      \
+    {                                         \
+        *tok = token_create(Type, NULL);      \
+        return 1;                             \
+    }
+#include "operator.def"
+#undef X
+    return 0;
 }
 
 static s_token *next_token(s_string *stream)

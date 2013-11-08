@@ -26,6 +26,7 @@ char string_getc(s_string *s);
 void string_ungetc(s_string *s);
 void string_rewind(s_string *s);
 void string_eat_spaces(s_string *s);
+int string_eat_pattern(s_string *s, char *pattern);
 
 void string_replace(s_string *s, char *pattern, char *rep);
 
