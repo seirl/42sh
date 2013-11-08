@@ -20,9 +20,9 @@ the SHell and Utilies portion of the IEEE POSIX specification.
 \fB\fC-i\fR
 If the \-i option is present, then \fB\fC42sh\fR will be in interactive mode.
 .PP
-\fB\fC-foo\fR 42
+\fB\fC--version\fR
+Display the current version of the \fB\fC42sh\fR binary
 .PP
-\fB\fC-bar\fR 42
 .SH SHELL GRAMMAR
 .PP
 Not implemented yet.
