@@ -17,3 +17,11 @@ void token_print(s_token *tok)
         fprintf(stdout, "with value: %s", tok->value->buf);
     fprintf(stdout, "\n");
 }
+
+s_token *token_create(e_type type, s_string *value)
+{
+    s_token *tok = smalloc(sizeof (s_token));
+    tok->type = type;
+    tok->value = value;
+    return tok;
+}
