@@ -9,13 +9,6 @@ void string_putc(s_string *s, char c)
     s->buf[s->len] = 0;
 }
 
-void string_ungetc(s_string *s)
-{
-    if (s->len == 0)
-        return;
-    s->buf[(--s->len)] = 0;
-}
-
 void string_cat(s_string *s1, s_string *s2)
 {
     char c;

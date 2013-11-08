@@ -9,6 +9,7 @@ s_string *string_create(size_t size)
         return NULL;
     s->max_len = size ? size : 8;
     s->len = 0;
+    s->read_pos = 0;
     s->buf = malloc(s->max_len);
     s->buf[0] = 0;
     return s;
@@ -22,7 +23,7 @@ s_string *string_create_from(char *str)
     return s;
 }
 
-void string_resize(s_string *s)
+static void string_resize(s_string *s)
 {
     s->max_len *= 2;
     s->buf = realloc(s->buf, s->max_len);
