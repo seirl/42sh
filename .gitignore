@@ -1,0 +1,7 @@
+__pycache__
+*.memcheck
+*.log
+
+*.aux
+*.out
+*.toc
