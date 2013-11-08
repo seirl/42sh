@@ -1,29 +1,32 @@
 \section{Découpage du projet}
 
 Le projet peut être découpé en 5 grosses parties :
+
 \subsection{Interface utilisateur}
 
-Cette partie s'occupe des différents moyen d'interagir avec le shell. Elle doit
-être capable de lire des commandes depuis un fichier, un argument ou depuis un
-mode interactif. Ce dernier est le plus important car il intéragit directement
-avec l'utilisateur, c'est pourquoi nous apporterons un soin tout particulier au
-confort d'utilisation (historique, déplacement, complétion,~\dots)
+Cette partie s'occupe des différents moyens d'interagir avec le shell. Elle
+doit être capable de lire des commandes depuis un fichier, un argument ou
+depuis un mode interactif. Celui-ci est le plus important car il interagit
+directement avec l'utilisateur, c'est pourquoi nous apporterons un soin tout
+particulier au confort d'utilisation (historique, déplacement,
+complétion,~\dots)
 
-Afin de donner la possibilité à l'utilisateur de manipuler la ligne de commande,
-le module readline devra être capable d'interprêter les combinaisons de touche
-telles que « flèche gauche », « alt b », « contrôl w », etc, et de reproduire le
-comportement attendu (déplacement du curseur, effacement de caractères). Nous
-utiliserons pour cela les fonctions de l'API termcap et les terminfos.
+Afin de donner la possibilité à l'utilisateur de manipuler la ligne de
+commande, le module readline devra être capable d'interprêter les combinaisons
+de touches telles que « flèche gauche », « Alt-W », « Ctrl-W », etc, et de
+reproduire le comportement attendu (déplacement du curseur, effacement de
+caractères). Nous utiliserons pour cela les fonctions de l'API termcap et les
+terminfos.
 
 Pour proposer des fonctionnalités avancées et pratiques pour l'utilisateur, le
-module readline devra communiquer avec les différentes parties du projet et avec
-l'environement dans lequel 42sh aura été appelé. L'auto complétion par exemple,
-dans sa forme basique, listera les fichiers disponibles dans un dossier pour
-proposer une completion de nom de fichier, mais elle pourrait par la suite
-communiquer avec le parseur pour connaitre le prochain type de token attendu
-et proposer l'auto completion des commandes ou des mot clefs. Elle pourrait
-encore demander à l'execution d'étendre le mot courant si le parseur le détecte
-comme étant un token valide à étendre.
+module readline devra communiquer avec les différentes parties du projet et
+avec l'environement dans lequel 42sh aura été appelé. L'auto complétion par
+exemple, dans sa forme basique, listera les fichiers disponibles dans un
+dossier pour proposer une completion de nom de fichier, mais elle pourrait par
+la suite communiquer avec le parseur pour connaître le prochain type de token
+attendu et proposer l'auto complétion des commandes ou des mot-clés. Elle
+pourrait aussi demander à l'exécution d'expandre le mot courant si le parseur
+le détecte comme étant un token valide à expandre.
 
 \subsection{Lexer, parser, AST}
 
