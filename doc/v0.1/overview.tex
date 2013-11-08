@@ -1,32 +1,41 @@
-\section{Découpement du projet}
+\section{Découpage du projet}
 \begin{sidewaysfigure}[ftbp]
     \includegraphics[width=0.9\textwidth]{imgs/overview}
     \caption{Schéma logique du projet}
 \end{sidewaysfigure}
 
 Le projet peut être découpé en 5 grosses parties :
-\begin{itemize}
-    \item Interface utilisateur : cette partie s'occupe des différents moyen
-        d'interagir avec le shell. Il doit être capable de lire des commandes
-        depuis un fichier, un argument ou depuis un mode interactif.
-        Ce dernier est le plus important car il intéragit directement avec
-        l'utilisateur, c'est pourquoi nous apporterons un soin tout particulier
-        au confort d'utilisation (historique, déplacement, complétion, \ldots)
-    \item Lexer, parser, AST : le shell doit essayer de comprendre ce que veux
-        faire l'utilisateur. En se basant sur une grammaire LL(1), le shell
-        doit construire une suite d'actions logiques sous la forme d'un arbre
-        (AST). Les entrées provenant d'un humain, il doit être assez robuste
-        pour résister aux multiples erreurs : « never trust user input ».
-    \item Gestions des options du shell: cette partie permet de définir les
-        réactions du shell vis-à-vis de différentes actions. L'utilisateur peut
-        donc changer le comportement du globbing ou de l'extension à travers
-        des arguments qui seront gérés ici.
-    \item Evaluation de l'AST: il s'agit ici d'interpréter l'AST que le parser
-        a produit pour effectuer les différentes actions (structures de
-        contrôles, commandes, \ldots). Tout en gérant l'expansions des
-        différentes différentes composantes (variables, globbing, \ldots).
-    \item Builtins, commandes, gestion des processus : il faut coder certaines
-        commandes du shell appellées « builtins ». Si l'utilisateur utilise
-        une commande externe, cette partie s'assurera de trouver cette commande
-        et de suivre son activité (code de retour, redirections, \ldots).
-\end{itemize}
+\subsection{Interface utilisateur}
+
+Cette partie s'occupe des différents moyen d'interagir avec le shell. Elle doit
+être capable de lire des commandes depuis un fichier, un argument ou depuis un
+mode interactif. Ce dernier est le plus important car il intéragit directement
+avec l'utilisateur, c'est pourquoi nous apporterons un soin tout particulier au
+confort d'utilisation (historique, déplacement, complétion,~\dots)
+
+\subsection{Lexer, parser, AST}
+
+Le shell doit essayer de comprendre ce que veux faire l'utilisateur. En se
+basant sur une grammaire LL(1), le shell doit construire une suite d'actions
+logiques sous la forme d'un arbre (AST). Les entrées provenant d'un humain, il
+doit être assez robuste pour résister aux multiples erreurs : « never trust
+user input ».
+
+\subsection{Gestions des options du shell}
+
+Cette partie permet de définir les réactions du shell vis-à-vis de différentes
+actions. L'utilisateur peut donc changer le comportement du globbing ou de
+l'extension à travers des arguments qui seront gérés ici.
+
+\subsection{Évaluation de l'AST}
+
+Il s'agit ici d'interpréter l'AST que le parser a produit pour effectuer les
+différentes actions (structures de contrôles, commandes,~\dots). Tout en gérant
+l'expansions des différentes différentes composantes (variables,
+globbing,~\dots).
+
+\subsection{Builtins, commandes, gestion des processus}
+
+Il faut coder certaines commandes du shell appellées « builtins ». Si
+l'utilisateur utilise une commande externe, cette partie s'assurera de trouver
+cette commande et de suivre son activité (code de retour, redirections,~\dots).
