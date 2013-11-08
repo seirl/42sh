@@ -41,15 +41,15 @@ Not implemented yet.
 AUTHOR
 ------
 
-Remi \`halfr\` Audebert
+Rémi \`halfr\` Audebert
 
 Nassim \`Nass\` Eddequiouaq
-
-Adrien \`schischi\` Schildknecht
 
 Paul \`Dettorer\` Hervot
 
 Antoine \`Serialk\` Pietri
+
+Adrien \`schischi\` Schildknecht
 
 SEE ALSO
 --------
