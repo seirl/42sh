@@ -13,6 +13,22 @@ mode interactif. Ce dernier est le plus important car il intéragit directement
 avec l'utilisateur, c'est pourquoi nous apporterons un soin tout particulier au
 confort d'utilisation (historique, déplacement, complétion,~\dots)
 
+Afin de donner la possibilité à l'utilisateur de manipuler la ligne de commande,
+le module readline devra être capable d'interprêter les combinaisons de touche
+telles que « flèche gauche », « alt b », « contrôl w », etc, et de reproduire le
+comportement attendu (déplacement du curseur, effacement de caractères). Nous
+utiliserons pour cela les fonctions de l'API termcap et les terminfos.
+
+Pour proposer des fonctionnalités avancées et pratiques pour l'utilisateur, le
+module readline devra communiquer avec les différentes parties du projet et avec
+l'environement dans lequel 42sh aura été appelé. L'auto complétion par exemple,
+dans sa forme basique, listera les fichiers disponibles dans un dossier pour
+proposer une completion de nom de fichier, mais elle pourrait par la suite
+communiquer avec le parseur pour connaitre le prochain type de token attendu
+et proposer l'auto completion des commandes ou des mot clefs. Elle pourrait
+encore demander à l'execution d'étendre le mot courant si le parseur le détecte
+comme étant un token valide à étendre.
+
 \subsection{Lexer, parser, AST}
 
 Le shell doit essayer de comprendre ce que veux faire l'utilisateur. En se
