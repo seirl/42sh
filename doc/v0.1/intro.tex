@@ -6,7 +6,13 @@
 
 \subsection{Build system}
 
-Nous utiliserons CMake comme \emph{build system}.
+Nous utiliserons CMake comme \emph{build system}. Les raisons de ce choix
+sont les suivantes :
+\begin{itemize}
+    \item Moderne
+    \item Propre
+    \item Configuration relativement facile
+\end{itemize}
 
 \subsection{Suite de tests}
 
@@ -48,8 +54,22 @@ Les développeurs utiliseront IRC pour les discutions quotidiennes.
 
 \subsection{Intégration continue}
 
-Chaque commit déclenchera une compilation du projet sur différents systèmes
-(variations d'architecture, système d'exploitation, libc, etc.) et la suite de
-tests sera lancée.
+Chaque commit déclenchera un système charger de vérifier l'absence de
+régressions.
+\begin{itemize}
+    \item Compilation avec gcc et clang
+    \item Suite de tests
+    \item Analyse valgrind (fd + mémoire)
+\end{itemize}
+
+Le projet sera automatiquement compilé sur différents systèmes
+(variations d'architecture, système d'exploitation, libc, etc.). Puis testé
+par le système décrit précedemment.
+
+Actuellement les systèmes suivants sont disponibles :
+\begin{itemize}
+    \item Archlinux
+    \item FreeBSD 9.1
+\end{itemize}
 
 Un bot IRC annoncera chaque commit et le résultat des tests.
