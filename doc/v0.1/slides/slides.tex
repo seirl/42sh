@@ -1,0 +1,78 @@
+\documentclass{beamer}
+\usepackage{amsmath, amsfonts, epsfig, xspace}
+\usepackage[english,francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm,algorithmic}
+\usepackage{pstricks,pst-node}
+\usepackage[normal,tight,center]{subfigure}
+\setlength{\subfigcapskip}{-.5em}
+\usepackage{beamerthemesplit}
+\usetheme{dark}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=sh,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\author{
+    hs24 team
+}
+
+\title[\hspace{2em}\insertframenumber/\inserttotalframenumber]
+{42sh}
+
+\date{20 main - 2 août}
+
+\institute{
+audebe\_r - Rémi Audebert \\
+schild\_a - Adrien Schildknecht \\
+eddequ\_n - Nassim Eddequiouaq \\
+hervot\_p - Paul Hervot \\
+pietri\_a - Antoine Pietri
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+    \frametitle{Découpage du projet}
+    \begin{itemize}
+        \item Système de build et suite de tests
+        \item Interface utilisateur
+        \item Lexer / Parser / AST
+        \item Expansions
+        \item Composants internes du shell
+    \end{itemize}
+\end{frame}
+
+\begin{frame} [fragile]
+    \frametitle{Conclusion}
+    Neither 42sh nor zsh is perfect.
+\begin{verbatim}
+$ cat test
+0="42sh is better than zsh"
+$ zsh test
+*** Error in `zsh': free(): invalid pointer: 0x00007fffd42b39e7 ***
+\end{verbatim}
+\end{frame}
+
+\end{document}
