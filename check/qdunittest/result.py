@@ -14,7 +14,6 @@ class QDTestResult(unittest.TestResult):
         super().__init__(stream, descriptions, verbosity)
         self.stream = stream
         self.showAll = verbosity > 1
-        self.dots = verbosity == 1
         self.descriptions = descriptions
 
     def getDescription(self, test):
@@ -38,9 +37,6 @@ class QDTestResult(unittest.TestResult):
                 self.stream.writeln(colorize("ok", fg="green"))
             else:
                 self.stream.writeln("ok")
-        elif self.dots:
-            self.stream.write('.')
-            self.stream.flush()
 
     def addError(self, test, err):
         super().addError(test, err)
@@ -49,9 +45,6 @@ class QDTestResult(unittest.TestResult):
                 self.stream.writeln(colorize("ERROR", bg="white", fg="red"))
             else:
                 self.stream.writeln("ERROR")
-        elif self.dots:
-            self.stream.write('E')
-            self.stream.flush()
 
     def addFailure(self, test, err):
         super().addFailure(test, err)
@@ -60,12 +53,9 @@ class QDTestResult(unittest.TestResult):
                 self.stream.writeln(colorize("FAIL", fg="red"))
             else:
                 self.stream.writeln("FAIL")
-        elif self.dots:
-            self.stream.write('F')
-            self.stream.flush()
 
     def printErrors(self):
-        if self.dots or self.showAll:
+        if self.showAll:
             self.stream.writeln()
 
         error = (colorize("ERROR", fg="red") if
@@ -83,15 +73,16 @@ class QDTestResult(unittest.TestResult):
             self.stream.writeln(self.separator2)
             self.stream.writeln("%s" % err)
 
-    def print_summary(self):
+    def print_summary(self, number=True):
         self.printErrors()
 
-        rate = 100 - len(self.failures + self.errors) / self.testsRun * 100
-        rate_str = colorize("{:.0f}".format(rate),
-                fg="green" if rate == 100 else "red")
-        self.stream.writeln(
-            "Tests: {} Failure: {} Errors: {} Success: {}%".format(
-                self.testsRun,
-                len(self.failures),
-                len(self.errors),
-                rate_str))
+        if number:
+            self.stream.writeln(
+                "Success: {}/{}".format(
+                    self.testsRun - (len(self.failures) + len(self.errors)),
+                    self.testsRun))
+        else:
+            rate = 100 - len(self.failures + self.errors) / self.testsRun * 100
+            rate_str = colorize("{:.0f}".format(rate),
+                    fg="green" if rate == 100 else "red")
+            self.stream.writeln( "Success: {}%".format( rate_str))

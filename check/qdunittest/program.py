@@ -22,7 +22,7 @@ class TestProgram(unittest.TestProgram):
     def _setAttributesFromOptions(self, options):
         """Store options in instance attributes."""
         super()._setAttributesFromOptions(options)
-        self.categories = options.categories
+        self.verbosity = 1 if options.categories else self.verbosity
         self.select = options.select
         self.final = options.final
         self.number = options.number
@@ -45,11 +45,11 @@ class TestProgram(unittest.TestProgram):
             help="Display the categories and the percentage of successful tests.")
         parser.add_option("-e", "--select",
             help="Select category of tests. Will only display categories name and percentage of success.")
-        parser.add_option("-f", "--final", action="store_true",
+        parser.add_option("-f", "--final", action="store_true", default=False,
             help="Display the percentage of successful tests.")
-        parser.add_option("-n", "--number", action="store_true",
+        parser.add_option("-n", "--number", action="store_true", default=False,
             help="Display the number of successful test.")
-        parser.add_option("-a", "--all", action="store_true",
+        parser.add_option("-a", "--all", action="store_true", default=True,
             help="Execute the test suite on all categories.")
 
         parser.add_option("-t", "--timeout", default=None, type=float,
@@ -80,7 +80,9 @@ class TestProgram(unittest.TestProgram):
         super().createTests()
 
     def runTests(self):
-        self.testRunner = QDTestRunner(verbosity=self.verbosity)
+        self.testRunner = QDTestRunner(verbosity=self.verbosity,
+                final=self.final,
+                number=self.number)
         super().runTests()
 
 

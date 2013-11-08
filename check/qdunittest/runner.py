@@ -26,26 +26,19 @@ class QDTestRunner:
     It prints out the names of tests as they are run, errors as they
     occur, and a summary of the results at the end of the test run.
     """
-    resultclass = QDTestResult
 
     def __init__(self, stream=None, descriptions=True, verbosity=1,
-                 failfast=False, buffer=False, resultclass=None,
-                 warnings=None):
+            final=False, number=True):
         if stream is None:
             stream = sys.stderr
         self.stream = _WritelnDecorator(stream)
         self.descriptions = descriptions
-        self.verbosity = verbosity
-        self.failfast = failfast
-        self.buffer = buffer
-        self.warnings = warnings
-        if resultclass is not None:
-            self.resultclass = resultclass
+        self.verbosity = verbosity if not final else 0
+        self.final = final
+        self.number = number
 
     def _makeResult(self):
-        return self.resultclass(self.stream, self.descriptions, self.verbosity)
-        result.failfast = self.failfast
-        result.buffer = self.buffer
+        return QDTestResult(self.stream, self.descriptions, self.verbosity)
 
     def run_single(self, test):
         result = self._makeResult()
@@ -56,21 +49,39 @@ class QDTestRunner:
     def run_suite(self, suite):
         failures = []
         errors = []
+        tests_run = 0
 
         for subtest in suite._tests:
-            if hasattr(subtest, "category"):
-                self.stream.writeln("\nCategory: " +
-                        colorize(subtest.category, fg="blue") + "\n")
+            if not self.final:
+                if hasattr(subtest, "category"):
+                    self.stream.writeln("\nCategory: " +
+                            colorize(subtest.category, fg="blue") + "\n")
+                else:
+                    try:
+                        category = subtest._tests[0]._tests[0].__class__.__name__
+                        self.stream.writeln("\nCategory: " +
+                                colorize(category, fg="blue") + "\n")
+                    except:
+                        pass
             result = self._makeResult()
             subtest(result)
-            result.print_summary()
+            if not self.final:
+                result.print_summary(self.number)
+
             failures.extend(result.failures)
             errors.extend(result.errors)
+            tests_run = result.testsRun
+
             result = self._makeResult()
 
+        if not self.final:
+            self.stream.write("\n")
+        self.stream.write("Final results: ")
         result = self._makeResult()
         result.failures = failures
         result.errors = errors
+        result.testsRun = tests_run
+        result.print_summary(self.number)
 
         return result
 
