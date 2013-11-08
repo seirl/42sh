@@ -26,7 +26,7 @@ Display the current version of the \fB\fC42sh\fR binary
 .SH SHELL GRAMMAR
 .PP
 Not implemented yet.
-.SH AUTHOR
+.SH AUTHORS
 .PP
 Remi `halfr` Audebert
 .PP
