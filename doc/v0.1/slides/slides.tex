@@ -11,6 +11,21 @@
 \usepackage{listings}
 \usepackage{color}
 
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+
+\newenvironment{changemargin}[2]{%
+  \begin{list}{}{%
+    \setlength{\topsep}{0pt}%
+    \setlength{\leftmargin}{#1}%
+    \setlength{\rightmargin}{#2}%
+    \setlength{\listparindent}{\parindent}%
+    \setlength{\itemindent}{\parindent}%
+    \setlength{\parsep}{\parskip}%
+  }%
+  \item[]}{\end{list}} 
+
+
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -75,8 +90,21 @@ pietri\_a - Antoine Pietri
     \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
     \frametitle{Lexer / Parser / AST}
+\begin{changemargin}{-0.5cm}{-0.5cm}
+        \begin{verbatim}
+            +-------------+   token  +-------------+  AST
+char* +---->| Lexer       |+-------->| Parser      |+---->
+            |-------------|          |-------------|
+            |             |          |             |
+            | Analyse     |          | LL(1)       |
+            |  syntaxique |          | Analyse     |
+            |             |          | grammaticale|
+            |             |          |             |
+            +-------------+          +-------------+
+\end{verbatim}
+\end{changemargin}
 \end{frame}
 
 \begin{frame}
@@ -113,13 +141,13 @@ pietri\_a - Antoine Pietri
 \end{frame}
 
 \begin{frame} [fragile]
-    \frametitle{Conclusion}
+    \frametitle{Conclusion}t 
     Neither 42sh nor zsh is perfect.
 \begin{verbatim}
 42sh$ cat test
 0="42sh is better than zsh"
-42sh$ zsh test
-*** Error in `zsh': free(): invalid pointer: 0x00007fffd42b39e7 ***
+$ zsh test
+*** Error in `zsh': free(): invalid pointer ***
 \end{verbatim}
 \end{frame}
 
