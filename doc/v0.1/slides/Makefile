@@ -1,8 +1,11 @@
-all:
+all: gantt.png
 	pdflatex -shell-escape slides.tex
 
 p: all
 	zathura slides.pdf
+
+gantt.png:
+	wget http://halfr.net/pub/42sh/gantt.png
 
 clean:
 	@rm -rf \
