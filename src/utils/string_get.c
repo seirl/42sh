@@ -19,3 +19,11 @@ void string_ungetc(s_string *s)
         s->read_pos--;
 }
 
+void string_eat_spaces(s_string *s)
+{
+    char c;
+    while ((c = string_getc(s)) == ' ' && c != 0)
+        continue;
+    if (c != 0)
+        string_ungetc(s);
+}
