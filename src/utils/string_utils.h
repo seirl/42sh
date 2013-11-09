@@ -22,7 +22,7 @@ void string_free(s_string *s);
 void string_putc(s_string *s, char c);
 void string_puts(s_string *s, const char *str);
 void string_cat(s_string *s1, s_string *s2);
-s_string *string_vcat(const char *s1, ...)
+s_string *string_vcat(const char *s1, ...);
 
 char string_getc(s_string *s);
 void string_ungetc(s_string *s);
