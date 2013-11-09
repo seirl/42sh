@@ -1,4 +1,4 @@
-.PHONY: all clean check export
+.PHONY: all clean check export doc
 
 all:
 	mkdir -p build
@@ -14,3 +14,6 @@ check: all
 export:
 	git archive HEAD --prefix=audebe_r-42sh/ \
 	    | bzip2 > audebe_r-42sh.tar.bz2
+
+doc:
+	doxygen
