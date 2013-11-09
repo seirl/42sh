@@ -60,6 +60,11 @@ static s_token *next_token(s_string *stream)
         return ret;
     if (lex_operator(stream, &ret))
         return ret;
+    s_string *buf = string_create(0);
+    char c;
+    while ((c = string_getc(stream)) != ' ' && c != 0)
+        string_putc(buf, c);
+    ret = token_create(T_WORD, buf);
     return ret;
 }
 
@@ -74,5 +79,5 @@ s_token_queue *lex(char *str)
         token_enqueue(q, tok);
     } while (tok->type != T_EOF);
     string_free(stream);
-    return NULL;
+    return q;
 }

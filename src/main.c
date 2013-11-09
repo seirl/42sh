@@ -13,8 +13,12 @@ int main(int argc, char *argv[])
         string_puts(input, argv[i]);
         string_putc(input, ' ');
     }
-    //s_token_queue *q = lex(input->buf);
-    printf("%s\n", input->buf);
+    s_token_queue *q = lex(input->buf);
+    s_token *tok;
+    do {
+        tok = token_dequeue(q);
+        token_print(tok);
+    } while (tok->type != T_EOF);
     string_free(input);
     return EXIT_SUCCESS;
 }
