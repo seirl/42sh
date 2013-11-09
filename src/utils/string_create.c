@@ -23,7 +23,7 @@ s_string *string_create_from(char *str)
     return s;
 }
 
-static void string_resize(s_string *s)
+void string_resize(s_string *s)
 {
     s->max_len *= 2;
     s->buf = realloc(s->buf, s->max_len);

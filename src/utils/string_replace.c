@@ -4,4 +4,7 @@
 void string_replace(s_string *s, char *pattern, char *rep)
 {
     //TODO
+    (void)s;
+    (void)pattern;
+    (void)rep;
 }

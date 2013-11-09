@@ -13,23 +13,23 @@ s_token_queue *token_queue_create()
 
 void token_enqueue(s_token_queue *q, s_token *tok)
 {
-    new_tok->next = NULL;
+    tok->next = NULL;
     if (q->size == 0)
     {
-        q->head = new_tok;
-        q->tail = new_tok;
+        q->head = tok;
+        q->tail = tok;
     }
     else
     {
-        q->tail->next = new_tok;
-        q->tail = new_tok;
+        q->tail->next = tok;
+        q->tail = tok;
     }
     q->size += 1;
 }
 
 s_token *token_front(s_token_queue *q)
 {
-    return *(q->head);
+    return q->head;
 }
 
 s_token *token_dequeue(s_token_queue *q)

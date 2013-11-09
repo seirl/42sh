@@ -45,13 +45,14 @@ void *smalloc(size_t size)
     node->next = buckets[hash];
     buckets[hash] = node;
 
-    return ptr + sizeof (u_smalloc_bucket);
+    char *char_ptr = ptr;
+    return char_ptr + sizeof (u_smalloc_bucket);
 }
 
 void *scalloc(size_t nmemb, size_t size)
 {
     char *ret = smalloc(nmemb * size);
-    for (int i = 0; i < nmemb * size; ++i)
+    for (size_t i = 0; i < nmemb * size; ++i)
         ret[i] = 0;
     return ret;
 }
@@ -65,7 +66,10 @@ void *srealloc(void *ptr, size_t size)
         sfree(ptr);
         return NULL;
     }
-    u_smalloc_bucket *meta = ptr - sizeof (u_smalloc_bucket);
+    char *char_ptr = ptr;
+    char_ptr -= sizeof (u_smalloc_bucket);
+    ptr = char_ptr;
+    u_smalloc_bucket *meta = ptr;
     u_smalloc_bucket *new_ptr = realloc(meta, size +
             sizeof (u_smalloc_bucket));
     if (new_ptr != meta)
@@ -82,7 +86,9 @@ void *srealloc(void *ptr, size_t size)
 
 void sfree(void *ptr)
 {
-    u_smalloc_bucket *meta = ptr - sizeof (u_smalloc_bucket);
+    char *char_ptr = ptr;
+    ptr = char_ptr - sizeof (u_smalloc_bucket);
+    u_smalloc_bucket *meta = ptr;
     free(get_remove(meta));
 }
 

@@ -15,6 +15,7 @@ typedef struct string s_string;
 
 s_string *string_create(size_t size);
 s_string *string_create_from(char *str);
+void string_resize(s_string *s);
 char *string_release(s_string *s);
 void string_free(s_string *s);
 
