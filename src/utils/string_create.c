@@ -15,7 +15,7 @@ s_string *string_create(size_t size)
     return s;
 }
 
-s_string *string_create_from(char *str)
+s_string *string_create_from(const char *str)
 {
     s_string *s = string_create(32);
     for (int i = 0; str[i]; ++i)
