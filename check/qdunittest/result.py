@@ -1,6 +1,6 @@
 import unittest
 
-from termcolors import colorize
+from .termcolors import colorize
 
 class QDTestResult(unittest.TestResult):
     """A test result class that can print formatted text results to a stream.

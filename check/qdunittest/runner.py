@@ -3,7 +3,7 @@ import unittest
 
 from .result import QDTestResult
 
-from termcolors import colorize
+from .termcolors import colorize
 
 class _WritelnDecorator():
     """Used to decorate file-like objects with a handy 'writeln' method."""
@@ -50,6 +50,10 @@ class QDTestRunner:
         failures = []
         errors = []
         tests_run = 0
+
+        # No tests, return dummy result
+        if len(suite._tests) == 0:
+            return self._makeResult()
 
         for subtest in suite._tests:
             if not self.final:
