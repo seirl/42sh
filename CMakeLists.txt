@@ -15,6 +15,7 @@ set(cfiles
     src/utils/string_create.c
     src/utils/string_get.c
     src/utils/string_replace.c
+    src/utils/log.c
 
     src/lexer/lexer.c
     src/lexer/token.c
