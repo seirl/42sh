@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "lexer.h"
+#include "smalloc.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,11 +15,17 @@ int main(int argc, char *argv[])
         string_putc(input, ' ');
     }
     s_token_queue *q = lex(input->buf);
-    s_token *tok;
-    do {
-        tok = token_dequeue(q);
+    s_token *tok = NULL;
+    while ((tok = token_dequeue(q))->type != T_EOF)
+    {
         token_print(tok);
-    } while (tok->type != T_EOF);
+        token_free(tok);
+    }
+    token_free(tok);
     string_free(input);
+    token_queue_free(q);
+
+    //TODO: free
+    smalloc_clean();
     return EXIT_SUCCESS;
 }

@@ -23,5 +23,6 @@ typedef struct token s_token;
 
 void token_print(s_token *tok);
 s_token *token_create(e_token_type type, s_string *value);
+void token_free(s_token *tok);
 
 #endif /* !TOKEN_H */

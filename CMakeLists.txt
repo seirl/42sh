@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(42sh)
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -pedantic -std=c99")
+set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -pedantic -std=c99 -g3")
 include_directories(src)
 include_directories(src/utils)
 include_directories(src/lexer)

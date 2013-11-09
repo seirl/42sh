@@ -28,3 +28,10 @@ s_token *token_create(e_token_type type, s_string *value)
     tok->value = value;
     return tok;
 }
+
+void token_free(s_token *tok)
+{
+    if (tok->value)
+        string_free(tok->value);
+    sfree(tok);
+}
