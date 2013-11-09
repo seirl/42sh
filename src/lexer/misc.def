@@ -1,0 +1,6 @@
+X(T_EOF, "")
+X(T_WORD, "")
+X(T_ASSIGNMENT_WORD, "")
+X(T_NAME, "")
+X(T_NEWLINE, "")
+X(T_IO_NUMBER)

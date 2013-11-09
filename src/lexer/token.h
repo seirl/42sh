@@ -6,7 +6,9 @@
 enum token_type
 {
 # define X(Type, Str) Type,
-# include "token.def"
+# include "misc.def"
+# include "operator.def"
+# include "res_word.def"
 # undef X
 };
 typedef enum token_type e_token_type;

@@ -11,7 +11,9 @@ void token_print(s_token *tok)
             fprintf(stdout, " (%s)", Str);      \
         break;                                  \
     }
-#include "token.def"
+#include "misc.def"
+#include "res_word.def"
+#include "operator.def"
 #undef X
     if (tok->value)
         fprintf(stdout, "with value: %s", tok->value->buf);
