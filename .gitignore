@@ -1,7 +1,12 @@
 __pycache__
 *.memcheck
 *.log
-
 *.aux
 *.out
 *.toc
+*.swp
+*.pdf
+*.png
+*.core
+42sh
+build
