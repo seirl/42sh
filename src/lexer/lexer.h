@@ -1,8 +1,8 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "token.h"
+# include "token_queue.h"
 
-void lex(char *str);
+s_token_queue *lex(char *str);
 
 #endif /* !LEXER_H */

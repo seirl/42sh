@@ -47,7 +47,7 @@ static s_token *next_token(s_string *stream)
     char c;
 }
 
-void lex(char *str)
+s_token_queue *lex(char *str)
 {
     s_string *stream = string_create_from(str);
     s_token *tok;
