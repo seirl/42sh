@@ -2,10 +2,12 @@
 #include <stdio.h>
 
 #include "lexer.h"
+#include "sighandler.h"
 #include "smalloc.h"
 
 int main(int argc, char *argv[])
 {
+    signal_init();
     if (argc < 1)
         return 1;
     s_string *input = string_create(0);
@@ -25,7 +27,6 @@ int main(int argc, char *argv[])
     string_free(input);
     token_queue_free(q);
 
-    //TODO: free
     smalloc_clean();
     return EXIT_SUCCESS;
 }
