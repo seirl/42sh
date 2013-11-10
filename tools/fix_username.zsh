@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
-BAD_NAME="Joel Courtois"
-COOL_NAME="Superman"
-COOL_EMAIL="super@man.universe"
+export BAD_NAME="Joel Courtois"
+export COOL_NAME="Superman"
+export COOL_EMAIL="super@man.universe"
 
 git filter-branch -f --commit-filter '
     if [ "$GIT_COMMITTER_NAME" = "$BAD_NAME" ];
