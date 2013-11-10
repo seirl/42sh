@@ -23,6 +23,7 @@ list_files() {
             if [ "${f##*.}" == "c" ] || [ "${f##*.}" == "h" ]; then
                 check_norm $f
                 files_stat $f
+                check_25 $f
             fi
         fi
     done
@@ -30,6 +31,36 @@ list_files() {
 
 files_stat() {
     LOC=$(($LOC + $(sed -n '/[^\ ]/p' $f | wc -l)))
+}
+
+check_25() {
+    acc=0
+    line=0;
+    tot_line=0;
+    last=""
+    while IFS= read -rn1 c; do
+        if [ -z "$c" ]; then           # \n
+            if [ $acc -ne 0 ]; then
+                if [ "$last" != "" ]; then
+                    line=$(($line + 1))
+                fi
+            else
+                if [ $line -gt 25 ]; then
+                    echo "Function $(($line - 1)) lines at $1:$tot_line"
+                fi
+                line=0
+            fi
+            tot_line=$(($tot_line + 1))
+        fi
+        if [ "$c" == "{" ]; then
+            acc=$(($acc + 1))
+        fi
+        if [ "$c" == "}" ]; then
+            acc=$(($acc - 1))
+        fi
+        #echo -ne "${c:-\n}"
+        last="$c"
+    done < $1
 }
 
 check_norm() {
