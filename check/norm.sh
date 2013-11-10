@@ -22,7 +22,7 @@ list_files() {
         elif [ -f $f ]; then
             if [ "${f##*.}" == "c" ] || [ "${f##*.}" == "h" ]; then
                 check_norm $f
-                files_stat $f &
+                files_stat $f
                 check_25 $f
             fi
         fi
