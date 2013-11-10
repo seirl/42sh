@@ -37,9 +37,13 @@ int parse_options(int argc, char *argv[])
     if (opt_get(&opt, "version", NULL))
         version();
     if (opt_get(&opt, "norc", NULL))
+    {
         ;
+    }
     if (opt_get(&opt, "ast-print", NULL))
+    {
         ;
+    }
     if (opt_get(&opt, "c", &arg))
     {
         printf("Exec %s\n", arg);
