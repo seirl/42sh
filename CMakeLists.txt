@@ -6,6 +6,7 @@ set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3")
 
 include_directories(src)
 include_directories(src/utils)
+include_directories(src/getopt)
 include_directories(src/lexer)
 
 add_library(smalloc OBJECT
@@ -30,6 +31,10 @@ add_library(lexer OBJECT
     src/lexer/location.c
 )
 
+add_library(getopt OBJECT
+    src/getopt/shopt.c
+)
+
 set(cfiles
     src/main.c
     src/utils/log.c
@@ -39,6 +44,7 @@ set(cfiles
 add_executable(42sh
     ${cfiles}
     $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:getopt>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:smalloc>
 )

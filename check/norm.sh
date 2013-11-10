@@ -1,10 +1,10 @@
 #! /bin/sh
 
+LOC=0
 RETCODE=0
 RED="\033[1;31m"
 GREEN="\033[1;32m"
 RESET="\033[0m"
-LOC=0
 
 bad_pattern () {
     IFS=$'\n'
@@ -22,7 +22,7 @@ list_files() {
         elif [ -f $f ]; then
             if [ "${f##*.}" == "c" ] || [ "${f##*.}" == "h" ]; then
                 check_norm $f
-                files_stat $f
+                files_stat $f &
                 check_25 $f
             fi
         fi
@@ -47,6 +47,7 @@ check_25() {
             else
                 if [ $line -gt 25 ]; then
                     echo "Function $(($line - 1)) lines at $1:$tot_line"
+                    RETCODE=$(($RETCODE + 1))
                 fi
                 line=0
             fi
