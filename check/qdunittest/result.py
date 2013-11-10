@@ -73,8 +73,9 @@ class QDTestResult(unittest.TestResult):
             self.stream.writeln(self.separator2)
             self.stream.writeln("%s" % err)
 
-    def print_summary(self, number=True):
-        self.printErrors()
+    def print_summary(self, number=True, show_errors=True):
+        if show_errors:
+            self.printErrors()
 
         if number:
             self.stream.writeln(
