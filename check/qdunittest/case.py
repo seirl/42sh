@@ -21,6 +21,14 @@ class QDTestCase(unittest.TestCase):
 
     def start_program(self, args):
         return subprocess.Popen(["valgrind",
+            "--leak-check=full",
+            "--show-reachable=yes",
+            "--track-fds=yes",
+            "--read-var-info=yes",
+            "--track-origins=yes",
+            "--partial-loads-ok=yes",
+            "--malloc-fill=0x42",
+            "--free-fill=0x43",
             "--xml=yes",
             "--xml-file={}.memcheck".format(self.get_test_path()),
             "--log-file={}.log".format(self.get_test_path())] + args,
