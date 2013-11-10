@@ -1,6 +1,7 @@
 #ifndef LEXER_PRIVATE_H
 # define LEXER_PRIVATE_H
 
+# include "lexer.h"
 # include "token.h"
 # include "location.h"
 
@@ -20,7 +21,6 @@ struct lexer
     s_string *working_buffer;
     s_location location;
 };
-typedef struct lexer s_lexer;
 
 /**
 ** @brief Lookup a char from input stream.

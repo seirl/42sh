@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     }
 
     s_token *tok;
-    t_lexer *lexer;
+    s_lexer *lexer;
 
     str = argv[1];
     lexer = lex_create(dummy_getc, dummy_topc, "<test>");
