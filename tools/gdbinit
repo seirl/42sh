@@ -1,0 +1,40 @@
+define plist
+  set $next = $arg0.head
+  printf "Size = %u\n", $arg0.size
+  while ($next != 0)
+    output $next->data
+    printf " -> "
+    set $next = $next.next
+  end
+  printf "NULL\n"
+end
+
+define plistr
+  set $next = $arg0.tail
+  printf "Size = %u\n", $arg0.size
+  while ($next != 0)
+    output $next->data
+    printf " -> "
+    set $next = $next.prev
+  end
+  printf "NULL\n"
+end
+
+define ptable
+    set print pretty off
+    printf "Size = %u\n", $arg0.size
+    printf "Hash function: %p\n", $arg0.hash
+    printf "Cmp function: %p\n", $arg0.cmp
+    set $i = 0
+    while ($i < $arg0.size)
+      printf "%u : ", $i
+      set $next = $arg0.bucket[$i].head
+      while ($next != 0)
+        output $next->data
+        printf " -> "
+        set $next = $next.next
+      end
+      printf "NULL\n"
+      set $i++
+    end
+end

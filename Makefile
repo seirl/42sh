@@ -10,7 +10,9 @@ clean:
 
 check: all
 	cd build/check && ./run_tests.py
-	check/norm.sh src/
+
+norm:
+	tools/norm.sh src/
 
 export:
 	git archive HEAD --prefix=audebe_r-42sh/ \
