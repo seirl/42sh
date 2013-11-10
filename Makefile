@@ -9,7 +9,7 @@ clean:
 	$(RM) -r build
 
 check: all
-	cd check && ./run_tests.py
+	cd build/check && ./run_tests.py
 	check/norm.sh src/
 
 export:
