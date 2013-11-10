@@ -34,7 +34,9 @@ class QDTestLoader(unittest.TestLoader):
             category = os.path.basename(directory)
             test_class_name = "Test{}{}".format(
                     category.title(),
-                    test_filename.title())
+                    test_filename.replace(".test", "")\
+                            .title()\
+                            .replace("_", ""))
             test_method_name = 'test_' + test_filename
             # We create the method here to give it the right name
             test_class_methods = {test_method_name: test_method}
@@ -45,7 +47,7 @@ class QDTestLoader(unittest.TestLoader):
 
             return test_case_class(methodName=test_method_name,
                     category=category,
-                    test_name=test_filename.rstrip(".test"),
+                    test_name=test_filename.replace(".test", ""),
                     description=test_description)
 
     def _load_test_suite(self, directory, filenames):
