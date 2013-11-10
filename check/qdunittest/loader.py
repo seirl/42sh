@@ -1,13 +1,19 @@
-import json
 import os
 import os.path
 import unittest
 
-from .case import QDTestCase
+from .case import (QDTestCase,
+        new_test_run_42sh,
+        new_test_run_lexer)
 from .suite import QDTestSuite
 
 class QDTestLoader(unittest.TestLoader):
     """Find and load tests."""
+
+    test_methods = {
+            'lexer': new_test_run_lexer,
+            '42sh': new_test_run_42sh,
+            }
 
     def __init__(self, select, timeout, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,25 +24,12 @@ class QDTestLoader(unittest.TestLoader):
         """Return a TestCase generated from the file test_file, expected to
         contain a json structure reprensenting the test."""
         with open(os.path.join(directory, test_filename)) as f:
-            test = json.load(f)
+            test = eval(f.read())
 
-            def test_it(subself):
-                shell_args = test.get('args', [])
-                subself.start_shell(shell_args)
-
-                timeout = test.get('timeout', self.timeout)
-                stdin_buf = test.get('stdin', None)
-                stdoutdata, stderrdata = subself._shell.communicate(stdin_buf,
-                                                                 timeout)
-
-                if 'stdout' in test:
-                    subself.assertEqual(stdoutdata,
-                                     test['stdout'].encode(),
-                                     "stdout differ")
-
-                retval = test.get('retval', 0)
-                subself.assertEqual(subself._shell.returncode, retval,
-                                 "return value differ")
+            test_method_type = test.get('type',
+                    'lexer' if 'lexer' in directory else '42sh')
+            test_method_func = self.test_methods[test_method_type]
+            test_method = test_method_func(test, self.timeout)
 
             category = os.path.basename(directory)
             test_class_name = "Test{}{}".format(
@@ -44,7 +37,7 @@ class QDTestLoader(unittest.TestLoader):
                     test_filename.title())
             test_method_name = 'test_' + test_filename
             # We create the method here to give it the right name
-            test_class_methods = {test_method_name: test_it}
+            test_class_methods = {test_method_name: test_method}
             test_case_class = type(test_class_name,
                     (QDTestCase, ),
                     test_class_methods,)
