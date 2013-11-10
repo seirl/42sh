@@ -35,4 +35,6 @@ int main(int argc, char **argv)
         tok = lex_token(lexer);
         token_print(tok);
     } while (tok->type != T_EOF);
+
+    lex_delete(lexer);
 }

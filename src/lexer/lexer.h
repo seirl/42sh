@@ -17,6 +17,11 @@ s_lexer *lex_create(char (*lex_getc)(void *input_state),
                     char *source);
 
 /**
+** @brief Delete a lexer.
+*/
+void lex_delete(s_lexer *lexer);
+
+/**
 ** @brief Lex a token or a word.
 **
 ** @return A token.

@@ -24,6 +24,8 @@ add_library(string OBJECT
 
 add_library(lexer OBJECT
     src/lexer/lexer.c
+    src/lexer/lexer_create.c
+    src/lexer/lexer_delete.c
     src/lexer/lexer_quoting.c
     src/lexer/lexer_release.c
     src/lexer/lexer_utils.c
