@@ -55,3 +55,15 @@ void shopt_print()
                shell_options[i].value == 1 ? "on" : "off");
     }
 }
+
+void shopt_from_opt(s_opt *opt)
+{
+    size_t size;
+    s_shopt *shell_options = shopt_get_ptr(&size);
+    for (size_t i = 0 ; i < size; ++i)
+    {
+        int ret = opt_is_set(opt, "O", shell_options[i].name);
+        if (ret != -1)
+            shell_options[i].value = ret;
+    }
+}
