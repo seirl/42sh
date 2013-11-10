@@ -125,6 +125,9 @@ s_token *lex_token(s_lexer *lexer)
     if (lex_io_number(lexer))
         return lex_release_token(lexer);
 
+    if (lex_single_quotes(lexer))
+        return lex_release_token(lexer);
+
     // FIXME: TO BE CONTINUED
     // $( -> T_EXP_SUBSHELL_START
     // ) -> T_EXP_SUBSHELL_END

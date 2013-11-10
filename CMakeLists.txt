@@ -24,10 +24,10 @@ add_library(string OBJECT
 add_library(lexer OBJECT
     src/lexer/lexer.c
     src/lexer/lexer_quoting.c
-    src/lexer/lexer_utils.c
     src/lexer/lexer_release.c
+    src/lexer/lexer_utils.c
     src/lexer/token.c
-    src/lexer/token_queue.c
+    src/lexer/location.c
 )
 
 set(cfiles
