@@ -1,8 +1,33 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "token_queue.h"
+# include "string_utils.h"
+# include "token.h"
 
-s_token_queue *lex(char *str);
+typedef struct lexer t_lexer;
+
+/**
+** @brief Create a new lexer.
+**
+** @param lex_getc A function that return a char
+** @return A lexer object.
+*/
+t_lexer *lex_create(char (*lex_getc)(void *input_state),
+                    char (*lex_topc)(void *input_state),
+                    char *source);
+
+/**
+** @brief Lex a token or a word.
+**
+** @return A token.
+*/
+s_token *lex_token(t_lexer *lex);
+
+/**
+** @brief Lex a word.
+**
+** @return A word token.
+*/
+s_token *lex_word(t_lexer *lex);
 
 #endif /* !LEXER_H */
