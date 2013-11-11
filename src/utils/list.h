@@ -23,7 +23,7 @@
     do {                                                               \
         List = calloc(1, sizeof (*List));                              \
         List->free = F;                                                \
-    } while(0)                                                         \
+    } while (0)                                                         \
 
 # define LIST_FREE(List)                                               \
     do {                                                               \
@@ -36,7 +36,7 @@
             free(List->tail);                                          \
         }                                                              \
         free(List);                                                    \
-    } while(0)
+    } while (0)
 
 # define LIST_INSERT_AFTER(List, Val, Node)                            \
     do {                                                               \
@@ -58,7 +58,7 @@
         if (Node == List->tail)                                        \
             List->tail = Node ? Node->next : List->head;               \
         List->size++;                                                  \
-    } while(0)
+    } while (0)
 
 # define LIST_INSERT_BEFORE(List, Val, Node)                           \
     do {                                                               \
@@ -80,21 +80,21 @@
         if (Node == List->head)                                        \
             List->head = Node ? Node->prev : List->tail;               \
         List->size++;                                                  \
-    } while(0)
+    } while (0)
 
 # define LIST_INSERT_TAIL(List, Val)                                   \
     do {                                                               \
         LIST_INSERT_AFTER(List, Val, List->tail);                      \
         if (!List->head)                                               \
             List->head = List->tail;                                   \
-    } while(0)
+    } while (0)
 
 # define LIST_INSERT_HEAD(List, Val)                                   \
     do {                                                               \
         LIST_INSERT_BEFORE(List, Val, List->head);                     \
         if (!List->tail)                                               \
             List->tail = List->head;                                   \
-    } while(0)
+    } while (0)
 
 # define LIST_AT(List, N, Elt)                                         \
     do {                                                               \
@@ -102,7 +102,7 @@
         Elt = List->head;                                              \
         for (i = 0; i < N && Elt; ++i)                                 \
             Elt = Elt->next;                                           \
-    } while(0)
+    } while (0)
 
 # define LIST_FOREACH(List)                                            \
     for (List->it = List->head; List->it; List->it = List->it->next)
@@ -116,7 +116,7 @@
         }                                                              \
         else                                                           \
             List_INSERT_TAIL(List, Val);                               \
-    } while(0)
+    } while (0)
 
 # define LIST_REMOVE(List, Node)                                       \
     do {                                                               \
@@ -132,7 +132,7 @@
             List->free(Node->data);                                    \
         free(Node);                                                    \
         List->size--;                                                  \
-    } while(0)
+    } while (0)
 
 # define LIST_REMOVE_AT(List, N)                                       \
     do {                                                               \
@@ -141,12 +141,12 @@
             LIST_AT(List, N, List->it);                                \
             LIST_REMOVE(List, List->it);                               \
         }                                                              \
-    } while(0)
+    } while (0)
 
 # define LIST_REMOVE_HEAD(List)                                        \
     do {                                                               \
         List->it = List->head;                                         \
         LIST_REMOVE(List, List->it);                                   \
-    } while(0)
+    } while (0)
 
 #endif /* !LIST_H */

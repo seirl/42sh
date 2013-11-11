@@ -22,6 +22,7 @@ end in `.test`.
 Hash Table
 ----------
 
+\code{.c}
     #include "hashtbl.h"
     HASHTBL(char*, char*, my_table);
 
@@ -41,3 +42,4 @@ Hash Table
         HASHTBL_DEL(t, "bar");
         HASHTBL_FREE(t);
     }
+\endcode

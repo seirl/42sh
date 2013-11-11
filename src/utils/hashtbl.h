@@ -33,7 +33,7 @@
         Table->bucket = malloc(sizeof (*Table->bucket) * Size);        \
         for (i = 0; i < Size; ++i)                                     \
             LIST_INIT(Table->bucket[i], F);                            \
-    } while(0)
+    } while (0)
 
 # define HASHTBL_SET(Table, Value, Key)                                \
     do {                                                               \
@@ -43,7 +43,7 @@
         Table->it->value = Value;                                      \
         LIST_INSERT_HEAD(Table->bucket[index], *Table->it);            \
         free(Table->it);                                               \
-    } while(0)
+    } while (0)
 
 # define HASHTBL_GET(Table, Key, Ret, Changed)                         \
     do {                                                               \
@@ -58,7 +58,7 @@
                 break;                                                 \
             }                                                          \
         }                                                              \
-    } while(0)
+    } while (0)
 
 # define HASHTBL_DEL(Table, Key)                                       \
     do {                                                               \
@@ -72,7 +72,7 @@
                 break;                                                 \
             }                                                          \
         }                                                              \
-    } while(0)
+    } while (0)
 
 # define HASHTBL_FREE(Table)                                           \
     do {                                                               \
@@ -81,7 +81,7 @@
             LIST_FREE(Table->bucket[i]);                               \
         free(Table->bucket);                                           \
         free(Table);                                                   \
-    } while(0)
+    } while (0)
 
 # define HASHTBL_DEBUG(Table)                                          \
     do {                                                               \
@@ -94,7 +94,7 @@
                        Table->bucket[i]->it->data.value);              \
         }                                                              \
         fprintf(stderr, "\n");                                         \
-    } while(0)
+    } while (0)
 
 unsigned long hash_string(s_string *s);
 int cmp_string(s_string *s1, s_string *s2);

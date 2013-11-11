@@ -45,7 +45,7 @@ check_25() {
                     line=$(($line + 1))
                 fi
             else
-                if [ $line -gt 25 ]; then
+                if [ $line -gt 26 ]; then
                     echo "Function $(($line - 1)) lines at $1:$tot_line"
                     RETCODE=$(($RETCODE + 1))
                 fi
