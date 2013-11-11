@@ -1,5 +1,6 @@
 {
     "type": "lexer",
+    "desc": "Test WORD token",
     "input": "A A",
     "output": """WORD with value: A
 WORD with value: A
