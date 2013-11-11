@@ -94,8 +94,9 @@ void sfree(void *ptr)
 
 void smalloc_clean()
 {
-    u_smalloc_bucket *tmp;
     u_smalloc_bucket **buckets = get_bucket();
+#ifndef ON_A_FREE_ON_A_TOUT_COMPRIS
+    u_smalloc_bucket *tmp;
     for (int i = 0; i < N_BUCKETS; ++i)
     {
         while (buckets[i] != NULL)
@@ -105,5 +106,6 @@ void smalloc_clean()
             buckets[i] = tmp;
         }
     }
+#endif /* !ON_A_FREE_ON_A_TOUT_COMPRIS */
     free(buckets);
 }

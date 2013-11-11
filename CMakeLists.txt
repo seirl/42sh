@@ -3,6 +3,7 @@ project(42sh)
 
 set(CMAKE_C_COMPILER "clang")
 set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3")
+add_definitions(-DON_A_FREE_ON_A_TOUT_COMPRIS)
 
 include_directories(src)
 include_directories(src/utils)
