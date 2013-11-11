@@ -34,8 +34,10 @@ void lex_double_quotes_piece(s_lexer *lexer)
     if (c == '"')
         lexer->token_type = T_DOUBLE_QUOTES;
     else
+    {
         // FIXME: lex error?
         ;
+    }
 }
 
 int lex_double_quotes(s_lexer *lexer)

@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(42sh)
 
-set(CMAKE_C_COMPILER "clang")
-set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3")
 add_definitions(-DON_A_FREE_ON_A_TOUT_COMPRIS)
+set(CMAKE_C_COMPILER "clang")
+set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3 -gdwarf-2")
 
 include_directories(src)
 include_directories(src/utils)
@@ -12,6 +12,10 @@ include_directories(src/lexer)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
+)
+
+add_library(hashtbl OBJECT
+    src/utils/hashtbl.c
 )
 
 add_library(string OBJECT
@@ -32,6 +36,7 @@ add_library(lexer OBJECT
     src/lexer/lexer_utils.c
     src/lexer/token.c
     src/lexer/location.c
+    src/lexer/alias.c
 )
 
 add_library(options OBJECT
@@ -52,6 +57,7 @@ add_executable(42sh
     $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:hashtbl>
 )
 
 MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )

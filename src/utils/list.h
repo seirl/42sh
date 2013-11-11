@@ -17,7 +17,7 @@
         s_Node_##Name *it;                                             \
         void(*free)(Type);                                             \
     };                                                                 \
-    typedef struct Name s_##Name;
+    typedef struct Name s_##Name
 
 # define LIST_INIT(List, F)                                            \
     do {                                                               \

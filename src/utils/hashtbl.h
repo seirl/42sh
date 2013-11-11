@@ -1,6 +1,8 @@
 #ifndef HASHTBL_H
 # define HASHTBL_H
 
+# include <stdlib.h>
+# include "string_utils.h"
 # include "list.h"
 
 # define HASHTBL(Type, Keytype, Name)                                  \
@@ -15,11 +17,11 @@
     {                                                                  \
         s_items_##Name **bucket;                                       \
         size_t size;                                                   \
-        int(*hash)(Keytype);                                           \
+        unsigned long(*hash)(Keytype);                                 \
         int(*cmp)(Keytype, Keytype);                                   \
         s_item_##Name *it;                                             \
     };                                                                 \
-    typedef struct Name s_##Name;
+    typedef struct Name s_##Name
 
 # define HASHTBL_INIT(Table, Size, Hash, Cmp, F)                       \
     do {                                                               \
@@ -35,7 +37,7 @@
 
 # define HASHTBL_SET(Table, Value, Key)                                \
     do {                                                               \
-        int index = Table->hash(Key);                                  \
+        int index = Table->hash(Key) % Table->size;                    \
         Table->it = malloc(sizeof (*Table->it));                       \
         Table->it->key = Key;                                          \
         Table->it->value = Value;                                      \
@@ -45,7 +47,7 @@
 
 # define HASHTBL_GET(Table, Key, Ret, Changed)                         \
     do {                                                               \
-        int index = Table->hash(Key);                                  \
+        int index = Table->hash(Key) % Table->size;                    \
         Changed = 0;                                                   \
         LIST_FOREACH(Table->bucket[index])                             \
         {                                                              \
@@ -60,7 +62,7 @@
 
 # define HASHTBL_DEL(Table, Key)                                       \
     do {                                                               \
-        int index = Table->hash(Key);                                  \
+        int index = Table->hash(Key) % Table->size;                    \
         LIST_FOREACH(Table->bucket[index])                             \
         {                                                              \
             if (!Table->cmp(Table->bucket[index]->it->data.key, Key))  \
@@ -93,5 +95,8 @@
         }                                                              \
         fprintf(stderr, "\n");                                         \
     } while(0)
+
+unsigned long hash_string(s_string *s);
+int cmp_string(s_string *s1, s_string *s2);
 
 #endif /* !HASHTBL_H */
