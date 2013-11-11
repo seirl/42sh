@@ -18,6 +18,8 @@ struct lexer
     e_token_type token_type;
     //! Is the current character quoted (lose special meaning)?
     int quoted;
+    //! Have a blank character preceeded the token?
+    int blank;
     s_string *working_buffer;
     s_location location;
 };

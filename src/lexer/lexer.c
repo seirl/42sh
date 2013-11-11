@@ -71,6 +71,23 @@ static int lex_io_number(s_lexer *lexer)
     return 0;
 }
 
+/**
+** @brief Remove blanks from input stream.
+**
+** Set next token blank to 1 if a blank character preceeds it.
+**
+**  2.3 8. If the current character is an unquoted <blank>, any token
+**  containing the previous character is delimited and the current character
+**  shall be discarded.
+*/
+static void lex_blanks(s_lexer *lexer)
+{
+    if (lex_topc(lexer) == ' ')
+        lexer->blank = 1;
+    while (lex_topc(lexer) == ' ')
+        lex_discard(lexer);
+}
+
 // FIXME: correct word definition
 s_token *lex_word(s_lexer *lexer)
 {
@@ -78,14 +95,6 @@ s_token *lex_word(s_lexer *lexer)
 
     while ((c = lex_topc(lexer)) != ' ' && c != 0)
         lex_eat(lexer);
-
-    // 2.3 8. If the current character is an unquoted <blank>, any token
-    // containing the previous character is delimited and the current character
-    // shall be discarded.
-    // FIXME: We have to remember that this character had existed to
-    // differenciate this "A$RANDOM" (1 word) from "A $RANDOM" (2 words).
-    if (c == ' ')
-        lex_discard(lexer);
 
     return lex_release_token(lexer);
 }
@@ -97,6 +106,9 @@ s_token *lex_token(s_lexer *lexer)
     // shall be returned as the token.
     if (lex_eof(lexer))
         return lex_release_token(lexer);
+
+    // Blanks separates words and tokens.
+    lex_blanks(lexer);
 
     // 2.3 10. If the current character is a '#', it and all subsequent
     // characters up to, but excluding, the next <newline> shall be discarded
