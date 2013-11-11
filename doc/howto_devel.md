@@ -23,23 +23,23 @@ Hash Table
 ----------
 
 \code{.c}
-    #include "hashtbl.h"
-    HASHTBL(char*, char*, my_table);
+#include "hashtbl.h"
+HASHTBL(char*, char*, my_table);
 
-    int foo()
-    {
-        s_my_table *t;
-        //table, size, hash, cmp, free function
-        HASHTBL_INIT(t, 10, hash_string, cmp_string, NULL);
-        //table, value, key
-        HASHTBL_SET(t, "foo", "bar");
-        int changed;
-        char *ret;
-        //table, key, res, bool
-        HASHTBL_GET(t, "bar", ret, changed)
-        if (changed)
-            printf("%s = %s\n", bar, ret);
-        HASHTBL_DEL(t, "bar");
-        HASHTBL_FREE(t);
-    }
+int foo()
+{
+    s_my_table *t;
+    //table, size, hash, cmp, free function
+    HASHTBL_INIT(t, 10, hash_string, cmp_string, NULL);
+    //table, value, key
+    HASHTBL_SET(t, "foo", "bar");
+    int changed;
+    char *ret;
+    //table, key, res, bool
+    HASHTBL_GET(t, "bar", ret, changed)
+    if (changed)
+        printf("%s = %s\n", bar, ret);
+    HASHTBL_DEL(t, "bar");
+    HASHTBL_FREE(t);
+}
 \endcode
