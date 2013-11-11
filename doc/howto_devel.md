@@ -22,7 +22,7 @@ end in `.test`.
 Hash Table
 ----------
 
-    `#include "hashtbl.h"
+    #include "hashtbl.h"
     HASHTBL(char*, char*, my_table);
 
     int foo()
@@ -40,4 +40,4 @@ Hash Table
             printf("%s = %s\n", bar, ret);
         HASHTBL_DEL(t, "bar");
         HASHTBL_FREE(t);
-    }`
+    }
