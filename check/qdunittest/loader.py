@@ -26,10 +26,10 @@ class QDTestLoader(unittest.TestLoader):
         with open(os.path.join(directory, test_filename)) as f:
             test = eval(f.read())
 
-            test_method_type = test.get('type',
+            test_type = test.get('type',
                     'lexer' if 'lexer' in directory else '42sh')
-            test_method_func = self.test_methods[test_method_type]
-            test_method = test_method_func(test, self.timeout)
+            test_func = self.test_methods[test_type]
+            test_class, test_method = test_func(test, self.timeout)
 
             category = os.path.basename(directory)
             test_class_name = "Test{}{}".format(
@@ -41,14 +41,13 @@ class QDTestLoader(unittest.TestLoader):
             # We create the method here to give it the right name
             test_class_methods = {test_method_name: test_method}
             test_case_class = type(test_class_name,
-                    (QDTestCase, ),
+                    (test_class, ),
                     test_class_methods,)
-            test_description = test.get('description', "A test")
 
             return test_case_class(methodName=test_method_name,
                     category=category,
                     test_name=test_filename.replace(".test", ""),
-                    description=test_description)
+                    test=test)
 
     def _load_test_suite(self, directory, filenames):
         """Return a TestSuite for the directory ``directory``."""

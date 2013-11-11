@@ -3,12 +3,12 @@ import subprocess
 import unittest
 
 class QDTestCase(unittest.TestCase):
-    def __init__(self, category, test_name, description, *args, **kwargs):
+    def __init__(self, category, test_name, test, *args,
+            **kwargs):
         super().__init__(*args, **kwargs)
         self.category = category
         self.test_name = test_name
-        self.description = description
-        self.shell_name = "../42sh"
+        self.test = test
 
     def __str__(self):
         return "{}/{}".format(self.category, self.test_name)
@@ -36,32 +36,48 @@ class QDTestCase(unittest.TestCase):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
 
-    def start_shell(self, args):
-        return self.start_program([self.shell_name] + args)
+class QDTestCaseShell(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[args: {}]\nstdin: {}".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('args', []),
+                self.test.get('stdin', "None"),
+            )
 
 def new_test_run_42sh(test, gtimeout):
     def test_42sh(subself):
         timeout = test.get('timeout', gtimeout)
 
         shell_args = test.get('args', [])
-        shell = subself.start_shell(shell_args)
+        shell = subself.start_shell(["../42sh"] + shell_args)
 
         stdin_buf = test.get('stdin', None)
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
 
         if 'stdout' in test:
-            subself.assertMultiLineEqual(stdoutdata.decode(), test['stdout'],
+            subself.assertMultiLineEqual(test['stdout'], stdoutdata.decode(),
                              "stdout differ")
         if 'stderr' in test:
-            subself.assertMultiLineEqual(stderrdata.decode(), test['stderr'],
+            subself.assertMultiLineEqual(test['stderr'], stderrdata.decode(),
                              "stderr differ")
         else:
-            subself.assertMultiLineEqual(stderrdata.decode(), b"", "stderr differ")
+            subself.assertMultiLineEqual(b"", stderrdata.decode(),
+                    "stderr differ")
 
         retval = test.get('retval', 0)
         subself.assertEqual(shell.returncode, retval, "return value differ")
 
-    return test_42sh
+    return QDTestCaseShell, test_42sh
+
+class QDTestCaseLexer(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[input: {}] [lexer: {}]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('input', "None"),
+                self.test.get('lexer', "None"),
+            )
 
 def new_test_run_lexer(test, gtimeout):
     def test_lexer(subself):
@@ -69,15 +85,15 @@ def new_test_run_lexer(test, gtimeout):
         input_string = test.get('input', "")
         lexer_commands = test.get('lexer', "")
 
-        lexer = subself.start_program(["./test_lexer",
-            input_string, lexer_commands])
+        lexer = subself.start_program(["./test_lexer", input_string,
+            lexer_commands])
         stdoutdata, stderrdata = lexer.communicate(b"", timeout)
 
         if 'output' in test:
-            subself.assertMultiLineEqual(stdoutdata.decode(), test['output'],
+            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
                              "stdout differ")
 
         retval = test.get('retval', 0)
-        subself.assertEqual(lexer.returncode, retval, "return value differ")
+        subself.assertEqual(retval, lexer.returncode, "return value differ")
 
-    return test_lexer
+    return QDTestCaseLexer, test_lexer

@@ -27,7 +27,7 @@ class QDTestRunner:
     occur, and a summary of the results at the end of the test run.
     """
 
-    def __init__(self, stream=None, descriptions=True, verbosity=1,
+    def __init__(self, stream=None, descriptions=False, verbosity=1,
             final=False, number=True):
         if stream is None:
             stream = sys.stderr

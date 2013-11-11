@@ -16,9 +16,12 @@ class QDTestResult(unittest.TestResult):
         self.showAll = verbosity > 1
         self.descriptions = descriptions
 
-    def getDescription(self, test):
+    def getShortDescription(self, test):
+        return str(test)
+
+    def getLongDescription(self, test):
         doc_first_line = test.shortDescription()
-        if self.descriptions and doc_first_line:
+        if doc_first_line:
             return '\n'.join((str(test), doc_first_line))
         else:
             return str(test)
@@ -26,7 +29,7 @@ class QDTestResult(unittest.TestResult):
     def startTest(self, test):
         super().startTest(test)
         if self.showAll:
-            self.stream.write(self.getDescription(test))
+            self.stream.write(self.getShortDescription(test))
             self.stream.write(" ... ")
             self.stream.flush()
 
@@ -69,9 +72,10 @@ class QDTestResult(unittest.TestResult):
     def printErrorList(self, flavour, errors):
         for test, err in errors:
             self.stream.writeln(self.separator1)
-            self.stream.writeln("%s: %s" % (flavour, self.getDescription(test)))
+            self.stream.writeln("{}: {}".format(flavour,
+                self.getLongDescription(test)))
             self.stream.writeln(self.separator2)
-            self.stream.writeln("%s" % err)
+            self.stream.writeln("{}".format(err))
 
     def print_summary(self, number=True, show_errors=True):
         if show_errors:
