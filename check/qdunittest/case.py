@@ -20,7 +20,7 @@ class QDTestCase(unittest.TestCase):
         return os.path.join(self.category, self.test_name)
 
     def start_program(self, args):
-        return subprocess.Popen(["valgrind",
+        command = ["valgrind",
             "--leak-check=full",
             "--show-reachable=yes",
             "--track-fds=yes",
@@ -31,7 +31,15 @@ class QDTestCase(unittest.TestCase):
             "--free-fill=0x43",
             "--xml=yes",
             "--xml-file={}.memcheck".format(self.get_test_path()),
-            "--log-file={}.log".format(self.get_test_path())] + args,
+            "--log-file={}.log".format(self.get_test_path())]
+
+        suppressions = os.getenv("VALGRIND_SUPP")
+        if suppressions:
+            command.append(suppressions)
+
+        command.extend(args)
+
+        return subprocess.Popen(command,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
