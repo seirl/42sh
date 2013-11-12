@@ -9,6 +9,7 @@ include_directories(src)
 include_directories(src/utils)
 include_directories(src/options)
 include_directories(src/lexer)
+include_directories(src/readline)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -45,6 +46,11 @@ add_library(options OBJECT
     src/options/shopt.c
 )
 
+add_library(readline OBJECT
+    src/readline/readline.c
+    src/readline/characters.c
+)
+
 set(cfiles
     src/main.c
     src/utils/log.c
@@ -58,6 +64,7 @@ add_executable(42sh
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:readline>
 )
 
 MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
