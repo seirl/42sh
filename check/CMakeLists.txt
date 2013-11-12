@@ -7,4 +7,5 @@ add_executable(test_lexer
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:readline>
 )
