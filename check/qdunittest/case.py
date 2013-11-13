@@ -19,22 +19,25 @@ class QDTestCase(unittest.TestCase):
     def get_test_path(self):
         return os.path.join(self.category, self.test_name)
 
-    def start_program(self, args):
-        command = ["valgrind",
-            "--leak-check=full",
-            "--show-reachable=yes",
-            "--track-fds=yes",
-            "--read-var-info=yes",
-            "--track-origins=yes",
-            "--partial-loads-ok=yes",
-            "--malloc-fill=0x42",
-            "--free-fill=0x43",
-            "--xml=yes",
-            "--xml-file={}.memcheck".format(self.get_test_path()),
-            "--log-file={}.log".format(self.get_test_path())]
+    def start_program(self, args, with_valgrind=True):
+        if with_valgrind:
+            command = ["valgrind",
+                "--leak-check=full",
+                "--show-reachable=yes",
+                "--track-fds=yes",
+                "--read-var-info=yes",
+                "--track-origins=yes",
+                "--partial-loads-ok=yes",
+                "--malloc-fill=0x42",
+                "--free-fill=0x43",
+                "--xml=yes",
+                "--xml-file={}.memcheck".format(self.get_test_path()),
+                "--log-file={}.log".format(self.get_test_path())]
+        else:
+            command = []
 
         suppressions = os.getenv("VALGRIND_SUPP")
-        if suppressions:
+        if suppressions and with_valgrind:
             command.append(suppressions)
 
         command.extend(args)
@@ -53,12 +56,14 @@ class QDTestCaseShell(QDTestCase):
                 self.test.get('stdin', "None"),
             )
 
-def new_test_run_42sh(test, gtimeout):
+def new_test_run_42sh(test, options):
     def test_42sh(subself):
-        timeout = test.get('timeout', gtimeout)
+        timeout = test.get('timeout', options.timeout)
 
         shell_args = test.get('args', [])
-        shell = subself.start_shell(["../42sh"] + shell_args)
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+        shell = subself.start_shell(["../42sh"] + shell_args,
+                with_valgrind=with_valgrind)
 
         stdin_buf = test.get('stdin', None)
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
@@ -87,15 +92,17 @@ class QDTestCaseLexer(QDTestCase):
                 self.test.get('lexer', "None"),
             )
 
-def new_test_run_lexer(test, gtimeout):
+def new_test_run_lexer(test, options):
     def test_lexer(subself):
-        timeout = test.get('timeout', gtimeout)
+        timeout = test.get('timeout', options.timeout)
         input_string = test.get('input', "")
         lexer_commands = test.get('lexer', "")
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
 
         lexer = subself.start_program(["./test_lexer", input_string,
-            lexer_commands])
-        stdoutdata, stderrdata = lexer.communicate(b"", timeout)
+            lexer_commands],
+            with_valgrind=with_valgrind)
+        stdoutdata, stderrdata = lexer.communicate(b"", options.timeout)
 
         if 'output' in test:
             subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),

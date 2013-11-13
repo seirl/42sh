@@ -10,16 +10,22 @@ class QDTestResult(unittest.TestResult):
     separator1 = '=' * 70
     separator2 = '-' * 70
 
-    def __init__(self, stream, descriptions, verbosity):
-        super().__init__(stream, descriptions, verbosity)
+    def __init__(self, options, stream):
+        super().__init__()
+        self.verbose = (options.verbose
+                and not options.final
+                and not options.categories)
         self.stream = stream
-        self.showAll = verbosity > 1
-        self.descriptions = descriptions
 
     def getShortDescription(self, test):
         return str(test)
 
     def getLongDescription(self, test):
+        # qdtestcase
+        if hasattr(test, 'get_test_path'):
+            return '\n'.join((test.get_test_path(), str(test)))
+
+        # unittest standard tests
         doc_first_line = test.shortDescription()
         if doc_first_line:
             return '\n'.join((str(test), doc_first_line))
@@ -28,14 +34,14 @@ class QDTestResult(unittest.TestResult):
 
     def startTest(self, test):
         super().startTest(test)
-        if self.showAll:
+        if self.verbose:
             self.stream.write(self.getShortDescription(test))
             self.stream.write(" ... ")
             self.stream.flush()
 
     def addSuccess(self, test):
         super().addSuccess(test)
-        if self.showAll:
+        if self.verbose:
             if self.stream.isatty():
                 self.stream.writeln(colorize("ok", fg="green"))
             else:
@@ -43,7 +49,7 @@ class QDTestResult(unittest.TestResult):
 
     def addError(self, test, err):
         super().addError(test, err)
-        if self.showAll:
+        if self.verbose:
             if self.stream.isatty():
                 self.stream.writeln(colorize("ERROR", bg="white", fg="red"))
             else:
@@ -51,14 +57,14 @@ class QDTestResult(unittest.TestResult):
 
     def addFailure(self, test, err):
         super().addFailure(test, err)
-        if self.showAll:
+        if self.verbose:
             if self.stream.isatty():
                 self.stream.writeln(colorize("FAIL", fg="red"))
             else:
                 self.stream.writeln("FAIL")
 
     def printErrors(self):
-        if self.showAll:
+        if self.verbose:
             self.stream.writeln()
 
         error = (colorize("ERROR", fg="red") if
@@ -87,7 +93,11 @@ class QDTestResult(unittest.TestResult):
                     self.testsRun - (len(self.failures) + len(self.errors)),
                     self.testsRun))
         else:
-            rate = 100 - len(self.failures + self.errors) / self.testsRun * 100
-            rate_str = colorize("{:.0f}".format(rate),
-                    fg="green" if rate == 100 else "red")
-            self.stream.writeln( "Success: {}%".format( rate_str))
+            try:
+                rate = (100 - len(self.failures + self.errors) / self.testsRun
+                        * 100)
+                rate_str = colorize("{:.0f}".format(rate),
+                        fg="green" if rate == 100 else "red")
+                self.stream.writeln( "Success: {}%".format( rate_str))
+            except ZeroDivisionError:
+                self.stream.writeln("No test run.")

@@ -27,21 +27,18 @@ class QDTestRunner:
     occur, and a summary of the results at the end of the test run.
     """
 
-    def __init__(self, stream=None, descriptions=False, verbosity=1,
-            final=False, number=True):
-        if stream is None:
-            stream = sys.stderr
-        self.stream = _WritelnDecorator(stream)
-        self.descriptions = descriptions
-        self.verbosity = verbosity if not final else 0
-        self.final = final
-        self.number = number
+    def __init__(self, options):
+        self.stream = _WritelnDecorator(sys.stderr)
+        self.final = options.final
+        self.number = options.number
 
-    def _makeResult(self):
-        return QDTestResult(self.stream, self.descriptions, self.verbosity)
+        self.options = options
+
+    def _make_result(self):
+        return QDTestResult(self.options, self.stream)
 
     def run_single(self, test):
-        result = self._makeResult()
+        result = self._make_result()
         test(result)
         result.print_summary()
         return result
@@ -53,13 +50,15 @@ class QDTestRunner:
 
         # No tests, return dummy result
         if len(suite._tests) == 0:
-            return self._makeResult()
+            return self._make_result()
 
         for subtest in suite._tests:
             if not self.final:
                 if hasattr(subtest, "category"):
                     self.stream.writeln("\nCategory: " +
-                            colorize(subtest.category, fg="blue") + "\n")
+                            colorize(subtest.category, fg="blue"))
+                    if not self.options.categories:
+                        self.stream.write("\n")
                 else:
                     try:
                         category = subtest._tests[0]._tests[0].__class__.__name__
@@ -67,7 +66,7 @@ class QDTestRunner:
                                 colorize(category, fg="blue") + "\n")
                     except:
                         pass
-            result = self._makeResult()
+            result = self._make_result()
             subtest(result)
             if not self.final:
                 result.print_summary(self.number)
@@ -76,12 +75,12 @@ class QDTestRunner:
             errors.extend(result.errors)
             tests_run = result.testsRun
 
-            result = self._makeResult()
+            result = self._make_result()
 
         if not self.final:
             self.stream.write("\n")
         self.stream.write("Final results: ")
-        result = self._makeResult()
+        result = self._make_result()
         result.failures = failures
         result.errors = errors
         result.testsRun = tests_run

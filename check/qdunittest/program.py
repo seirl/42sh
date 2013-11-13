@@ -23,11 +23,7 @@ class TestProgram(unittest.TestProgram):
         """Store options in instance attributes."""
         super()._setAttributesFromOptions(options)
         self.verbosity = 1 if options.categories else self.verbosity
-        self.select = options.select
-        self.final = options.final
-        self.number = options.number
-        self.timeout = options.timeout
-        self.all = options.all
+        self.options = options
 
     def _getOptParser(self):
         """Setup and run option parser."""
@@ -52,15 +48,36 @@ class TestProgram(unittest.TestProgram):
         parser.add_option("-a", "--all", action="store_true", default=True,
             help="Execute the test suite on all categories.")
 
-        parser.add_option("-t", "--timeout", default=None, type=float,
+        parser.add_option("-t", "--timeout", default=2.0, type=float,
             help="General timeout in seconds for each test.")
+
+        parser.add_option("-m", "--without-valgrind", default=False,
+            action="store_true",
+            help="Disable running tests under valgrind (memcheck).")
 
         return parser
 
-    def _do_discovery(self, *args, **kwargs):
-        # Monkey patch to add our testLoader
-        self.testLoader = QDTestLoader(select=self.select, timeout=self.timeout)
-        super()._do_discovery(*args, **kwargs)
+    def _do_discovery(self, argv, *args, **kwargs):
+        # handle command line args for test discovery
+        self.progName = '%s discover' % self.progName
+        parser = self._getOptParser()
+        self._addDiscoveryOptions(parser)
+
+        options, args = parser.parse_args(argv)
+        if len(args) > 3:
+            self.usageExit()
+
+        for name, value in zip(('start', 'pattern', 'top'), args):
+            setattr(options, name, value)
+
+        self._setAttributesFromOptions(options)
+
+        start_dir = options.start
+        pattern = options.pattern
+        top_level_dir = options.top
+
+        loader = QDTestLoader(options)
+        self.test = loader.discover(start_dir, pattern, top_level_dir)
 
     def _addDiscoveryOptions(self, parser):
         """Change -t option to -T"""
@@ -75,14 +92,11 @@ class TestProgram(unittest.TestProgram):
 
     def createTests(self):
         # Monkey patch to add our testLoader
-        self.testLoader = QDTestLoader(select=self.select,
-                timetout=self.timeout)
+        self.testLoader = QDTestLoader(options=self.options)
         super().createTests()
 
     def runTests(self):
-        self.testRunner = QDTestRunner(verbosity=self.verbosity,
-                final=self.final,
-                number=self.number)
+        self.testRunner = QDTestRunner(options=self.options)
         super().runTests()
 
 

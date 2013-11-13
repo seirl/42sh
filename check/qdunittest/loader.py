@@ -15,10 +15,9 @@ class QDTestLoader(unittest.TestLoader):
             '42sh': new_test_run_42sh,
             }
 
-    def __init__(self, select, timeout, *args, **kwargs):
+    def __init__(self, options, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.select = select
-        self.timeout = timeout
+        self.options = options
 
     def _load_test_case(self, directory, test_filename):
         """Return a TestCase generated from the file test_file, expected to
@@ -29,7 +28,7 @@ class QDTestLoader(unittest.TestLoader):
             test_type = test.get('type',
                     'lexer' if 'lexer' in directory else '42sh')
             test_func = self.test_methods[test_type]
-            test_class, test_method = test_func(test, self.timeout)
+            test_class, test_method = test_func(test, self.options)
 
             category = os.path.basename(directory)
             test_class_name = "Test{}{}".format(
@@ -46,7 +45,7 @@ class QDTestLoader(unittest.TestLoader):
 
             return test_case_class(methodName=test_method_name,
                     category=category,
-                    test_name=test_filename.replace(".test", ""),
+                    test_name=test_filename,
                     test=test)
 
     def _load_test_suite(self, directory, filenames):
@@ -66,18 +65,19 @@ class QDTestLoader(unittest.TestLoader):
 
     def discover(self, start_dir, pattern, top_level_dir):
         """Add discovery of test from files ending with .test. Filter
-        categories self.select is != None.
+        categories if select is != None.
         """
 
         # Discover python scripts
-        if not self.select:
+        if not self.options.select:
             test = super().discover(start_dir, pattern, top_level_dir)
         else:
             test = unittest.TestSuite()
         for dirpath, dirnames, filenames in os.walk(start_dir):
             directory = os.path.basename(dirpath)
-            if self.select and directory != self.select:
+            if self.options.select and directory != self.options.select:
                 continue
+            filenames.sort()
             test_suite = self._load_test_suite(directory, filenames)
             if test_suite:
                 test.addTest(test_suite)
