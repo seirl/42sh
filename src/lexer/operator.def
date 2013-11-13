@@ -1,5 +1,8 @@
+X(T_AND, "&")
+X(T_PIPE, "|")
 X(T_AND_IF, "&&")
 X(T_OR_IF, "||")
+X(T_SEMI, ";")
 X(T_DSEMI, ";;")
 X(T_DLESS, "<<")
 X(T_DGREAT, ">>")

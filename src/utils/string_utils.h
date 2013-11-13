@@ -31,6 +31,8 @@ void string_ungetc(s_string *s);
 void string_rewind(s_string *s);
 char string_topc(s_string *s);
 
+void string_del_from_end(s_string *str, size_t n);
+
 void string_eat_spaces(s_string *s);
 void string_replace(s_string *s, char *pattern, char *rep);
 

@@ -1,9 +1,14 @@
 #include "char_utils.h"
 
+int is_operator(char c)
+{
+    return (c == '&' || c == '|' || c == ';' || c == '<' || c == '>'
+           || c == '(' || c == ')');
+}
+
 int is_delimiter(char c)
 {
-    return (c == 0 || c == ' ' || c == '&' || c == '|' || c == ';' || c == '<'
-           || c == '>' || c == '(' || c == ')');
+    return (c == 0 || c == ' ' || is_operator(c));
 }
 
 int is_quote(char c)

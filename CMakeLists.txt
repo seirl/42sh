@@ -27,6 +27,7 @@ add_library(string OBJECT
     src/utils/string_add.c
     src/utils/string_cmp.c
     src/utils/string_create.c
+    src/utils/string_delete.c
     src/utils/string_read.c
     src/utils/string_replace.c
     src/utils/string_update.c
