@@ -19,6 +19,10 @@ add_library(hashtbl OBJECT
     src/utils/hashtbl.c
 )
 
+add_library(log OBJECT
+    src/utils/log.c
+)
+
 add_library(string OBJECT
     src/utils/string_add.c
     src/utils/string_cmp.c
@@ -53,7 +57,6 @@ add_library(readline OBJECT
 
 set(cfiles
     src/main.c
-    src/utils/log.c
     src/sighandler.c
 )
 
@@ -61,6 +64,7 @@ add_executable(42sh
     ${cfiles}
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:options>
+    $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:hashtbl>

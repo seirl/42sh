@@ -1,3 +1,4 @@
+#include "log.h"
 #include "smalloc.h"
 
 static u_smalloc_bucket **get_bucket()
@@ -100,7 +101,13 @@ void sfree(void *ptr)
     char *char_ptr = ptr;
     ptr = char_ptr - sizeof (u_smalloc_bucket);
     u_smalloc_bucket *meta = ptr;
-    free(get_remove(meta, meta));
+    void *free_ptr = get_remove(meta, meta);
+    if (free_ptr == NULL)
+    {
+        LOG(ERROR, "Double free or malloc/sfree\n", NULL);
+        return;
+    }
+    free(free_ptr);
 }
 
 void smalloc_clean()
@@ -117,6 +124,6 @@ void smalloc_clean()
             buckets[i] = tmp;
         }
     }
-#endif /* !ON_A_FREE_ON_A_TOUT_COMPRIS */
+#endif /* !CONCHITA */
     free(buckets);
 }

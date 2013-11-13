@@ -2,6 +2,7 @@
 # define MACROS_H
 
 # include <stdio.h>
+# include <assert.h>
 
 # define VERSION "0.5"
 # define PROGNAME "42sh"

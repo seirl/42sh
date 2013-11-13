@@ -1,6 +1,11 @@
 #ifndef LOG_H
 # define LOG_H
 
+# define COLOR_BLUE    "\x1b[34m"
+# define COLOR_RED     "\x1b[31m"
+# define COLOR_YELLOW  "\x1b[33m"
+# define COLOR_RESET   "\x1b[0m"
+
 enum log_level
 {
     INFO,
@@ -16,10 +21,7 @@ struct debug_info
 };
 typedef struct debug_info s_debug_info;
 
-# define COLOR_BLUE    "\x1b[34m"
-# define COLOR_RED     "\x1b[31m"
-# define COLOR_YELLOW  "\x1b[33m"
-# define COLOR_RESET   "\x1b[0m"
+void my_log(e_log_level level, s_debug_info debug, char *fmt, ...);
 
 # define LOG(Level, fmt, ...)                     \
     do {                                          \
@@ -30,7 +32,5 @@ typedef struct debug_info s_debug_info;
         };                                        \
         my_log(Level, debug, fmt, __VA_ARGS__);   \
     } while(0)
-
-void my_log(e_log_level level, s_debug_info debug, char *fmt, ...);
 
 #endif
