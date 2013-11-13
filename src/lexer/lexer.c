@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "lexer.h"
 #include "lexer_private.h"
 #include "char_utils.h"
@@ -33,7 +34,7 @@ static int lex_comment(s_lexer *lexer)
         char c;
         while ((c = string_getc(lexer->working_buffer)) != '\n')
         {
-            if (c == 0 && lex_fill_buf(lexer))
+            if (c == 0 && lex_fill_buf(lexer, 0))
                 return 1;
         }
         return 1;
@@ -77,22 +78,13 @@ static int lex_io_number(s_lexer *lexer)
 // FIXME: correct word definition
 s_token *lex_word(s_lexer *lexer)
 {
-    char c;
-    while ((c = string_getc(lexer->working_buffer)) != 0)
-    {
-        if (is_quote(c))
-        {
-            
-        }
-    }
     return lex_release_token(lexer);
 }
 
-#include <stdio.h>
 s_token *lex_token(s_lexer *lexer)
 {
     if (lexer->working_buffer->len == 0)
-        lex_fill_buf(lexer);
+        lex_fill_buf(lexer, 1);
 
     // 2.3 1. If the end of input is recognized, the current token shall be
     // delimited. If there is no current token, the end-of-input indicator

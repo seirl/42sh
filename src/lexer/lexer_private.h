@@ -76,6 +76,6 @@ int lex_double_quotes(s_lexer *lexer);
 */
 s_token *lex_release_token(s_lexer *lexer);
 
-int lex_fill_buf(s_lexer *lexer);
+int lex_fill_buf(s_lexer *lexer, int eat_spaces);
 
 #endif /* !LEXER_PRIVATE_H */

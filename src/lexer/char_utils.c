@@ -13,7 +13,7 @@ int is_quote(char c)
     if (c == '\"')
         return 2;
     if (c == '`')
-        return 3;
+        return 4;
     return 0;
 }
 
