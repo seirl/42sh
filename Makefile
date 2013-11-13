@@ -11,6 +11,9 @@ clean:
 check: all
 	cd build/check && ./run_tests.py
 
+fastcheck: all
+	cd build/check && ./run_tests.py -m
+
 norm:
 	tools/norm.sh src/
 
