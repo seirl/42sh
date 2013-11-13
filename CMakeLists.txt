@@ -60,7 +60,7 @@ set(cfiles
     src/sighandler.c
 )
 
-add_executable(42sh
+add_executable(../42sh
     ${cfiles}
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:options>
