@@ -3,7 +3,7 @@
 all:
 	mkdir -p build
 	cd build && cmake ..
-	$(MAKE) -C build
+	$(MAKE) -s -C build
 
 clean:
 	$(RM) -r build
