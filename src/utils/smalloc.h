@@ -7,7 +7,7 @@
 union smalloc_bucket
 {
     union smalloc_bucket *next;
-    size_t align[2];
+    size_t padding[1];
 };
 typedef union smalloc_bucket u_smalloc_bucket;
 

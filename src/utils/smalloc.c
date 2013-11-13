@@ -15,14 +15,15 @@ static size_t ptr_hash(void *ptr)
     return ((ptr_char - ptr_null) / 4) % N_BUCKETS;
 }
 
-static u_smalloc_bucket *get_remove(u_smalloc_bucket *meta)
+static u_smalloc_bucket *get_remove(u_smalloc_bucket *hash_ptr,
+        u_smalloc_bucket *meta)
 {
-    size_t hash = ptr_hash(meta);
+    size_t hash = ptr_hash(hash_ptr);
     u_smalloc_bucket *tmp = get_bucket()[hash];
     u_smalloc_bucket *prev = NULL;
     while (tmp != NULL)
     {
-        if (tmp == meta)
+        if (tmp == hash_ptr)
         {
             if (prev)
                 prev->next = meta->next;
@@ -57,7 +58,20 @@ void *scalloc(size_t nmemb, size_t size)
     return ret;
 }
 
-#include <stdio.h>
+static void *get_header(void *ptr)
+{
+    char *char_ptr = ptr;
+    char_ptr -= sizeof (u_smalloc_bucket);
+    return char_ptr;
+}
+
+static void *get_data(void *ptr)
+{
+    char *char_ptr = ptr;
+    char_ptr += sizeof (u_smalloc_bucket);
+    return char_ptr;
+}
+
 void *srealloc(void *ptr, size_t size)
 {
     if (ptr == NULL)
@@ -67,24 +81,18 @@ void *srealloc(void *ptr, size_t size)
         sfree(ptr);
         return NULL;
     }
-    char *char_ptr = ptr;
-    ptr = char_ptr - sizeof (u_smalloc_bucket);
-    u_smalloc_bucket *meta = ptr;
-    u_smalloc_bucket *new_ptr = realloc(meta, size +
+    u_smalloc_bucket *header = get_header(ptr);
+    u_smalloc_bucket *new_ptr = realloc(header, size +
             sizeof (u_smalloc_bucket));
-    if (new_ptr != meta)
-    {
-        u_smalloc_bucket *old_ptr = get_remove(meta);
-        sfree(old_ptr);
-        int hash = ptr_hash(new_ptr);
-        u_smalloc_bucket **buckets = get_bucket();
-        new_ptr->next = buckets[hash];
-        buckets[hash] = new_ptr;
-        ptr = new_ptr;
-        char_ptr = ptr;
-        return char_ptr + sizeof (u_smalloc_bucket);
-    }
-    return char_ptr;
+    if (new_ptr == header)
+        return ptr;
+
+    get_remove(header, new_ptr);
+    int hash = ptr_hash(new_ptr);
+    u_smalloc_bucket **buckets = get_bucket();
+    new_ptr->next = buckets[hash];
+    buckets[hash] = new_ptr;
+    return get_data(new_ptr);
 }
 
 void sfree(void *ptr)
@@ -92,7 +100,7 @@ void sfree(void *ptr)
     char *char_ptr = ptr;
     ptr = char_ptr - sizeof (u_smalloc_bucket);
     u_smalloc_bucket *meta = ptr;
-    free(get_remove(meta));
+    free(get_remove(meta, meta));
 }
 
 void smalloc_clean()
