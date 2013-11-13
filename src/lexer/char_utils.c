@@ -8,7 +8,7 @@ int is_operator(char c)
 
 int is_delimiter(char c)
 {
-    return (c == 0 || c == ' ' || is_operator(c));
+    return (c == 0 || c == ' ' || c == '\n' || is_operator(c));
 }
 
 int is_quote(char c)

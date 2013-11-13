@@ -55,7 +55,12 @@ int lex_fill_buf(s_lexer *lexer, int eat_spaces)
         if (is_delimiter(c) && prev != '\\' && quote == 0)
         {
             if (prev == 0)
-                return lex_fill_delimiter(lexer);
+            {
+                if (c == '\n')
+                    string_putc(lexer->working_buffer, lexer->getc(lexer));
+                else
+                    lex_fill_delimiter(lexer);
+            }
             break;
         }
         string_putc(lexer->working_buffer, lexer->getc(lexer));

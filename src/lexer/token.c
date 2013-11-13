@@ -4,11 +4,12 @@
 
 void token_print(s_token *tok)
 {
+    fprintf(stdout, "%s", tok->value.str->buf);
     do {
 #define X(Type, Str)                            \
     if (tok->type == Type)                      \
     {                                           \
-        fprintf(stdout, "%s ", Str);            \
+        fprintf(stdout, "\t%s", Str);           \
         break;                                  \
     }
 #include "misc.def"
@@ -16,8 +17,6 @@ void token_print(s_token *tok)
 #include "operator.def"
 #undef X
     } while (0);
-    if (tok->type == T_WORD)
-        fprintf(stdout, "with value: %s", tok->value.str->buf);
     fprintf(stdout, "\n");
 }
 
