@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(42sh)
 
-add_definitions(-DON_A_FREE_ON_A_TOUT_COMPRIS)
+add_definitions(-DCONCHITA)
 set(CMAKE_C_COMPILER "clang")
 set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3 -gdwarf-2")
 
