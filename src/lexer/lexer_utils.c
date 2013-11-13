@@ -30,13 +30,14 @@ int lex_fill_delimiter(s_lexer *lexer)
     do {
         c = lexer->topc(lexer);
         string_putc(lexer->working_buffer, c);
-        if (!is_valid_operator(lexer->working_buffer))
+        if (!is_valid_operator(lexer->working_buffer) || c == 0)
         {
             string_del_from_end(lexer->working_buffer, 1);
             return 0;
         }
         lexer->getc(lexer);
-    } while (1);
+    } while (c != 0);
+    return 0;
 }
 
 int lex_fill_buf(s_lexer *lexer, int eat_spaces)
