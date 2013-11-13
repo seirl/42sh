@@ -1,0 +1,9 @@
+{
+    "type": "lexer",
+    "desc": "Simple single quote",
+    "input": "'echo' ' foo\n'bar",
+    "output": """'echo'	WORD
+' foo\n'bar	WORD
+	EOF
+"""
+}

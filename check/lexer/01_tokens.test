@@ -1,8 +1,9 @@
 {
     "type": "lexer",
     "desc": "Test WORD token",
-    "input": "A",
-    "output": """A	WORD
+    "input": "echo foo",
+    "output": """echo	WORD
+foo	WORD
 	EOF
 """
 }

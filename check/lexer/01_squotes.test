@@ -1,8 +1,0 @@
-{
-    "type": "lexer",
-    "input": "'A' ' A A '",
-    "output": """WORD with value: 'A'
-WORD with value: ' A A '
-EOF 
-"""
-}
