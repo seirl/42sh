@@ -11,7 +11,7 @@ class QDTestCase(unittest.TestCase):
         self.test = test
 
     def __str__(self):
-        return "{}/{}".format(self.category, self.test_name)
+        return self.test.get("desc", self.test_name)
 
     def get_test_name(self):
         return self.category + '_' + self.test_name
