@@ -57,6 +57,7 @@ void *scalloc(size_t nmemb, size_t size)
     return ret;
 }
 
+#include <stdio.h>
 void *srealloc(void *ptr, size_t size)
 {
     if (ptr == NULL)
@@ -73,12 +74,15 @@ void *srealloc(void *ptr, size_t size)
             sizeof (u_smalloc_bucket));
     if (new_ptr != meta)
     {
-        get_remove(meta);
+        u_smalloc_bucket *old_ptr = get_remove(meta);
+        sfree(old_ptr);
         int hash = ptr_hash(new_ptr);
         u_smalloc_bucket **buckets = get_bucket();
         new_ptr->next = buckets[hash];
         buckets[hash] = new_ptr;
-        return new_ptr + sizeof (u_smalloc_bucket);
+        ptr = new_ptr;
+        char_ptr = ptr;
+        return char_ptr + sizeof (u_smalloc_bucket);
     }
     return char_ptr;
 }
