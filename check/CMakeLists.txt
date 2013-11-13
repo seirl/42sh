@@ -1,4 +1,5 @@
 file(COPY . DESTINATION . FILES_MATCHING PATTERN "*.test")
+file(COPY . DESTINATION . FILES_MATCHING PATTERN "test_*.py")
 file(COPY qdunittest run_tests.py DESTINATION .)
 
 add_executable(test_lexer
