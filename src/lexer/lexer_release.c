@@ -26,12 +26,9 @@ s_token *lex_release_token(s_lexer *lexer)
         NULL
     };
 
-    if (lexer->token_type != T_WORD)
-        type = lexer->token_type;
-    else
-        value.str = string_moult(&(lexer->working_buffer));
+    type = lexer->token_type;
+    value.str = string_moult(&(lexer->working_buffer));
     tok = token_create(type, value, lexer->location);
-    tok->blank_preceed = lexer->blank;
 
     lexer_reset(lexer);
 

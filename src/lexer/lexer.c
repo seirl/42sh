@@ -4,7 +4,7 @@
 
 static int lex_eof(s_lexer *lexer)
 {
-    char c = lex_topc(lexer);
+    char c = string_topc(lexer->working_buffer);
     if (c == '\0')
     {
         // Don't eat the EOF
@@ -16,9 +16,8 @@ static int lex_eof(s_lexer *lexer)
 
 static int lex_newline(s_lexer *lexer)
 {
-    if (lex_topc(lexer) == '\n')
+    if (string_topc(lexer->working_buffer) == '\n')
     {
-        lex_eat(lexer);
         lexer->token_type = T_NEWLINE;
         location_next_line(&(lexer->location));
         return 1;
@@ -28,11 +27,14 @@ static int lex_newline(s_lexer *lexer)
 
 static int lex_comment(s_lexer *lexer)
 {
-    if (lex_topc(lexer) == '#')
+    if (string_topc(lexer->working_buffer) == '#')
     {
         char c;
-        while ((c = lex_topc(lexer)) && c != '\n')
-            lex_discard(lexer);
+        while ((c = string_getc(lexer->working_buffer)) != '\n')
+        {
+            if (c == 0 && lex_fill_buf(lexer))
+                return 1;
+        }
         return 1;
     }
     return 0;
@@ -71,50 +73,29 @@ static int lex_io_number(s_lexer *lexer)
     return 0;
 }
 
-/**
-** @brief Remove blanks from input stream.
-**
-** Set next token blank to 1 if a blank character preceeds it.
-**
-**  2.3 8. If the current character is an unquoted <blank>, any token
-**  containing the previous character is delimited and the current character
-**  shall be discarded.
-*/
-static void lex_blanks(s_lexer *lexer)
-{
-    if (lex_topc(lexer) == ' ')
-        lexer->blank = 1;
-    while (lex_topc(lexer) == ' ')
-        lex_discard(lexer);
-}
-
 // FIXME: correct word definition
 s_token *lex_word(s_lexer *lexer)
 {
-    char c;
-
-    while ((c = lex_topc(lexer)) != ' ' && c != 0)
-        lex_eat(lexer);
-
     return lex_release_token(lexer);
 }
 
+#include <stdio.h>
 s_token *lex_token(s_lexer *lexer)
 {
+    if (lexer->working_buffer->len == 0)
+        lex_fill_buf(lexer);
+
     // 2.3 1. If the end of input is recognized, the current token shall be
     // delimited. If there is no current token, the end-of-input indicator
     // shall be returned as the token.
     if (lex_eof(lexer))
         return lex_release_token(lexer);
 
-    // Blanks separates words and tokens.
-    lex_blanks(lexer);
-
     // 2.3 10. If the current character is a '#', it and all subsequent
     // characters up to, but excluding, the next <newline> shall be discarded
     // as a comment.  The <newline> that ends the line is not considered part
     // of the comment.
-    if (lex_comment(lexer))
+    if (0  && lex_comment(lexer))
         return lex_token(lexer);
 
     // 2.10.1 1. A <newline> shall be returned as the token identifier NEWLINE.
@@ -134,16 +115,6 @@ s_token *lex_token(s_lexer *lexer)
     // returned.
     if (lex_io_number(lexer))
         return lex_release_token(lexer);
-
-    if (lex_single_quotes(lexer))
-        return lex_release_token(lexer);
-
-    // FIXME: TO BE CONTINUED
-    // $( -> T_EXP_SUBSHELL_START
-    // ) -> T_EXP_SUBSHELL_END
-    // ${ -> T_EXP_VARIABLE_START
-    // } -> T_EXP_VARIABLE_END
-    // ...
 
     // 2.10.1 4.Otherwise, the token identifier TOKEN results.
     return lex_word(lexer);

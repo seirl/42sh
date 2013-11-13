@@ -17,8 +17,7 @@ void token_print(s_token *tok)
 #undef X
     } while (0);
     if (tok->type == T_WORD)
-        fprintf(stdout, "with value: %s",
-                string_nullterminated(tok->value.str));
+        fprintf(stdout, "with value: %s", tok->value.str->buf);
     fprintf(stdout, "\n");
 }
 

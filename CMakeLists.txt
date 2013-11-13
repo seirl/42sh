@@ -23,7 +23,7 @@ add_library(string OBJECT
     src/utils/string_add.c
     src/utils/string_cmp.c
     src/utils/string_create.c
-    src/utils/string_get.c
+    src/utils/string_read.c
     src/utils/string_replace.c
     src/utils/string_update.c
 )
@@ -32,9 +32,9 @@ add_library(lexer OBJECT
     src/lexer/lexer.c
     src/lexer/lexer_create.c
     src/lexer/lexer_delete.c
-    src/lexer/lexer_quoting.c
     src/lexer/lexer_release.c
     src/lexer/lexer_utils.c
+    src/lexer/char_utils.c
     src/lexer/token.c
     src/lexer/location.c
     src/lexer/alias.c
