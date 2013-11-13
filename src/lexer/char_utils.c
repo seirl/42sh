@@ -8,7 +8,13 @@ int is_delimiter(char c)
 
 int is_quote(char c)
 {
-    return c == '\'' || c == '\"' || c == '`';
+    if (c == '\'')
+        return 1;
+    if (c == '\"')
+        return 2;
+    if (c == '`')
+        return 3;
+    return 0;
 }
 
 int is_token_delimiter(char c)

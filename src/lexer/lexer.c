@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "lexer_private.h"
+#include "char_utils.h"
 #include "location.h"
 
 static int lex_eof(s_lexer *lexer)
@@ -76,6 +77,14 @@ static int lex_io_number(s_lexer *lexer)
 // FIXME: correct word definition
 s_token *lex_word(s_lexer *lexer)
 {
+    char c;
+    while ((c = string_getc(lexer->working_buffer)) != 0)
+    {
+        if (is_quote(c))
+        {
+            
+        }
+    }
     return lex_release_token(lexer);
 }
 
@@ -95,7 +104,7 @@ s_token *lex_token(s_lexer *lexer)
     // characters up to, but excluding, the next <newline> shall be discarded
     // as a comment.  The <newline> that ends the line is not considered part
     // of the comment.
-    if (0  && lex_comment(lexer))
+    if (lex_comment(lexer))
         return lex_token(lexer);
 
     // 2.10.1 1. A <newline> shall be returned as the token identifier NEWLINE.
