@@ -67,8 +67,7 @@ void *srealloc(void *ptr, size_t size)
         return NULL;
     }
     char *char_ptr = ptr;
-    char_ptr -= sizeof (u_smalloc_bucket);
-    ptr = char_ptr;
+    ptr = char_ptr - sizeof (u_smalloc_bucket);
     u_smalloc_bucket *meta = ptr;
     u_smalloc_bucket *new_ptr = realloc(meta, size +
             sizeof (u_smalloc_bucket));
@@ -81,7 +80,7 @@ void *srealloc(void *ptr, size_t size)
         buckets[hash] = new_ptr;
         return new_ptr + sizeof (u_smalloc_bucket);
     }
-    return ptr;
+    return char_ptr;
 }
 
 void sfree(void *ptr)
