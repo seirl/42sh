@@ -29,13 +29,12 @@ s_string *string_vcat(const char *s1, ...);
 char string_getc(s_string *s);
 void string_ungetc(s_string *s);
 void string_rewind(s_string *s);
-void string_eat_spaces(s_string *s);
-int string_eat_pattern(s_string *s, char *pattern);
+char string_topc(s_string *s);
 
+void string_eat_spaces(s_string *s);
 void string_replace(s_string *s, char *pattern, char *rep);
 
 int string_equal(const s_string *s, const char *pattern);
-
-char *string_nullterminated(s_string *s);
+int string_begin_with(const s_string *s, const char *pattern);
 
 #endif /* !STRING_BUF_H */

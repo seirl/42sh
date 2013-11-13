@@ -9,3 +9,13 @@ int string_equal(const s_string *s, const char *pattern)
 
     return pattern[i] == '\0';
 }
+
+int string_begin_with(const s_string *s, const char *pattern)
+{
+    for (int i = 0; pattern[i]; ++i)
+    {
+        if (pattern[i] != s->buf[i])
+            return 0;
+    }
+    return 1;
+}
