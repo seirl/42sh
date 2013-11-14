@@ -29,6 +29,13 @@ void lex_delete(s_lexer *lexer);
 s_token *lex_token(s_lexer *lex);
 
 /**
+** @brief Lex a token or a word.
+**
+** @return A copy of the next token.
+*/
+s_token *lex_look_token(s_lexer *lex);
+
+/**
 ** @brief Lex a word.
 **
 ** @return A word token.
