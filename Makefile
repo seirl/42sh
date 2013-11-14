@@ -14,6 +14,9 @@ check: all
 fastcheck: all
 	cd build/check && ./run_tests.py -m
 
+readlinecheck: all
+	cd build/check && ./run_readline_test "Test.$$ "
+
 norm:
 	tools/norm.sh src/
 
