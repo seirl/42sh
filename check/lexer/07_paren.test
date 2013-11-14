@@ -1,0 +1,13 @@
+{
+    "type": "lexer",
+    "desc": "Parenthesis with a quoted parenthesis",
+    "input": """(echo "foo)bar" 'foo)bar' foo\)bar)""",
+    "output": """(	T_LPAREN
+echo	T_WORD
+"foo)bar"	T_WORD
+'foo)bar'	T_WORD
+foo\)bar	T_WORD
+)	T_RPAREN
+	T_EOF
+"""
+}

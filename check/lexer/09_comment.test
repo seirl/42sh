@@ -1,0 +1,14 @@
+{
+    "type": "lexer",
+    "desc": "Comments end of line",
+    "input": """echo foo#echo\necho foo #comment\nls""",
+    "output": """echo	T_WORD
+foo#echo	T_WORD
+\n	T_NEWLINE
+echo	T_WORD
+foo	T_WORD
+#comment\n	T_NEWLINE
+ls	T_WORD
+	T_EOF
+"""
+}

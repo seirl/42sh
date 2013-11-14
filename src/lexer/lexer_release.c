@@ -13,6 +13,7 @@ static s_string *string_moult(s_string **s)
 static void lexer_reset(s_lexer *lexer)
 {
     lexer->token_type = T_WORD;
+    lexer->concat = 0;
     string_reset(lexer->working_buffer);
 }
 

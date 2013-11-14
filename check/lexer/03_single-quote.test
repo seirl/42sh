@@ -3,7 +3,8 @@
     "desc": "Simple single quote",
     "input": "'echo' ' foo\n'bar",
     "output": """'echo'	T_WORD
-' foo\n'bar	T_WORD
+' foo\n'	T_WORD
+bar	T_WORD
 	T_EOF
 """
 }

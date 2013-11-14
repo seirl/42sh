@@ -4,33 +4,41 @@
 
 #define EOF -1
 
-static void lex_eat_spaces(s_lexer *lexer)
+static int lex_eat_spaces(s_lexer *lexer)
 {
     char c;
+    int ret = 0;
     while ((c = lexer->topc(lexer)) == ' ')
+    {
+        ret = 1;
         lexer->getc(lexer);
+    }
+    return ret;
 }
 
 #include <stdio.h>
 #undef getc
 
-static int is_valid_operator(s_string *s)
+static int is_valid_operator(s_lexer *lexer, s_string *s)
 {
-#define X(Tok, Str)            \
-    if (!strcmp(s->buf, Str))  \
-        return 1;
+#define X(Tok, Str)                     \
+    if (!strcmp(s->buf, Str))           \
+    {                                   \
+        lexer->token_type = Tok;        \
+        return 1;                       \
+    }
 #include "operator.def"
 #undef X
     return 0;
 }
 
-int handle_operator(s_lexer *lexer)
+static int handle_operator(s_lexer *lexer)
 {
     char c;
     do {
         c = lexer->topc(lexer);
         string_putc(lexer->working_buffer, c);
-        if (!is_valid_operator(lexer->working_buffer) || c == 0)
+        if (!is_valid_operator(lexer, lexer->working_buffer) || c == 0)
         {
             string_del_from_end(lexer->working_buffer, 1);
             return 1;
@@ -44,9 +52,8 @@ static int is_quoted(s_lexer *lexer, char prev)
 {
     return prev == '\\' || lexer->quoted;
 }
-//TODO: until = {char, count}[], tant que count != + handle prev + handle is in
-//quote
-int fill_until(s_lexer *lexer, int include_last)
+
+static int fill_until(s_lexer *lexer, int include_last)
 {
     char c;
     char prev = 0;
@@ -77,21 +84,21 @@ int fill_until(s_lexer *lexer, int include_last)
     return c != 0;
 }
 
-int handle_quotes(s_lexer *lexer, char c, char prev)
+static int handle_quotes(s_lexer *lexer, char c, char prev)
 {
     if (prev == '\\')
-        return 1;
+        return 0;
     if (c == '\'' || c == '\"' || c == '`')
     {
         lexer->sur.end = c;
         lexer->sur.count = 1;
         string_putc(lexer->working_buffer, lexer->getc(lexer));
-        return fill_until(lexer, 0);
+        return fill_until(lexer, 1);
     }
-    return 1;
+    return 0;
 }
 
-int handle_dollar(s_lexer *lexer, char c, char prev)
+static int handle_dollar(s_lexer *lexer, char c, char prev)
 {
     if (prev == '\\')
         return 0;
@@ -99,17 +106,10 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
     {
         string_putc(lexer->working_buffer, lexer->getc(lexer));
         c = lexer->topc(lexer);
-        if (c == '(')
+        if (c == '(' || c == '{')
         {
-            lexer->sur.begin = '(';
-            lexer->sur.end = ')';
-            lexer->sur.count = 1;
-            fill_until(lexer, 1);
-        }
-        if (c == '{')
-        {
-            lexer->sur.begin = '{';
-            lexer->sur.end = '}';
+            lexer->sur.begin = c;
+            lexer->sur.end = (c == '(') ? ')' : '}';
             lexer->sur.count = 1;
             fill_until(lexer, 1);
         }
@@ -118,21 +118,40 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
     return 0;
 }
 
-int lex_fill_buf(s_lexer *lexer, int eat_spaces)
+static int handle_comment(s_lexer *lexer, char c, char prev)
 {
-    string_reset(lexer->working_buffer); //set to word ?
+    if (prev != 0)
+        return 0;
+    if (c == '#')
+    {
+        lexer->sur.begin = 0;
+        lexer->sur.end = '\n';
+        lexer->sur.count = 1;
+        fill_until(lexer, 1);
+        lexer->token_type = T_NEWLINE;
+        return 1;
+    }
+    return 0;
+}
+
+int lex_delimit_token(s_lexer *lexer)
+{
+    string_reset(lexer->working_buffer);
+    lexer->token_type = T_WORD;
     char prev = 0;
     char c;
 
-    if (lexer->sur.end)
-        return fill_until(lexer, 0);
+    //if (lexer->sur.end)
+    //    return fill_until(lexer, 0);
+    lexer->concat = !lex_eat_spaces(lexer);
 
-    if (eat_spaces)
-        lex_eat_spaces(lexer);
     do
     {
         c = lexer->topc(lexer);
-        handle_quotes(lexer, c, prev);
+        if (handle_comment(lexer, c, prev))
+            break;
+        if (handle_quotes(lexer, c, prev))
+            break;
         if (handle_dollar(lexer, c, prev))
             break;
         if (is_delimiter(c) && prev != '\\')
