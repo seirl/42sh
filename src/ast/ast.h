@@ -20,7 +20,7 @@ typedef struct ast_redirection s_ast_redirection;
 
 struct ast_cmd_prefix
 {
-    s_ast_assignement *assignement;
+    // TODO: s_ast_assignement *assignement;
     s_ast_redirection *redirection;
     struct ast_cmd_prefix *next;
 };
@@ -29,8 +29,9 @@ typedef struct ast_cmd_prefix s_ast_cmd_prefix;
 struct ast_simple_cmd
 {
     s_ast_cmd_prefix *prefixes;
-    s_ast_cmd_element *elements;
+    // TODO: s_ast_cmd_element *elements;
 };
+typedef struct ast_simple_cmd s_ast_simple_cmd;
 
 enum ctrl_structure
 {
@@ -68,25 +69,36 @@ struct ast_cmd
 };
 typedef struct ast_cmd s_ast_cmd;
 
+//! pipeline : ['!'] command ('|' ('\n')* command)*
 struct ast_pipeline
 {
     int inverted; /** ! cmd */
-    s_cmd *cmd;
+    s_ast_cmd *cmd;
     struct ast_pipeline *next; /** cmd | next */
 };
 typedef struct ast_pipeline s_ast_pipeline;
 
+enum ast_pipeline_and_or
+{
+    AST_AND, /** && */
+    AST_OR, /** || */
+};
+typedef enum ast_pipeline_and_or e_ast_pipeline_and_or;
+
+//! and_or: pipeline (('&&'|'|| ') ('\n')* pipeline)*
 struct ast_and_or
 {
-    s_pipeline *pipeline;
-    int next_asynchronous; /** 1 if & else 0 */
+    e_ast_pipeline_and_or and_or;
+    s_ast_pipeline *pipeline;
     struct ast_and_or *next;
 };
 typedef struct ast_and_or s_ast_and_or;
 
+//! list: and_or (( ';'|'& ') and_or )* [';'|'&']
 struct ast_list
 {
-    s_ast_and_or *s_ast_and; /** ';' or '&' */
+    int next_asynchronous; /** 1 if & else 0 */
+    s_ast_and_or *and_or;
     struct ast_list *next;
 };
 typedef struct ast_list s_ast_list;
