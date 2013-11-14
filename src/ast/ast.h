@@ -69,7 +69,10 @@ struct ast_cmd
 };
 typedef struct ast_cmd s_ast_cmd;
 
-//! pipeline : ['!'] command ('|' ('\n')* command)*
+/** @brief Pipeline
+**
+** pipeline : ['!'] command ('|' ('\n')* command)*
+*/
 struct ast_pipeline
 {
     int inverted; /** ! cmd */
@@ -85,7 +88,11 @@ enum ast_pipeline_and_or
 };
 typedef enum ast_pipeline_and_or e_ast_pipeline_and_or;
 
-//! and_or: pipeline (('&&'|'|| ') ('\n')* pipeline)*
+/**
+** @brief And or Or
+**
+** and_or: pipeline (('&&'|'|| ') ('\n')* pipeline)*
+*/
 struct ast_and_or
 {
     e_ast_pipeline_and_or and_or;
@@ -94,7 +101,11 @@ struct ast_and_or
 };
 typedef struct ast_and_or s_ast_and_or;
 
-//! list: and_or (( ';'|'& ') and_or )* [';'|'&']
+/**
+** @brief List
+**
+** list: and_or (( ';'|'& ') and_or )* [';'|'&']
+*/
 struct ast_list
 {
     int next_asynchronous; /** 1 if & else 0 */
