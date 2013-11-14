@@ -42,6 +42,7 @@ s_string *readline(const char *prompt) // TODO: test
     if (!read_ret && !index) // TODO: EOF is not handled well
         return NULL;
 
-    string_replace(buffer, "\\\n", ""); // TODO: string_replace not implemented.
-    return buffer;
+    s_string *rep_buffer = string_replace(buffer, "\\\n", ""); // TODO: string_replace not implemented.
+    string_free(buffer);
+    return rep_buffer;
 }
