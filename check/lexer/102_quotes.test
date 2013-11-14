@@ -1,0 +1,9 @@
+{
+    "type": "lexer",
+    "desc": "Backquote with double in it",
+    "input": """echo `"echo" 'ls'`""",
+    "output": """echo	T_WORD
+`"echo" 'ls'`	T_WORD
+	T_EOF
+"""
+}

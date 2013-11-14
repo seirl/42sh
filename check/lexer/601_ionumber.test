@@ -1,0 +1,13 @@
+{
+    "type": "lexer",
+    "desc": "IOnumber with an operator",
+    "input": """echo lol &2>foo""",
+    "output": """echo	T_WORD
+lol	T_WORD
+&	T_AND
+2	T_IO_NUMBER
+>	T_GREAT
+foo	T_WORD
+	T_EOF
+"""
+}

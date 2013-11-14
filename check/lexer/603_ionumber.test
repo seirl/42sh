@@ -1,0 +1,12 @@
+{
+    "type": "lexer",
+    "desc": "IOnumber quoted",
+    "input": """echo lol "42">&2""",
+    "output": """echo	T_WORD
+lol	T_WORD
+"42"	T_WORD
+>&	T_GREATAND
+2	T_WORD
+	T_EOF
+"""
+}

@@ -1,0 +1,12 @@
+{
+    "type": "lexer",
+    "desc": "Simple IOnumber",
+    "input": """echo lol 2>foo""",
+    "output": """echo	T_WORD
+lol	T_WORD
+2	T_IO_NUMBER
+>	T_GREAT
+foo	T_WORD
+	T_EOF
+"""
+}
