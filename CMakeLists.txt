@@ -56,6 +56,7 @@ add_library(options OBJECT
 add_library(readline OBJECT
     src/readline/readline.c
     src/readline/characters.c
+    src/readline/terminal.c
 )
 
 add_library(parser OBJECT
