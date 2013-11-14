@@ -35,6 +35,10 @@ add_library(string OBJECT
     src/utils/string_update.c
 )
 
+add_library(fnmatch OBJECT
+    src/utils/my_fnmatch.c
+)
+
 add_library(lexer OBJECT
     src/lexer/lexer.c
     src/lexer/lexer_create.c
