@@ -32,9 +32,10 @@ void string_rewind(s_string *s);
 char string_topc(s_string *s);
 
 void string_del_from_end(s_string *str, size_t n);
+unsigned int string_search(s_string *s, const char *needle);
 
 void string_eat_spaces(s_string *s);
-void string_replace(s_string *s, char *pattern, char *rep);
+s_string *string_replace(const s_string *s, const char *pat, const char *rep);
 
 int string_equal(const s_string *s, const char *pattern);
 int string_begin_with(const s_string *s, const char *pattern);

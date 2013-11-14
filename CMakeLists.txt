@@ -33,6 +33,7 @@ add_library(string OBJECT
     src/utils/string_read.c
     src/utils/string_replace.c
     src/utils/string_update.c
+    src/utils/string_search.c
 )
 
 add_library(fnmatch OBJECT
