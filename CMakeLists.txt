@@ -6,10 +6,12 @@ set(CMAKE_C_COMPILER "clang")
 set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3 -gdwarf-2")
 
 include_directories(src)
-include_directories(src/utils)
-include_directories(src/options)
+include_directories(src/ast)
 include_directories(src/lexer)
+include_directories(src/options)
+include_directories(src/parser)
 include_directories(src/readline)
+include_directories(src/utils)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -54,6 +56,12 @@ add_library(options OBJECT
 add_library(readline OBJECT
     src/readline/readline.c
     src/readline/characters.c
+)
+
+add_library(parser OBJECT
+    src/parser/parser_create.c
+    src/parser/parser_delete.c
+    src/parser/parse_rule_input.c
 )
 
 set(cfiles
