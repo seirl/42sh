@@ -1,0 +1,10 @@
+{
+    "type": "lexer",
+    "desc": "Subshell, math operator and quote",
+    "input": """($(($((1 + 1)) + 1 + `echo \')\'`)))""",
+    "output": """(	T_LPAREN
+$(($((1 + 1)) + 1 + `echo ')'`))	T_WORD
+)	T_RPAREN
+	T_EOF
+"""
+}

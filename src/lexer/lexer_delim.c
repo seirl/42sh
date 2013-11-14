@@ -48,9 +48,15 @@ static int handle_operator(s_lexer *lexer)
     return 0;
 }
 
-static int is_quoted(s_lexer *lexer, char prev)
+static void update_quote(s_lexer *lexer, char c, char prev)
 {
-    return prev == '\\' || lexer->quoted;
+    if ((c == '\'' || c == '\"') && prev != '\\')
+    {
+        if (lexer->quoted == c)
+            lexer->quoted = 0;
+        else if (lexer->quoted == 0)
+            lexer->quoted = c;
+    }
 }
 
 static int fill_until(s_lexer *lexer, int include_last)
@@ -60,13 +66,13 @@ static int fill_until(s_lexer *lexer, int include_last)
     while (1)
     {
         c = lexer->topc(lexer);
-        if (!is_quoted(lexer, prev) && (c == lexer->sur.end || c == '\0'))
+        if (lexer->quoted == 0 && prev != '\\' && (c == lexer->sur.end || c == '\0'))
         {
             lexer->sur.count -= 1;
             if (lexer->sur.count == 0)
                 break;
         }
-        if (prev && !is_quoted(lexer, prev) && (c == lexer->sur.begin || c == '\0'))
+        if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == '\0'))
         {
             lexer->sur.count += 1;
             if (lexer->sur.count == 0)
@@ -75,10 +81,12 @@ static int fill_until(s_lexer *lexer, int include_last)
             }
         }
         string_putc(lexer->working_buffer, lexer->getc(lexer));
+        update_quote(lexer, c, prev);
         prev = c;
     }
     if (include_last)
         string_putc(lexer->working_buffer, lexer->getc(lexer));
+    lexer->quoted = 0;
     lexer->sur.end = 0;
     lexer->sur.count = 0;
     return c != 0;

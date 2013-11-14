@@ -27,7 +27,7 @@ struct lexer
     s_string *working_buffer;
     s_location location;
     s_surround sur;
-    int quoted;
+    char quoted;
     int concat;
 };
 
