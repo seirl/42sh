@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 2.6)
 project(42sh)
 
 add_definitions(-DCONCHITA)
+add_definitions(-D_XOPEN_SOURCE)
 set(CMAKE_C_COMPILER "clang")
-set(CMAKE_C_FLAGS "-std=gnu99 -Wall -Wextra -Werror -pedantic -g3 -gdwarf-2")
+set(CMAKE_C_FLAGS "-std=c99 -Wall -Wextra -Werror -pedantic -g3 -gdwarf-2")
 
 include_directories(src)
 include_directories(src/ast)

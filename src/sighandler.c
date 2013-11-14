@@ -45,7 +45,7 @@ static void segfault_callback()
 void signal_init()
 {
     struct sigaction action;
-    action.sa_sigaction = segfault_callback;
+    action.sa_handler = segfault_callback;
     action.sa_flags = 0;
     sigemptyset(&action.sa_mask);
     sigaction(SIGSEGV, &action, NULL);
