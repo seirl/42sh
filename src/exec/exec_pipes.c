@@ -96,7 +96,7 @@ static void wait_pipe(pid_t main, s_pipe *pipe)
         status = st;
     }
     proc = get_next_proc(pipe);
-    while(proc >= 0)
+    while (proc >= 0)
     {
         kill(proc, SIGPIPE);
         waitpid(proc, &st, 0);
