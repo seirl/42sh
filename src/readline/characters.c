@@ -1,4 +1,4 @@
 int readline_printable(char c) // TODO: test
 {
-    return c >= ' ' && c <= '~';
+    return (c >= ' ' && c <= '~') || (c == '\n');
 }
