@@ -1,0 +1,11 @@
+{
+    "type": "lexer",
+    "desc": "Quoted string concatenation",
+    "input": """echo 'foo'bar'baz'""",
+    "output": """echo	T_WORD
+'foo'	T_WORD
+bar	T_WORD
+'baz'	T_WORD
+	T_EOF
+"""
+}

@@ -150,14 +150,14 @@ int lex_delimit_token(s_lexer *lexer)
         c = lexer->topc(lexer);
         if (handle_comment(lexer, c, prev))
             break;
-        if (handle_quotes(lexer, c, prev))
-            break;
         if (handle_dollar(lexer, c, prev))
             break;
         if (is_delimiter(c) && prev != '\\')
         {
             if (prev == 0)
             {
+                if (handle_quotes(lexer, c, prev))
+                    break;
                 if (c == '\n')
                     string_putc(lexer->working_buffer, lexer->getc(lexer));
                 else
