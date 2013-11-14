@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Lparen",
+    "input": """(""",
+    "output": """(	T_LPAREN
+	T_EOF
+"""
+}

@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Semi",
+    "input": """;""",
+    "output": """;	T_SEMI
+	T_EOF
+"""
+}

@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Do",
+    "input": """do""",
+    "output": """do	T_DO
+	T_EOF
+"""
+}

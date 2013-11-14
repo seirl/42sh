@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Clobber",
+    "input": """>|""",
+    "output": """>|	T_CLOBBER
+	T_EOF
+"""
+}

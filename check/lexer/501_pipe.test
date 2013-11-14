@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Pipe",
+    "input": """|""",
+    "output": """|	T_PIPE
+	T_EOF
+"""
+}

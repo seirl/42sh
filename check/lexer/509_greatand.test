@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Greatand",
+    "input": """>&""",
+    "output": """>&	T_GREATAND
+	T_EOF
+"""
+}

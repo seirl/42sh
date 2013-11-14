@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "For",
+    "input": """for""",
+    "output": """for	T_FOR
+	T_EOF
+"""
+}

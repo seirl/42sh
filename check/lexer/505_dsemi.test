@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Dsemi",
+    "input": """;;""",
+    "output": """;;	T_DSEMI
+	T_EOF
+"""
+}

@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Esac",
+    "input": """esac""",
+    "output": """esac	T_ESAC
+	T_EOF
+"""
+}

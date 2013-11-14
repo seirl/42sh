@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "if",
+    "input": """if""",
+    "output": """if	T_IF
+	T_EOF
+"""
+}

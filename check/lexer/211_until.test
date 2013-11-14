@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Until",
+    "input": """until""",
+    "output": """until	T_UNTIL
+	T_EOF
+"""
+}

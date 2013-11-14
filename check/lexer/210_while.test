@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "While",
+    "input": """while""",
+    "output": """while	T_WHILE
+	T_EOF
+"""
+}

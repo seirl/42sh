@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Then",
+    "input": """then""",
+    "output": """then	T_THEN
+	T_EOF
+"""
+}

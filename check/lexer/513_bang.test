@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Bang",
+    "input": """!""",
+    "output": """!	T_BANG
+	T_EOF
+"""
+}

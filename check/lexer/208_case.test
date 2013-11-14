@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Case",
+    "input": """case""",
+    "output": """case	T_CASE
+	T_EOF
+"""
+}

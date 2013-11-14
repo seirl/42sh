@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Fi",
+    "input": """fi""",
+    "output": """fi	T_FI
+	T_EOF
+"""
+}

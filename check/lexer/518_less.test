@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Less",
+    "input": """<""",
+    "output": """<	T_LESS
+	T_EOF
+"""
+}

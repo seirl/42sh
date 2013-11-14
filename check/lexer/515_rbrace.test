@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Rbrace",
+    "input": """}""",
+    "output": """}	T_RBRACE
+	T_EOF
+"""
+}

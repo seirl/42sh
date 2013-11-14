@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "DlessDash",
+    "input": """<<-""",
+    "output": """<<-	T_DLESSDASH
+	T_EOF
+"""
+}

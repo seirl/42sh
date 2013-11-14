@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Else",
+    "input": """else""",
+    "output": """else	T_ELSE
+	T_EOF
+"""
+}

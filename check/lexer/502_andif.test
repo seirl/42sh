@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Andif",
+    "input": """&&""",
+    "output": """&&	T_AND_IF
+	T_EOF
+"""
+}

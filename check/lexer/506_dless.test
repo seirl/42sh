@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Dless",
+    "input": """<<""",
+    "output": """<<	T_DLESS
+	T_EOF
+"""
+}

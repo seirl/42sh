@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Elif",
+    "input": """elif""",
+    "output": """elif	T_ELIF
+	T_EOF
+"""
+}

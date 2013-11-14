@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Great",
+    "input": """>""",
+    "output": """>	T_GREAT
+	T_EOF
+"""
+}

@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Rparen",
+    "input": """)""",
+    "output": """)	T_RPAREN
+	T_EOF
+"""
+}

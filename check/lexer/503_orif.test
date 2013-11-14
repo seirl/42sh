@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Orif",
+    "input": """||""",
+    "output": """||	T_OR_IF
+	T_EOF
+"""
+}

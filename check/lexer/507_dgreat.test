@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Dgreat",
+    "input": """>>""",
+    "output": """>>	T_DGREAT
+	T_EOF
+"""
+}

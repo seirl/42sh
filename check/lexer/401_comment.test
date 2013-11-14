@@ -1,0 +1,12 @@
+{
+    "type": "lexer",
+    "desc": "Only Comments and newline",
+    "input": """#comm\n#\n# !/bin/sh\n\n#end""",
+    "output": """#comm\n	T_NEWLINE
+#\n	T_NEWLINE
+# !/bin/sh\n	T_NEWLINE
+\n	T_NEWLINE
+#end	T_NEWLINE
+	T_EOF
+"""
+}
