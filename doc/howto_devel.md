@@ -37,6 +37,7 @@ General fields:
 {
     "type": "42sh",        # type of test
     "desc": "test 42sh",   # description of the test
+    "retval": 0,           # check return value
     "timeout" 4.2,         # custom timeout
     "with_valgrind": True, # check for memory errors
 }
