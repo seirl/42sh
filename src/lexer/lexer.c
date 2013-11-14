@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 #include "lexer.h"
 #include "lexer_private.h"
 #include "char_utils.h"
@@ -19,8 +20,16 @@ static int lex_res_word(s_lexer *lexer)
 
 static int lex_io_number(s_lexer *lexer)
 {
-    // TODO
-    (void) lexer;
+    for (size_t i = 0; i < lexer->working_buffer->len; ++i)
+    {
+        if (!isdigit(lexer->working_buffer->buf[i]))
+            return 0;
+    }
+    if (lexer->topc(lexer) == '>' || lexer->topc(lexer) == '<')
+    {
+        lexer->token_type = T_IO_NUMBER;
+        return 1;
+    }
     return 0;
 }
 
