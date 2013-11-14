@@ -106,6 +106,13 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
             lexer->sur.count = 1;
             fill_until(lexer, 1);
         }
+        if (c == '{')
+        {
+            lexer->sur.begin = '{';
+            lexer->sur.end = '}';
+            lexer->sur.count = 1;
+            fill_until(lexer, 1);
+        }
         return 1;
     }
     return 0;

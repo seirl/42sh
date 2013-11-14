@@ -1,6 +1,6 @@
 {
     "type": "lexer",
-    "desc": "Simple double quote",
+    "desc": "Parenthesis",
     "input": """echo (ls) $(FOO) """,
     "output": """echo	T_WORD
 (	T_LPAREN
