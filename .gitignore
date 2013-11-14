@@ -10,3 +10,4 @@ __pycache__
 *.core
 42sh
 build
+.*
