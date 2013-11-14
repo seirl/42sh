@@ -1,21 +1,10 @@
 #ifndef AST_TYPES_H
 # define AST_TYPES_H
 
-# define _POSIX_SOURCE
-# define _GNU_SOURCE
-
 # include <fcntl.h>
 # include <unistd.h>
-# include <assert.h>
 # include <stdlib.h>
-# include <errno.h>
 # include <sys/types.h>
-# include <signal.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <assert.h>
-# include "smalloc.h"
 
 struct ast_node;
 
@@ -28,6 +17,8 @@ enum ast_node_type
     FOR,
     WHILE,
     CASE,
+    REDIR,
+    BANG,
     AND,
     OR
 };
@@ -61,40 +52,60 @@ struct while_node
 {
     struct ast_node *cond;
     struct ast_node *statement;
-}
+};
 
 struct for_node
 {
     char *var;
-    /* char ** or int * values */
+    char **val;
     struct ast_node *statement;
 };
 
-#if 0
-/* Redirection.. ?! */
+struct case_switch
+{
+    char **values;
+    struct ast_node *statement;
+    struct case_switch *next_case;
+};
+
+struct case_node
+{
+    char *var;
+    struct case_switch *first_case;
+};
 
 enum redirect_type
 {
-    L_TO_R_S // Left to right, simple: >
-    R_TO_L_S // Right to left, simple: <
-    L_TO_R_D // Left to right, double: >>
-    R_TO_L_D // Right to left, double: <<
-    ...
-}
+    L_TO_R_S, // Left to right, simple: >
+    R_TO_L_S, // Right to left, simple: <
+    L_TO_R_D, // Left to right, double: >>
+    R_TO_L_D, // Right to left, double: <<
+    L_TO_R_SA, // Left to right, simple, and: >&
+    R_TO_L_SA, // Right to left, simple, and: <&
+    L_TO_R_SO, // Left to right, simple, or: >|
+    R_TO_L_DD, // Right to left, double, dash: <<-
+    LR_TO_RL // Bidirectionnal: <>
+};
 
-struct redirect_node
+struct redir_node
 {
-    int *fd
     enum redirect_type type;
-    ... words, ..?
-}
-#endif
+    int *fd;
+};
 
 union ast_node_child
 {
-    struct cmd_node cmd;
-    struct binary_node pipe;
-    struct func_node func;
+    struct cmd_node cmd_n;
+    struct binary_node pipe_n;
+    struct func_node func_n;
+    struct if_node if_n;
+    struct for_node for_n;
+    struct case_node case_n;
+    struct while_node while_n;
+    struct binary_node bang_n;
+    struct binary_node or_n;
+    struct binary_node and_n;
+    struct redir_node redir_n;
 };
 
 struct ast_node
@@ -116,8 +127,6 @@ typedef enum side
     LEFT
 } e_side;
 
-void exec_pipe_node(struct binary_node *node);
-void exec_cmd_node(struct cmd_node *cmd);
-void exec_node(struct ast_node *node);
+extern int status;
 
 #endif /* !AST_TYPES_H */
