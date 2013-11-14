@@ -63,6 +63,7 @@ add_library(parser OBJECT
     src/parser/parser_create.c
     src/parser/parser_delete.c
     src/parser/parse_rule_input.c
+    src/parser/parse_rule_list.c
 )
 
 set(cfiles

@@ -1,8 +1,8 @@
 #include "parser_private.h"
+#include "smalloc.h"
 
 static s_ast_list *list_new(void)
 {
-
     s_ast_list *list = smalloc(sizeof (s_ast_list));
     list->next_asynchronous = 0;
     list->and_or = NULL;
@@ -20,13 +20,15 @@ s_ast_list *parse_rule_list(s_parser *parser)
     list->and_or = sub;
 
     s_token *tok = lex_look_token(parser->lexer);
-    switch (tok)
+    switch (tok->type)
     {
     case T_AND:
         list->next_asynchronous = 1;
     case T_SEMI:
-        lex_token(tok);
+        token_free(lex_token(parser->lexer));
         list->next = parse_rule_list(parser);
+    default:
+        break;
     }
 
     return list;
