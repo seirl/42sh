@@ -12,7 +12,7 @@ static s_pipe *init_pipe(void)
 static void add_process(pid_t pid, s_pipe *pipe)
 {
     ++pipe->nb_proc;
-    srealloc(pipe->process, pipe->nb_proc * sizeof (pid_t));
+    pipe->process = srealloc(pipe->process, pipe->nb_proc * sizeof (pid_t));
     pipe->process[pipe->nb_proc - 1] = pid;
 }
 
@@ -38,7 +38,10 @@ static pid_t exec_pipe_side_cmd(int fd_pipe[2],
         return pid;
     if (pid == 0)
     {
-        dup2(fd_pipe[input], STDOUT_FILENO);
+        if (side == RIGHT)
+            dup2(fd_pipe[input], STDIN_FILENO);
+        else
+            dup2(fd_pipe[input], STDOUT_FILENO);
         close(fd_pipe[output]);
         if (side_node->type == CMD)
             exec_cmd_node(&side_node->next.cmd_n);
@@ -69,7 +72,6 @@ static int exec_pipe_cmd(s_pipe *p, struct binary_node *node)
         int tmp = dup(STDOUT_FILENO);
         dup2(fd_pipe[1], STDOUT_FILENO);
         close(fd_pipe[1]);
-        /* current node has a LEFT|RIGHT command node */
         int res = exec_pipe_cmd(p, &node->left->next.pipe_n);
         dup2(tmp, STDOUT_FILENO);
         close(tmp);
@@ -89,12 +91,16 @@ static void wait_pipe(pid_t main, s_pipe *pipe)
     pid_t proc = 0;
 
     if (main == 0)
+    {
         waitpid((proc = get_next_proc(pipe)), &st, 0);
+        status = st;
+    }
     proc = get_next_proc(pipe);
     while(proc >= 0)
     {
         kill(proc, SIGPIPE);
         waitpid(proc, &st, 0);
+        proc = get_next_proc(pipe);
     }
 }
 
@@ -104,7 +110,10 @@ void exec_pipe_node(struct binary_node *node)
     s_pipe *pipe = init_pipe();
     int res = exec_pipe_cmd(pipe, node);
     if (res == 0)
+    {
         fprintf(stderr, "Fail to exec pipe node");
+        status = -1;
+    }
     wait_pipe(!res, pipe);
     sfree(pipe);
 }

@@ -21,7 +21,7 @@ void exec_for_node(struct for_node *node)
 void exec_while_node(struct while_node *node)
 {
     exec_node(node->cond);
-    while (status != 0)
+    while (status == 0)
     {
         exec_node(node->statement);
         exec_node(node->cond);

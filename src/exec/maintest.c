@@ -2,6 +2,8 @@
 
 int main(void)
 {
+
+#if 0
 /*======================================================================*/
 /*======================================================================*/
 /*======================================================================*/
@@ -9,7 +11,7 @@ int main(void)
             /*              then    touch nass              */
             /*              else    ls -lsa                 */
     char *grep_cmd = "grep";
-    char *grep_arg = "nass";
+    char *grep_arg = "fass";
     char *grep_arg2 = "/etc/passwd";
     char **grep_cmd_str = malloc(sizeof (char *) * 4);
     grep_cmd_str[0] = grep_cmd;
@@ -73,5 +75,52 @@ int main(void)
     main_if_node.type = IF;
 
     exec_node(&main_if_node);
+#endif
+
+    char *grep_cmd = "grep";
+    char *grep_arg = "nass";
+    char *grep_arg2 = "/etc/passwd";
+    char **grep_cmd_str = malloc(sizeof (char *) * 4);
+    grep_cmd_str[0] = grep_cmd;
+    grep_cmd_str[1] = grep_arg;
+    grep_cmd_str[2] = grep_arg2;
+    grep_cmd_str[3] = NULL;
+    struct cmd_node grep_command_node = {
+        .argv = grep_cmd_str,
+        .prefix = NULL
+    };
+    union ast_node_child first_child;
+    first_child.cmd_n = grep_command_node;
+    struct ast_node left_node = {
+        .next = first_child,
+        .type = CMD
+    };
+
+    char *touch_cmd = "cat";
+    char **touch_cmd_str = malloc(sizeof (char *) * 2);
+    touch_cmd_str[0] = touch_cmd;
+    touch_cmd_str[1] = NULL;
+    struct cmd_node touch_command_node = {
+        .argv = touch_cmd_str,
+        .prefix = NULL
+    };
+    union ast_node_child second_child;
+    second_child.cmd_n = touch_command_node;
+    struct ast_node right_node = {
+        .next = second_child,
+        .type = CMD
+    };
+
+    struct binary_node pipe_node = {
+        .left = &left_node,
+        .right = &right_node
+    };
+    union ast_node_child pipe_child;
+    pipe_child.pipe_n = pipe_node;;
+    struct ast_node main_node;
+    main_node.next = pipe_child;
+    main_node.type = PIPE;
+
+    exec_node(&main_node);
     return 0;
 }
