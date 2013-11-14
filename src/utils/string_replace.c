@@ -11,7 +11,7 @@ s_string *string_replace(const s_string *s, const char *pat, const char *rep)
         if (!strncmp(s->buf + i, pat, len_pat))
         {
             string_puts(sr, rep);
-            i += len_pat;
+            i += len_pat + 1;
         }
         else
             string_putc(sr, s->buf[i]);
