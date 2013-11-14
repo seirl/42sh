@@ -9,7 +9,7 @@ void token_print(s_token *tok)
 #define X(Type, Str)                            \
     if (tok->type == Type)                      \
     {                                           \
-        fprintf(stdout, "\t%s", Str);           \
+        fprintf(stdout, "\t"#Type);             \
         break;                                  \
     }
 #include "misc.def"

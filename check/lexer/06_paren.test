@@ -1,0 +1,12 @@
+{
+    "type": "lexer",
+    "desc": "Simple double quote",
+    "input": """echo (ls) $(FOO) """,
+    "output": """echo	T_WORD
+(	T_LPAREN
+ls	T_WORD
+)	T_RPAREN
+$(FOO)	T_WORD
+	T_EOF
+"""
+}

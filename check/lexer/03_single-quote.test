@@ -2,8 +2,8 @@
     "type": "lexer",
     "desc": "Simple single quote",
     "input": "'echo' ' foo\n'bar",
-    "output": """'echo'	WORD
-' foo\n'bar	WORD
-	EOF
+    "output": """'echo'	T_WORD
+' foo\n'bar	T_WORD
+	T_EOF
 """
 }

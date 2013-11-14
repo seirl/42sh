@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Test WORD token",
     "input": "A",
-    "output": """A	WORD
-	EOF
+    "output": """A	T_WORD
+	T_EOF
 """
 }

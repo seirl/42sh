@@ -2,8 +2,8 @@
     "type": "lexer",
     "desc": "Test WORD token",
     "input": "echo foo",
-    "output": """echo	WORD
-foo	WORD
-	EOF
+    "output": """echo	T_WORD
+foo	T_WORD
+	T_EOF
 """
 }

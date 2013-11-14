@@ -1,23 +1,21 @@
 {
     "type": "lexer",
     "desc": "Every reserverd words",
-    "input": """if then else elif fi do done case esac while until for !{ }in""",
-    "output": """if	if
-then	then
-else	else
-elif	elif
-fi	fi
-do	do
-done	done
-case	case
-esac	esac
-while	while
-until	until
-for	for
-!	!
-{	{
-}	}
-in	in
-	EOF
+    "input": """if then else elif fi do done case esac while until for !in""",
+    "output": """if	T_IF
+then	T_THEN
+else	T_ELSE
+elif	T_ELIF
+fi	T_FI
+do	T_DO
+done	T_DONE
+case	T_CASE
+esac	T_ESAC
+while	T_WHILE
+until	T_UNTIL
+for	T_FOR
+!	T_BANG
+in	T_IN
+	T_EOF
 """
 }

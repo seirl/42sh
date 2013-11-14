@@ -15,8 +15,10 @@ s_lexer *lex_create(char (*lex_getc)(void *input_state),
     lexer->source = source;
     lexer->working_buffer = string_create(0);
     lexer->token_type = T_WORD;
+    lexer->sur.begin = 0;
+    lexer->sur.end = 0;
+    lexer->sur.count = 0;
     lexer->quoted = 0;
-    lexer->blank = 0;
 
     return lexer;
 }

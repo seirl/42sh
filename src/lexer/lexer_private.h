@@ -5,6 +5,14 @@
 # include "token.h"
 # include "location.h"
 
+struct surround
+{
+    char begin;
+    char end;
+    int count;
+};
+typedef struct surround s_surround;
+
 /**
 ** @brief The internal state of the lexer.
 */
@@ -16,12 +24,11 @@ struct lexer
     //! Where does the characters come from.
     char *source;
     e_token_type token_type;
-    //! Is the current character quoted (lose special meaning)?
-    int quoted;
-    //! Have a blank character preceeded the token?
-    int blank;
     s_string *working_buffer;
     s_location location;
+    char until;
+    s_surround sur;
+    int quoted;
 };
 
 /**

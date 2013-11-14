@@ -2,11 +2,11 @@
     "type": "lexer",
     "desc": "WORDS separated by blank chars",
     "input": "    echo\n\n\nfoo   ",
-    "output": """echo	WORD
-\n\tNEWLINE
-\n\tNEWLINE
-\n\tNEWLINE
-foo	WORD
-	EOF
+    "output": """echo	T_WORD
+\n\tT_NEWLINE
+\n\tT_NEWLINE
+\n\tT_NEWLINE
+foo	T_WORD
+	T_EOF
 """
 }
