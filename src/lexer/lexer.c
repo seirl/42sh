@@ -11,7 +11,7 @@ static int lex_res_word(s_lexer *lexer)
     if (string_equal(lexer->working_buffer, Str)) \
     {                                             \
         lexer->token_type = Type;                 \
-        lexer->concat = -1;                       \
+        lexer->concat = 0;                       \
         return 1;                                 \
     }
 #include "res_word.def"

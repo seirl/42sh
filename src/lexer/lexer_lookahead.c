@@ -18,3 +18,15 @@ s_token *lex_release_lookahead(s_lexer *lexer)
     lexer->lookahead = NULL;
     return tok;
 }
+
+#if 0
+s_token *lex_look_word(s_lexer *lexer)
+{
+
+}
+
+s_token *lex_release_lookahead(s_lexer *lexer)
+{
+
+}
+#endif
