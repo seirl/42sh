@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Assignment word with quoted var",
+    "input": """foo='bar'""",
+    "output": """foo='bar'	T_ASSIGNMENT_WORD
+	T_EOF
+"""
+}

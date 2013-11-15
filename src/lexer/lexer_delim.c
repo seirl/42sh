@@ -142,6 +142,38 @@ static int handle_comment(s_lexer *lexer, char c, char prev)
     return 0;
 }
 
+static int fill_upto_delim(s_lexer *lexer)
+{
+    char c;
+    char prev = 0;
+    do
+    {
+        c = lexer->topc(lexer);
+        if (is_delimiter(c) && prev != '\\')
+            break;
+        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        prev = c;
+    } while (c != 0 && c != EOF);
+    return 1;
+}
+
+int handle_assignment(s_lexer *lexer, char c)
+{
+    if (c == '=')
+    {
+        for (size_t i = 0; i < lexer->working_buffer->len; ++i)
+        {
+            if (is_quote(lexer->working_buffer->buf[i]))
+                return 0;
+        }
+        if (fill_upto_delim(lexer) == 0)
+            return 0;
+        lexer->token_type = T_ASSIGNMENT_WORD;
+        return 1;
+    }
+    return 0;
+}
+
 int lex_delimit_token(s_lexer *lexer)
 {
     string_reset(lexer->working_buffer);
@@ -160,7 +192,9 @@ int lex_delimit_token(s_lexer *lexer)
             break;
         if (handle_dollar(lexer, c, prev))
             break;
-        if (is_delimiter(c) && prev != '\\')
+        if (handle_assignment(lexer, c))
+            break;
+        if ((is_delimiter(c) || is_quote(c)) && prev != '\\')
         {
             if (prev == 0)
             {

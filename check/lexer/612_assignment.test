@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Quoted assignment word",
+    "input": """'foo=bar'""",
+    "output": """'foo=bar'	T_WORD
+	T_EOF
+"""
+}

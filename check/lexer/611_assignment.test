@@ -1,0 +1,9 @@
+{
+    "type": "lexer",
+    "desc": "Bad assignment word",
+    "input": """foo= bar""",
+    "output": """foo=	T_ASSIGNMENT_WORD
+bar	T_WORD
+	T_EOF
+"""
+}
