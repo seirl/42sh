@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "string_utils.h"
 #include "smalloc.h"
@@ -31,15 +32,15 @@ void string_resize(s_string *s)
     s->buf = srealloc(s->buf, s->max_len);
 }
 
-char *string_release(s_string *s)
+s_string *string_duplicate(const s_string *src)
 {
-    char *ret = s->buf;
-    sfree(s);
-    return ret;
-}
+    s_string *ret = smalloc(sizeof (s_string));
 
-void string_free(s_string *s)
-{
-    sfree(s->buf);
-    sfree(s);
+    ret->buf = srealloc(ret->buf, src->max_len);
+    memcpy(ret->buf, src->buf, src->len + 1);
+    ret->len = src->len;
+    ret->max_len = src->max_len;
+    ret->read_pos = src->read_pos;
+
+    return ret;
 }

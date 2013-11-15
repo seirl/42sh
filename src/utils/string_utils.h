@@ -16,6 +16,8 @@ typedef struct string s_string;
 s_string *string_create(size_t size);
 s_string *string_create_from(const char *str);
 void string_resize(s_string *s);
+s_string *string_duplicate(const s_string *src);
+
 //! @brief Set string size to 0.
 void string_reset(s_string *s);
 char *string_release(s_string *s);
