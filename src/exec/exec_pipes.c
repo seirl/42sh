@@ -47,6 +47,7 @@ static pid_t exec_pipe_side_cmd(int fd_pipe[2],
             exec_cmd_node(&side_node->next.cmd_n);
         else
             exec_node(side_node);
+        exit(status);
     }
     else
     {
