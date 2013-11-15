@@ -70,8 +70,18 @@ add_library(readline OBJECT
 add_library(parser OBJECT
     src/parser/parser_create.c
     src/parser/parser_delete.c
+    src/parser/parse_expect.c
+
+    src/parser/parse_rule_and_or.c
+    src/parser/parse_rule_command.c
+    src/parser/parse_rule_elements.c
     src/parser/parse_rule_input.c
     src/parser/parse_rule_list.c
+    src/parser/parse_rule_pipeline.c
+    src/parser/parse_rule_prefix.c
+    src/parser/parse_rule_simple_command.c
+    src/parser/parse_rule_shell_command.c
+    src/parser/parse_rule_funcdec.c
 )
 
 add_library(exec OBJECT

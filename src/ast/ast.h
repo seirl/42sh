@@ -1,6 +1,8 @@
 #ifndef AST_H
 # define AST_H
 
+# include "string_utils.h"
+
 enum redirection_type
 {
     REDIR_WRITE, /** > */
@@ -18,18 +20,40 @@ struct ast_redirection
 };
 typedef struct ast_redirection s_ast_redirection;
 
-struct ast_cmd_prefix
+struct ast_prefix
 {
     // TODO: s_ast_assignement *assignement;
     s_ast_redirection *redirection;
-    struct ast_cmd_prefix *next;
+    struct ast_prefix *next;
 };
-typedef struct ast_cmd_prefix s_ast_cmd_prefix;
+typedef struct ast_prefix s_ast_prefix;
 
+// XXX: Will be used to form ast_compound_word, and probably expansion hints
+struct ast_word
+{
+    s_string *word;
+};
+typedef struct ast_word s_ast_word;
+
+/**
+** elements: (WORD | redirection)+
+*/
+struct ast_element
+{
+    s_ast_word *word;
+    s_ast_redirection *redirection;
+    struct ast_element *next;
+};
+typedef struct ast_element s_ast_element;
+
+/**
+** simple_command: (prefix)+
+**          | (prefix)* elements
+*/
 struct ast_simple_cmd
 {
-    s_ast_cmd_prefix *prefixes;
-    // TODO: s_ast_cmd_element *elements;
+    s_ast_prefix *prefixes;
+    s_ast_element *elements;
 };
 typedef struct ast_simple_cmd s_ast_simple_cmd;
 
@@ -41,18 +65,34 @@ enum ctrl_structure
     AST_CASE,
     AST_IF,
 };
-typedef enum ctrl_structure u_ctrl_structure;
+typedef enum ctrl_structure e_ctrl_structure;
 
+/**
+** @brief Shell command
+**
+** shell_command: '{' compound_list '}'
+**          | '(' compound_list ')'
+**          | rule_for
+**          | rule_while
+**          | rule_until
+**          | rule_case
+**          | rule_if
+*/
 struct ast_shell_cmd
 {
     // TODO: compount_list_sameshell { }
     // TODO: compount_list_subshell ( )
 
-    u_ctrl_structure ctrl_structure;
+    e_ctrl_structure ctrl_structure;
     // TODO: Add ctrl structures union ptr
 };
 typedef struct ast_shell_cmd s_ast_shell_cmd;
 
+/**
+** @breif Function definition
+**
+** funcdec: [' function '] WORD '(' ')' ('\n')* shell_command
+*/
 struct ast_funcdec
 {
     s_string *name;
@@ -60,6 +100,13 @@ struct ast_funcdec
 };
 typedef struct ast_funcdec s_ast_funcdec;
 
+/**
+** @brief Command
+**
+** command: simple_command
+**          | shell_command (redirection)*
+**          | funcdec (redirection)*
+*/
 struct ast_cmd
 {
     s_ast_simple_cmd *simple_cmd;
@@ -71,7 +118,7 @@ typedef struct ast_cmd s_ast_cmd;
 
 /** @brief Pipeline
 **
-** pipeline : ['!'] command ('|' ('\n')* command)*
+** pipeline: ['!'] command ('|' ('\n')* command)*
 */
 struct ast_pipeline
 {
@@ -83,8 +130,8 @@ typedef struct ast_pipeline s_ast_pipeline;
 
 enum ast_pipeline_and_or
 {
-    AST_AND, /** && */
-    AST_OR, /** || */
+    AST_CMD_AND, /** && */
+    AST_CMD_OR, /** || */
 };
 typedef enum ast_pipeline_and_or e_ast_pipeline_and_or;
 
@@ -114,6 +161,11 @@ struct ast_list
 };
 typedef struct ast_list s_ast_list;
 
+/**
+** @brief input
+**
+** input: list ('\n'|EOF) | \n | EOF
+*/
 struct ast_input
 {
     s_ast_list *list;

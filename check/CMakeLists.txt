@@ -11,6 +11,16 @@ add_executable(test_lexer
     $<TARGET_OBJECTS:hashtbl>
 )
 
+add_executable(test_parser
+    test_parser.c
+    $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:lexer>
+    $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:parser>
+    $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:string>
+)
+
 add_executable(run_readline_test
     test_readline.c
     $<TARGET_OBJECTS:string>
