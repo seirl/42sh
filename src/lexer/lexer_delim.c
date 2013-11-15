@@ -124,7 +124,7 @@ static int handle_quotes(s_lexer *lexer, char c, char prev)
 
 static int handle_dollar(s_lexer *lexer, char c, char prev)
 {
-    if (prev == '\\')
+    if (prev != 0)
         return 0;
     if (c == '$')
     {
@@ -198,7 +198,7 @@ int lex_delimit_token(s_lexer *lexer)
             break;
         if (handle_assignment(lexer, c))
             break;
-        if ((is_delimiter(c) || is_quote(c)) && prev != '\\')
+        if ((is_delimiter(c) || is_quote(c) || c == '$') && prev != '\\')
         {
             if (prev == 0)
             {
