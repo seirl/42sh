@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Range 13 with negation",
+    "string": "testatestlol",
+    "pattern": "test[!A-Z0-9]test*",
+    "output": "0"
+}

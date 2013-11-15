@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Class 2 alpha",
+    "string": "test",
+    "pattern": "[[:alpha:]]es[[:alpha:]]",
+    "output": "0"
+}

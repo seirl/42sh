@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Range with negation bracket",
+    "string": "testdtestlol",
+    "pattern": "test[!]]test*",
+    "output": "0"
+}

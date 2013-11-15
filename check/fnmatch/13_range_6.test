@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Range 6",
+    "string": "testKtestlol",
+    "pattern": "test[a-z]test*",
+    "output": "1"
+}

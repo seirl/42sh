@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Question mark 5 with backslash",
+    "string": "canniberge lol",
+    "pattern": "canniberge\\?lol",
+    "output": "1"
+}

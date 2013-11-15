@@ -112,3 +112,29 @@ def new_test_run_lexer(test, options):
         subself.assertEqual(retval, lexer.returncode, "return value differ")
 
     return QDTestCaseLexer, test_lexer
+
+class QDTestCaseFnmatch(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[string: {}] [pattern: {}]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('string', "None"),
+                self.test.get('pattern', "None"),
+            )
+
+def new_test_run_fnmatch(test, options):
+    def test_fnmatch(subself):
+        timeout = test.get('timeout', options.timeout)
+        string = test.get('string', "")
+        pattern = test.get('pattern', "")
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+
+        fnmatch = subself.start_program(["./test_fnmatch", pattern, string],
+            with_valgrind=with_valgrind)
+        stdoutdata, stderrdata = fnmatch.communicate(b"", options.timeout)
+
+        if 'output' in test:
+            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
+                             "stdout differ")
+
+    return QDTestCaseFnmatch, test_fnmatch

@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Class 4 digit",
+    "string": "-es-",
+    "pattern": "[[:digit:]]es[[:digit:]]",
+    "output": "1"
+}

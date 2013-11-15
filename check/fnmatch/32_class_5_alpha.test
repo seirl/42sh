@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Class 5 alpha",
+    "string": "tes-",
+    "pattern": "[[:alpha:]]es[[:alpha:]]",
+    "output": "1"
+}

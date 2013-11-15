@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Star 2",
+    "string": "testabtestabtest",
+    "pattern": "*ab*d",
+    "output": "1"
+}

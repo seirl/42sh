@@ -21,6 +21,11 @@ add_executable(test_parser
     $<TARGET_OBJECTS:string>
 )
 
+add_executable(test_fnmatch
+    test_fnmatch.c
+    $<TARGET_OBJECTS:fnmatch>
+)
+
 add_executable(run_readline_test
     test_readline.c
     $<TARGET_OBJECTS:string>

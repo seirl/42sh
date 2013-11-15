@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Range ending with minus",
+    "string": "test-testlol",
+    "pattern": "test[a-z-]test*",
+    "output": "0"
+}

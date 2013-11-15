@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Class 3 alnum",
+    "string": "tes7",
+    "pattern": "[[:alnum:]]es[[:alnum:]]",
+    "output": "0"
+}

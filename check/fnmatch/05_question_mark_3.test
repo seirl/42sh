@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Question mark 3",
+    "string": "cannibergelol",
+    "pattern": "canniberge?lol",
+    "output": "1"
+}

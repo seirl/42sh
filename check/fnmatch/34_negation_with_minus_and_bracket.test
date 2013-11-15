@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Negation with minus and bracket",
+    "string": "f",
+    "pattern": "[!]-]",
+    "output": "0"
+}

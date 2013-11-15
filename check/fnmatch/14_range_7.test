@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Range 7",
+    "string": "test5testlol",
+    "pattern": "test[a-zA-Z0-9]test*",
+    "output": "0"
+}

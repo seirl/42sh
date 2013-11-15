@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Multiple stars 2",
+    "string": "abcd",
+    "pattern": "**a*****?***bc**d****",
+    "output": "1"
+}

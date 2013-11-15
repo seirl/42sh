@@ -4,6 +4,7 @@ import unittest
 
 from .case import (QDTestCase,
         new_test_run_42sh,
+        new_test_run_fnmatch,
         new_test_run_lexer)
 from .suite import QDTestSuite
 
@@ -12,6 +13,7 @@ class QDTestLoader(unittest.TestLoader):
 
     test_methods = {
             'lexer': new_test_run_lexer,
+            'fnmatch': new_test_run_fnmatch,
             '42sh': new_test_run_42sh,
             }
 
