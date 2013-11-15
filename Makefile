@@ -7,6 +7,7 @@ all:
 
 clean:
 	$(RM) -r build
+	$(RM) common.cmake
 
 check: all
 	cd build/check && ./run_tests.py
