@@ -85,13 +85,10 @@ add_library(exec OBJECT
     src/exec/exec_redir.c
 )
 
-set(cfiles
+add_executable(../42sh
     src/main.c
     src/sighandler.c
-)
 
-add_executable(../42sh
-    ${cfiles}
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:log>
