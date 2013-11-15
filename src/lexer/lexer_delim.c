@@ -25,6 +25,7 @@ static int is_valid_operator(s_lexer *lexer, s_string *s)
     if (!strcmp(s->buf, Str))           \
     {                                   \
         lexer->token_type = Tok;        \
+        lexer->concat = -1;             \
         return 1;                       \
     }
 #include "operator.def"
@@ -92,6 +93,21 @@ static int fill_until(s_lexer *lexer, int include_last)
     return c != 0;
 }
 
+static int fill_upto_delim(s_lexer *lexer)
+{
+    char c;
+    char prev = 0;
+    do
+    {
+        c = lexer->topc(lexer);
+        if ((is_quote(c) || is_delimiter(c)) && prev != '\\')
+            break;
+        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        prev = c;
+    } while (c != 0 && c != EOF);
+    return 1;
+}
+
 static int handle_quotes(s_lexer *lexer, char c, char prev)
 {
     if (prev == '\\')
@@ -121,6 +137,8 @@ static int handle_dollar(s_lexer *lexer, char c, char prev)
             lexer->sur.count = 1;
             fill_until(lexer, 1);
         }
+        else
+            fill_upto_delim(lexer);
         return 1;
     }
     return 0;
@@ -142,21 +160,6 @@ static int handle_comment(s_lexer *lexer, char c, char prev)
     return 0;
 }
 
-static int fill_upto_delim(s_lexer *lexer)
-{
-    char c;
-    char prev = 0;
-    do
-    {
-        c = lexer->topc(lexer);
-        if (is_delimiter(c) && prev != '\\')
-            break;
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
-        prev = c;
-    } while (c != 0 && c != EOF);
-    return 1;
-}
-
 int handle_assignment(s_lexer *lexer, char c)
 {
     if (c == '=')
@@ -166,8 +169,9 @@ int handle_assignment(s_lexer *lexer, char c)
             if (is_quote(lexer->working_buffer->buf[i]))
                 return 0;
         }
-        if (fill_upto_delim(lexer) == 0)
-            return 0;
+        //if (fill_upto_delim(lexer) == 0)
+        //    return 0;
+        lexer->getc(lexer); //discard '='
         lexer->token_type = T_ASSIGNMENT_WORD;
         return 1;
     }
@@ -183,7 +187,7 @@ int lex_delimit_token(s_lexer *lexer)
 
     //if (lexer->sur.end)
     //    return fill_until(lexer, 0);
-    lexer->concat = !lex_eat_spaces(lexer);
+    lexer->concat = lexer->concat == -1 ? 0 : !lex_eat_spaces(lexer);
 
     do
     {

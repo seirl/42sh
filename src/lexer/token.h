@@ -35,7 +35,7 @@ struct token
     e_token_type type;
     u_token_value value;
     s_location location;
-    int blank_preceed;
+    int concat;
 };
 typedef struct token s_token;
 
@@ -45,7 +45,7 @@ typedef struct token s_token;
 s_token *token_create(e_token_type type,
                       u_token_value value,
                       s_location location,
-                      int blank_preceed);
+                      int concat);
 
 /**
 ** @brief Duplicate a token.
