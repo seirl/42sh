@@ -44,7 +44,14 @@ typedef struct token s_token;
 */
 s_token *token_create(e_token_type type,
                       u_token_value value,
-                      s_location location);
+                      s_location location,
+                      int blank_preceed);
+
+/**
+** @brief Duplicate a token.
+*/
+s_token *token_duplicate(const s_token *token);
+
 void token_free(s_token *tok);
 
 // Debug functions

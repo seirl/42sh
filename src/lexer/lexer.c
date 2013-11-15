@@ -71,6 +71,9 @@ static int lex_newline(s_lexer *lexer)
 
 s_token *lex_token(s_lexer *lexer)
 {
+    if (lexer->lookahead)
+        return lex_release_lookahead(lexer);
+
     lex_delimit_token(lexer);
 
     if (lex_eof(lexer))

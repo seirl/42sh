@@ -20,6 +20,7 @@ s_lexer *lex_create(char (*lex_getc)(void *input_state),
     lexer->sur.count = 0;
     lexer->quoted = 0;
     lexer->concat = 0;
+    lexer->lookahead = NULL;
 
     return lexer;
 }

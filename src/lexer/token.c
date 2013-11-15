@@ -1,6 +1,8 @@
 #include <stdio.h>
+
 #include "token.h"
 #include "smalloc.h"
+#include "string_utils.h"
 
 void token_print(s_token *tok)
 {
@@ -22,7 +24,8 @@ void token_print(s_token *tok)
 
 s_token *token_create(e_token_type type,
                       u_token_value value,
-                      s_location location)
+                      s_location location,
+                      int blank_preceed)
 {
     s_token *tok;
 
@@ -31,14 +34,28 @@ s_token *token_create(e_token_type type,
     tok->type = type;
     tok->value = value;
     tok->location = location;
-    tok->blank_preceed = 0;
+    tok->blank_preceed = blank_preceed;
 
     return tok;
 }
 
+s_token *token_duplicate(const s_token *tok)
+{
+    if (tok->type == T_WORD)
+    {
+        u_token_value value;
+        value.str = string_duplicate(tok->value.str);
+        return (token_create(tok->type, value,
+               tok->location, tok->blank_preceed));
+    }
+    return (token_create(tok->type, tok->value, tok->location,
+           tok->blank_preceed));
+}
+
 void token_free(s_token *tok)
 {
-    if (tok->type == T_WORD) // FIXME: Other types may hold strings
+    // FIXME: Other types may hold strings
+    if (tok->type == T_WORD && tok->value.str)
         string_free(tok->value.str);
     sfree(tok);
 }

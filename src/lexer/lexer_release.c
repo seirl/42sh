@@ -28,7 +28,7 @@ s_token *lex_release_token(s_lexer *lexer)
 
     type = lexer->token_type;
     value.str = string_moult(&(lexer->working_buffer));
-    tok = token_create(type, value, lexer->location);
+    tok = token_create(type, value, lexer->location, 0);
 
     lexer_reset(lexer);
 

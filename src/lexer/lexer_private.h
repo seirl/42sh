@@ -29,6 +29,8 @@ struct lexer
     s_surround sur;
     char quoted;
     int concat;
+    //! Lookahead token
+    s_token *lookahead;
 };
 
 /**
@@ -40,6 +42,11 @@ struct lexer
 ** The token is said to be delimited.
 */
 s_token *lex_release_token(s_lexer *lexer);
+
+/**
+** @brief Release current lookahead.
+*/
+s_token *lex_release_lookahead(s_lexer *lexer);
 
 int lex_delimit_token(s_lexer *lexer);
 
