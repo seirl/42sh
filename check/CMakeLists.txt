@@ -18,3 +18,11 @@ add_executable(run_readline_test
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:readline>
 )
+
+add_executable(test_exec
+    test_exec.c
+    $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:exec>
+)

@@ -13,6 +13,7 @@ include_directories(src/options)
 include_directories(src/parser)
 include_directories(src/readline)
 include_directories(src/utils)
+include_directories(src/exec)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -70,6 +71,17 @@ add_library(parser OBJECT
     src/parser/parser_delete.c
     src/parser/parse_rule_input.c
     src/parser/parse_rule_list.c
+)
+
+add_library(exec OBJECT
+    src/exec/exec_bang.c
+    src/exec/exec.c
+    src/exec/exec_cmds.c
+    src/exec/exec_control.c
+    src/exec/exec_func.c
+    src/exec/exec_or_and.c
+    src/exec/exec_pipes.c
+    src/exec/exec_redir.c
 )
 
 set(cfiles

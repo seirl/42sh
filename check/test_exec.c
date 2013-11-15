@@ -78,7 +78,7 @@ int main(void)
 #endif
 
     char *grep_cmd = "grep";
-    char *grep_arg = "nass";
+    char *grep_arg = "root";
     char *grep_arg2 = "/etc/passwd";
     char **grep_cmd_str = malloc(sizeof (char *) * 4);
     grep_cmd_str[0] = grep_cmd;
