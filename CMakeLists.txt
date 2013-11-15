@@ -16,6 +16,7 @@ add_definitions(-D_XOPEN_SOURCE)
 include_directories(src)
 include_directories(src/ast)
 include_directories(src/lexer)
+include_directories(src/fnmatch)
 include_directories(src/options)
 include_directories(src/parser)
 include_directories(src/readline)
@@ -46,7 +47,7 @@ add_library(string OBJECT
 )
 
 add_library(fnmatch OBJECT
-    src/utils/my_fnmatch.c
+    src/fnmatch/fnmatch.c
 )
 
 add_library(lexer OBJECT

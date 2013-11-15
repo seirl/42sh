@@ -23,10 +23,8 @@ static const struct sclasses
 static int classeq(const char *start, int class_index)
 {
     for (int i = 0; start[i] && start[i] != ':' && start[i + 1] != ']'; i++)
-    {
         if (start[i] != classes[class_index].name[i])
             return 0;
-    }
     return 1;
 }
 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "my_fnmatch.h"
+#include "fnmatch.h"
 
 int main(int argc, char **argv)
 {
