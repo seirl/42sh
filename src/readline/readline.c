@@ -33,7 +33,7 @@ s_string *readline(const char *prompt) // TODO: test
             string_putc(buffer, c);
             index++;
         }
-        else if (c == '')
+        else if (c == '\x1b') /** ESC (escape) == ^[ */
             handle_special(buffer, c);
     }
 
