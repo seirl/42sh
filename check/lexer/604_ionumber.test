@@ -2,11 +2,11 @@
     "type": "lexer",
     "desc": "IOnumber with spaces",
     "input": """echo lol 42 >&2""",
-    "output": """echo	T_WORD
-lol	T_WORD
-42	T_WORD
->&	T_GREATAND
-2	T_WORD
-	T_EOF
+    "output": """echo	T_WORD (0)
+lol	T_WORD (0)
+42	T_WORD (0)
+>&	T_GREATAND (0)
+2	T_WORD (0)
+	T_EOF (0)
 """
 }

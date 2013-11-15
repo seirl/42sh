@@ -2,9 +2,9 @@
     "type": "lexer",
     "desc": "Subshell, math operator and quote",
     "input": """($(($((1 + 1)) + 1 + `echo \')\'`)))""",
-    "output": """(	T_LPAREN
-$(($((1 + 1)) + 1 + `echo ')'`))	T_WORD
-)	T_RPAREN
-	T_EOF
+    "output": """(	T_LPAREN (0)
+$(($((1 + 1)) + 1 + `echo ')'`))	T_WORD (0)
+)	T_RPAREN (0)
+	T_EOF (0)
 """
 }

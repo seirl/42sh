@@ -2,11 +2,11 @@
     "type": "lexer",
     "desc": "IOnumber with a number in it",
     "input": """echo lol 13e7>foo""",
-    "output": """echo	T_WORD
-lol	T_WORD
-13e7	T_WORD
->	T_GREAT
-foo	T_WORD
-	T_EOF
+    "output": """echo	T_WORD (0)
+lol	T_WORD (0)
+13e7	T_WORD (0)
+>	T_GREAT (0)
+foo	T_WORD (0)
+	T_EOF (0)
 """
 }

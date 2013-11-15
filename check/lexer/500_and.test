@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "And",
     "input": """&""",
-    "output": """&	T_AND
-	T_EOF
+    "output": """&	T_AND (0)
+	T_EOF (0)
 """
 }

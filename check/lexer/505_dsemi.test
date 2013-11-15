@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Dsemi",
     "input": """;;""",
-    "output": """;;	T_DSEMI
-	T_EOF
+    "output": """;;	T_DSEMI (0)
+	T_EOF (0)
 """
 }

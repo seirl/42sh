@@ -11,6 +11,7 @@ static int lex_res_word(s_lexer *lexer)
     if (string_equal(lexer->working_buffer, Str)) \
     {                                             \
         lexer->token_type = Type;                 \
+        lexer->concat = -1;                       \
         return 1;                                 \
     }
 #include "res_word.def"
@@ -55,6 +56,9 @@ static int lex_name(s_lexer *lexer)
 {
     if (lexer->token_type == T_WORD && lexer->working_buffer->buf[0] == '$')
     {
+        if (lexer->working_buffer->buf[1] == '('
+           && lexer->working_buffer->buf[2] == '(')
+            return 0;
         lexer->token_type = T_NAME;
         return 1;
     }
@@ -77,7 +81,7 @@ static int lex_newline(s_lexer *lexer)
     if (lexer->working_buffer->buf[0] == '\n')
     {
         lexer->token_type = T_NEWLINE;
-        lexer->concat = 0;
+        lexer->concat = -1;
         return 1;
     }
     return 0;

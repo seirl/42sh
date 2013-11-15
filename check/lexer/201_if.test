@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "if",
     "input": """if""",
-    "output": """if	T_IF
-	T_EOF
+    "output": """if	T_IF (0)
+	T_EOF (0)
 """
 }

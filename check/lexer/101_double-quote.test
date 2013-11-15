@@ -2,9 +2,9 @@
     "type": "lexer",
     "desc": "Simple double quote",
     "input": """"echo" " foo'baz'\n"bar""",
-    "output": """"echo"	T_WORD
-" foo'baz'\n"	T_WORD
-bar	T_WORD
-	T_EOF
+    "output": """"echo"	T_WORD (0)
+" foo'baz'\n"	T_WORD (0)
+bar	T_WORD (1)
+	T_EOF (0)
 """
 }

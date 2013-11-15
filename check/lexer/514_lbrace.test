@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Lbrace",
     "input": """{""",
-    "output": """{	T_LBRACE
-	T_EOF
+    "output": """{	T_LBRACE (0)
+	T_EOF (0)
 """
 }

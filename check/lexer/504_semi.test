@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Semi",
     "input": """;""",
-    "output": """;	T_SEMI
-	T_EOF
+    "output": """;	T_SEMI (0)
+	T_EOF (0)
 """
 }

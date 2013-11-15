@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Elif",
     "input": """elif""",
-    "output": """elif	T_ELIF
-	T_EOF
+    "output": """elif	T_ELIF (0)
+	T_EOF (0)
 """
 }

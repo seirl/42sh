@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Rbrace",
     "input": """}""",
-    "output": """}	T_RBRACE
-	T_EOF
+    "output": """}	T_RBRACE (0)
+	T_EOF (0)
 """
 }

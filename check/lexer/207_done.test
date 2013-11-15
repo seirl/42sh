@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Done",
     "input": """done""",
-    "output": """done	T_DONE
-	T_EOF
+    "output": """done	T_DONE (0)
+	T_EOF (0)
 """
 }

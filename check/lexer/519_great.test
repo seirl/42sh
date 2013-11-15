@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Great",
     "input": """>""",
-    "output": """>	T_GREAT
-	T_EOF
+    "output": """>	T_GREAT (0)
+	T_EOF (0)
 """
 }

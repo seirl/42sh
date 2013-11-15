@@ -2,10 +2,10 @@
     "type": "lexer",
     "desc": "Quoted string concatenation",
     "input": """echo 'foo'bar'baz'""",
-    "output": """echo	T_WORD
-'foo'	T_WORD
-bar	T_WORD
-'baz'	T_WORD
-	T_EOF
+    "output": """echo	T_WORD (0)
+'foo'	T_WORD (0)
+bar	T_WORD (1)
+'baz'	T_WORD (1)
+	T_EOF (0)
 """
 }

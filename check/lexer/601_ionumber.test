@@ -2,12 +2,12 @@
     "type": "lexer",
     "desc": "IOnumber with an operator",
     "input": """echo lol &2>foo""",
-    "output": """echo	T_WORD
-lol	T_WORD
-&	T_AND
-2	T_IO_NUMBER
->	T_GREAT
-foo	T_WORD
-	T_EOF
+    "output": """echo	T_WORD (0)
+lol	T_WORD (0)
+&	T_AND (0)
+2	T_IO_NUMBER (0)
+>	T_GREAT (0)
+foo	T_WORD (0)
+	T_EOF (0)
 """
 }

@@ -2,26 +2,26 @@
     "type": "lexer",
     "desc": "Parenthesis and operator without any blanks",
     "input": """((echo 'fo)o'))&&(echo '&&' && ls) || $(FOO) &&& ${BAR}; $((1+1))""",
-    "output": """(	T_LPAREN
-(	T_LPAREN
-echo	T_WORD
-'fo)o'	T_WORD
-)	T_RPAREN
-)	T_RPAREN
-&&	T_AND_IF
-(	T_LPAREN
-echo	T_WORD
-'&&'	T_WORD
-&&	T_AND_IF
-ls	T_WORD
-)	T_RPAREN
-||	T_OR_IF
-$(FOO)	T_WORD
-&&	T_AND_IF
-&	T_AND
-${BAR}	T_WORD
-;	T_SEMI
-$((1+1))	T_WORD
-	T_EOF
+    "output": """(	T_LPAREN (0)
+(	T_LPAREN (0)
+echo	T_WORD (0)
+'fo)o'	T_WORD (0)
+)	T_RPAREN (0)
+)	T_RPAREN (0)
+&&	T_AND_IF (0)
+(	T_LPAREN (0)
+echo	T_WORD (0)
+'&&'	T_WORD (0)
+&&	T_AND_IF (0)
+ls	T_WORD (0)
+)	T_RPAREN (0)
+||	T_OR_IF (0)
+$(FOO)	T_NAME (0)
+&&	T_AND_IF (0)
+&	T_AND (0)
+${BAR}	T_NAME (0)
+;	T_SEMI (0)
+$((1+1))	T_WORD (0)
+	T_EOF (0)
 """
 }

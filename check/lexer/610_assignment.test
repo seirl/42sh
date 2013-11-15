@@ -2,7 +2,8 @@
     "type": "lexer",
     "desc": "Simple assignment word",
     "input": """foo=bar""",
-    "output": """foo=bar	T_ASSIGNMENT_WORD
-	T_EOF
+    "output": """foo	T_ASSIGNMENT_WORD (0)
+bar	T_WORD (1)
+	T_EOF (0)
 """
 }

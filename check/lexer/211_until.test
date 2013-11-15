@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Until",
     "input": """until""",
-    "output": """until	T_UNTIL
-	T_EOF
+    "output": """until	T_UNTIL (0)
+	T_EOF (0)
 """
 }

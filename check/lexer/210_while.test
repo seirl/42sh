@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "While",
     "input": """while""",
-    "output": """while	T_WHILE
-	T_EOF
+    "output": """while	T_WHILE (0)
+	T_EOF (0)
 """
 }

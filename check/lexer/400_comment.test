@@ -2,13 +2,13 @@
     "type": "lexer",
     "desc": "Comments end of line",
     "input": """echo foo#echo\necho foo #comment\nls""",
-    "output": """echo	T_WORD
-foo#echo	T_WORD
-\n	T_NEWLINE
-echo	T_WORD
-foo	T_WORD
-#comment\n	T_NEWLINE
-ls	T_WORD
-	T_EOF
+    "output": """echo	T_WORD (0)
+foo#echo	T_WORD (0)
+\n	T_NEWLINE (0)
+echo	T_WORD (0)
+foo	T_WORD (0)
+#comment\n	T_NEWLINE (0)
+ls	T_WORD (0)
+	T_EOF (0)
 """
 }

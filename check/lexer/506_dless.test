@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Dless",
     "input": """<<""",
-    "output": """<<	T_DLESS
-	T_EOF
+    "output": """<<	T_DLESS (0)
+	T_EOF (0)
 """
 }

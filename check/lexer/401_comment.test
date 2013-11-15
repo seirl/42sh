@@ -2,11 +2,11 @@
     "type": "lexer",
     "desc": "Only Comments and newline",
     "input": """#comm\n#\n# !/bin/sh\n\n#end""",
-    "output": """#comm\n	T_NEWLINE
-#\n	T_NEWLINE
-# !/bin/sh\n	T_NEWLINE
-\n	T_NEWLINE
-#end	T_NEWLINE
-	T_EOF
+    "output": """#comm\n	T_NEWLINE (0)
+#\n	T_NEWLINE (0)
+# !/bin/sh\n	T_NEWLINE (0)
+\n	T_NEWLINE (0)
+#end	T_NEWLINE (0)
+	T_EOF (0)
 """
 }

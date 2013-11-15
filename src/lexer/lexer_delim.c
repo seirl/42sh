@@ -155,6 +155,7 @@ static int handle_comment(s_lexer *lexer, char c, char prev)
         lexer->sur.count = 1;
         fill_until(lexer, 1);
         lexer->token_type = T_NEWLINE;
+        lexer->concat = -1;
         return 1;
     }
     return 0;
@@ -180,14 +181,13 @@ int handle_assignment(s_lexer *lexer, char c)
 
 int lex_delimit_token(s_lexer *lexer)
 {
-    string_reset(lexer->working_buffer);
-    lexer->token_type = T_WORD;
-    char prev = 0;
     char c;
+    char prev = 0;
 
     //if (lexer->sur.end)
     //    return fill_until(lexer, 0);
-    lexer->concat = lexer->concat == -1 ? 0 : !lex_eat_spaces(lexer);
+    int spaces = lex_eat_spaces(lexer);
+    lexer->concat = lexer->concat == -1 ? 0 : !spaces;
 
     do
     {

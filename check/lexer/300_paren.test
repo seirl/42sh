@@ -2,11 +2,11 @@
     "type": "lexer",
     "desc": "Parenthesis",
     "input": """echo (ls) $(FOO) """,
-    "output": """echo	T_WORD
-(	T_LPAREN
-ls	T_WORD
-)	T_RPAREN
-$(FOO)	T_WORD
-	T_EOF
+    "output": """echo	T_WORD (0)
+(	T_LPAREN (0)
+ls	T_WORD (0)
+)	T_RPAREN (0)
+$(FOO)	T_NAME (0)
+	T_EOF (0)
 """
 }

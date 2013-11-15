@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Clobber",
     "input": """>|""",
-    "output": """>|	T_CLOBBER
-	T_EOF
+    "output": """>|	T_CLOBBER (0)
+	T_EOF (0)
 """
 }

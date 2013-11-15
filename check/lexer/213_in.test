@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "In",
     "input": """in""",
-    "output": """in	T_IN
-	T_EOF
+    "output": """in	T_IN (0)
+	T_EOF (0)
 """
 }

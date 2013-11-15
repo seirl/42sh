@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Less",
     "input": """<""",
-    "output": """<	T_LESS
-	T_EOF
+    "output": """<	T_LESS (0)
+	T_EOF (0)
 """
 }

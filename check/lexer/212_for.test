@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "For",
     "input": """for""",
-    "output": """for	T_FOR
-	T_EOF
+    "output": """for	T_FOR (0)
+	T_EOF (0)
 """
 }

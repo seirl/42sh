@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Andif",
     "input": """&&""",
-    "output": """&&	T_AND_IF
-	T_EOF
+    "output": """&&	T_AND_IF (0)
+	T_EOF (0)
 """
 }

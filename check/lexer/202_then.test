@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Then",
     "input": """then""",
-    "output": """then	T_THEN
-	T_EOF
+    "output": """then	T_THEN (0)
+	T_EOF (0)
 """
 }

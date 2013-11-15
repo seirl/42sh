@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Esac",
     "input": """esac""",
-    "output": """esac	T_ESAC
-	T_EOF
+    "output": """esac	T_ESAC (0)
+	T_EOF (0)
 """
 }

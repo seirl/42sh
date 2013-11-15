@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Else",
     "input": """else""",
-    "output": """else	T_ELSE
-	T_EOF
+    "output": """else	T_ELSE (0)
+	T_EOF (0)
 """
 }

@@ -1,0 +1,10 @@
+{
+    "type": "lexer",
+    "desc": "Assign an assignment word",
+    "input": """foo=$bar'suffix'""",
+    "output": """foo	T_ASSIGNMENT_WORD (0)
+$bar	T_NAME (1)
+'suffix'	T_WORD (1)
+	T_EOF (0)
+"""
+}

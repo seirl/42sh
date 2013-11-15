@@ -1,8 +1,8 @@
 {
     "type": "lexer",
-    "desc": "Test WORD token",
+    "desc": "Single token",
     "input": "A",
-    "output": """A	T_WORD
-	T_EOF
+    "output": """A	T_WORD (0)
+	T_EOF (0)
 """
 }

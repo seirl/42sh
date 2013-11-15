@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Do",
     "input": """do""",
-    "output": """do	T_DO
-	T_EOF
+    "output": """do	T_DO (0)
+	T_EOF (0)
 """
 }

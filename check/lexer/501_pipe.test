@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Pipe",
     "input": """|""",
-    "output": """|	T_PIPE
-	T_EOF
+    "output": """|	T_PIPE (0)
+	T_EOF (0)
 """
 }

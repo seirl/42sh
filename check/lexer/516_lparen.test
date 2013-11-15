@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Lparen",
     "input": """(""",
-    "output": """(	T_LPAREN
-	T_EOF
+    "output": """(	T_LPAREN (0)
+	T_EOF (0)
 """
 }

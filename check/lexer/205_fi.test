@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Fi",
     "input": """fi""",
-    "output": """fi	T_FI
-	T_EOF
+    "output": """fi	T_FI (0)
+	T_EOF (0)
 """
 }
