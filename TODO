@@ -29,9 +29,12 @@ EXPANSION
 EVALUATION
 ==========
     Done:
-        -
+        - Simple Commands
+        - Pipes
+        - If commands
     Todo:
-        -
+        - Debug Or, And, While, Until
+        - finish implementing Case, Functions, For, ";", "&"
 
 TESTS
 =====
