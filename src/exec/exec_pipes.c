@@ -60,7 +60,7 @@ static pid_t exec_pipe_side_cmd(int fd_pipe[2],
 static int exec_pipe_cmd(s_pipe *p, struct binary_node *node)
 {
     int fd_pipe[2];
-    if (pipe2(fd_pipe, 0) < 0)
+    if (pipe(fd_pipe) < 0)
         return 0; /* pipe failed */
 
     /* execute right node */
