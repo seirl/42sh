@@ -9,7 +9,7 @@ static s_ast_element *element_new(void)
     element->next = NULL;
     element->word = NULL;
     element->redirection = NULL;
-    
+
     return element;
 }
 

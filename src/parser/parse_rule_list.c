@@ -4,9 +4,11 @@
 static s_ast_list *list_new(void)
 {
     s_ast_list *list = smalloc(sizeof (s_ast_list));
+
     list->next_asynchronous = 0;
     list->and_or = NULL;
     list->next = NULL;
+
     return list;
 }
 
