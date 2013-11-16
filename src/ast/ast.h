@@ -64,7 +64,8 @@ typedef enum redirection_type e_redirection_type;
 /**
 ** @brief Redirections
 **
-** redirection :
+** @code
+** redirection:
 **        [IONUMBER] '>' WORD
 **      | [IONUMBER] '<' WORD
 **      | [IONUMBER] '>>' WORD
@@ -74,6 +75,7 @@ typedef enum redirection_type e_redirection_type;
 **      | [IONUMBER] '<&' WORD
 **      | [IONUMBER] '>|' WORD
 **      | [IONUMBER] '<>' WORD
+** @endcode
 */
 struct ast_redirection
 {
@@ -87,7 +89,9 @@ typedef struct ast_redirection s_ast_redirection;
 /**
 ** @brief Prefixes
 **
+** @code
 ** prefixes: (ASSIGMENT_WORD | redirection)+
+** @endcode
 */
 struct ast_prefix
 {
@@ -100,7 +104,9 @@ typedef struct ast_prefix s_ast_prefix;
 /**
 ** @brief Elements
 **
+** @code
 ** elements: (WORD | redirection)+
+** @endcode
 */
 struct ast_element
 {
@@ -116,8 +122,10 @@ struct ast_element
 /**
 ** @brief Simple command
 **
+** @code
 ** simple_command: (prefix)+
 **          | (prefix)* elements
+** @endcode
 */
 struct ast_simple_cmd
 {
@@ -150,8 +158,10 @@ typedef struct ast_case s_ast_case;
 /**
 ** @brief For
 **
+** @code
 ** rule_for:
 **          'for' WORD ('\n')* ['in' (WORD)* (';'|'\n') ('\n')*] do_group
+** @endcode
 */
 struct ast_for
 {
@@ -164,8 +174,10 @@ typedef struct ast_for s_ast_for;
 /**
 ** @brief If
 **
+** @code
 ** rule_if:
 **          'if' compound_list 'then' compound_list [else_clause] 'fi'
+** @endcode
 */
 struct ast_if
 {
@@ -178,14 +190,14 @@ typedef struct ast_if s_ast_if;
 
 struct ast_until
 {
-    s_ast_list *preficate;
+    s_ast_list *predicate;
     s_ast_list *cms;
 };
 typedef struct ast_until s_ast_until;
 
 struct ast_while
 {
-    s_ast_list *preficate;
+    s_ast_list *predicate;
     s_ast_list *cms;
 };
 typedef struct ast_while s_ast_while;
@@ -213,6 +225,7 @@ typedef union ctrl_structure u_ctrl_structure;
 /**
 ** @brief Shell command
 **
+** @code
 ** shell_command: '{' compound_list '}'
 **          | '(' compound_list ')'
 **          | rule_for
@@ -220,6 +233,7 @@ typedef union ctrl_structure u_ctrl_structure;
 **          | rule_until
 **          | rule_case
 **          | rule_if
+** @endcode
 */
 struct ast_shell_cmd
 { 
@@ -234,7 +248,9 @@ typedef struct ast_shell_cmd s_ast_shell_cmd;
 /**
 ** @brief Function definition
 **
+** @code
 ** funcdec: ['function'] WORD '(' ')' ('\n')* shell_command
+** @endcode
 */
 struct ast_funcdec
 {
@@ -246,9 +262,11 @@ typedef struct ast_funcdec s_ast_funcdec;
 /**
 ** @brief Command
 **
+** @code
 ** command: simple_command
 **          | shell_command (redirection)*
 **          | funcdec (redirection)*
+** @endcode
 */
 struct ast_cmd
 {
@@ -261,7 +279,9 @@ typedef struct ast_cmd s_ast_cmd;
 
 /** @brief Pipeline
 **
+** @code
 ** pipeline: ['!'] command ('|' ('\n')* command)*
+** @endcode
 */
 struct ast_pipeline
 {
@@ -281,7 +301,9 @@ typedef enum ast_pipeline_and_or e_ast_pipeline_and_or;
 /**
 ** @brief And or Or
 **
+** @code
 ** and_or: pipeline (('&&'|'|| ') ('\n')* pipeline)*
+** @endcode
 */
 struct ast_and_or
 {
@@ -294,7 +316,9 @@ typedef struct ast_and_or s_ast_and_or;
 /**
 ** @brief List
 **
+** @code
 ** list: and_or (( ';'|'& ') and_or )* [';'|'&']
+** @endcode
 */
 struct ast_list
 {
@@ -307,7 +331,9 @@ struct ast_list
 /**
 ** @brief input
 **
+** @code
 ** input: list ('\n'|EOF) | \n | EOF
+** @endcode
 */
 struct ast_input
 {
