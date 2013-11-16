@@ -88,7 +88,7 @@ static int fill_until(s_lexer *lexer, int include_last)
         update_quote(lexer, c, prev);
         prev = c;
     }
-    if (include_last)
+    if (include_last && c != 0)
         string_putc(lexer->working_buffer, lexer->getc(lexer));
     lexer->quoted = 0;
     lexer->sur.end = 0;
