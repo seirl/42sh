@@ -42,6 +42,10 @@ class QDTestLoader(unittest.TestLoader):
                             .title()\
                             .replace("_", ""))
             test_method_name = 'test_' + test_filename
+
+            if test.get('skip', False):
+                test_method = unittest.skip("broken")(test_method)
+
             # We create the method here to give it the right name
             test_class_methods = {test_method_name: test_method}
             test_case_class = type(test_class_name,

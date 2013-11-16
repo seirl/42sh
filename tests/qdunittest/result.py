@@ -88,6 +88,9 @@ class QDTestResult(unittest.TestResult):
         if show_errors:
             self.printErrors()
 
+        if self.skipped:
+            self.stream.writeln("Skipped: {}".format(len(self.skipped)))
+
         if number:
             self.stream.writeln(
                 "Success: {}/{}".format(
