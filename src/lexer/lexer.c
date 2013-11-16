@@ -88,11 +88,31 @@ static int lex_newline(s_lexer *lexer)
     return 0;
 }
 
+static int token_to_word(s_token *token)
+{
+#define X(Type, Str)                              \
+    if (token->type == Type)                      \
+    {                                             \
+        token->type = T_WORD;                     \
+        return 1;                                 \
+    }
+#include "res_word.def"
+#undef X
+    if (token->type == T_ASSIGNMENT_WORD
+       || token->type == T_IO_NUMBER
+       || token->type == T_WORD)
+    {
+        token->type = T_WORD;
+        return 1;
+    }
+    return 0;
+}
+
 s_token *lex_word(s_lexer *lexer)
 {
     s_token *tok = lex_look_token(lexer);
 
-    if (tok->type == T_WORD)
+    if (token_to_word(tok))
     {
         token_free(tok);
         return lex_token(lexer);
