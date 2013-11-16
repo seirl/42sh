@@ -1,0 +1,5 @@
+{
+    "desc": "rule and_or: one and",
+    "input": "a && b",
+    "output": "",
+}
