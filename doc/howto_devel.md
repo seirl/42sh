@@ -16,7 +16,7 @@ Testing
 </blockquote>
 
 Tests are organized in tests files. Each test file is located in a sub
-directory of `check/` that describe what is being tested. A test file always
+directory of `tests/` that describe what is being tested. A test file always
 end in `.test`.
 
 ### How to test?
@@ -26,7 +26,7 @@ end in `.test`.
 or
 
     hs24$ make
-    hs24$ cd build/check
+    hs24$ cd build/tests
     hs24$ ./run_tests.py
 
 ### Formats of the tests

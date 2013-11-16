@@ -11,16 +11,16 @@ clean:
 	$(RM) -r doc/html doc/latex
 
 check: all
-	cd build/check && ./run_tests.py
+	cd build/tests && ./run_tests.py
 
 fastcheck: all
-	cd build/check && ./run_tests.py -m
+	cd build/tests && ./run_tests.py -m
 
 coverage: all
 	$(MAKE) -C build coverage
 
 readlinecheck: all
-	cd build/check && ./run_readline_test "Test.$$ "
+	cd build/tests && ./run_readline_test "Test.$$ "
 
 norm:
 	tools/norm.sh src/

@@ -14,7 +14,7 @@ endif()
 if(COVERAGE)
     include(tools/CodeCoverage)
     setup_target_for_coverage(coverage
-                              ./check/run_tests.py
+                              ./tests/run_tests.py
                               coverage
     )
 endif()
@@ -133,4 +133,4 @@ MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
 MESSAGE( STATUS "CMAKE_CPP_FLAGS: " ${CMAKE_CPP_FLAGS} )
 
 # Tests and checks
-add_subdirectory(check)
+add_subdirectory(tests)
