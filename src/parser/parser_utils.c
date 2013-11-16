@@ -11,6 +11,19 @@ s_ast_word *word_of_token(s_token *tok)
     return word;
 }
 
+int parser_eof(s_parser *parser)
+{
+    s_token *tok;
+    tok = lex_look_token(parser->lexer);
+    if (tok->type != T_EOF)
+    {
+        token_free(tok);
+        return 0;
+    }
+    token_free(tok);
+    return 1;
+}
+
 void parser_shift_token(s_parser *parser)
 {
     token_free(lex_token(parser->lexer));
