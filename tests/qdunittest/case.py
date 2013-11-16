@@ -161,6 +161,12 @@ def new_test_run_parser(test, options):
             subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
                              "stdout differ")
 
+        if test.get('stderr') == ...:
+            subself.assertNotEqual("", stderrdata.decode(), "stderr empty")
+        else:
+            subself.assertMultiLineEqual(test.get('stderr', ""),
+                    stderrdata.decode(), "stderr differ")
+
         retval = test.get('retval', 0)
         subself.assertEqual(retval, parser.returncode, "return value differ")
 
