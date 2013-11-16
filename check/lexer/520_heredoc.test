@@ -1,0 +1,10 @@
+{
+    "type": "lexer",
+    "desc": "Heredoc with delim",
+    "input": """cat << foo bar baz foo""",
+    "output": """cat	T_WORD (0)
+<<	T_DLESS (0)
+bar baz	T_WORD (0)
+	T_EOF (0)
+"""
+}

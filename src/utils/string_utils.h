@@ -35,6 +35,7 @@ char string_topc(s_string *s);
 
 void string_del_from_end(s_string *str, size_t n);
 unsigned int string_search(s_string *s, const char *needle);
+s_string *string_extract(s_string *str, size_t start, size_t end);
 
 void string_eat_spaces(s_string *s);
 s_string *string_replace(const s_string *s, const char *pat, const char *rep);

@@ -4,7 +4,7 @@
 
 #define EOF -1
 
-static int lex_eat_spaces(s_lexer *lexer)
+int lex_eat_spaces(s_lexer *lexer)
 {
     char c;
     int ret = 0;
@@ -42,6 +42,9 @@ static int handle_operator(s_lexer *lexer)
         if (!is_valid_operator(lexer, lexer->working_buffer) || c == 0)
         {
             string_del_from_end(lexer->working_buffer, 1);
+            if (lexer->token_type == T_DLESS
+               || lexer->token_type == T_DLESSDASH)
+                lexer->prev_heredoc = 1;
             return 1;
         }
         lexer->getc(lexer);
@@ -192,6 +195,8 @@ int lex_delimit_token(s_lexer *lexer)
     do
     {
         c = lexer->topc(lexer);
+        if (lex_heredoc(lexer))
+            break;
         if (handle_comment(lexer, c, prev))
             break;
         if (handle_dollar(lexer, c, prev))

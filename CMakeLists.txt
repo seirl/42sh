@@ -55,6 +55,7 @@ add_library(lexer OBJECT
     src/lexer/lexer_create.c
     src/lexer/lexer_delete.c
     src/lexer/lexer_delim.c
+    src/lexer/lexer_heredoc.c
     src/lexer/lexer_lookahead.c
     src/lexer/lexer_release.c
     src/lexer/char_utils.c

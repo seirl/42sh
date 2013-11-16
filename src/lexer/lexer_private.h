@@ -29,6 +29,7 @@ struct lexer
     s_surround sur;
     char quoted;
     int concat;
+    int prev_heredoc;
     //! Lookahead token
     s_token *lookahead;
 };
@@ -49,5 +50,7 @@ s_token *lex_release_token(s_lexer *lexer);
 s_token *lex_release_lookahead(s_lexer *lexer);
 
 int lex_delimit_token(s_lexer *lexer);
+int lex_heredoc(s_lexer *lexer);
+int lex_eat_spaces(s_lexer *lexer);
 
 #endif /* !LEXER_PRIVATE_H */
