@@ -5,6 +5,7 @@
 #include "ast.h"
 #include "lexer.h"
 #include "parser.h"
+#include "log.h"
 
 char *str;
 size_t pos = 0;
@@ -40,8 +41,14 @@ int main(int argc, char **argv)
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {
-        ret = 0;
         (void)ast;
+        if (parser_eof(parser))
+            ret = 0;
+        else
+        {
+            LOG(ERROR, "Garbage in the lexer after parsing", NULL);
+            ret = 1;
+        }
     }
     else
         ret = 1;
