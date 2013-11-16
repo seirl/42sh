@@ -8,6 +8,7 @@ usage() {
 $0
     --with-debug    Add debug flags
     --with-coverage Add coverage flags
+    --with-gc       Enable garbage collector
     --help          Display this message
 EOF
 }
@@ -24,6 +25,9 @@ do
             BUILD_TYPE=Debug
             COVERAGE="set(COVERAGE yes)"
             ;;
+        --with-gc)
+            GARBAGE_COLLECTOR="add_definitions(-DCONCHITA)"
+            ;;
         --help)
             usage
             ;;
@@ -33,3 +37,4 @@ done
 echo "set(CMAKE_C_FLAGS \"$CFLAGS\")" > common.cmake
 echo "set(CMAKE_BUILD_TYPE $BUILD_TYPE)" >> common.cmake
 echo $COVERAGE >> common.cmake
+echo $GARBAGE_COLLECTOR >> common.cmake
