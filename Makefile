@@ -8,6 +8,7 @@ all:
 clean:
 	$(RM) -r build
 	$(RM) common.cmake
+	$(RM) -r doc/html doc/latex
 
 check: all
 	cd build/check && ./run_tests.py
