@@ -3,50 +3,119 @@
 
 # include "string_utils.h"
 
+// Forward declarations
+typedef struct ast_list s_ast_list;
+typedef struct ast_element s_ast_element;
+
+/**
+** @brief A word.
+*/
+struct ast_word
+{
+    s_string *str;
+};
+typedef struct ast_word s_ast_word;
+
+/**
+** @brief A word composed of multiple tokens/words.
+**
+** Example: for'bar'
+*/
+struct ast_compound_word
+{
+    s_ast_word *word;
+    struct ast_compound_word *next;
+};
+typedef struct ast_compound_word s_ast_compound_word;
+
+struct ast_io_number
+{
+    unsigned io_number;
+};
+typedef struct ast_io_number s_ast_io_number;
+
+struct ast_heredoc
+{
+    s_string heredoc;
+};
+typedef struct ast_heredoc s_ast_heredoc;
+
+struct ast_assignment
+{
+    s_ast_word *word;
+    s_ast_element *value;
+};
+typedef struct ast_assignment s_ast_assignment;
+
 enum redirection_type
 {
-    REDIR_WRITE, /** > */
-    REDIR_WRITE_UPDATE, /** >> */
-    REDIR_READ, /** < */
-    // ...
+    REDIR_WRITE,            /** >   */
+    REDIR_WRITE_UPDATE,     /** >>  */
+    REDIR_READ,             /** <   */
+    REDIR_HEREDOC,          /** <<  */
+    REDIR_HEREDOC_STRIP,    /** <<- */
+    REDIR_DUPLICATE_INPUT,  /** <&  */
+    REDIR_DUPLICATE_OUTPUT, /** >&  */
+    REDIR_CLOBBER,          /** >|  */
+    REDIR_READ_WRITE,       /** <>  */
 };
 typedef enum redirection_type e_redirection_type;
 
+/**
+** @brief Redirections
+**
+** redirection :
+**        [IONUMBER] '>' WORD
+**      | [IONUMBER] '<' WORD
+**      | [IONUMBER] '>>' WORD
+**      | [IONUMBER] '<<' HEREDOC
+**      | [IONUMBER] '<<-' HEREDOC
+**      | [IONUMBER] '>&' WORD
+**      | [IONUMBER] '<&' WORD
+**      | [IONUMBER] '>|' WORD
+**      | [IONUMBER] '<>' WORD
+*/
 struct ast_redirection
 {
+    s_ast_io_number *io;
+    s_ast_word *word;
+    s_ast_heredoc *heredoc;
     e_redirection_type type;
-    // TODO: s_ast_word to;
-    // TODO: s_ast_heredoc to;
 };
 typedef struct ast_redirection s_ast_redirection;
 
+/**
+** @brief Prefixes
+**
+** prefixes: (ASSIGMENT_WORD | redirection)+
+*/
 struct ast_prefix
 {
-    // TODO: s_ast_assignement *assignement;
+    s_ast_assignment *assignement;
     s_ast_redirection *redirection;
     struct ast_prefix *next;
 };
 typedef struct ast_prefix s_ast_prefix;
 
-// XXX: Will be used to form ast_compound_word, and probably expansion hints
-struct ast_word
-{
-    s_string *word;
-};
-typedef struct ast_word s_ast_word;
-
 /**
+** @brief Elements
+**
 ** elements: (WORD | redirection)+
 */
 struct ast_element
 {
-    s_ast_word *word;
+    s_ast_compound_word *word;
     s_ast_redirection *redirection;
+    // TODO: add T_SHELL_SUBST $()
+    // TODO: add T_VAR_EXP ${}
+    // TODO: add T_MATH_EXP $(())
     struct ast_element *next;
 };
-typedef struct ast_element s_ast_element;
+// typedef forward declared
 
 /**
+** @brief Simple command
+**
 ** simple_command: (prefix)+
 **          | (prefix)* elements
 */
@@ -57,7 +126,71 @@ struct ast_simple_cmd
 };
 typedef struct ast_simple_cmd s_ast_simple_cmd;
 
-enum ctrl_structure
+struct ast_word_list
+{
+    s_ast_compound_word *word;
+    struct ast_word_list *next;
+};
+typedef struct ast_word_list s_ast_word_list;
+
+struct ast_case_item
+{
+    s_ast_word_list *matches;
+    s_ast_list *cmd_list;
+};
+typedef struct ast_case_item s_ast_case_item;
+
+struct ast_case
+{
+    s_ast_compound_word *word;
+    s_ast_case_item *clauses;
+};
+typedef struct ast_case s_ast_case;
+
+/**
+** @brief For
+**
+** rule_for:
+**          'for' WORD ('\n')* ['in' (WORD)* (';'|'\n') ('\n')*] do_group
+*/
+struct ast_for
+{
+    s_ast_word *identifier; /** XXX: add s_ast_name? */
+    s_ast_word_list *values;
+    s_ast_list *cmd_list;
+};
+typedef struct ast_for s_ast_for;
+
+/**
+** @brief If
+**
+** rule_if:
+**          'if' compound_list 'then' compound_list [else_clause] 'fi'
+*/
+struct ast_if
+{
+    s_ast_list *predicate;
+    s_ast_list *then_cmds;
+    s_ast_list *elif_cmds;
+    s_ast_list *else_cmds;
+};
+typedef struct ast_if s_ast_if;
+
+struct ast_until
+{
+    s_ast_list *preficate;
+    s_ast_list *cms;
+};
+typedef struct ast_until s_ast_until;
+
+struct ast_while
+{
+    s_ast_list *preficate;
+    s_ast_list *cms;
+};
+typedef struct ast_while s_ast_while;
+
+enum ctrl_structure_kind
 {
     AST_FOR,
     AST_WHILE,
@@ -65,7 +198,17 @@ enum ctrl_structure
     AST_CASE,
     AST_IF,
 };
-typedef enum ctrl_structure e_ctrl_structure;
+typedef enum ctrl_structure_kind e_ctrl_structure_kind;
+
+union ctrl_structure
+{
+    s_ast_case *ast_case;
+    s_ast_for *ast_for;
+    s_ast_if *ast_if;
+    s_ast_until *ast_until;
+    s_ast_while *ast_while;
+};
+typedef union ctrl_structure u_ctrl_structure;
 
 /**
 ** @brief Shell command
@@ -79,19 +222,19 @@ typedef enum ctrl_structure e_ctrl_structure;
 **          | rule_if
 */
 struct ast_shell_cmd
-{
-    // TODO: compount_list_sameshell { }
-    // TODO: compount_list_subshell ( )
+{ 
+    int subshell; /** if 1 then ( ) else { } */
+    s_ast_list *cmd_list;
 
-    e_ctrl_structure ctrl_structure;
-    // TODO: Add ctrl structures union ptr
+    e_ctrl_structure_kind ctrl_structure;
+    u_ctrl_structure ctrl;
 };
 typedef struct ast_shell_cmd s_ast_shell_cmd;
 
 /**
-** @breif Function definition
+** @brief Function definition
 **
-** funcdec: [' function '] WORD '(' ')' ('\n')* shell_command
+** funcdec: ['function'] WORD '(' ')' ('\n')* shell_command
 */
 struct ast_funcdec
 {
@@ -159,7 +302,7 @@ struct ast_list
     s_ast_and_or *and_or;
     struct ast_list *next;
 };
-typedef struct ast_list s_ast_list;
+// typedef forward declared
 
 /**
 ** @brief input
