@@ -1,0 +1,5 @@
+{
+    "desc": "rule input: multiple words",
+    "input": "a a a a a\n",
+    "output": "",
+}

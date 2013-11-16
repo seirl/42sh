@@ -5,7 +5,9 @@ import unittest
 from .case import (QDTestCase,
         new_test_run_42sh,
         new_test_run_fnmatch,
-        new_test_run_lexer)
+        new_test_run_lexer,
+        new_test_run_parser,
+    )
 from .suite import QDTestSuite
 
 class QDTestLoader(unittest.TestLoader):
@@ -13,6 +15,7 @@ class QDTestLoader(unittest.TestLoader):
 
     test_methods = {
             'lexer': new_test_run_lexer,
+            'parser': new_test_run_parser,
             'fnmatch': new_test_run_fnmatch,
             '42sh': new_test_run_42sh,
             }
@@ -28,7 +31,7 @@ class QDTestLoader(unittest.TestLoader):
             test = eval(f.read())
 
             test_type = test.get('type',
-                    'lexer' if 'lexer' in directory else '42sh')
+                    directory if directory in self.test_methods else '42sh')
             test_func = self.test_methods[test_type]
             test_class, test_method = test_func(test, self.options)
 

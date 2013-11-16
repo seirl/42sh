@@ -23,6 +23,8 @@ char dummy_topc(void *state)
 
 int main(int argc, char **argv)
 {
+    int ret;
+
     if (argc < 2)
     {
         fputs("usage: test_parser <INPUT>\n", stderr);
@@ -36,7 +38,16 @@ int main(int argc, char **argv)
     str = argv[1];
     lexer = lex_create(dummy_getc, dummy_topc, "<test>");
     parser = parser_create(lexer);
-    ast = parse_rule_input(parser);
+    if ((ast = parse_rule_input(parser)))
+    {
+        ret = 0;
+        (void)ast;
+    }
+    else
+        ret = 1;
+
     parser_delete(parser);
     smalloc_clean();
+
+    return ret;
 }

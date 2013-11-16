@@ -138,3 +138,30 @@ def new_test_run_fnmatch(test, options):
                              "stdout differ")
 
     return QDTestCaseFnmatch, test_fnmatch
+
+class QDTestCaseParser(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[input: ]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('input', "None"),
+            )
+
+def new_test_run_parser(test, options):
+    def test_parser(subself):
+        timeout = test.get('timeout', options.timeout)
+        input = test.get('input', "")
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+
+        parser = subself.start_program(["./test_parser", input],
+            with_valgrind=with_valgrind)
+        stdoutdata, stderrdata = parser.communicate(b"", options.timeout)
+
+        if 'output' in test:
+            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
+                             "stdout differ")
+
+        retval = test.get('retval', 0)
+        subself.assertEqual(retval, parser.returncode, "return value differ")
+
+    return QDTestCaseParser, test_parser
