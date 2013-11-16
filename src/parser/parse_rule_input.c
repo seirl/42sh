@@ -32,7 +32,7 @@ s_ast_input *parse_rule_input(s_parser *parser)
     tok = lex_token(parser->lexer);
     if (!(tok->type == T_NEWLINE
         || tok->type == T_EOF))
-        LOG(WARN, "parser: unexpected 'input' token.", NULL);
+        LOG(ERROR, "parser: unexpected 'input' token.", NULL);
     token_free(tok);
 
     return ast;
