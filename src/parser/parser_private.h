@@ -16,7 +16,7 @@ s_ast_list *parse_rule_list(s_parser *parser);
 /** @brief Parse rule and_or. */
 s_ast_and_or *parse_rule_and_or(s_parser *parser);
 /** @brief Parse rule pipeline. */
-s_ast_pipeline *parse_rule_pipeline(s_parser *parser);
+s_ast_pipeline *parse_rule_pipeline(s_parser *parser, int first);
 /** @brief Parse rule command. */
 s_ast_cmd *parse_rule_command(s_parser *parser);
 /** @brief Parse rule simple command. */

@@ -16,7 +16,7 @@ static s_ast_and_or *and_or_new(void)
 s_ast_and_or *parse_rule_and_or(s_parser *parser)
 {
     s_ast_pipeline *pipeline;
-    if (!(pipeline = parse_rule_pipeline(parser)))
+    if (!(pipeline = parse_rule_pipeline(parser, 1)))
         return NULL;
 
     s_ast_and_or *and_or = and_or_new();

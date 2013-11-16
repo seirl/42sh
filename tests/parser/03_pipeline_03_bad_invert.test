@@ -1,0 +1,7 @@
+{
+    "desc": "rule pipeline: bad invert",
+    "input": "! a | ! b | c | d",
+    "output": "",
+    "retval": 1,
+    "stderr": ...,
+}

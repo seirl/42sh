@@ -1,0 +1,5 @@
+{
+    "desc": "rule pipeline: one pipe",
+    "input": "a | b",
+    "output": "",
+}

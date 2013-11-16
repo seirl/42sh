@@ -1,4 +1,5 @@
 #include "parser_private.h"
+#include "parser_macros.h"
 #include "smalloc.h"
 
 static s_ast_pipeline *pipeline_new(void)
@@ -12,20 +13,23 @@ static s_ast_pipeline *pipeline_new(void)
     return pipeline;
 }
 
-s_ast_pipeline *parse_rule_pipeline(s_parser *parser)
+s_ast_pipeline *parse_rule_pipeline(s_parser *parser, int first)
 {
     int inverted = 0;
     s_token *tok = lex_look_token(parser->lexer);
     if (tok->type == T_BANG)
     {
+        if (!first)
+            RETURN_PARSE_UNEXPECTED(tok);
         inverted = 1;
-        token_free(lex_token(parser->lexer));
+        parser_shift_token(parser);
     }
     token_free(tok);
 
     s_ast_cmd *cmd;
     if (!(cmd = parse_rule_command(parser)))
         return NULL;
+
     s_ast_pipeline *pipeline = pipeline_new();
     pipeline->cmd = cmd;
     pipeline->inverted = inverted;
@@ -33,8 +37,9 @@ s_ast_pipeline *parse_rule_pipeline(s_parser *parser)
     tok = lex_look_token(parser->lexer);
     if (tok->type == T_PIPE)
     {
-        pipeline->next = parse_rule_pipeline(parser);
         parser_shift_token(parser);
+        if (!(pipeline->next = parse_rule_pipeline(parser, 0)))
+            return NULL;
     }
     token_free(tok);
 
