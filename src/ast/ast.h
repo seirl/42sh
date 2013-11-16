@@ -236,7 +236,7 @@ typedef union ctrl_structure u_ctrl_structure;
 ** @endcode
 */
 struct ast_shell_cmd
-{ 
+{
     int subshell; /** if 1 then ( ) else { } */
     s_ast_list *cmd_list;
 
@@ -302,7 +302,7 @@ typedef enum ast_pipeline_and_or e_ast_pipeline_and_or;
 ** @brief And or Or
 **
 ** @code
-** and_or: pipeline (('&&'|'|| ') ('\n')* pipeline)*
+** and_or: pipeline (('&&'|'||') ('\n')* pipeline)*
 ** @endcode
 */
 struct ast_and_or
