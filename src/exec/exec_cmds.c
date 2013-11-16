@@ -3,30 +3,35 @@
 struct ast_node *get_funct_node(char *func_name)
 {
     assert(func_name);
+    (void)func_name;
     return NULL; /* FIXME */
 }
 
 int is_function(char *func_name)
 {
     assert(func_name);
+    (void)func_name;
     return 0; /* FIXME */
 }
 
 int is_builtin(char *name)
 {
     assert(name);
+    (void)name;
     return 0; /* FIXME */
 }
 
 static void exec_cmd_prefix(char **pref)
 {
     assert(pref && pref[0]);
+    (void)pref;
     /* for (int i = 0; pref[i] != NULL; ++i) */
 }
 
 static void exec_func(char **func)
 {
     assert(func && func[0]);
+    (void)func;
     struct ast_node *func_node = get_funct_node(func[0]);
     exec_node(func_node);
 }
@@ -34,6 +39,8 @@ static void exec_func(char **func)
 static void exec_builtin(char *name, char **argv)
 {
     assert(name && argv);
+    (void)name;
+    (void)argv;
     /* FIXME */
 }
 
