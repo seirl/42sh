@@ -11,6 +11,14 @@ else()
     set(CMAKE_C_FLAGS "-std=c99 -Wall -Wextra -Werror -pedantic -g3 -gdwarf-2")
 endif()
 
+if(COVERAGE)
+    include(tools/CodeCoverage)
+    setup_target_for_coverage(coverage
+                              ./check/run_tests.py
+                              coverage
+    )
+endif()
+
 add_definitions(-D_XOPEN_SOURCE)
 
 include_directories(src)

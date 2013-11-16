@@ -16,6 +16,9 @@ check: all
 fastcheck: all
 	cd build/check && ./run_tests.py -m
 
+coverage: all
+	$(MAKE) -C build coverage
+
 readlinecheck: all
 	cd build/check && ./run_readline_test "Test.$$ "
 
