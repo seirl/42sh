@@ -1,6 +1,34 @@
 #include <stdio.h>
 #include "ast.h"
 
+static void print_simple_cmd(s_ast_pipeline *p, FILE *out)
+{
+}
+
+static void print_shell_cmd(s_ast_pipeline *p, FILE *out)
+{
+}
+
+static void print_func_dec(s_ast_pipeline *p, FILE *out)
+{
+}
+
+static void print_redirections(s_ast_pipeline *p, FILE *out)
+{
+}
+
+static void print_cmd(s_ast_pipeline *p, FILE *out)
+{
+    if (p->cmd->simple_cmd)
+        print_simple_cmd(p, out);
+    else if (p->cmd->shell_cmd)
+        print_shell_cmd(p, out);
+    else if (p->cmd->func_dec)
+        print_func_dec(p, out);
+    else if (p->cmd->redirections)
+        print_redirections(p, out);
+}
+
 static void print_pipeline(s_ast_and_or *node, FILE *out)
 {
     if (!node->pipeline)
@@ -8,7 +36,7 @@ static void print_pipeline(s_ast_and_or *node, FILE *out)
     fprintf(out, "and_or_%p -> pipeline_%p;\n", node, node->pipeline);
     for (s_ast_pipeline *p = node->pipeline; p; p = p->next)
     {
-        fprintf(out, "pipeline_%p [label=\"Pipeline\"];\n");
+        fprintf(out, "pipeline_%p [label=\"Pipeline\"];\n", p);
         if (p->next)
             fprintf(out, "pipeline_%p -> pipeline_%p;\n", p, p->next);
     }
