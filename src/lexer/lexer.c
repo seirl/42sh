@@ -5,7 +5,6 @@
 #include "lexer_private.h"
 #include "char_utils.h"
 #include "location.h"
-#include "log.h"
 
 static int lex_res_word(s_lexer *lexer)
 {
@@ -91,8 +90,16 @@ static int lex_newline(s_lexer *lexer)
 
 s_token *lex_word(s_lexer *lexer)
 {
-    LOG(INFO, "lex_word stub", NULL);
-    return lex_token(lexer);
+    s_token *tok = lex_look_token(lexer);
+
+    if (tok->type == T_WORD)
+    {
+        token_free(tok);
+        return lex_token(lexer);
+    }
+
+    token_free(tok);
+    return NULL;
 }
 
 s_token *lex_token(s_lexer *lexer)
