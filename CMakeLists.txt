@@ -130,8 +130,8 @@ add_executable(../42sh
     $<TARGET_OBJECTS:readline>
 )
 
-MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
-MESSAGE( STATUS "CMAKE_CPP_FLAGS: " ${CMAKE_CPP_FLAGS} )
+message(STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS})
+message(STATUS "CMAKE_CPP_FLAGS: " ${CMAKE_CPP_FLAGS})
 
 # Tests and checks
 add_subdirectory(tests)
