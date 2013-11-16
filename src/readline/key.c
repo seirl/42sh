@@ -17,6 +17,7 @@ int handle_arrow(char c)
     }
 #include "arrow.def" 
 #undef X
+    (void)k;
     return 1; //ERROR ?
 }
 
