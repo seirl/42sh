@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <ctype.h>
+
 #include "lexer.h"
 #include "lexer_private.h"
 #include "char_utils.h"
 #include "location.h"
+#include "log.h"
 
 static int lex_res_word(s_lexer *lexer)
 {
@@ -85,6 +87,12 @@ static int lex_newline(s_lexer *lexer)
         return 1;
     }
     return 0;
+}
+
+s_token *lex_word(s_lexer *lexer)
+{
+    LOG(INFO, "lex_word stub", NULL);
+    return lex_token(lexer);
 }
 
 s_token *lex_token(s_lexer *lexer)
