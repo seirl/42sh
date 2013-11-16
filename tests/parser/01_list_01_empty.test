@@ -1,0 +1,6 @@
+{
+    "desc": "rule list: empty trailing ; token",
+    "input": "a & ;",
+    "output": "",
+    "stderr": ...,
+}

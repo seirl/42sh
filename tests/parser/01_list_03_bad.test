@@ -1,0 +1,6 @@
+{
+    "desc": "rule list: multiple",
+    "input": "a ; ;",
+    "output": "",
+    "stderr": ...,
+}

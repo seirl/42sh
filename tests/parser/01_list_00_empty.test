@@ -1,0 +1,5 @@
+{
+    "desc": "rule list: empty",
+    "input": "a &",
+    "output": "",
+}
