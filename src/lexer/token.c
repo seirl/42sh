@@ -21,7 +21,8 @@ s_token *token_create(e_token_type type,
 
 s_token *token_duplicate(const s_token *tok)
 {
-    if (tok->type == T_WORD)
+    // FIXME: Which token types do not hold a string in tok->value?
+    if (tok->type != T_IO_NUMBER)
     {
         u_token_value value;
         value.str = string_duplicate(tok->value.str);
@@ -34,8 +35,8 @@ s_token *token_duplicate(const s_token *tok)
 
 void token_free(s_token *tok)
 {
-    // FIXME: Other types may hold strings
-    if (tok->type == T_WORD && tok->value.str)
+    // FIXME: Which token types do not hold a string in tok->value?
+    if (tok->type != T_IO_NUMBER && tok->value.str)
         string_free(tok->value.str);
     sfree(tok);
 }
