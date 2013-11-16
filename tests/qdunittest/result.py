@@ -23,7 +23,8 @@ class QDTestResult(unittest.TestResult):
     def getLongDescription(self, test):
         # qdtestcase
         if hasattr(test, 'get_test_path'):
-            return '\n'.join((test.get_test_path(), str(test)))
+            return '\n'.join((test.get_test_path(),
+                test.shortDescription()))
 
         # unittest standard tests
         doc_first_line = test.shortDescription()

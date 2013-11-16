@@ -142,7 +142,7 @@ def new_test_run_fnmatch(test, options):
 class QDTestCaseParser(QDTestCase):
 
     def shortDescription(self):
-        return "{}[input: ]".format(
+        return "Description: {}Input: '{}'".format(
                 self.test["desc"] + "\n" if "desc" in self.test else "",
                 self.test.get('input', "None"),
             )
