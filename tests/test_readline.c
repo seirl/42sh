@@ -4,6 +4,10 @@
 
 int main(int argc, char **argv)
 {
+    (void)argc;
+    (void)argv;
+    readline();
+#if 0
     if (argc != 2)
         return 1;
 
@@ -14,6 +18,7 @@ int main(int argc, char **argv)
         string_free(line);
         line = readline(argv[1]);
     }
+#endif
 
     return 0;
 }

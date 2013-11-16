@@ -26,7 +26,7 @@ add_executable(test_fnmatch
     $<TARGET_OBJECTS:fnmatch>
 )
 
-add_executable(run_readline_test
+add_executable(test_readline
     test_readline.c
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:log>

@@ -3,6 +3,6 @@
 
 # include "string_utils.h"
 
-s_string *readline(const char *prompt); // TODO: document
+s_string *readline();
 
 #endif /* !READLINE_H */

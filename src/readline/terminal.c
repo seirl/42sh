@@ -1,24 +1,47 @@
-#include <stdlib.h>
-#include <termios.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "terminal.h"
+#include "smalloc.h"
 
-static struct termios *g_initial_termios = NULL;
-
-void setup_terminal(void) // TODO: test
+static s_term *term_init()
 {
-    g_initial_termios = malloc(sizeof (struct termios));
-    tcgetattr(STDIN_FILENO, g_initial_termios);
-
-    struct termios new_termios = *g_initial_termios;
-    new_termios.c_lflag &= ~(ICANON | ECHO);
-    new_termios.c_cc[VMIN] = 1;
-    new_termios.c_cc[VTIME] = 0;
-
-    tcsetattr(STDIN_FILENO, TCSADRAIN, &new_termios);
+    s_term *term = smalloc(sizeof (struct terminal));
+    if (tcgetattr(STDIN_FILENO, &term->restore_state) != 0)
+    {
+        sfree(term);
+        return NULL;
+    }
+    term->name = TERM_NAME; //TODO var_get("TERM");
+    term->bp = smalloc(2048);
+    if (tgetent(term->bp, term->name) <= 0)
+    {
+        sfree(term);
+        sfree(term->bp);
+        return NULL;
+    }
+    term->termios.c_lflag &= ~(ICANON | ECHO);
+    term->termios.c_cc[VMIN] = 1;
+    term->termios.c_cc[VTIME] = 0;
+    tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
+    return term;
 }
 
-void reset_terminal(void) // TODO: test
+s_term *term_get()
 {
-    tcsetattr(STDIN_FILENO, TCSADRAIN, g_initial_termios);
-    g_initial_termios = NULL;
+    static s_term *term = NULL;
+    if (term == NULL)
+    {
+        term = term_init();
+        //TODO handle errors
+    }
+    return term;
+}
+
+void term_close()
+{
+    s_term *term = term_get();
+    sfree(term->bp);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term->restore_state);
+    sfree(term);
 }

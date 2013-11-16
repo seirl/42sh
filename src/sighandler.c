@@ -46,11 +46,12 @@ static void segfault_callback()
     //waitpid(pid_gdb, &status, 0);
 }
 
+
 void signal_init()
 {
     struct sigaction action;
-    action.sa_handler = segfault_callback;
     action.sa_flags = 0;
     sigemptyset(&action.sa_mask);
+    action.sa_handler = segfault_callback;
     sigaction(SIGSEGV, &action, NULL);
 }

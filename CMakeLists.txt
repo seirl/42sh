@@ -20,6 +20,7 @@ if(COVERAGE)
 endif()
 
 add_definitions(-D_XOPEN_SOURCE)
+LINK_LIBRARIES(m ncurses)
 
 include_directories(src)
 include_directories(src/ast)
@@ -81,7 +82,8 @@ add_library(options OBJECT
 
 add_library(readline OBJECT
     src/readline/readline.c
-    src/readline/characters.c
+    src/readline/key.c
+    src/readline/key_signal.c
     src/readline/terminal.c
 )
 
