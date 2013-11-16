@@ -38,6 +38,7 @@ static void heredoc_body(s_lexer *lexer, s_string *delim)
         string_putc(body, lexer->getc(lexer));
         if (cmp_str_delim(body, delim) == 0)
         {
+            string_free(lexer->working_buffer);
             lexer->working_buffer = string_extract(body, 0,
                     body->len - delim->len - 1);
             string_free(body);

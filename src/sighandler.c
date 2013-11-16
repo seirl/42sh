@@ -30,6 +30,10 @@ static void segfault_callback()
     {
         int stdin_pipe[2];
         int stdout_pipe[2];
+        stdin_pipe[0] = 0;
+        stdin_pipe[1] = 0;
+        stdout_pipe[0] = 0;
+        stdout_pipe[1] = 0;
         dup2(stdin_pipe[0], STDIN_FILENO);
         dup2(stdout_pipe[1], STDOUT_FILENO);
         char pid_s[16];
