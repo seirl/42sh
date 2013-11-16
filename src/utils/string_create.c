@@ -36,7 +36,7 @@ s_string *string_duplicate(const s_string *src)
 {
     s_string *ret = smalloc(sizeof (s_string));
 
-    ret->buf = srealloc(ret->buf, src->max_len);
+    ret->buf = smalloc(src->max_len);
     memcpy(ret->buf, src->buf, src->len + 1);
     ret->len = src->len;
     ret->max_len = src->max_len;
