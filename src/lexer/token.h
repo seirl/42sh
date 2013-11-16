@@ -54,6 +54,11 @@ s_token *token_duplicate(const s_token *token);
 
 void token_free(s_token *tok);
 
+/**
+** @brief Could this token be a T_WORD?
+*/
+int token_to_word(s_token *token);
+
 // Debug functions
 void token_print(s_token *tok);
 

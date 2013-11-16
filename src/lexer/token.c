@@ -1,26 +1,6 @@
-#include <stdio.h>
-
 #include "token.h"
 #include "smalloc.h"
 #include "string_utils.h"
-
-void token_print(s_token *tok)
-{
-    fprintf(stdout, "%s", tok->value.str->buf);
-    do {
-#define X(Type, Str)                            \
-    if (tok->type == Type)                      \
-    {                                           \
-        fprintf(stdout, "\t"#Type);             \
-        break;                                  \
-    }
-#include "misc.def"
-#include "res_word.def"
-#include "operator.def"
-#undef X
-    } while (0);
-    fprintf(stdout, " (%d)\n", tok->concat);
-}
 
 s_token *token_create(e_token_type type,
                       u_token_value value,
@@ -58,4 +38,24 @@ void token_free(s_token *tok)
     if (tok->type == T_WORD && tok->value.str)
         string_free(tok->value.str);
     sfree(tok);
+}
+
+int token_to_word(s_token *token)
+{
+#define X(Type, Str)                              \
+    if (token->type == Type)                      \
+    {                                             \
+        token->type = T_WORD;                     \
+        return 1;                                 \
+    }
+#include "res_word.def"
+#undef X
+    if (token->type == T_ASSIGNMENT_WORD
+       || token->type == T_IO_NUMBER
+       || token->type == T_WORD)
+    {
+        token->type = T_WORD;
+        return 1;
+    }
+    return 0;
 }

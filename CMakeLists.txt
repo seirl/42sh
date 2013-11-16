@@ -68,6 +68,7 @@ add_library(lexer OBJECT
     src/lexer/lexer_release.c
     src/lexer/char_utils.c
     src/lexer/token.c
+    src/lexer/token_debug.c
     src/lexer/location.c
     src/lexer/alias.c
 )

@@ -1,6 +1,7 @@
 #include <assert.h>
 
 #include "lexer_private.h"
+#include "token.h"
 
 s_token *lex_look_token(s_lexer *lexer)
 {
@@ -13,14 +14,13 @@ s_token *lex_look_token(s_lexer *lexer)
 
 s_token *lex_look_word(s_lexer *lexer)
 {
-    if (lexer->lookahead)
-        return token_duplicate(lexer->lookahead);
+    s_token *tok = lex_look_token(lexer);
 
-    lexer->lookahead = lex_word(lexer);
-    if (lexer->lookahead)
-        return token_duplicate(lexer->lookahead);
-    else
-        return NULL;
+    if (token_to_word(tok))
+        return tok;
+
+    token_free(tok);
+    return NULL;
 }
 
 s_token *lex_release_lookahead(s_lexer *lexer)
