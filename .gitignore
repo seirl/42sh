@@ -11,3 +11,4 @@ __pycache__
 42sh
 build
 .*
+common.cmake
