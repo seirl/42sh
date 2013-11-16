@@ -14,6 +14,6 @@ static s_ast_prefix *prefix_new(void)
 s_ast_prefix *parse_rule_prefix(s_parser *parser) // TODO
 {
     (void)parser;
-    (void)prefix_new();
+    (void)prefix_new;
     return NULL;
 }

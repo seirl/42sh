@@ -27,11 +27,12 @@ s_ast_list *parse_rule_list(s_parser *parser)
     case T_AND:
         list->next_asynchronous = 1;
     case T_SEMI:
-        token_free(lex_token(parser->lexer));
+        parser_shift_token(parser);
         list->next = parse_rule_list(parser);
     default:
         break;
     }
+    token_free(tok);
 
     return list;
 }

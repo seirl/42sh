@@ -17,9 +17,11 @@ s_ast_input *parse_rule_input(s_parser *parser)
     if (tok->type == T_NEWLINE
         || tok->type == T_EOF)
     {
-        sfree(lex_token(parser->lexer));
-        return NULL;
+        token_free(tok);
+        parser_shift_token(parser);
+        return ast_input_new(); /** nothing is a valid input */
     }
+    token_free(tok);
 
     s_ast_list *list;
     if (!(list = parse_rule_list(parser)))
@@ -31,7 +33,7 @@ s_ast_input *parse_rule_input(s_parser *parser)
     if (!(tok->type == T_NEWLINE
         || tok->type == T_EOF))
         LOG(WARN, "parser: unexpected 'input' token.", NULL);
-
     token_free(tok);
+
     return ast;
 }

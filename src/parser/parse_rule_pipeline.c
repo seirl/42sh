@@ -19,8 +19,9 @@ s_ast_pipeline *parse_rule_pipeline(s_parser *parser)
     if (tok->type == T_BANG)
     {
         inverted = 1;
-        token_free(tok);
+        token_free(lex_token(parser->lexer));
     }
+    token_free(tok);
 
     s_ast_cmd *cmd;
     if (!(cmd = parse_rule_command(parser)))
@@ -31,7 +32,10 @@ s_ast_pipeline *parse_rule_pipeline(s_parser *parser)
 
     tok = lex_look_token(parser->lexer);
     if (tok->type == T_PIPE)
+    {
         pipeline->next = parse_rule_pipeline(parser);
+        parser_shift_token(parser);
+    }
     token_free(tok);
 
     return pipeline;

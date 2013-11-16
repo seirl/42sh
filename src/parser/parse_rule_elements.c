@@ -15,18 +15,10 @@ static s_ast_element *element_new(void)
 
 s_ast_element *parse_rule_elements(s_parser *parser)
 {
-    s_ast_word *word = NULL;
+    s_ast_compound_word *word = NULL;
     s_ast_redirection *redirection = NULL;
-    s_token *tok;
 
-    // FIXME: make_parse_word
-    tok = lex_look_token(parser->lexer);
-    if (tok->type == T_WORD)
-    {
-        word = smalloc(sizeof (s_ast_word));
-        word->word = string_duplicate(tok->value.str);
-    }
-    token_free(tok);
+    word = parse_compound_word(parser);
 
     // TODO: redirection = parse_rule_redirection(word);
 
@@ -34,6 +26,10 @@ s_ast_element *parse_rule_elements(s_parser *parser)
         return NULL;
 
     s_ast_element *element = element_new();
+
+    element->word = word;
+    element->redirection = redirection;
     element->next = parse_rule_elements(parser);
+
     return element;
 }
