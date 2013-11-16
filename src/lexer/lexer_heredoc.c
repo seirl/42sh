@@ -29,7 +29,6 @@ static int cmp_str_delim(s_string *body, s_string *delim)
 static void heredoc_body(s_lexer *lexer, s_string *delim)
 {
     char c = 0;
-    char prev = 0;
     s_string *body = string_create(0);
     while (1)
     {
@@ -44,7 +43,6 @@ static void heredoc_body(s_lexer *lexer, s_string *delim)
             string_free(body);
             return;
         }
-        prev = c;
     }
 }
 
