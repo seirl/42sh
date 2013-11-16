@@ -73,7 +73,7 @@ class QDTestRunner:
 
             failures.extend(result.failures)
             errors.extend(result.errors)
-            tests_run = result.testsRun
+            tests_run += result.testsRun
 
             result = self._make_result()
 
