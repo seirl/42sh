@@ -88,6 +88,7 @@ static int lex_newline(s_lexer *lexer)
     return 0;
 }
 
+#undef getc
 s_token *lex_word(s_lexer *lexer)
 {
     s_token *tok = lex_look_token(lexer);
@@ -137,10 +138,7 @@ s_token *lex_token(s_lexer *lexer)
         if (lex_io_number(lexer))
             break;
     } while (0);
-#if 0
-    if (lex_assignment(lexer))
-        return lex_release_token(lexer);
-#endif
+
     s_token *ret = lex_release_token(lexer);
     if (ret->concat == -1)
         ret->concat = 0;

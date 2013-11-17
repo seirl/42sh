@@ -1,10 +1,10 @@
 {
     "type": "lexer",
     "desc": "Single quote equal",
-    "skip": True,
     "input": """'a'=bar""",
     "output": """'a'	T_WORD (0)
-=bar	T_WORD (1)
+=	T_WORD (1)
+bar	T_WORD (1)
 	T_EOF (0)
 """
 }

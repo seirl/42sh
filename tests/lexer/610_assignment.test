@@ -3,6 +3,7 @@
     "desc": "Simple assignment word",
     "input": """foo=bar""",
     "output": """foo	T_ASSIGNMENT_WORD (0)
+=	T_WORD (1)
 bar	T_WORD (1)
 	T_EOF (0)
 """

@@ -186,7 +186,7 @@ int handle_assignment(s_lexer *lexer, char c)
         }
         //if (fill_upto_delim(lexer) == 0)
         //    return 0;
-        lexer->getc(lexer); //discard '='
+        //lexer->getc(lexer); //discard '='
         lexer->token_type = T_ASSIGNMENT_WORD;
         return 1;
     }
