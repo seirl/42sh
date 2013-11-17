@@ -1,15 +1,15 @@
 {
     "type": "lexer",
     "desc": "Heredoc with delim",
-    "input": """cat << EOF
-foo
-bar
-baz
-EOF
+    "input": """cat <<- EOF
+	foo
+	bar
+	baz
+	EOF
 """,
-    "lexer": ['TTWTHT', 'EOF'],
+    "lexer": ['TTWTST', 'EOF'],
     "output": """cat	T_WORD (0)
-<<	T_DLESS (0)
+<<-	T_DLESSDASH (0)
 EOF	T_WORD (0)
 
 	T_NEWLINE (0)

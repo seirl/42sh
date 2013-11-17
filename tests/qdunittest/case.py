@@ -96,12 +96,14 @@ def new_test_run_lexer(test, options):
     def test_lexer(subself):
         timeout = test.get('timeout', options.timeout)
         input_string = test.get('input', "")
-        lexer_commands = test.get('lexer', "")
         with_valgrind = test.get('with_valgrind', not options.without_valgrind)
 
-        lexer = subself.start_program(["./test_lexer", input_string,
-            lexer_commands],
-            with_valgrind=with_valgrind)
+        command = ["./test_lexer", input_string]
+        if 'lexer' in test:
+            command.extend(test['lexer'])
+
+        lexer = subself.start_program(args=command,
+                with_valgrind=with_valgrind)
         stdoutdata, stderrdata = lexer.communicate(b"", options.timeout)
 
         if 'output' in test:
