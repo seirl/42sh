@@ -1,0 +1,6 @@
+{
+    "type": "utils",
+    "desc": "Hashtbl delete non-existant elt",
+    "input": "4",
+    "output": """"""
+}

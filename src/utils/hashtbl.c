@@ -28,3 +28,8 @@ int cmp_char(char *s1, char *s2)
 {
     return strcmp(s1, s2);
 }
+
+void null_free(void *foo)
+{
+    (void)foo;
+}

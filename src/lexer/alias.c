@@ -1,6 +1,6 @@
 #include "alias.h"
 
-HASHTBL(s_string*, s_string*, alias_table);
+HASHTBL(s_string*, s_string*, alias_table, null_free, null_free);
 
 static s_alias_table *alias_get_ptr()
 {

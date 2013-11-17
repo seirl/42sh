@@ -2,7 +2,7 @@
 #include "env.h"
 #include "hashtbl.h"
 
-HASHTBL(char*, char*, env);
+HASHTBL(char*, char*, env, null_free, null_free);
 
 static s_env *env_get_ptr()
 {

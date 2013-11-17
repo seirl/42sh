@@ -4,8 +4,8 @@
 #include "hashtbl.h"
 #include "string_utils.h"
 
-HASHTBL(char *, char *, ctable);
-HASHTBL(s_string *, s_string *, stable);
+HASHTBL(char *, char *, ctable, null_free, null_free);
+HASHTBL(s_string *, s_string *, stable, string_free, string_free);
 
 static int test_1()
 {
@@ -59,6 +59,40 @@ static int test_2()
     return 0;
 }
 
+static int test_3()
+{
+    s_ctable *t;
+    HASHTBL_INIT(t, 10, my_hash, my_cmp, NULL);
+    HASHTBL_SET(t, "0", "zero");
+    if (!value_is(t, "zero", "0"))
+        return 1;
+    HASHTBL_SET(t, "1", "zero");
+    if (!value_is(t, "zero", "1"))
+        return 1;
+    HASHTBL_FREE(t);
+    return 0;
+}
+
+static int test_4()
+{
+    s_ctable *t;
+    HASHTBL_INIT(t, 10, my_hash, my_cmp, NULL);
+    HASHTBL_DEL(t, "foo");
+    HASHTBL_FREE(t);
+    return 0;
+}
+
+static int test_5()
+{
+    s_stable *t;
+    HASHTBL_INIT(t, 10, hash_string, cmp_string, free_stable);
+    s_string *s1 = string_create_from("foo");
+    s_string *s2 = string_create_from("bar");
+    HASHTBL_SET(t, s1, s2);
+    HASHTBL_FREE(t);
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
     (void)argc;
@@ -67,5 +101,11 @@ int main(int argc, char *argv[])
         return test_1();
     if (n == 2)
         return test_2();
+    if (n == 3)
+        return test_3();
+    if (n == 4)
+        return test_4();
+    if (n == 5)
+        return test_5();
     return EXIT_SUCCESS;
 }

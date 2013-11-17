@@ -5,7 +5,8 @@
 # include "string_utils.h"
 # include "list.h"
 
-# define HASHTBL(Type, Keytype, Name)                                  \
+#include <stdio.h>
+# define HASHTBL(Type, Keytype, Name, Fvalue, Fkey)                    \
     struct item_##Name                                                 \
     {                                                                  \
         Keytype key;                                                   \
@@ -21,6 +22,12 @@
         int(*cmp)(Keytype, Keytype);                                   \
         s_item_##Name *it;                                             \
     };                                                                 \
+    void free_##Name(s_item_##Name item)                               \
+    {                                                                  \
+        fprintf(stderr, "Free\n"); \
+        Fvalue(item.key);                                             \
+        Fkey(item.value);                                             \
+    }                                                                  \
     typedef struct Name s_##Name
 
 # define HASHTBL_INIT(Table, Size, Hash, Cmp, F)                       \
@@ -112,5 +119,6 @@ unsigned long hash_string(s_string *s);
 int cmp_string(s_string *s1, s_string *s2);
 unsigned long hash_char(char *s);
 int cmp_char(char *s1, char *s2);
+void null_free(void *foo);
 
 #endif /* !HASHTBL_H */
