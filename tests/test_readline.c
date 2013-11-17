@@ -1,24 +1,22 @@
 #include <stdio.h>
 #include "string_utils.h"
 #include "readline.h"
+#include "env.h"
 
-int main(int argc, char **argv)
+int main(void)
 {
-    (void)argc;
-    (void)argv;
-    readline();
-#if 0
-    if (argc != 2)
-        return 1;
-
-    s_string *line = readline(argv[1]);
-    while (line)
+    s_string *line = readline();
+    while (1)
     {
         printf("\nRead: [%s]\n", line->buf);
         string_free(line);
-        line = readline(argv[1]);
-    }
-#endif
 
+        line = readline();
+        if (string_equal(line, "exit"))
+            break;
+    }
+
+    string_free(line);
+    env_free();
     return 0;
 }
