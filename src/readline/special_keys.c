@@ -14,6 +14,7 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
             printf("%s\n", "^C");
             printf("%s", env_get("PS1"));
             string_reset(term->input);
+            term->input_index = 0;
             fflush(stdout);
             return CONTINUE;
         case CTRL_D:

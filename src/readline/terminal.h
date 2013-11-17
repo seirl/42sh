@@ -22,6 +22,7 @@ struct terminal
     int width;
     int height;
     s_string *input;
+    size_t input_index;
 };
 typedef struct terminal s_term;
 

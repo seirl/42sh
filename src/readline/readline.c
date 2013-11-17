@@ -30,6 +30,7 @@ s_string *readline()
         if (ret == PRINT && isprint(c))
         {
             string_putc(term->input, c);
+            term->input_index++;
             printf("%c", c);
             fflush(stdout);
         }

@@ -26,6 +26,7 @@ static s_term *term_init()
     term->termios.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
     term->input = string_create(0);
+    term->input_index = 0;
     return term;
 }
 
