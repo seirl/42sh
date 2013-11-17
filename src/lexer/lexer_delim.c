@@ -167,16 +167,22 @@ static int is_in_name_charset(char c)
     return isdigit(c) || isalpha(c) || c == '_';
 }
 
+//0 -> no =, 1 -> assign, 2 -> word
 int handle_assignment(s_lexer *lexer, char c)
 {
     if (c == '=')
     {
+        if (lexer->working_buffer->len == 0)
+        {
+            string_putc(lexer->working_buffer, lexer->getc(lexer));
+            return 1;
+        }
         for (size_t i = 0; i < lexer->working_buffer->len; ++i)
         {
             if (i == 0 && isdigit(lexer->working_buffer->buf[i]))
-                return 0;
+                return 2;
             if (!is_in_name_charset(lexer->working_buffer->buf[i]))
-                return 0;
+                return 2;
         }
         //if (fill_upto_delim(lexer) == 0)
         //    return 0;
@@ -204,8 +210,11 @@ int lex_delimit_token(s_lexer *lexer)
             break;
         if (handle_dollar(lexer, c, prev))
             break;
-        if (handle_assignment(lexer, c))
+        int ret = handle_assignment(lexer, c);
+        if (ret == 1)
             break;
+        if (ret == 2)
+            return 0;
         if ((is_delimiter(c) || is_quote(c) || c == '$') && prev != '\\')
         {
             if (prev == 0)
