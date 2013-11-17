@@ -21,7 +21,7 @@ static s_term *term_init()
     if (tgetent(term->bp, term->name) <= 0)
         tgetent(term->bp, "xterm");
     term->termios.c_iflag &= ~ICRNL;
-    term->termios.c_lflag &= ~(ICANON | ECHO);
+    term->termios.c_lflag &= ~(ICANON | ECHO | ISIG);
     term->termios.c_cc[VMIN] = 1;
     term->termios.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
