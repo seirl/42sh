@@ -1,6 +1,8 @@
 #ifndef KEY_H
 # define KEY_H
 
+# include "terminal.h"
+
 enum key
 {
 #define X(Char, Name) Name,
@@ -9,6 +11,6 @@ enum key
 };
 typedef enum key e_key;
 
-char getkey();
+char getkey(s_term *term);
 
 #endif /* !KEY_H */

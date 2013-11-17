@@ -13,6 +13,11 @@ struct terminal
     char *bp;
     struct termios restore_state;
     char *name;
+    struct
+    {
+        int x;
+        int y;
+    } cursor;
     int width;
     int height;
 };

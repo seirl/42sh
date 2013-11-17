@@ -41,7 +41,7 @@ s_term *term_get()
 void term_close()
 {
     s_term *term = term_get();
-    sfree(term->bp);
+    //sfree(term->bp); //FIXME ????
     tcsetattr(STDIN_FILENO, TCSANOW, &term->restore_state);
     sfree(term);
 }

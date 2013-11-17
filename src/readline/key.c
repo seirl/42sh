@@ -1,19 +1,23 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "key.h"
+#include "cursor_handler.h"
 
-int handle_arrow(char c)
+int handle_arrow(char c, s_term *term)
 {
     e_key k;
     if (c != '[')
         return 0;
-    char next = getkey();
-#define X(Char, Res)              \
-    if (next == Char)             \
-    {                             \
-        k = Res;                  \
-        printf("%s", #Res);       \
-        return 1;                 \
+    char next = getkey(term);
+#define X(Char, Res)               \
+    if (next == Char)              \
+    {                              \
+        k = Res;                   \
+        if (Res == KEY_CURS_LEFT)  \
+            curs_left(term);       \
+        if (Res == KEY_CURS_RIGHT) \
+            curs_right(term);      \
+        return 1;                  \
     }
 #include "arrow.def" 
 #undef X
@@ -21,7 +25,7 @@ int handle_arrow(char c)
     return 1; //ERROR ?
 }
 
-char getkey()
+char getkey(s_term *term)
 {
     char c;
     int escape = 0;
@@ -32,7 +36,7 @@ char getkey()
             escape = 1;
         else if (escape)
         {
-            if (handle_arrow(c))
+            if (handle_arrow(c, term))
                 return 0;
         }
         else

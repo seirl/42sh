@@ -7,20 +7,20 @@
 #include "key.h"
 #include "key_signal.h"
 
+#include "wrapper.h"
 s_string *readline()
 {
     s_term *term = term_get();
-    (void)term;
     char c;
+    //my_tputs(tgetstr("sc", &term->bp));
+    //my_tputs(tgetstr("ve", &term->bp));
     while (1)
     {
-        c = getkey();
+        c = getkey(term);
         if (signal_key(c))
             break;
         if (isprint(c))
             printf("%c", c);
-        else
-            printf("%d", c);
         fflush(stdout);
         //else if (readline_printable(c))
         //{

@@ -1,11 +1,11 @@
-#ifndef CURSOR_HANDLE_H
-# define CURSOR_HANDLE_H
+#ifndef CURSOR_HANDLER_H
+# define CURSOR_HANDLER_H
 
-# include "term.h"
+# include "terminal.h"
 
-void cursor_left(s_term *term);
-void cursor_right(s_term *term);
-void cursor_up(s_term *term);
-void cursor_down(s_term *term);
+void curs_left(s_term *term);
+void curs_right(s_term *term);
+void curs_up(s_term *term);
+void curs_down(s_term *term);
 
-#endif /* !CURSOR_HANDLE_H */
+#endif /* !CURSOR_HANDLER_H */
