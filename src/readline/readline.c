@@ -22,7 +22,7 @@ s_string *readline()
         if (c == 0)
             continue;
         if (c == -1)
-            return NULL;
+            break;
         if (isprint(c))
         {
             printf("%c", c);
