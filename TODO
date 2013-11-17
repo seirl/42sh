@@ -1,3 +1,10 @@
+TODO from tests
+===============
+
+A skipped test is equivalent to a Todo item in the tests folder.
+
+A successful test is considered as a Done item.
+
 READLINE
 ========
     Done:
