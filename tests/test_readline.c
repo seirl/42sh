@@ -8,12 +8,12 @@ int main(void)
     s_string *line = readline();
     while (1)
     {
+        if (string_equal(line, "exit"))
+            break;
         printf("\nRead: [%s]\n", line->buf);
         string_free(line);
 
         line = readline();
-        if (string_equal(line, "exit"))
-            break;
     }
 
     string_free(line);
