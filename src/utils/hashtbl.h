@@ -38,6 +38,18 @@
 # define HASHTBL_SET(Table, Value, Key)                                \
     do {                                                               \
         int index = Table->hash(Key) % Table->size;                    \
+        int replace = 0;                                               \
+        LIST_FOREACH(Table->bucket[index])                             \
+        {                                                              \
+            if (!Table->cmp(Table->bucket[index]->it->data.key, Key))  \
+            {                                                          \
+                Table->bucket[index]->it->data.value = Value;          \
+                replace = 1;                                           \
+                break;                                                 \
+            }                                                          \
+        }                                                              \
+        if (replace == 1)                                              \
+            break;                                                     \
         Table->it = malloc(sizeof (*Table->it));                       \
         Table->it->key = Key;                                          \
         Table->it->value = Value;                                      \
