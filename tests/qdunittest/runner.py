@@ -87,7 +87,7 @@ class QDTestRunner:
         result.errors = errors
         result.skipped = skipped
         result.testsRun = tests_run
-        result.print_summary(self.number, show_errors=False)
+        result.print_summary(self.number)
 
         return result
 
