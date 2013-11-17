@@ -1,0 +1,12 @@
+{
+    "type": "lexer",
+    "desc": "No assignement with token that is not a name.",
+    "input": """1foo=bar""",
+    "lexer": ["TWWT"],
+    "output": """1foo	T_WORD (0)
+=	T_WORD (1)
+bar	T_WORD (1)
+	T_EOF (0)
+""",
+    "skip": True,
+}
