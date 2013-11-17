@@ -15,10 +15,12 @@ static s_term *term_init()
         sfree(term);
         return NULL;
     }
+    term->termios = term->restore_state;
     term->name = env_get("TERM");
     term->bp = smalloc(2048);
     if (tgetent(term->bp, term->name) <= 0)
         tgetent(term->bp, "xterm");
+    term->termios.c_iflag &= ~ICRNL;
     term->termios.c_lflag &= ~(ICANON | ECHO);
     term->termios.c_cc[VMIN] = 1;
     term->termios.c_cc[VTIME] = 0;
