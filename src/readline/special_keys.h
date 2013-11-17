@@ -6,7 +6,7 @@
 
 enum special_key
 {
-#define X(Name, Code) Name,
+#define X(Name, Code1, Code2) Name,
 #include "special_keys.def"
 #undef X
 };

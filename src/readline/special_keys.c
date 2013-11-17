@@ -37,8 +37,8 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
 
 e_next_action handle_special_char(s_term *term, char c)
 {
-#define X(Name, Code)                             \
-    if (c == Code)                                \
+#define X(Name, Code1, Code2)                      \
+    if (c == Code1 || (Code2 != 0 && c == Code2))  \
         return handle_special_key(Name, term);
 #include "special_keys.def"
 #undef X
