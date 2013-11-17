@@ -32,5 +32,5 @@ e_next_action handle_special_char(s_term *term, char c)
         return handle_special_key(Name, term);
 #include "special_keys.def"
 #undef X
-    return CONTINUE; // Unrecognized key, just ignore it.
+    return PRINT; // Unrecognized key, just ignore it.
 }

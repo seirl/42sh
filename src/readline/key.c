@@ -9,7 +9,7 @@ e_next_action getkey(s_term *term, char *c)
 {
     read(STDIN_FILENO, c, sizeof (char));
     if (isprint(*c))
-        return CONTINUE;
+        return PRINT;
     if (*c == 27) // \x1b: escape
     {
         read(STDIN_FILENO, c, sizeof (char));

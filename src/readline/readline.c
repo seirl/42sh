@@ -23,13 +23,16 @@ s_string *readline()
     while (1)
     {
         ret = getkey(term, &c);
-        if (ret == CONTINUE && !isprint(c))
+        if (ret == CONTINUE)
             continue;
         if (ret == RETURN || ret == ERROR)
             break;
-        string_putc(term->input, c);
-        printf("%c", c);
-        fflush(stdout);
+        if (ret == PRINT && isprint(c))
+        {
+            string_putc(term->input, c);
+            printf("%c", c);
+            fflush(stdout);
+        }
     }
 
     s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);

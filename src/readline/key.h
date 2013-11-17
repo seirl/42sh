@@ -6,6 +6,7 @@
 enum next_action
 {
     CONTINUE,
+    PRINT,
     RETURN,
     ERROR
 };
