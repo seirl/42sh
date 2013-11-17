@@ -24,6 +24,7 @@ char *string_release(s_string *s);
 void string_free(s_string *s);
 
 void string_putc(s_string *s, char c);
+int string_insertc(s_string *s, char c, size_t index);
 void string_puts(s_string *s, const char *str);
 void string_cat(s_string *s1, s_string *s2);
 s_string *string_vcat(const char *s1, ...);

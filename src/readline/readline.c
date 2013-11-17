@@ -38,10 +38,12 @@ s_string *readline()
             break;
         if (ret == PRINT && isprint(c))
         {
-            string_putc(term->input, c);
+            string_insertc(term->input, c, term->input_index);
             term->input_index++;
+            my_tputs(tgetstr("im", NULL));
             printf("%c", c);
             fflush(stdout);
+            my_tputs(tgetstr("ei", NULL));
         }
     }
 
