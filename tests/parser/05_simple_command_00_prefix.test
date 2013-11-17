@@ -1,0 +1,5 @@
+{
+    "desc": "rule simple command: one prefix",
+    "input": ">foo echo lol",
+    "output": "",
+}
