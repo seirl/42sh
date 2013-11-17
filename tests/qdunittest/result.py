@@ -99,12 +99,14 @@ class QDTestResult(unittest.TestResult):
         if number:
             self.stream.writeln(
                 "Success: {}/{}".format(
-                    self.testsRun - (len(self.failures) + len(self.errors)),
+                    self.testsRun
+                    - (len(self.failures)
+                        + len(self.errors) + len(self.skipped)),
                     self.testsRun))
         else:
             try:
-                rate = (100 - len(self.failures + self.errors) / self.testsRun
-                        * 100)
+                rate = (100 - len(self.failures + self.errors + self.skipped)
+                        / self.testsRun * 100)
                 rate_str = colorize("{:.0f}".format(rate),
                         fg="green" if rate == 100 else "red")
                 self.stream.writeln(colorize("Success: {}%".format(rate_str),
