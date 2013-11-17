@@ -20,7 +20,7 @@ coverage: all
 	$(MAKE) -C build coverage
 
 readlinecheck: all
-	cd build/tests && ./run_readline_test "Test.$$ "
+	cd build/tests && ./test_readline
 
 norm:
 	tools/norm.sh src/
