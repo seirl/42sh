@@ -1,0 +1,10 @@
+{
+    "desc": "rule for: multiple commands",
+    "input": """for a in a b c; do
+echo $a &
+touch foo; echo lol
+a || b
+done
+""",
+    "output": "",
+}

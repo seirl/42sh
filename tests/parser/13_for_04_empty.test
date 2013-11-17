@@ -1,0 +1,7 @@
+{
+    "desc": "rule for: empty",
+    "input": """for a; do
+done
+""",
+    "output": "",
+}

@@ -1,0 +1,6 @@
+{
+    "desc": "rule for: single line",
+    "input": """for a in a b c; do echo $a; done
+""",
+    "output": "",
+}

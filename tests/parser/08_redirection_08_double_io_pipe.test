@@ -1,0 +1,5 @@
+{
+    "desc": "rule redirection: double io redirection and stuff",
+    "input": """echo 2>&1 lol | cat 1>&1;""",
+    "output": "",
+}

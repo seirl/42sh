@@ -1,0 +1,10 @@
+{
+    "desc": "rule for: no in",
+    "input": """for a; do
+echo $a &
+touch foo; echo lol
+a || b
+done
+""",
+    "output": "",
+}
