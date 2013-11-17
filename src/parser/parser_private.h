@@ -36,7 +36,7 @@ s_ast_funcdec *parse_rule_funcdec(s_parser *parser);
 /** @brief Parse rule for. */
 s_ast_for *parse_rule_for(s_parser *parser);
 /** @brief Parse rule redirection. */
-s_ast_redirection *parse_rule_redirection(s_parser *parser);
+s_ast_redirection_list *parse_rule_redirection(s_parser *parser);
 /** @brief Parse rule prefix. */
 s_ast_prefix *parse_rule_prefix(s_parser *parser);
 /** @brief Parse rule elements. */

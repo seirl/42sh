@@ -3,15 +3,16 @@
 #include "string_utils.h"
 #include "smalloc.h"
 
-static s_ast_redirection *redirection_new(void)
+static s_ast_redirection_list *redirection_new(void)
 {
-    s_ast_redirection *redir = smalloc(sizeof (s_ast_redirection));
+    s_ast_redirection_list *redir = smalloc(sizeof (s_ast_redirection_list));
 
     redir->word = NULL;
     redir->io = NULL;
     redir->type = 0;
     redir->heredoc = NULL;
     redir->heredoc_delim = NULL;
+    redir->next = NULL;
 
     return redir;
 }
@@ -82,7 +83,7 @@ static s_ast_compound_word *parse_heredoc_delim(s_parser *parser)
     return word;
 }
 
-s_ast_redirection *parse_rule_redirection(s_parser *parser)
+s_ast_redirection_list *parse_rule_redirection(s_parser *parser)
 {
     s_ast_io_number *io = parse_io_number(parser);
     s_ast_compound_word *word = NULL;
@@ -94,7 +95,7 @@ s_ast_redirection *parse_rule_redirection(s_parser *parser)
     if (redir_type != REDIR_HEREDOC && redir_type != REDIR_HEREDOC_STRIP)
         word = parse_heredoc_delim(parser);
 
-    s_ast_redirection *redirection = redirection_new();
+    s_ast_redirection_list *redirection = redirection_new();
     redirection->io = io;
     redirection->word = word;
     redirection->type = redir_type;

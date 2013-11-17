@@ -4,14 +4,14 @@
 #include "parser_macros.h"
 #include "smalloc.h"
 
-static int is_heredoc(const s_ast_redirection *redir)
+static int is_heredoc(const s_ast_redirection_list *redir)
 {
     return (redir && (redir->type == REDIR_HEREDOC
                       || redir->type == REDIR_HEREDOC_STRIP)
             && redir->heredoc_delim);
 }
 
-static int prefix_heredoc(s_ast_prefix *pref, s_ast_redirection **redir)
+static int prefix_heredoc(s_ast_prefix *pref, s_ast_redirection_list **redir)
 {
     if (!pref)
         return 0;
@@ -25,7 +25,7 @@ static int prefix_heredoc(s_ast_prefix *pref, s_ast_redirection **redir)
         return prefix_heredoc(pref->next, redir);
 }
 
-static int element_heredoc(s_ast_element *elem, s_ast_redirection **redir)
+static int element_heredoc(s_ast_element *elem, s_ast_redirection_list **redir)
 {
     if (!elem)
         return 0;
@@ -40,7 +40,7 @@ static int element_heredoc(s_ast_element *elem, s_ast_redirection **redir)
 }
 
 static int simple_command_heredoc(s_ast_simple_cmd *cmd,
-                                  s_ast_redirection **redir)
+                                  s_ast_redirection_list **redir)
 {
     if (prefix_heredoc(cmd->prefixes, redir)
         || element_heredoc(cmd->elements, redir))
@@ -49,21 +49,21 @@ static int simple_command_heredoc(s_ast_simple_cmd *cmd,
 }
 
 static int redirections_heredoc(s_ast_redirection_list *redirs,
-                                s_ast_redirection **redir)
+                                s_ast_redirection_list **redir)
 {
     if (!redirs)
         return 0;
 
-    if (is_heredoc(&(redirs->redir)))
+    if (is_heredoc(redirs->next))
     {
-        *redir = &(redirs->redir);
+        *redir = redirs->next;
         return 1;
     }
     else
         return redirections_heredoc(redirs->next, redir);
 }
 
-static int command_heredoc(s_ast_cmd *cmd, s_ast_redirection **redir)
+static int command_heredoc(s_ast_cmd *cmd, s_ast_redirection_list **redir)
 {
     if (redirections_heredoc(cmd->redirections, redir))
         return 1;
@@ -76,7 +76,7 @@ static int command_heredoc(s_ast_cmd *cmd, s_ast_redirection **redir)
 int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd)
 {
     s_token *tok;
-    s_ast_redirection *redir = NULL;
+    s_ast_redirection_list *redir = NULL;
 
     if (!command_heredoc(cmd, &redir))
         return 1; /** No heredocuments. */

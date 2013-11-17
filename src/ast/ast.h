@@ -87,19 +87,14 @@ typedef enum ast_redirection_type e_ast_redirection_type;
 **      | [IONUMBER] '<>' WORD
 ** @endcode
 */
-struct ast_redirection
+
+struct ast_redirection_list
 {
     s_ast_io_number *io;
     s_ast_compound_word *word;
     s_ast_heredoc *heredoc;
     s_string *heredoc_delim;
     e_ast_redirection_type type;
-};
-typedef struct ast_redirection s_ast_redirection;
-
-struct ast_redirection_list
-{
-    s_ast_redirection redir;
     struct ast_redirection_list *next;
 };
 typedef struct ast_redirection_list s_ast_redirection_list;
@@ -114,7 +109,7 @@ typedef struct ast_redirection_list s_ast_redirection_list;
 struct ast_prefix
 {
     s_ast_assignment *assignment;
-    s_ast_redirection *redirection;
+    s_ast_redirection_list *redirection;
     struct ast_prefix *next;
 };
 typedef struct ast_prefix s_ast_prefix;
@@ -129,7 +124,7 @@ typedef struct ast_prefix s_ast_prefix;
 struct ast_element
 {
     s_ast_compound_word *word;
-    s_ast_redirection *redirection;
+    s_ast_redirection_list *redirection;
     // TODO: add T_SHELL_SUBST $()
     // TODO: add T_VAR_EXP ${}
     // TODO: add T_MATH_EXP $(())

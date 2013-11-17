@@ -14,7 +14,7 @@ static s_ast_prefix *prefix_new(void)
 
 s_ast_prefix *parse_rule_prefix(s_parser *parser) // TODO
 {
-    s_ast_redirection *redirection;
+    s_ast_redirection_list *redirection;
     s_ast_assignment *assignment;
 
     redirection = parse_rule_redirection(parser);
