@@ -6,6 +6,7 @@
 #include <stdio.h>
 static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
 {
+    (void)term;
     switch (key)
     {
         case CHAR_UP:
@@ -13,10 +14,10 @@ static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
         case CHAR_DOWN:
             break;
         case CHAR_RIGHT:
-            my_tputs(tgetstr("nd", &term->bp));
+            my_tputs(tgetstr("nd", NULL));
             break;
         case CHAR_LEFT:
-            my_tputs(tgetstr("le", &term->bp));
+            my_tputs(tgetstr("le", NULL));
             break;
         default:
             break;

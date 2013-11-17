@@ -41,7 +41,7 @@ void term_close()
 {
     if (!g_term)
         return;
-    //sfree(term->bp); //FIXME ????
+    sfree(g_term->bp);
     string_free(g_term->input);
     tcsetattr(STDIN_FILENO, TCSANOW, &(g_term->restore_state));
     sfree(g_term);

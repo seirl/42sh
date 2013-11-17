@@ -20,15 +20,16 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
             if (term->input->len != 0)
                 return CONTINUE;
             string_puts(term->input, "exit");
+            printf("exit\n");
             return RETURN;
         case BACKSPACE:
             if (term->input->len > 0)
             {
                 string_del_from_end(term->input, 1);
-                my_tputs(tgetstr("le", &term->bp)); //cursor left
-                my_tputs(tgetstr("dm", &term->bp)); //delete mode
-                my_tputs(tgetstr("dc", &term->bp)); //delete char
-                my_tputs(tgetstr("ed", &term->bp)); //edition mode
+                my_tputs(tgetstr("le", NULL)); //cursor left
+                my_tputs(tgetstr("dm", NULL)); //delete mode
+                my_tputs(tgetstr("dc", NULL)); //delete char
+                my_tputs(tgetstr("ed", NULL)); //edition mode
             }
         default:
             return CONTINUE; // Unrecognized key, just ignore it.
