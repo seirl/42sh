@@ -24,6 +24,7 @@ static s_term *term_init()
     term->termios.c_cc[VMIN] = 1;
     term->termios.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
+    term->input = string_create(0);
     return term;
 }
 
@@ -42,6 +43,7 @@ void term_close()
 {
     s_term *term = term_get();
     //sfree(term->bp); //FIXME ????
+    string_free(term->input);
     tcsetattr(STDIN_FILENO, TCSANOW, &term->restore_state);
     sfree(term);
 }

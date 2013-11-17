@@ -24,7 +24,10 @@ s_string *readline()
         if (c == -1)
             return NULL;
         if (isprint(c))
+        {
             printf("%c", c);
+            string_putc(term->input, c);
+        }
         fflush(stdout);
         //else if (readline_printable(c))
         //{
