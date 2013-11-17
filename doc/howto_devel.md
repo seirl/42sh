@@ -104,13 +104,14 @@ Hash Table
 
 \code{.c}
 #include "hashtbl.h"
-HASHTBL(char*, char*, my_table);
+//value_type, key_type, name, fun_free_value, fun_free_key
+HASHTBL(char*, char*, my_table, null_free, null_free);
 
 int foo()
 {
     s_my_table *t;
-    //table, size, hash, cmp, free function
-    HASHTBL_INIT(t, 10, hash_string, cmp_string, NULL);
+    //table, size, hash, cmp, free_name
+    HASHTBL_INIT(t, 10, hash_string, cmp_string, free_my_table);
     //table, value, key
     HASHTBL_SET(t, "foo", "bar");
     int changed;
