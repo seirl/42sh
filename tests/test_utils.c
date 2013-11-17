@@ -94,6 +94,20 @@ static int test_5()
     return 0;
 }
 
+static int test_6()
+{
+    s_stable *t;
+    HASHTBL_INIT(t, 10, hash_string, cmp_string, free_stable);
+    s_string *s1 = string_create_from("foo");
+    s_string *s2 = string_create_from("bar");
+    s_string *s3 = string_create_from("egg");
+    s_string *s4 = string_create_from("bar");
+    HASHTBL_SET(t, s1, s2);
+    HASHTBL_SET(t, s3, s4);
+    HASHTBL_FREE(t);
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
     if (argc != 2)
@@ -110,6 +124,8 @@ int main(int argc, char *argv[])
         ret = test_4();
     else if (n == 5)
         ret = test_5();
+    else if (n == 6)
+        ret = test_6();
     smalloc_clean();
     return ret;
 }

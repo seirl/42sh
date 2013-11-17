@@ -1,0 +1,6 @@
+{
+    "type": "utils",
+    "desc": "Hashtbl with s_string, replace",
+    "input": "6",
+    "output": "",
+}
