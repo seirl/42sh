@@ -27,23 +27,13 @@ s_string *readline()
             continue;
         if (ret == RETURN || ret == ERROR)
             break;
-        if (isprint(c))
-        {
-            printf("%c", c);
-            string_putc(term->input, c);
-        }
+        string_putc(term->input, c);
+        printf("%c", c);
         fflush(stdout);
-        //else if (readline_printable(c))
-        //{
-        //    string_putc(buffer, c);
-        //    index++;
-        //}
-        //else if (c == '\x1b') /** ESC (escape) == ^[ */
-        //    handle_special(buffer, c);
     }
 
     s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
     term_close();
-    env_free();
-    return NULL;
+    fflush(stdout);
+    return input;
 }
