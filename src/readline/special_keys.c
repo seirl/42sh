@@ -2,6 +2,7 @@
 #include "env.h"
 #include "key.h"
 #include "special_keys.h"
+#include "wrapper.h"
 
 static e_next_action handle_special_key(e_special_key key, s_term *term)
 {
@@ -20,6 +21,12 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
                 return CONTINUE;
             string_puts(term->input, "exit");
             return RETURN;
+        case BACKSPACE:
+            string_del_from_end(term->input, 1);
+            my_tputs(tgetstr("le", &term->bp)); //cursor left
+            my_tputs(tgetstr("dm", &term->bp)); //delete mode
+            my_tputs(tgetstr("dc", &term->bp)); //delete char
+            my_tputs(tgetstr("ed", &term->bp)); //edition mode
         default:
             return CONTINUE; // Unrecognized special key, just ignore it.
     }
