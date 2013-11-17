@@ -58,5 +58,7 @@ int token_to_word(s_token *token)
         token->type = T_WORD;
         return 1;
     }
+    if (token->type == T_NAME)
+        return 1;
     return 0;
 }
