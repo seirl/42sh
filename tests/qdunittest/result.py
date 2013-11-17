@@ -56,6 +56,22 @@ class QDTestResult(unittest.TestResult):
             else:
                 self.stream.writeln("skip")
 
+    def addExpectedFailure(self, test, err):
+        """Called when an expected failure/error occured."""
+        self.expectedFailures.append(
+            (test, self._exc_info_to_string(err, test)))
+        super().addSkip(test, "broken")
+        if self.verbose:
+            if self.stream.isatty():
+                self.stream.writeln(colorize("skip, expected failure",
+                    fg="blue"))
+            else:
+                self.stream.writeln("skip, expected failure")
+
+    def addUnexpectedSuccess(self, test):
+        """Called when a test was expected to fail, but succeed."""
+        super().addUnexpectedSuccess(test)
+
     def addError(self, test, err):
         super().addError(test, err)
         if self.verbose:
@@ -117,3 +133,12 @@ class QDTestResult(unittest.TestResult):
         if self.skipped:
             self.stream.writeln("Skipped: \n - "
                 + "\n - ".join(t.get_test_path() for t, reason in self.skipped))
+
+        if self.unexpectedSuccesses:
+            self.stream.writeln(
+            colorize("Unexpected succeses (aka.  bugfixes):", opts=("bold",))
+                + "\n - "
+                + "\n - ".join(
+                    colorize(t.get_test_path(), bg='green')
+                    for t in self.unexpectedSuccesses))
+

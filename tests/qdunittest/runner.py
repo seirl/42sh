@@ -47,6 +47,7 @@ class QDTestRunner:
         failures = []
         errors = []
         skipped = []
+        unexpectedSuccesses = []
         tests_run = 0
 
         # No tests, return dummy result
@@ -76,6 +77,7 @@ class QDTestRunner:
             failures.extend(result.failures)
             errors.extend(result.errors)
             skipped.extend(result.skipped)
+            unexpectedSuccesses.extend(result.unexpectedSuccesses)
             tests_run += result.testsRun
 
             result = self._make_result()
@@ -87,6 +89,7 @@ class QDTestRunner:
         result.failures = failures
         result.errors = errors
         result.skipped = skipped
+        result.unexpectedSuccesses = unexpectedSuccesses
         result.testsRun = tests_run
         result.print_summary(self.number, show_errors=not self.options.select)
 
