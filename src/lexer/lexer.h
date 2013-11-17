@@ -49,6 +49,9 @@ s_token *lex_word(s_lexer *lexer);
 */
 s_token *lex_look_word(s_lexer *lexer);
 
+s_token *lex_name(s_lexer *lexer);
+s_token *lex_look_name(s_lexer *lexer);
+
 /**
 ** @brief Lex a heredoc.
 **

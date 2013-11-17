@@ -53,7 +53,7 @@ static int lex_assignment(s_lexer *lexer)
 }
 #endif
 
-static int lex_name(s_lexer *lexer)
+static int lex_name_internal(s_lexer *lexer)
 {
     if (lexer->token_type == T_WORD && lexer->working_buffer->buf[0] == '$')
     {
@@ -104,6 +104,20 @@ s_token *lex_word(s_lexer *lexer)
     return NULL;
 }
 
+s_token *lex_name(s_lexer *lexer)
+{
+    s_token *tok = lex_look_token(lexer);
+
+    if (tok->type == T_ASSIGNMENT_WORD)
+    {
+        token_free(tok);
+        tok = lex_token(lexer);
+        return tok;
+    }
+    token_free(tok);
+    return NULL;
+}
+
 s_token *lex_token(s_lexer *lexer)
 {
     if (lexer->lookahead)
@@ -116,7 +130,7 @@ s_token *lex_token(s_lexer *lexer)
             break;
         if (lex_newline(lexer))
             break;
-        if (lex_name(lexer))
+        if (lex_name_internal(lexer))
             break;
         if (lex_res_word(lexer))
             break;

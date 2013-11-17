@@ -1,4 +1,5 @@
 #include <string.h>
+#include <ctype.h>
 #include "char_utils.h"
 #include "lexer_private.h"
 
@@ -161,13 +162,20 @@ static int handle_comment(s_lexer *lexer, char c, char prev)
     return 0;
 }
 
+static int is_in_name_charset(char c)
+{
+    return isdigit(c) || isalpha(c) || c == '_';
+}
+
 int handle_assignment(s_lexer *lexer, char c)
 {
     if (c == '=')
     {
         for (size_t i = 0; i < lexer->working_buffer->len; ++i)
         {
-            if (is_quote(lexer->working_buffer->buf[i]))
+            if (i == 0 && isdigit(lexer->working_buffer->buf[i]))
+                return 0;
+            if (!is_in_name_charset(lexer->working_buffer->buf[i]))
                 return 0;
         }
         //if (fill_upto_delim(lexer) == 0)

@@ -23,6 +23,17 @@ s_token *lex_look_word(s_lexer *lexer)
     return NULL;
 }
 
+s_token *lex_look_name(s_lexer *lexer)
+{
+    s_token *tok = lex_look_token(lexer);
+
+    if (tok->type == T_ASSIGNMENT_WORD)
+        return tok;
+
+    token_free(tok);
+    return NULL;
+}
+
 s_token *lex_release_lookahead(s_lexer *lexer)
 {
     assert(lexer->lookahead);
