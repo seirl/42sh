@@ -2,12 +2,12 @@
 #include <string.h>
 #include "string_utils.h"
 
-unsigned int string_search(s_string *s, const char *needle)
+unsigned int string_search(const s_string *s, const char *needle)
 {
     return strstr(s->buf, needle) - s->buf;
 }
 
-s_string *string_extract(s_string *str, size_t start, size_t end)
+s_string *string_extract(const s_string *str, size_t start, size_t end)
 {
     s_string *res = string_create(0);
     if (end == 0 || end > str->len)

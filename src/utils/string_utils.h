@@ -34,13 +34,18 @@ void string_rewind(s_string *s);
 char string_topc(s_string *s);
 
 void string_del_from_end(s_string *str, size_t n);
-unsigned int string_search(s_string *s, const char *needle);
-s_string *string_extract(s_string *str, size_t start, size_t end);
+unsigned int string_search(const s_string *s, const char *needle);
+s_string *string_extract(const s_string *str, size_t start, size_t end);
 
 void string_eat_spaces(s_string *s);
 s_string *string_replace(const s_string *s, const char *pat, const char *rep);
 
 int string_equal(const s_string *s, const char *pattern);
-int string_begin_with(const s_string *s, const char *pattern);
+int string_begins_with(const s_string *s, const char *pattern);
+int string_ends_with(const s_string *s, const s_string *pattern);
+/**
+** @brief Return character at index `index` or `'\0'` if index is invalid.
+*/
+char string_index(const s_string *s, int index);
 
 #endif /* !STRING_BUF_H */

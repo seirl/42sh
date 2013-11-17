@@ -21,7 +21,6 @@ s_lexer *lex_create(char (*lex_getc)(void *input_state),
     lexer->quoted = 0;
     lexer->concat = -1;
     lexer->lookahead = NULL;
-    lexer->prev_heredoc = 0;
 
     return lexer;
 }

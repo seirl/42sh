@@ -49,4 +49,18 @@ s_token *lex_word(s_lexer *lexer);
 */
 s_token *lex_look_word(s_lexer *lexer);
 
+/**
+** @brief Lex a heredoc.
+**
+** @return A heredoc token or NULL if it is not a heredoc.
+*/
+s_token *lex_heredoc(s_lexer *lexer, const s_string *word);
+
+/**
+** @brief Lex a stripped heredoc.
+**
+** @return A heredoc token or NULL if it is not a heredoc.
+*/
+s_token *lex_heredoc_strip(s_lexer *lexer, const s_string *word);
+
 #endif /* !LEXER_H */
