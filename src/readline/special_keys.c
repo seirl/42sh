@@ -21,7 +21,7 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
             string_puts(term->input, "exit");
             return RETURN;
         default:
-            return CONTINUE; // Unrecognized key, just ignore it.
+            return CONTINUE; // Unrecognized special key, just ignore it.
     }
 }
 
@@ -32,5 +32,5 @@ e_next_action handle_special_char(s_term *term, char c)
         return handle_special_key(Name, term);
 #include "special_keys.def"
 #undef X
-    return PRINT; // Unrecognized key, just ignore it.
+    return PRINT; // Unrecognized key, probably a regular character.
 }
