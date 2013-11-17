@@ -107,7 +107,8 @@ class QDTestResult(unittest.TestResult):
                         * 100)
                 rate_str = colorize("{:.0f}".format(rate),
                         fg="green" if rate == 100 else "red")
-                self.stream.writeln("Success: {}%".format( rate_str))
+                self.stream.writeln(colorize("Success: {}%".format(rate_str),
+                    opts=("bold",)))
             except ZeroDivisionError:
                 self.stream.writeln("No test run.")
 

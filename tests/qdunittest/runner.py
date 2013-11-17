@@ -56,8 +56,9 @@ class QDTestRunner:
         for subtest in suite._tests:
             if not self.final:
                 if hasattr(subtest, "category"):
-                    self.stream.writeln("\nCategory: " +
-                            colorize(subtest.category, fg="blue"))
+                    self.stream.writeln(colorize("\nCategory: " +
+                            colorize(subtest.category, fg="blue"),
+                            opts=("bold",)))
                     if not self.options.categories:
                         self.stream.write("\n")
                 else:
