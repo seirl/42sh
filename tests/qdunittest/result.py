@@ -136,7 +136,7 @@ class QDTestResult(unittest.TestResult):
 
         if self.unexpectedSuccesses:
             self.stream.writeln(
-            colorize("Unexpected succeses (aka.  bugfixes):", opts=("bold",))
+            colorize("Unexpected successes (aka. bugfixes):", opts=("bold",))
                 + "\n - "
                 + "\n - ".join(
                     colorize(t.get_test_path(), bg='green')
