@@ -5,7 +5,6 @@
 #include <stdio.h>
 static int handle_bracket_key(e_bracket_key key, s_term *term)
 {
-    (void)key;
     switch (key)
     {
         case CHAR_UP:

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "key.h"
 #include "bracket_key.h"
+#include "special_keys.h"
 
 char getkey(s_term *term)
 {
@@ -14,5 +15,7 @@ char getkey(s_term *term)
             handle_bracket_char(term);
         return 0;
     }
+    else if (handle_special_char(term, c))
+        return 0;
     return c;
 }
