@@ -3,6 +3,7 @@
 #include <string.h>
 #include "hashtbl.h"
 #include "string_utils.h"
+#include "smalloc.h"
 
 HASHTBL(char *, char *, ctable, null_free, null_free);
 HASHTBL(s_string *, s_string *, stable, string_free, string_free);
@@ -95,17 +96,20 @@ static int test_5()
 
 int main(int argc, char *argv[])
 {
-    (void)argc;
+    if (argc != 2)
+        return 1;
+    int ret = 0;
     int n = atoi(argv[1]);
     if (n == 1)
-        return test_1();
-    if (n == 2)
-        return test_2();
-    if (n == 3)
-        return test_3();
-    if (n == 4)
-        return test_4();
-    if (n == 5)
-        return test_5();
-    return EXIT_SUCCESS;
+        ret = test_1();
+    else if (n == 2)
+        ret = test_2();
+    else if (n == 3)
+        ret = test_3();
+    else if (n == 4)
+        ret = test_4();
+    else if (n == 5)
+        ret = test_5();
+    smalloc_clean();
+    return ret;
 }

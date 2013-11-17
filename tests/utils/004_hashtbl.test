@@ -3,5 +3,4 @@
     "desc": "Hashtbl with s_string",
     "input": "5",
     "output": "",
-    "skip": True,
 }
