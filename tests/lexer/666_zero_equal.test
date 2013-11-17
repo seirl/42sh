@@ -1,0 +1,9 @@
+{
+    "type": "lexer",
+    "desc": "0=",
+    "skip": True,
+    "input": """0=""",
+    "output": """0=	T_WORD (0)
+	T_EOF (0)
+"""
+}
