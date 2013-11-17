@@ -46,6 +46,7 @@ class QDTestRunner:
     def run_suite(self, suite):
         failures = []
         errors = []
+        skipped = []
         tests_run = 0
 
         # No tests, return dummy result
@@ -73,6 +74,7 @@ class QDTestRunner:
 
             failures.extend(result.failures)
             errors.extend(result.errors)
+            skipped.extend(result.skipped)
             tests_run += result.testsRun
 
             result = self._make_result()
@@ -83,6 +85,7 @@ class QDTestRunner:
         result = self._make_result()
         result.failures = failures
         result.errors = errors
+        result.skipped = skipped
         result.testsRun = tests_run
         result.print_summary(self.number, show_errors=False)
 

@@ -40,6 +40,7 @@ General fields:
     "retval": 0,           # check return value
     "timeout" 4.2,         # custom timeout
     "with_valgrind": True, # check for memory errors
+    "skip": False,         # skip this test?
 }
 \endcode
 

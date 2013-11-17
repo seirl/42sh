@@ -48,6 +48,14 @@ class QDTestResult(unittest.TestResult):
             else:
                 self.stream.writeln("ok")
 
+    def addSkip(self, test, reason):
+        super().addSkip(test, reason)
+        if self.verbose:
+            if self.stream.isatty():
+                self.stream.writeln(colorize("skip", fg="blue"))
+            else:
+                self.stream.writeln("skip")
+
     def addError(self, test, err):
         super().addError(test, err)
         if self.verbose:
@@ -88,9 +96,6 @@ class QDTestResult(unittest.TestResult):
         if show_errors:
             self.printErrors()
 
-        if self.skipped:
-            self.stream.writeln("Skipped: {}".format(len(self.skipped)))
-
         if number:
             self.stream.writeln(
                 "Success: {}/{}".format(
@@ -102,6 +107,9 @@ class QDTestResult(unittest.TestResult):
                         * 100)
                 rate_str = colorize("{:.0f}".format(rate),
                         fg="green" if rate == 100 else "red")
-                self.stream.writeln( "Success: {}%".format( rate_str))
+                self.stream.writeln("Success: {}%".format( rate_str))
             except ZeroDivisionError:
                 self.stream.writeln("No test run.")
+
+        if self.skipped:
+            self.stream.writeln("Skipped: {}".format(len(self.skipped)))
