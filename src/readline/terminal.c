@@ -5,6 +5,8 @@
 #include "env.h"
 #include "smalloc.h"
 
+static s_term *g_term = NULL;
+
 static s_term *term_init()
 {
     s_term *term = smalloc(sizeof (struct terminal));
@@ -27,20 +29,19 @@ static s_term *term_init()
 
 s_term *term_get()
 {
-    static s_term *term = NULL;
-    if (term == NULL)
-    {
-        term = term_init();
-        //TODO handle errors
-    }
-    return term;
+    if (g_term == NULL)
+        g_term = term_init();
+
+    return g_term;
 }
 
 void term_close()
 {
-    s_term *term = term_get();
+    if (!g_term)
+        return;
     //sfree(term->bp); //FIXME ????
-    string_free(term->input);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term->restore_state);
-    sfree(term);
+    string_free(g_term->input);
+    tcsetattr(STDIN_FILENO, TCSANOW, &(g_term->restore_state));
+    sfree(g_term);
+    g_term = NULL;
 }

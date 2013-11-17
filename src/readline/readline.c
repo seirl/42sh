@@ -11,6 +11,8 @@
 s_string *readline()
 {
     s_term *term = term_get();
+    if (term == NULL)
+        return NULL;
     char c;
 
     if (!env_get("PS1"))
@@ -40,6 +42,7 @@ s_string *readline()
         //    handle_special(buffer, c);
     }
 
+    s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
     term_close();
     env_free();
     return NULL;
