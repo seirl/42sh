@@ -5,7 +5,6 @@
 #include "string_utils.h"
 #include "terminal.h"
 #include "key.h"
-#include "key_signal.h"
 #include "env.h"
 
 #include "wrapper.h"
@@ -22,8 +21,8 @@ s_string *readline()
         c = getkey(term);
         if (c == 0)
             continue;
-        if (signal_key(c))
-            break;
+        if (c == -1)
+            return NULL;
         if (isprint(c))
             printf("%c", c);
         fflush(stdout);

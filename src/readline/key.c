@@ -15,7 +15,18 @@ char getkey(s_term *term)
             handle_bracket_char(term);
         return 0;
     }
-    else if (handle_special_char(term, c))
-        return 0;
+    else
+    {
+        int ret = handle_special_char(term, c);
+        switch (ret)
+        {
+            case 0:
+                return c;
+            case 1:
+                return 0;
+            case 2:
+                return -1;
+        }
+    }
     return c;
 }

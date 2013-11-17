@@ -2,7 +2,7 @@
 #include "env.h"
 #include "special_keys.h"
 
-static void handle_special_key(e_special_key key, s_term *term)
+static int handle_special_key(e_special_key key, s_term *term)
 {
     (void)term;
     switch (key)
@@ -12,19 +12,20 @@ static void handle_special_key(e_special_key key, s_term *term)
             printf("%s", env_get("PS1"));
             fflush(stdout);
             break;
+        case CTRL_D:
+            return 2;
+            break;
         default:
             break;
     }
+    return 1;
 }
 
 int handle_special_char(s_term *term, char c)
 {
-#define X(Name, Code)                      \
-    if (c == Code)                         \
-    {                                      \
-        handle_special_key(Name, term);    \
-        return 1;                          \
-    }
+#define X(Name, Code)                             \
+    if (c == Code)                                \
+        return handle_special_key(Name, term);
 #include "special_keys.def"
 #undef X
     return 0;
