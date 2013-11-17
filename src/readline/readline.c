@@ -8,6 +8,15 @@
 #include "env.h"
 
 #include "wrapper.h"
+
+static s_string *readline_close(s_term *term, e_next_action ret)
+{
+    s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
+    term_close();
+    fflush(stdout);
+    return input;
+}
+
 s_string *readline()
 {
     s_term *term = term_get();
@@ -36,8 +45,5 @@ s_string *readline()
         }
     }
 
-    s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
-    term_close();
-    fflush(stdout);
-    return input;
+    return readline_close(term, ret);
 }

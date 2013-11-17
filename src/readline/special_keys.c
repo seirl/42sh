@@ -4,6 +4,18 @@
 #include "special_keys.h"
 #include "wrapper.h"
 
+static void do_backspace(s_term *term)
+{
+    if (term->input->len > 0)
+    {
+        string_del_from_end(term->input, 1);
+        my_tputs(tgetstr("le", NULL)); //cursor left
+        my_tputs(tgetstr("dm", NULL)); //delete mode
+        my_tputs(tgetstr("dc", NULL)); //delete char
+        my_tputs(tgetstr("ed", NULL)); //edition mode
+    }
+}
+
 static e_next_action handle_special_key(e_special_key key, s_term *term)
 {
     switch (key)
@@ -24,14 +36,7 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
             printf("exit\n");
             return RETURN;
         case BACKSPACE:
-            if (term->input->len > 0)
-            {
-                string_del_from_end(term->input, 1);
-                my_tputs(tgetstr("le", NULL)); //cursor left
-                my_tputs(tgetstr("dm", NULL)); //delete mode
-                my_tputs(tgetstr("dc", NULL)); //delete char
-                my_tputs(tgetstr("ed", NULL)); //edition mode
-            }
+            do_backspace(term);
         default:
             return CONTINUE; // Unrecognized key, just ignore it.
     }
