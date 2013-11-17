@@ -18,9 +18,8 @@ s_ast_element *parse_rule_elements(s_parser *parser)
     s_ast_compound_word *word = NULL;
     s_ast_redirection *redirection = NULL;
 
+    redirection = parse_rule_redirection(parser);
     word = parse_compound_word(parser);
-
-    // TODO: redirection = parse_rule_redirection(word);
 
     if (!word && !redirection)
         return NULL;

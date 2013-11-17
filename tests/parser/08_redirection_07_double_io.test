@@ -1,0 +1,5 @@
+{
+    "desc": "rule redirection: double io redirection",
+    "input": """echo lol 2>&1""",
+    "output": "",
+}

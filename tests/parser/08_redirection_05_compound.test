@@ -1,0 +1,5 @@
+{
+    "desc": "rule redirection: compound word redirection",
+    "input": """echo lol > 'a''b'""",
+    "output": "",
+}

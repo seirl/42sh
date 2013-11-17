@@ -1,0 +1,11 @@
+{
+    "desc": "rule redirection: multiple heredoc",
+    "input": """cat << FOO; cat << BAR
+hello
+FOO
+world
+BAR
+""",
+    "output": "",
+    "skip": True,
+}

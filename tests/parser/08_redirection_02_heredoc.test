@@ -1,0 +1,9 @@
+{
+    "desc": "rule redirection: heredoc",
+    "input": """cat << FOO
+hello
+FOO
+""",
+    "output": "",
+    "skip": True,
+}

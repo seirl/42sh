@@ -1,0 +1,11 @@
+{
+    "desc": "rule redirection: multiple heredoc same command, equivalent to: "
+            """cat << "FOO\nBAR" """,
+    "input": """cat << FOO << BAR
+hello
+FOO
+BAR
+""",
+    "output": "",
+    "skip": True,
+}

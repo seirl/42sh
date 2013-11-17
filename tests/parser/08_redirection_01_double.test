@@ -1,0 +1,5 @@
+{
+    "desc": "rule redirection: double",
+    "input": ">foo cat < bar",
+    "output": "",
+}
