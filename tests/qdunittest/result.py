@@ -115,4 +115,5 @@ class QDTestResult(unittest.TestResult):
                 self.stream.writeln("No test run.")
 
         if self.skipped:
-            self.stream.writeln("Skipped: {}".format(len(self.skipped)))
+            self.stream.writeln("Skipped: \n - "
+                + "\n - ".join(t.get_test_path() for t, reason in self.skipped))
