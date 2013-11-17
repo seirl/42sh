@@ -13,7 +13,8 @@ s_string *readline()
     s_term *term = term_get();
     char c;
 
-    env_set("42sh$ ", "PS1");
+    if (!env_get("PS1"))
+        env_set("42sh$ ", "PS1");
     printf("%s", env_get("PS1"));
     fflush(stdout);
     e_next_action ret;
