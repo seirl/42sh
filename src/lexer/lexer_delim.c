@@ -9,7 +9,7 @@ int lex_eat_spaces(s_lexer *lexer)
 {
     char c;
     int ret = 0;
-    while ((c = lexer->topc(lexer->input_state)) == ' ')
+    while ((c = lexer->topc(lexer->input_state)) == ' ' || c == '\t')
     {
         ret = 1;
         lexer->getc(lexer->input_state);
