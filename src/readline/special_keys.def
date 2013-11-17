@@ -1,5 +1,6 @@
 X(CTRL_A, 1)
 X(CTRL_B, 2)
+X(CTRL_C, 3)
 X(CTRL_D, 4)
 X(CTRL_E, 5)
 X(CTRL_F, 6)

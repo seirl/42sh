@@ -12,6 +12,7 @@ static int handle_special_key(e_special_key key, s_term *term)
             printf("%s", env_get("PS1"));
             fflush(stdout);
             break;
+        case CTRL_C:
         case CTRL_D:
             return 2;
             break;
