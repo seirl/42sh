@@ -17,6 +17,8 @@ s_string *readline()
     while (1)
     {
         c = getkey(term);
+        if (c == 0)
+            continue;
         if (signal_key(c))
             break;
         if (isprint(c))
