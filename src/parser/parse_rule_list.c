@@ -1,7 +1,7 @@
 #include "parser_private.h"
 #include "smalloc.h"
 
-static s_ast_list *list_new(void)
+s_ast_list *ast_list_new(void)
 {
     s_ast_list *list = smalloc(sizeof (s_ast_list));
 
@@ -18,7 +18,7 @@ s_ast_list *parse_rule_list(s_parser *parser)
     if (!(sub = parse_rule_and_or(parser)))
         return NULL; /** Could not parse */
 
-    s_ast_list *list = list_new();
+    s_ast_list *list = ast_list_new();
     list->and_or = sub;
 
     s_token *tok = lex_look_token(parser->lexer);

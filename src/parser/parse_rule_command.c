@@ -20,12 +20,12 @@ s_ast_cmd *parse_rule_command(s_parser *parser)
     s_ast_funcdec *funcdec;
     s_ast_cmd *cmd = cmd_new();
 
-    if ((simple_cmd = parse_rule_simple_command(parser)))
-        cmd->simple_cmd = simple_cmd;
-    else if ((shell_cmd = parse_rule_shell_command(parser)))
+    if ((shell_cmd = parse_rule_shell_command(parser)))
         cmd->shell_cmd = shell_cmd;
     else if ((funcdec = parse_rule_funcdec(parser)))
         cmd->func_dec = funcdec;
+    else if ((simple_cmd = parse_rule_simple_command(parser)))
+        cmd->simple_cmd = simple_cmd;
     else
     {
         sfree(cmd);

@@ -1,8 +1,62 @@
 #include "parser_private.h"
+#include "parser_macros.h"
 #include "smalloc.h"
+
+s_ast_shell_cmd *shell_cmd_new(void)
+{
+    s_ast_shell_cmd *shell_cmd = smalloc(sizeof (s_ast_shell_cmd));
+
+    shell_cmd->cmd_list = NULL;
+    shell_cmd->subshell = 0;
+    shell_cmd->ctrl.ast_if = NULL;
+    shell_cmd->ctrl_structure = 0;
+
+    return shell_cmd;
+}
+
+s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
+{
+    int subshell = 0;
+
+    if (tok->type == T_LPAREN)
+        subshell = 1;
+    token_free(tok);
+
+    parser_shift_token(parser);
+
+    s_ast_list *list;
+    if (!(list = parse_rule_list(parser)))
+        RETURN_PARSE_EXPECTED(parser, "List");
+
+    s_ast_shell_cmd *shell_cmd = shell_cmd_new();
+    shell_cmd->subshell = subshell;
+    shell_cmd->cmd_list = list;
+
+    return shell_cmd;
+}
 
 s_ast_shell_cmd *parse_rule_shell_command(s_parser *parser) // TODO
 {
-    (void) parser;
+    s_token *tok;
+
+    tok = lex_look_token(parser->lexer);
+
+    if (tok->type == T_LBRACE || tok->type == T_LPAREN)
+        return parse_compound_list(parser, tok);
+
+#define X(Token, Type, Sub, Rule)                     \
+    if (tok->type == Token)                           \
+    {                                                 \
+        parser_shift_token(parser);                   \
+        s_ast_shell_cmd *shell_cmd = shell_cmd_new(); \
+        shell_cmd->ctrl_structure = Type;             \
+        shell_cmd->ctrl.Sub = Rule(parser);           \
+        token_free(tok);                              \
+        return shell_cmd;                             \
+    }
+#include "shell_command.def"
+#undef X
+    token_free(tok);
+
     return NULL;
 }

@@ -101,7 +101,10 @@ add_library(parser OBJECT
 
     src/parser/parse_rule_and_or.c
     src/parser/parse_rule_command.c
+    src/parser/parse_rule_compound_list.c
+    src/parser/parse_rule_do_group.c
     src/parser/parse_rule_elements.c
+    src/parser/parse_rule_for.c
     src/parser/parse_rule_funcdec.c
     src/parser/parse_rule_input.c
     src/parser/parse_rule_list.c

@@ -67,7 +67,7 @@ static int command_heredoc(s_ast_cmd *cmd, s_ast_redirection **redir)
 {
     if (redirections_heredoc(cmd->redirections, redir))
         return 1;
-    else if (simple_command_heredoc(cmd->simple_cmd, redir))
+    else if (cmd->simple_cmd && simple_command_heredoc(cmd->simple_cmd, redir))
         return 1;
     else
         return 0;
