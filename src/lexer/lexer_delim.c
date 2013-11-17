@@ -9,10 +9,10 @@ int lex_eat_spaces(s_lexer *lexer)
 {
     char c;
     int ret = 0;
-    while ((c = lexer->topc(lexer)) == ' ')
+    while ((c = lexer->topc(lexer->input_state)) == ' ')
     {
         ret = 1;
-        lexer->getc(lexer);
+        lexer->getc(lexer->input_state);
     }
     return ret;
 }
@@ -38,14 +38,14 @@ static int handle_operator(s_lexer *lexer)
 {
     char c;
     do {
-        c = lexer->topc(lexer);
+        c = lexer->topc(lexer->input_state);
         string_putc(lexer->working_buffer, c);
         if (!is_valid_operator(lexer, lexer->working_buffer) || c == 0)
         {
             string_del_from_end(lexer->working_buffer, 1);
             return 1;
         }
-        lexer->getc(lexer);
+        lexer->getc(lexer->input_state);
     } while (c != 0);
     return 0;
 }
@@ -67,7 +67,7 @@ static int fill_until(s_lexer *lexer, int include_last)
     char prev = 0;
     while (1)
     {
-        c = lexer->topc(lexer);
+        c = lexer->topc(lexer->input_state);
         if (lexer->quoted == 0 && prev != '\\' && (c == lexer->sur.end || c == '\0'))
         {
             lexer->sur.count -= 1;
@@ -82,12 +82,12 @@ static int fill_until(s_lexer *lexer, int include_last)
                 ;//syntax error
             }
         }
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
         update_quote(lexer, c, prev);
         prev = c;
     }
     if (include_last && c != 0)
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
     lexer->quoted = 0;
     lexer->sur.end = 0;
     lexer->sur.count = 0;
@@ -100,10 +100,10 @@ static int fill_upto_delim(s_lexer *lexer)
     char prev = 0;
     do
     {
-        c = lexer->topc(lexer);
+        c = lexer->topc(lexer->input_state);
         if ((is_quote(c) || is_delimiter(c)) && prev != '\\')
             break;
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
         prev = c;
     } while (c != 0 && c != EOF);
     return 1;
@@ -117,7 +117,7 @@ static int handle_quotes(s_lexer *lexer, char c, char prev)
     {
         lexer->sur.end = c;
         lexer->sur.count = 1;
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
         return fill_until(lexer, 1);
     }
     return 0;
@@ -129,8 +129,8 @@ static int handle_dollar(s_lexer *lexer, char c, char prev)
         return 0;
     if (c == '$')
     {
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
-        c = lexer->topc(lexer);
+        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        c = lexer->topc(lexer->input_state);
         if (c == '(' || c == '{')
         {
             lexer->sur.begin = c;
@@ -174,7 +174,7 @@ int handle_assignment(s_lexer *lexer, char c)
     {
         if (lexer->working_buffer->len == 0)
         {
-            string_putc(lexer->working_buffer, lexer->getc(lexer));
+            string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
             return 1;
         }
         for (size_t i = 0; i < lexer->working_buffer->len; ++i)
@@ -186,7 +186,7 @@ int handle_assignment(s_lexer *lexer, char c)
         }
         //if (fill_upto_delim(lexer) == 0)
         //    return 0;
-        //lexer->getc(lexer); //discard '='
+        //lexer->getc(lexer->input_state); //discard '='
         lexer->token_type = T_ASSIGNMENT_WORD;
         return 1;
     }
@@ -205,7 +205,7 @@ int lex_delimit_token(s_lexer *lexer)
 
     do
     {
-        c = lexer->topc(lexer);
+        c = lexer->topc(lexer->input_state);
         if (handle_comment(lexer, c, prev))
             break;
         if (handle_dollar(lexer, c, prev))
@@ -222,13 +222,13 @@ int lex_delimit_token(s_lexer *lexer)
                 if (handle_quotes(lexer, c, prev))
                     break;
                 if (c == '\n')
-                    string_putc(lexer->working_buffer, lexer->getc(lexer));
+                    string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
                 else
                     handle_operator(lexer);
             }
             break;
         }
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
         prev = c;
     } while (c != 0 && c != EOF);
     return 0;

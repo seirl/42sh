@@ -27,7 +27,7 @@ static int lex_io_number(s_lexer *lexer)
         if (!isdigit(lexer->working_buffer->buf[i]))
             return 0;
     }
-    if (lexer->topc(lexer) == '>' || lexer->topc(lexer) == '<')
+    if (lexer->topc(lexer->input_state) == '>' || lexer->topc(lexer->input_state) == '<')
     {
         lexer->token_type = T_IO_NUMBER;
         return 1;
