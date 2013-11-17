@@ -2,6 +2,7 @@
 # define BRACKET_KEY_H
 
 # include "terminal.h"
+# include "key.h"
 
 enum bracket_key
 {
@@ -11,6 +12,6 @@ enum bracket_key
 };
 typedef enum bracket_key e_bracket_key;
 
-int handle_bracket_char(s_term *term);
+e_next_action handle_bracket_char(s_term *term);
 
 #endif /* !BRACKET_KEY_H */

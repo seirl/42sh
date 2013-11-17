@@ -2,6 +2,7 @@
 # define SPECIAL_KEYS_H
 
 # include "terminal.h"
+# include "key.h"
 
 enum special_key
 {
@@ -11,6 +12,6 @@ enum special_key
 };
 typedef enum special_key e_special_key;
 
-int handle_special_char(s_term *term, char c);
+e_next_action handle_special_char(s_term *term, char c);
 
 #endif /* !SPECIAL_KEYS_H */

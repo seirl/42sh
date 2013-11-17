@@ -1,9 +1,10 @@
 #include <unistd.h>
+#include "key.h"
 #include "bracket_key.h"
 #include "wrapper.h"
 
 #include <stdio.h>
-static int handle_bracket_key(e_bracket_key key, s_term *term)
+static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
 {
     switch (key)
     {
@@ -20,10 +21,10 @@ static int handle_bracket_key(e_bracket_key key, s_term *term)
         default:
             break;
     }
-    return 1;
+    return CONTINUE;
 }
 
-int handle_bracket_char(s_term *term)
+e_next_action handle_bracket_char(s_term *term)
 {
     char c;
     char c2 = -1;
@@ -43,5 +44,5 @@ int handle_bracket_char(s_term *term)
     }
 #include "bracket_key.def"
 #undef X
-    return 0;
+    return CONTINUE;
 }

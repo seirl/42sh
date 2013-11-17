@@ -16,12 +16,13 @@ s_string *readline()
     env_set("42sh$ ", "PS1");
     printf("%s", env_get("PS1"));
     fflush(stdout);
+    e_next_action ret;
     while (1)
     {
-        c = getkey(term);
-        if (c == 0)
+        ret = getkey(term, &c);
+        if (ret == CONTINUE && !isprint(c))
             continue;
-        if (c == -1)
+        if (ret == RETURN || ret == ERROR)
             break;
         if (isprint(c))
         {
