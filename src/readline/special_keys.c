@@ -22,13 +22,16 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
             string_puts(term->input, "exit");
             return RETURN;
         case BACKSPACE:
-            string_del_from_end(term->input, 1);
-            my_tputs(tgetstr("le", &term->bp)); //cursor left
-            my_tputs(tgetstr("dm", &term->bp)); //delete mode
-            my_tputs(tgetstr("dc", &term->bp)); //delete char
-            my_tputs(tgetstr("ed", &term->bp)); //edition mode
+            if (term->input->len > 0)
+            {
+                string_del_from_end(term->input, 1);
+                my_tputs(tgetstr("le", &term->bp)); //cursor left
+                my_tputs(tgetstr("dm", &term->bp)); //delete mode
+                my_tputs(tgetstr("dc", &term->bp)); //delete char
+                my_tputs(tgetstr("ed", &term->bp)); //edition mode
+            }
         default:
-            return CONTINUE; // Unrecognized special key, just ignore it.
+            return CONTINUE; // Unrecognized key, just ignore it.
     }
 }
 
@@ -39,5 +42,5 @@ e_next_action handle_special_char(s_term *term, char c)
         return handle_special_key(Name, term);
 #include "special_keys.def"
 #undef X
-    return PRINT; // Unrecognized key, probably a regular character.
+    return PRINT; // Unrecognized key, just ignore it.
 }
