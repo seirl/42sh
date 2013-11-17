@@ -102,15 +102,18 @@ add_library(parser OBJECT
     src/parser/parse_rule_and_or.c
     src/parser/parse_rule_command.c
     src/parser/parse_rule_elements.c
+    src/parser/parse_rule_funcdec.c
     src/parser/parse_rule_input.c
     src/parser/parse_rule_list.c
     src/parser/parse_rule_pipeline.c
     src/parser/parse_rule_prefix.c
-    src/parser/parse_rule_simple_command.c
+    src/parser/parse_rule_redirection.c
     src/parser/parse_rule_shell_command.c
-    src/parser/parse_rule_funcdec.c
+    src/parser/parse_rule_simple_command.c
 
+    src/parser/parse_assignment.c
     src/parser/parse_compound_words.c
+    src/parser/parse_heredoc.c
 )
 
 add_library(exec OBJECT

@@ -7,12 +7,22 @@
 typedef struct ast_list s_ast_list;
 typedef struct ast_element s_ast_element;
 
+enum ast_word_kind
+{
+    WORD,         /** a or 'a' or "a" */
+    SUBSTS_SHELL, /** $(echo foo)     */
+    SUBSTS_VAR,   /** $(#argv)        */
+    EXPAND_VAR,   /** $a              */
+};
+typedef enum ast_word_kind e_ast_word_kind;
+
 /**
 ** @brief A word.
 */
 struct ast_word
 {
     s_string *str;
+    e_ast_word_kind kind;
 };
 typedef struct ast_word s_ast_word;
 
@@ -36,18 +46,18 @@ typedef struct ast_io_number s_ast_io_number;
 
 struct ast_heredoc
 {
-    s_string heredoc;
+    s_string *heredoc;
 };
 typedef struct ast_heredoc s_ast_heredoc;
 
 struct ast_assignment
 {
-    s_ast_word *word;
-    s_ast_element *value;
+    s_string *name;
+    s_ast_compound_word *value;
 };
 typedef struct ast_assignment s_ast_assignment;
 
-enum redirection_type
+enum ast_redirection_type
 {
     REDIR_WRITE,            /** >   */
     REDIR_WRITE_UPDATE,     /** >>  */
@@ -59,7 +69,7 @@ enum redirection_type
     REDIR_CLOBBER,          /** >|  */
     REDIR_READ_WRITE,       /** <>  */
 };
-typedef enum redirection_type e_redirection_type;
+typedef enum ast_redirection_type e_ast_redirection_type;
 
 /**
 ** @brief Redirections
@@ -80,11 +90,19 @@ typedef enum redirection_type e_redirection_type;
 struct ast_redirection
 {
     s_ast_io_number *io;
-    s_ast_word *word;
+    s_ast_compound_word *word;
     s_ast_heredoc *heredoc;
-    e_redirection_type type;
+    s_string *heredoc_delim;
+    e_ast_redirection_type type;
 };
 typedef struct ast_redirection s_ast_redirection;
+
+struct ast_redirection_list
+{
+    s_ast_redirection redir;
+    struct ast_redirection_list *next;
+};
+typedef struct ast_redirection_list s_ast_redirection_list;
 
 /**
 ** @brief Prefixes
@@ -95,7 +113,7 @@ typedef struct ast_redirection s_ast_redirection;
 */
 struct ast_prefix
 {
-    s_ast_assignment *assignement;
+    s_ast_assignment *assignment;
     s_ast_redirection *redirection;
     struct ast_prefix *next;
 };
@@ -273,7 +291,7 @@ struct ast_cmd
     s_ast_simple_cmd *simple_cmd;
     s_ast_shell_cmd *shell_cmd;
     s_ast_funcdec *func_dec;
-    s_ast_redirection *redirections; /** for shell_cmd of funcdec */
+    s_ast_redirection_list *redirections; /** for shell_cmd of funcdec */
 };
 typedef struct ast_cmd s_ast_cmd;
 

@@ -13,18 +13,27 @@ static s_ast_pipeline *pipeline_new(void)
     return pipeline;
 }
 
-s_ast_pipeline *parse_rule_pipeline(s_parser *parser, int first)
+static int parse_bang(s_parser *parser, int first)
 {
     int inverted = 0;
+
     s_token *tok = lex_look_token(parser->lexer);
     if (tok->type == T_BANG)
     {
         if (!first)
-            RETURN_PARSE_UNEXPECTED(tok);
+            RETURN_PARSE_UNEXPECTED_INT(parser, tok);
         inverted = 1;
         parser_shift_token(parser);
     }
     token_free(tok);
+
+    return inverted;
+}
+
+s_ast_pipeline *parse_rule_pipeline(s_parser *parser, int first)
+{
+    s_token *tok;
+    int inverted = parse_bang(parser, first);
 
     s_ast_cmd *cmd;
     if (!(cmd = parse_rule_command(parser)))
@@ -39,6 +48,12 @@ s_ast_pipeline *parse_rule_pipeline(s_parser *parser, int first)
     {
         parser_shift_token(parser);
         if (!(pipeline->next = parse_rule_pipeline(parser, 0)))
+            return NULL;
+    }
+    else if (tok->type == T_NEWLINE)
+    {
+        parser_shift_token(parser); /** Eat newline */
+        if (!maybe_parse_heredoc(parser, pipeline->cmd))
             return NULL;
     }
     token_free(tok);

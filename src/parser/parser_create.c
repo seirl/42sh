@@ -7,6 +7,7 @@ s_parser *parser_create(s_lexer *lexer)
 
     parser = smalloc(sizeof (s_parser));
     parser->lexer = lexer;
+    parser->status = PARSE_OK;
 
     return parser;
 }
