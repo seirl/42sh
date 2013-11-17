@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "terminal.h"
+#include "env.h"
 #include "smalloc.h"
 
 static s_term *term_init()
@@ -12,14 +13,10 @@ static s_term *term_init()
         sfree(term);
         return NULL;
     }
-    term->name = TERM_NAME; //TODO var_get("TERM");
+    term->name = env_get("TERM");
     term->bp = smalloc(2048);
     if (tgetent(term->bp, term->name) <= 0)
-    {
-        sfree(term);
-        sfree(term->bp);
-        return NULL;
-    }
+        tgetent(term->bp, "xterm");
     term->termios.c_lflag &= ~(ICANON | ECHO);
     term->termios.c_cc[VMIN] = 1;
     term->termios.c_cc[VTIME] = 0;
