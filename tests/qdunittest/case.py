@@ -173,3 +173,35 @@ def new_test_run_parser(test, options):
         subself.assertEqual(retval, parser.returncode, "return value differ")
 
     return QDTestCaseParser, test_parser
+
+class QDTestCaseUtils(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[input: {}] [utils: {}]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('input', "None"),
+                self.test.get('utils', "None"),
+            )
+
+def new_test_run_utils(test, options):
+    def test_utils(subself):
+        timeout = test.get('timeout', options.timeout)
+        input_string = test.get('input', "")
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+
+        command = ["./test_utils", input_string]
+        if 'lexer' in test:
+            command.extend(test['utils'])
+
+        utils = subself.start_program(args=command,
+                with_valgrind=with_valgrind)
+        stdoutdata, stderrdata = utils.communicate(b"", options.timeout)
+
+        if 'output' in test:
+            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
+                             "stdout differ")
+
+        retval = test.get('retval', 0)
+        subself.assertEqual(retval, utils.returncode, "return value differ")
+
+    return QDTestCaseUtils, test_utils

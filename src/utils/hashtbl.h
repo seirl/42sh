@@ -98,8 +98,8 @@
 # define HASHTBL_DEBUG(Table)                                          \
     do {                                                               \
         size_t i;                                                      \
-        for (i = 0; i < Table->size; ++i)\
-        {                             \
+        for (i = 0; i < Table->size; ++i)                              \
+        {                                                              \
             fprintf(stderr, "\n%ld : ", i);                            \
             LIST_FOREACH(Table->bucket[i])                             \
                 fprintf(stderr, "%d -> ",                              \
