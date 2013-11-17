@@ -98,5 +98,7 @@
 
 unsigned long hash_string(s_string *s);
 int cmp_string(s_string *s1, s_string *s2);
+unsigned long hash_char(char *s);
+int cmp_char(char *s1, char *s2);
 
 #endif /* !HASHTBL_H */

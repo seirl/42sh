@@ -21,6 +21,7 @@ add_definitions(-D_XOPEN_SOURCE)
 LINK_LIBRARIES(m ncurses)
 
 include_directories(src)
+include_directories(src/env)
 include_directories(src/ast)
 include_directories(src/lexer)
 include_directories(src/fnmatch)
@@ -40,6 +41,10 @@ add_library(hashtbl OBJECT
 
 add_library(log OBJECT
     src/utils/log.c
+)
+
+add_library(env OBJECT
+    src/env/env.c
 )
 
 add_library(string OBJECT
@@ -125,6 +130,7 @@ add_executable(../42sh
     src/sighandler.c
 
     $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:env>
     $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:lexer>
