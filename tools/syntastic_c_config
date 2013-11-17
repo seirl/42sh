@@ -1,0 +1,11 @@
+-Isrc/
+-Isrc/ast
+-Isrc/env
+-Isrc/exec
+-Isrc/expand
+-Isrc/fnmatch
+-Isrc/lexer
+-Isrc/options
+-Isrc/parser
+-Isrc/readline
+-Isrc/utils
