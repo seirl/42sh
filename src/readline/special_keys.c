@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "env.h"
 #include "special_keys.h"
 
 static void handle_special_key(e_special_key key, s_term *term)
@@ -8,6 +9,8 @@ static void handle_special_key(e_special_key key, s_term *term)
     {
         case ENTER:
             printf("\n");
+            printf("%s", env_get("PS1"));
+            fflush(stdout);
             break;
         default:
             break;

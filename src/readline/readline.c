@@ -6,14 +6,17 @@
 #include "terminal.h"
 #include "key.h"
 #include "key_signal.h"
+#include "env.h"
 
 #include "wrapper.h"
 s_string *readline()
 {
     s_term *term = term_get();
     char c;
-    //my_tputs(tgetstr("sc", &term->bp));
-    //my_tputs(tgetstr("ve", &term->bp));
+
+    env_set("42sh$ ", "PS1");
+    printf("%s", env_get("PS1"));
+    fflush(stdout);
     while (1)
     {
         c = getkey(term);
@@ -34,5 +37,6 @@ s_string *readline()
     }
 
     term_close();
+    env_free();
     return NULL;
 }
