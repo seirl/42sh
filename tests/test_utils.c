@@ -104,6 +104,9 @@ static int test_6()
     s_string *s4 = string_create_from("bar");
     HASHTBL_SET(t, s1, s2);
     HASHTBL_SET(t, s3, s4);
+    s_string *s5 = string_create_from("bar");
+    HASHTBL_DEL(t, s5);
+    string_free(s5);
     HASHTBL_FREE(t);
     return 0;
 }
