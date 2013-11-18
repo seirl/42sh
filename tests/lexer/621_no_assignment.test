@@ -8,5 +8,4 @@
 bar	T_WORD (1)
 	T_EOF (0)
 """,
-    "skip": True,
 }
