@@ -31,6 +31,7 @@ include_directories(src/readline)
 include_directories(src/utils)
 include_directories(src/exec)
 include_directories(src/input)
+include_directories(src/history)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -93,6 +94,10 @@ add_library(readline OBJECT
     src/readline/bracket_key.c
     src/readline/special_keys.c
     src/readline/terminal.c
+)
+
+add_library(history OBJECT
+    src/history/history.c
 )
 
 add_library(input OBJECT
@@ -184,6 +189,7 @@ add_executable(../42sh
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:input>
+    $<TARGET_OBJECTS:history>
 )
 
 message(STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS})
