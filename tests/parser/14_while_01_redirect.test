@@ -1,0 +1,8 @@
+{
+    "desc": "rule while: redirection",
+    "input": """while true; do
+echo yes
+done > lol
+""",
+    "output": "",
+}

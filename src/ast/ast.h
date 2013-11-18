@@ -205,14 +205,14 @@ typedef struct ast_if s_ast_if;
 struct ast_until
 {
     s_ast_list *predicate;
-    s_ast_list *cms;
+    s_ast_list *cmds;
 };
 typedef struct ast_until s_ast_until;
 
 struct ast_while
 {
     s_ast_list *predicate;
-    s_ast_list *cms;
+    s_ast_list *cmds;
 };
 typedef struct ast_while s_ast_while;
 
@@ -371,6 +371,7 @@ s_ast_prefix *ast_prefix_new(void);
 s_ast_redirection_list *ast_redirection_new(void);
 s_ast_shell_cmd *ast_shell_cmd_new(void);
 s_ast_simple_cmd *ast_simple_cmd_new(void);
+s_ast_while *ast_while_new(void);
 s_ast_word *ast_word_new(void);
 s_ast_word_list *ast_word_list_new(void);
 

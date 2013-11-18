@@ -74,6 +74,8 @@ s_ast_redirection_list *parse_rule_redirection(s_parser *parser)
 
     if (redir_type == REDIR_HEREDOC || redir_type == REDIR_HEREDOC_STRIP)
         heredoc_delim = parse_heredoc_delim(parser);
+    else
+        word = parse_compound_word(parser);
 
     s_ast_redirection_list *redirection = ast_redirection_new();
     redirection->io = io;

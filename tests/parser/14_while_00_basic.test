@@ -1,0 +1,8 @@
+{
+    "desc": "rule while: basic",
+    "input": """while true; do
+echo yes
+done
+""",
+    "output": "",
+}

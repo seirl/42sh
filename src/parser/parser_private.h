@@ -43,6 +43,8 @@ s_ast_element *parse_rule_elements(s_parser *parser);
 s_ast_list *parse_rule_compound_list(s_parser *parser, int first);
 /** @brief Parse rule for. */
 s_ast_for *parse_rule_for(s_parser *parser);
+/** @brief Parse rule while. */
+s_ast_while *parse_rule_while(s_parser *parser);
 /** @brief Parse rule if. */
 s_ast_if *parse_rule_if(s_parser *parser);
 /** @brief Parse rule do_group. */

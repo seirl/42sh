@@ -19,5 +19,7 @@ s_ast_cmd *parse_rule_command(s_parser *parser)
         return NULL;
     }
 
+    cmd->redirections = parse_rule_redirection(parser);
+
     return cmd;
 }
