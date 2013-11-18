@@ -6,6 +6,7 @@ from .case import (QDTestCase,
         new_test_run_42sh,
         new_test_run_fnmatch,
         new_test_run_utils,
+        new_test_run_interface,
         new_test_run_lexer,
         new_test_run_parser,
     )
@@ -18,6 +19,7 @@ class QDTestLoader(unittest.TestLoader):
             'lexer': new_test_run_lexer,
             'parser': new_test_run_parser,
             'utils': new_test_run_utils,
+            'interface': new_test_run_interface,
             'fnmatch': new_test_run_fnmatch,
             '42sh': new_test_run_42sh,
             }

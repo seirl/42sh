@@ -19,6 +19,14 @@ add_executable(test_utils
     $<TARGET_OBJECTS:hashtbl>
 )
 
+add_executable(test_interface
+    test_interface.c
+    $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:options>
+)
+
 add_executable(test_parser
     test_parser.c
 

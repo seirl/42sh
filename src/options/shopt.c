@@ -73,7 +73,7 @@ static int shopt_check(s_opt *opt, const char *arg)
 {
     s_param *p = get_param(opt, arg);
     if (p == NULL)
-        return 0;
+        return 1;
     for (s_arg *it = &(p->arg); it; it = it->next)
     {
         int ok = 0;

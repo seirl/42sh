@@ -205,3 +205,35 @@ def new_test_run_utils(test, options):
         subself.assertEqual(retval, utils.returncode, "return value differ")
 
     return QDTestCaseUtils, test_utils
+
+class QDTestCaseInterface(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[input: {}] [interface: {}]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('input', "None"),
+                self.test.get('interface', "None"),
+            )
+
+def new_test_run_interface(test, options):
+    def test_interface(subself):
+        timeout = test.get('timeout', options.timeout)
+        input_string = test.get('input', "")
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+
+        command = ["./test_interface", input_string]
+        if 'lexer' in test:
+            command.extend(test['interface'])
+
+        utils = subself.start_program(args=command,
+                with_valgrind=with_valgrind)
+        stdoutdata, stderrdata = interface.communicate(b"", options.timeout)
+
+        if 'output' in test:
+            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
+                             "stdout differ")
+
+        retval = test.get('retval', 0)
+        subself.assertEqual(retval, utils.returncode, "return value differ")
+
+    return QDTestCaseUtils, test_interface
