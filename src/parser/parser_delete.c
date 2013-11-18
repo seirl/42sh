@@ -3,6 +3,6 @@
 
 void parser_delete(s_parser *parser)
 {
-    sfree(parser->lexer);
+    lex_delete(parser->lexer);
     sfree(parser);
 }

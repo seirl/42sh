@@ -21,22 +21,14 @@ s_token *token_create(e_token_type type,
 
 s_token *token_duplicate(const s_token *tok)
 {
-    // FIXME: Which token types do not hold a string in tok->value?
-    if (tok->type != T_IO_NUMBER)
-    {
-        u_token_value value;
-        value.str = string_duplicate(tok->value.str);
-        return (token_create(tok->type, value,
-               tok->location, tok->concat));
-    }
-    return (token_create(tok->type, tok->value, tok->location,
-           tok->concat));
+    u_token_value value;
+    value.str = string_duplicate(tok->value.str);
+    return (token_create(tok->type, value, tok->location, tok->concat));
 }
 
 void token_free(s_token *tok)
 {
-    // FIXME: Which token types do not hold a string in tok->value?
-    if (tok->type != T_IO_NUMBER && tok->value.str)
+    if (tok->value.str)
         string_free(tok->value.str);
     sfree(tok);
 }

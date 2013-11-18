@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {
-        (void)ast;
+        ast_input_delete(ast);
         if (parser_eof(parser))
             ret = 0;
         else

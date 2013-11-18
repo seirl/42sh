@@ -17,4 +17,6 @@ void ast_simple_cmd_delete(s_ast_simple_cmd *cmd)
         return;
     ast_prefix_delete(cmd->prefixes);
     ast_element_delete(cmd->elements);
+
+    sfree(cmd);
 }

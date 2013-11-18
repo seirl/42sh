@@ -10,11 +10,14 @@ static int parse_redirection_type(s_parser *parser, e_ast_redirection_type *redi
     if (tok->type == Token)         \
     {                               \
         *redir = Ast;               \
+        token_free(tok);            \
         parser_shift_token(parser); \
         return 1;                   \
     }
 #include "redirections.def"
 #undef X
+
+    token_free(tok);
 
     return 0;
 }

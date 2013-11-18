@@ -12,3 +12,13 @@ s_ast_pipeline *ast_pipeline_new(void)
     return pipeline;
 }
 
+void ast_pipeline_delete(s_ast_pipeline *pipeline)
+{
+    if (!pipeline)
+        return;
+
+    ast_pipeline_delete(pipeline->next);
+    ast_cmd_delete(pipeline->cmd);
+
+    sfree(pipeline);
+}

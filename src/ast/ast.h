@@ -373,6 +373,7 @@ s_ast_word *ast_word_new(void);
 s_ast_word_list *ast_word_list_new(void);
 
 void ast_and_or_delete(s_ast_and_or *ao);
+void ast_pipeline_delete(s_ast_pipeline *pipeline);
 void ast_assignment_delete(s_ast_assignment *ass);
 void ast_case_delete(s_ast_case *casee);
 void ast_cmd_delete(s_ast_cmd *cmd);
@@ -381,6 +382,7 @@ void ast_element_delete(s_ast_element *elem);
 void ast_for_delete(s_ast_for *forr);
 void ast_func_dec_delete(s_ast_funcdec *fd);
 void ast_if_delete(s_ast_if *iff);
+void ast_input_delete(s_ast_input *input);
 void ast_list_delete(s_ast_list *list);
 void ast_prefix_delete(s_ast_prefix *pref);
 void ast_redirection_list_delete(s_ast_redirection_list *redir);
