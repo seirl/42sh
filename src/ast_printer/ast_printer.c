@@ -103,6 +103,31 @@ void print_simple_cmd(s_ast_simple_cmd *n, void *prev, FILE *out)
     print_element(n->elements, n, out);
 }
 
+void print_ast_case(s_ast_case *n, void *prev, FILE *out)
+{
+    //TODO
+}
+
+void print_ast_for(s_ast_for *n, void *prev, FILE *out)
+{
+    //TODO
+}
+
+void print_ast_if(s_ast_if *n, void *prev, FILE *out)
+{
+    //TODO
+}
+
+void print_ast_while(s_ast_while *n, void *prev, FILE *out)
+{
+    //TODO
+}
+
+void print_ast_until(s_ast_until *n, void *prev, FILE *out)
+{
+    //TODO
+}
+
 void print_shell_cmd(s_ast_shell_cmd *n, void *prev, FILE *out)
 {
     if (!n)
@@ -110,8 +135,13 @@ void print_shell_cmd(s_ast_shell_cmd *n, void *prev, FILE *out)
     fprintf(out, "node_%p [label=\"shell_cmd '%s'\"];", n,
             (n->subshell) ? "(subshell)" : "");
     fprintf(out, "node_%p -> node_%p;", prev, n);
-    print_cmd_list(n->cmd_list, n, out);
-    //TODO: ctrl structure
+    if (n->cmd_list)
+        print_cmd_list(n->cmd_list, n, out);
+#define X(U1, Type, Sub, U2)                                    \
+    else if (n->ctrl_structure == Type)                         \
+        print_ ## Sub(n->ctrl.Sub, n, out);
+# include "shell_command.def"
+#undef X
 }
 
 void print_func_dec(s_ast_funcdec *n, void *prev, FILE *out)
