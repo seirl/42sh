@@ -21,6 +21,8 @@ add_executable(test_utils
 
 add_executable(test_parser
     test_parser.c
+
+    $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:log>

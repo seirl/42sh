@@ -93,7 +93,7 @@ struct ast_redirection_list
     s_ast_io_number *io;
     s_ast_compound_word *word;
     s_ast_heredoc *heredoc;
-    s_string *heredoc_delim;
+    s_ast_compound_word *heredoc_delim;
     e_ast_redirection_type type;
     struct ast_redirection_list *next;
 };
@@ -353,5 +353,12 @@ struct ast_input
     s_ast_list *list;
 };
 typedef struct ast_input s_ast_input;
+
+// Functions ------------------------------------------------------------------
+s_ast_compound_word *ast_compound_word_new(void);
+s_ast_word *ast_word_new(void);
+
+void ast_word_delete(s_ast_word *word);
+void ast_compound_word_delete(s_ast_compound_word *cw);
 
 #endif /* !AST_H */

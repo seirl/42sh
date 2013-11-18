@@ -130,18 +130,24 @@ add_library(exec OBJECT
     src/exec/exec_redir.c
 )
 
+add_library(ast OBJECT
+    src/ast/compound_word.c
+    src/ast/word.c
+)
+
 add_executable(../42sh
     src/main.c
     src/sighandler.c
 
-    $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:env>
-    $<TARGET_OBJECTS:options>
-    $<TARGET_OBJECTS:log>
-    $<TARGET_OBJECTS:lexer>
-    $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:lexer>
+    $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:readline>
+    $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:string>
 )
 
 message(STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS})

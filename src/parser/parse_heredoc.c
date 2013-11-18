@@ -76,17 +76,20 @@ static int command_heredoc(s_ast_cmd *cmd, s_ast_redirection_list **redir)
 int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd)
 {
     s_token *tok;
+    s_string *delim;
     s_ast_redirection_list *redir = NULL;
 
     if (!command_heredoc(cmd, &redir))
         return 1; /** No heredocuments. */
 
+    delim = redir->heredoc_delim->word->str; /** FIXME: merge compound word */
+
     if (redir->type == REDIR_HEREDOC
-        && !(tok = lex_heredoc(parser->lexer, redir->heredoc_delim)))
-        RETURN_PARSE_EXPECTED_INT(parser, redir->heredoc_delim->buf);
+        && !(tok = lex_heredoc(parser->lexer, delim)))
+        RETURN_PARSE_EXPECTED_INT(parser, delim);
     else if (redir->type == REDIR_HEREDOC_STRIP
-            && !(tok = lex_heredoc_strip(parser->lexer, redir->heredoc_delim)))
-        RETURN_PARSE_EXPECTED_INT(parser, redir->heredoc_delim->buf);
+            && !(tok = lex_heredoc_strip(parser->lexer, delim)))
+        RETURN_PARSE_EXPECTED_INT(parser, delim);
     else
         assert("Well, no.");
 
@@ -95,7 +98,9 @@ int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd)
     token_free(tok);
 
     redir->heredoc = heredoc;
-    string_free(redir->heredoc_delim);
+    string_free(delim);
+    ast_compound_word_delete(redir->heredoc_delim);
+    redir->heredoc_delim = NULL;
     redir->heredoc_delim = NULL;
 
     return 1;

@@ -1,15 +1,4 @@
 #include "parser_private.h"
-#include "smalloc.h"
-
-s_ast_compound_word *cw_new(void)
-{
-    s_ast_compound_word *cw = smalloc(sizeof (s_ast_compound_word));
-
-    cw->word = NULL;
-    cw->next = NULL;
-
-    return cw;
-}
 
 s_ast_compound_word *parse_compound_word(s_parser *parser)
 {
@@ -23,7 +12,7 @@ s_ast_compound_word *parse_compound_word(s_parser *parser)
     token_free(tok);
     parser_shift_word(parser);
 
-    s_ast_compound_word *cw = cw_new();
+    s_ast_compound_word *cw = ast_compound_word_new();
 
     tok = lex_look_word(parser->lexer);
     if (tok)

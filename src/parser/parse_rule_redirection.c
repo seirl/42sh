@@ -86,18 +86,20 @@ static s_ast_compound_word *parse_heredoc_delim(s_parser *parser)
 s_ast_redirection_list *parse_rule_redirection(s_parser *parser)
 {
     s_ast_io_number *io = parse_io_number(parser);
+    s_ast_compound_word *heredoc_delim = NULL;
     s_ast_compound_word *word = NULL;
 
     e_ast_redirection_type redir_type;
     if (!parse_redirection_type(parser, &redir_type))
         return NULL;
 
-    if (redir_type != REDIR_HEREDOC && redir_type != REDIR_HEREDOC_STRIP)
-        word = parse_heredoc_delim(parser);
+    if (redir_type == REDIR_HEREDOC || redir_type == REDIR_HEREDOC_STRIP)
+        heredoc_delim = parse_heredoc_delim(parser);
 
     s_ast_redirection_list *redirection = redirection_new();
     redirection->io = io;
     redirection->word = word;
+    redirection->heredoc_delim = heredoc_delim;
     redirection->type = redir_type;
 
     return redirection;
