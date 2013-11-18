@@ -7,10 +7,12 @@ all:
 
 clean:
 	$(RM) -r build
-	$(RM) common.cmake
 	$(RM) -r doc/html doc/latex
 	$(RM) -r tests/qdunittest/__pycache__
 	$(RM) 42sh
+
+distclean: clean
+	$(RM) common.cmake
 
 check: all
 	cd build/tests && ./run_tests.py
