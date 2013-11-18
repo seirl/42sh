@@ -91,7 +91,8 @@ class QDTestRunner:
         result.skipped = skipped
         result.unexpectedSuccesses = unexpectedSuccesses
         result.testsRun = tests_run
-        result.print_summary(options=self.options, show_errors=not self.options.select)
+        result.print_summary(options=self.options, number=self.number,
+                show_errors=not self.options.select)
 
         return result
 
