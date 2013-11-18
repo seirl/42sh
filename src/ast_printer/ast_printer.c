@@ -2,6 +2,27 @@
 #include "ast.h"
 #include "ast_printer.h"
 
+static const char *redirection_type_str[] =
+{
+    ">",
+    ">>",
+    "<",
+    "<<",
+    "<<-",
+    "<&",
+    ">&",
+    ">|",
+    "<>",
+};
+
+static const char *word_kind_str[] =
+{
+    "WORD",
+    "SUBSTS_SHELL",
+    "SUBSTS_VAR",
+    "EXPAND_VAR",
+};
+
 void print_word(s_ast_word *w, void *prev, FILE *out)
 {
     if (!w)

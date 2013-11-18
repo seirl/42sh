@@ -16,14 +16,6 @@ enum ast_word_kind
 };
 typedef enum ast_word_kind e_ast_word_kind;
 
-const char *word_kind_str[] =
-{
-    "WORD",
-    "SUBSTS_SHELL",
-    "SUBSTS_VAR",
-    "EXPAND_VAR",
-};
-
 /**
 ** @brief A word.
 */
@@ -78,19 +70,6 @@ enum ast_redirection_type
     REDIR_READ_WRITE,       /** <>  */
 };
 typedef enum ast_redirection_type e_ast_redirection_type;
-
-const char *redirection_type_str[] =
-{
-    ">",
-    ">>",
-    "<",
-    "<<",
-    "<<-",
-    "<&",
-    ">&",
-    ">|",
-    "<>",
-};
 
 /**
 ** @brief Redirections
@@ -417,7 +396,7 @@ void ast_shell_cmd_delete(s_ast_shell_cmd *cmd);
 void ast_simple_cmd_delete(s_ast_simple_cmd *cmd);
 void ast_until_delete(s_ast_until *until);
 void ast_while_delete(s_ast_while *whilee);
-void ast_word_delete(s_ast_word *word);
 void ast_word_list_delete(s_ast_word_list *wl);
+void ast_word_delete(s_ast_word *word);
 
 #endif /* !AST_H */
