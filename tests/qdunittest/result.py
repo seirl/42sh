@@ -108,7 +108,7 @@ class QDTestResult(unittest.TestResult):
             self.stream.writeln(self.separator2)
             self.stream.writeln("{}".format(err))
 
-    def print_summary(self, number=True, show_errors=True):
+    def print_summary(self, options, number=True, show_errors=True):
         if show_errors:
             self.printErrors()
 
@@ -130,11 +130,11 @@ class QDTestResult(unittest.TestResult):
             except ZeroDivisionError:
                 self.stream.writeln("No test run.")
 
-        if self.skipped:
+        if self.skipped and not options.categories:
             self.stream.writeln("Skipped: \n - "
                 + "\n - ".join(t.get_test_path() for t, reason in self.skipped))
 
-        if self.unexpectedSuccesses:
+        if self.unexpectedSuccesses and not options.categories:
             self.stream.writeln(
             colorize("Unexpected successes (aka. bugfixes):", opts=("bold",))
                 + "\n - "

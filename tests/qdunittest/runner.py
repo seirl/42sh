@@ -40,7 +40,7 @@ class QDTestRunner:
     def run_single(self, test):
         result = self._make_result()
         test(result)
-        result.print_summary()
+        result.print_summary(self.options)
         return result
 
     def run_suite(self, suite):
@@ -72,7 +72,7 @@ class QDTestRunner:
             result = self._make_result()
             subtest(result)
             if not self.final:
-                result.print_summary(self.number)
+                result.print_summary(options=self.options, number=self.number)
 
             failures.extend(result.failures)
             errors.extend(result.errors)
@@ -91,7 +91,7 @@ class QDTestRunner:
         result.skipped = skipped
         result.unexpectedSuccesses = unexpectedSuccesses
         result.testsRun = tests_run
-        result.print_summary(self.number, show_errors=not self.options.select)
+        result.print_summary(options=self.options, show_errors=not self.options.select)
 
         return result
 
