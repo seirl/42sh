@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "options.h"
+#include "input.h"
 
 int main(int argc, char *argv[])
 {

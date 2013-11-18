@@ -24,8 +24,6 @@ s_string *readline()
         return NULL;
     char c;
 
-    if (!env_get("PS1"))
-        env_set("42sh$ ", "PS1");
     printf("%s", env_get("PS1"));
     fflush(stdout);
     e_next_action ret;

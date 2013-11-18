@@ -30,6 +30,7 @@ include_directories(src/parser)
 include_directories(src/readline)
 include_directories(src/utils)
 include_directories(src/exec)
+include_directories(src/input)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -92,6 +93,11 @@ add_library(readline OBJECT
     src/readline/terminal.c
 )
 
+add_library(input OBJECT
+    src/input/input.c
+    src/input/input.h
+)
+
 add_library(parser OBJECT
     src/parser/parser_create.c
     src/parser/parser_delete.c
@@ -148,6 +154,7 @@ add_executable(../42sh
     $<TARGET_OBJECTS:readline>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:input>
 )
 
 message(STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS})
