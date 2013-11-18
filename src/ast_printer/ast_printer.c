@@ -135,8 +135,7 @@ void print_cmd(s_ast_cmd *c, void *prev, FILE *out)
         print_shell_cmd(c->shell_cmd, c, out);
     else if (c->func_dec)
         print_func_dec(c->func_dec, c, out);
-    else if (c->redirections)
-        print_redirection_list(c->redirections, c, out);
+    print_redirection_list(c->redirections, c, out);
 }
 
 void print_pipeline(s_ast_pipeline *node, void *prev, FILE *out)
