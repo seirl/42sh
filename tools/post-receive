@@ -1,4 +1,2 @@
 #!/bin/bash
-
-/usr/bin/curl -s 'http://evolutek.org:8042/job/42sh/buildWithParameters?token=0cc1a525-18d8-430e-b28f-120b9983b20a&CHECK_METHOD=fastcheck&CC=gcc&WITH_DEBUG=--with-debug'
-/usr/bin/curl -s 'http://evolutek.org:8042/job/42sh/buildWithParameters?token=0cc1a525-18d8-430e-b28f-120b9983b20a&CHECK_METHOD=check&CC=gcc&WITH_DEBUG=--with-debug'
+/usr/bin/curl -s 'http://evolutek.org:8042/job/42sh/buildWithParameters?token=0cc1a525-18d8-430e-b28f-120b9983b20a&CHECK_METHOD=coverage&CC=gcc&WITH_DEBUG=--with-coverage' &
