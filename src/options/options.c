@@ -7,9 +7,9 @@ static void version()
     fprintf(stdout, "Version "VERSION"\n");
 }
 
-static void usage()
+static void usage(FILE *output)
 {
-    fprintf(stdout,
+    fprintf(output,
         "Usage: "PROGNAME" [options] ...\n"
         "       "PROGNAME" [options] script-file ...\n"
         "Shell options:\n"
@@ -28,12 +28,12 @@ int parse_options(int argc, char *argv[])
     char *arg;
     if (opt_parse(argc, argv, &opt) == 1)
     {
-        usage();
+        usage(stderr);
         opt_free(&opt);
-        return 1;
+        return 2;
     }
     if (opt_get(&opt, "help", NULL))
-        usage();
+        usage(stdout);
     if (opt_get(&opt, "version", NULL))
         version();
     if (opt_get(&opt, "norc", NULL))

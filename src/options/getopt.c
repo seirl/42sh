@@ -49,13 +49,13 @@ static int handle_long_arg(s_opt *opt, char *arg, char *o)
     }
 #include "arg.def"
 #undef X
-    return 0;
+    RET_WITH(-1, PROGNAME": --%s: invalid option\n", arg);
 }
 
 static int handle_short_arg(s_opt *opt, char *arg, char *o, int set)
 {
     s_param p;
-    int ret = 0;
+    int ret = -1;
     for (int i = 0; arg[i]; ++i)
     {
 #define X(S, L, T, M)                                                       \
@@ -68,11 +68,14 @@ static int handle_short_arg(s_opt *opt, char *arg, char *o, int set)
             p.arg.set = set;                                                \
             ret = add_arg(opt, p, e_##T, arg[i + 1] ? NULL : o);            \
             if (ret == -1)                                                  \
-            RET_WITH(-1, "-%c requiere an argument\n", *#S)                 \
+                RET_WITH(-1, PROGNAME": -%c: option requiere an argument\n",\
+                        *#S)                                                \
         }
 #include "arg.def"
 #undef X
     }
+    if (ret == -1)
+        RET_WITH(-1, PROGNAME": -%s: invalid option\n", arg);
     return ret;
 }
 
