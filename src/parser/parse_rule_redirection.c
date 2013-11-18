@@ -2,7 +2,8 @@
 #include "parser_macros.h"
 #include "string_utils.h"
 
-static int parse_redirection_type(s_parser *parser, e_ast_redirection_type *redir)
+static int parse_redirection_type(s_parser *parser,
+                                  e_ast_redirection_type *redir)
 {
     s_token *tok = lex_look_token(parser->lexer);
 
