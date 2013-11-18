@@ -10,6 +10,7 @@ clean:
 	$(RM) -r doc/html doc/latex
 	$(RM) -r tests/qdunittest/__pycache__
 	$(RM) 42sh
+	$(RM) audebe_r-42sh.tar.bz2
 
 distclean: clean
 	$(RM) common.cmake
