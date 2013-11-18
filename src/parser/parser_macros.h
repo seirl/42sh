@@ -28,6 +28,7 @@
     do {                                                    \
         Parser->status = PARSE_ERROR;                       \
         LOG(ERROR, "Unexpected %s", Token->value.str->buf); \
+        token_free(Token);                                  \
         return 0;                                           \
     } while (0)
 
