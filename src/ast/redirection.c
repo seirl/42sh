@@ -17,6 +17,14 @@ s_ast_redirection_list *ast_redirection_new(void)
 
 void ast_redirection_list_delete(s_ast_redirection_list *redir)
 {
-    (void)redir;
-    // TODO
+    if (!redir)
+        return;
+
+    ast_redirection_list_delete(redir->next);
+    ast_compound_word_delete(redir->heredoc_delim);
+    ast_heredoc_delete(redir->heredoc);
+    ast_io_number_delete(redir->io);
+    ast_compound_word_delete(redir->word);
+
+    sfree(redir);
 }

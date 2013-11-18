@@ -9,3 +9,11 @@ s_ast_io_number *ast_io_number_new(void)
 
     return io;
 }
+
+void ast_io_number_delete(s_ast_io_number *io)
+{
+    if (!io)
+        return;
+
+    sfree(io);
+}

@@ -151,6 +151,7 @@ add_library(ast OBJECT
     src/ast/element.c
     src/ast/for.c
     src/ast/funcdec.c
+    src/ast/heredoc.c
     src/ast/if.c
     src/ast/input.c
     src/ast/io_number.c
