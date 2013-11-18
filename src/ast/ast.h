@@ -184,6 +184,15 @@ struct ast_for
 };
 typedef struct ast_for s_ast_for;
 
+struct ast_else
+{
+    s_ast_list *elif_predicate;
+    s_ast_list *elif_cmds;
+    s_ast_list *else_cmds;
+    struct ast_else *next_else;
+};
+typedef struct ast_else s_ast_else;
+
 /**
 ** @brief If
 **
@@ -196,9 +205,7 @@ struct ast_if
 {
     s_ast_list *predicate;
     s_ast_list *then_cmds;
-    s_ast_list *elif_predicate;
-    s_ast_list *elif_cmds;
-    s_ast_list *else_cmds;
+    s_ast_else *else_clause;
 };
 typedef struct ast_if s_ast_if;
 
@@ -361,6 +368,7 @@ s_ast_assignment *ast_assignment_new(void);
 s_ast_cmd *ast_cmd_new(void);
 s_ast_compound_word *ast_compound_word_new(void);
 s_ast_element *ast_element_new(void);
+s_ast_else *ast_else_new(void);
 s_ast_for *ast_for_new(void);
 s_ast_if *ast_if_new(void);
 s_ast_input *ast_input_new(void);
@@ -383,6 +391,7 @@ void ast_cmd_delete(s_ast_cmd *cmd);
 void ast_compound_word_delete(s_ast_compound_word *cw);
 void ast_element_delete(s_ast_element *elem);
 void ast_for_delete(s_ast_for *forr);
+void ast_else_delete(s_ast_else *myelse);
 void ast_func_dec_delete(s_ast_funcdec *fd);
 void ast_heredoc_delete(s_ast_heredoc *hd);
 void ast_if_delete(s_ast_if *iff);

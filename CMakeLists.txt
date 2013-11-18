@@ -112,6 +112,7 @@ add_library(parser OBJECT
     src/parser/parse_rule_compound_list.c
     src/parser/parse_rule_do_group.c
     src/parser/parse_rule_elements.c
+    src/parser/parse_rule_else.c
     src/parser/parse_rule_for.c
     src/parser/parse_rule_funcdec.c
     src/parser/parse_rule_if.c
@@ -149,6 +150,7 @@ add_library(ast OBJECT
     src/ast/command.c
     src/ast/compound_word.c
     src/ast/element.c
+    src/ast/else.c
     src/ast/for.c
     src/ast/funcdec.c
     src/ast/heredoc.c

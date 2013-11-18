@@ -49,6 +49,8 @@ s_ast_while *parse_rule_while(s_parser *parser);
 s_ast_until *parse_rule_until(s_parser *parser);
 /** @brief Parse rule if. */
 s_ast_if *parse_rule_if(s_parser *parser);
+/** @brief Parse rule else. */
+s_ast_else *parse_rule_else(s_parser *parser);
 /** @brief Parse rule do_group. */
 s_ast_list *parse_rule_do_group(s_parser *parser);
 
