@@ -18,6 +18,12 @@ void ast_if_delete(s_ast_if *iff)
 {
     if (!iff)
         return;
-    // TODO
+
+    ast_list_delete(iff->elif_cmds);
+    ast_list_delete(iff->predicate);
+    ast_list_delete(iff->else_cmds);
+    ast_list_delete(iff->then_cmds);
+    ast_list_delete(iff->elif_predicate);
+
     sfree(iff);
 }

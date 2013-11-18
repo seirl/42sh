@@ -397,5 +397,6 @@ void ast_simple_cmd_delete(s_ast_simple_cmd *cmd);
 void ast_until_delete(s_ast_until *until);
 void ast_while_delete(s_ast_while *whilee);
 void ast_word_delete(s_ast_word *word);
+void ast_word_list_delete(s_ast_word_list *wl);
 
 #endif /* !AST_H */

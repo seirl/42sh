@@ -16,6 +16,10 @@ void ast_for_delete(s_ast_for *forr)
 {
     if (!forr)
         return;
-    // TODO
+
+    ast_list_delete(forr->cmd_list);
+    ast_word_list_delete(forr->values);
+    ast_word_delete(forr->identifier);
+
     sfree(forr);
 }

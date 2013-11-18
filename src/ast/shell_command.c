@@ -17,6 +17,7 @@ void ast_shell_cmd_delete(s_ast_shell_cmd *cmd)
 {
     if (!cmd)
         return;
+
     ast_list_delete(cmd->cmd_list);
     switch (cmd->ctrl_structure)
     {
@@ -36,4 +37,6 @@ void ast_shell_cmd_delete(s_ast_shell_cmd *cmd)
         ast_if_delete(cmd->ctrl.ast_if);
         break;
     }
+
+    sfree(cmd);
 }
