@@ -169,6 +169,7 @@ add_executable(../42sh
     $<TARGET_OBJECTS:env>
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
+    $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:readline>
