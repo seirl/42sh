@@ -26,9 +26,11 @@ int parse_options(int argc, char *argv[])
 {
     s_opt opt;
     char *arg;
-    if (opt_parse(argc, argv, &opt) == 1)
+    int ret = opt_parse(argc, argv, &opt);
+    if (ret)
     {
-        usage(stderr);
+        if (ret == 1)
+            usage(stderr);
         opt_free(&opt);
         return 2;
     }

@@ -44,7 +44,7 @@ static int handle_long_arg(s_opt *opt, char *arg, char *o)
         p.type = e_##T;                                                     \
         p.multi = M;                                                        \
         if ((ret = add_arg(opt, p, e_##T, o)) == -1)                        \
-        RET_WITH(-1, "--%s requiere an argument\n", #L)                     \
+        RET_WITH(-2, PROGNAME": --%s: option requieres an argument\n", #L)  \
         return ret;                                                         \
     }
 #include "arg.def"
@@ -58,18 +58,18 @@ static int handle_short_arg(s_opt *opt, char *arg, char *o, int set)
     int ret = -1;
     for (int i = 0; arg[i]; ++i)
     {
-#define X(S, L, T, M)                                                       \
-        if (*#S != '/' && *#S == arg[i])                                    \
-        {                                                                   \
-            p.short_name = *#S;                                             \
-            p.long_name = #L;                                               \
-            p.type = e_##T;                                                 \
-            p.multi = M;                                                    \
-            p.arg.set = set;                                                \
-            ret = add_arg(opt, p, e_##T, arg[i + 1] ? NULL : o);            \
-            if (ret == -1)                                                  \
-                RET_WITH(-1, PROGNAME": -%c: option requiere an argument\n",\
-                        *#S)                                                \
+#define X(S, L, T, M)                                                        \
+        if (*#S != '/' && *#S == arg[i])                                     \
+        {                                                                    \
+            p.short_name = *#S;                                              \
+            p.long_name = #L;                                                \
+            p.type = e_##T;                                                  \
+            p.multi = M;                                                     \
+            p.arg.set = set;                                                 \
+            ret = add_arg(opt, p, e_##T, arg[i + 1] ? NULL : o);             \
+            if (ret == -1)                                                   \
+                RET_WITH(-2, PROGNAME": -%c: option requieres an argument\n",\
+                        *#S)                                                 \
         }
 #include "arg.def"
 #undef X
@@ -103,8 +103,8 @@ int opt_parse(int argc, char *argv[], s_opt *opt)
             else
                 ret = handle_short_arg(opt, &argv[i][1], argv[i + 1],
                         argv[i][0] == '+');
-            if (ret == -1)
-                return 1;
+            if (ret == -1 || ret == -2)
+                return -ret;
             i += ret;
         }
         else
