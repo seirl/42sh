@@ -32,6 +32,11 @@ int parse_options(int argc, char *argv[])
         opt_free(&opt);
         return 2;
     }
+    if (shopt_from_opt(&opt) == 1)
+    {
+        opt_free(&opt);
+        return 2;
+    }
     if (opt_get(&opt, "help", NULL))
         usage(stdout);
     if (opt_get(&opt, "version", NULL))
@@ -48,7 +53,6 @@ int parse_options(int argc, char *argv[])
     {
         printf("Exec %s\n", arg);
     }
-    shopt_from_opt(&opt);
     opt_free(&opt);
     return 0;
 }

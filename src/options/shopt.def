@@ -1,0 +1,8 @@
+X("ast_print", 0)
+X("dotglob", 0)
+X("expand_aliases", 1)
+X("extglob", 0)
+X("nocaseglob", 0)
+X("nullglob", 0)
+X("sourcepath", 1)
+X("xpg_echo", 0)
