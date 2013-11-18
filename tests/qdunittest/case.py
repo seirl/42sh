@@ -222,18 +222,20 @@ def new_test_run_interface(test, options):
         with_valgrind = test.get('with_valgrind', not options.without_valgrind)
 
         command = ["./test_interface", input_string]
-        if 'lexer' in test:
+        if 'interface' in test:
             command.extend(test['interface'])
 
-        utils = subself.start_program(args=command,
+        interface = subself.start_program(args=command,
                 with_valgrind=with_valgrind)
         stdoutdata, stderrdata = interface.communicate(b"", options.timeout)
 
-        if 'output' in test:
-            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
-                             "stdout differ")
+        if 'stdout' in test:
+            subself.assertRegexpMatches(stdoutdata.decode (), test['stdout'])
+
+        if 'stderr' in test:
+            subself.assertRegexpMatches(stderrdata.decode (), test['stderr'])
 
         retval = test.get('retval', 0)
-        subself.assertEqual(retval, utils.returncode, "return value differ")
+        subself.assertEqual(retval, interface.returncode, "return value differ")
 
-    return QDTestCaseUtils, test_interface
+    return QDTestCaseInterface, test_interface

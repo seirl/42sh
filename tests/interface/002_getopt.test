@@ -1,0 +1,7 @@
+{
+    "type": "interface",
+    "desc": "getopt bad short option",
+    "input": "-z",
+    "retval": 2,
+    "stderr": """42sh: -z: invalid option\n.*"""
+}

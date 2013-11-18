@@ -1,0 +1,7 @@
+{
+    "type": "interface",
+    "desc": "getopt version",
+    "input": "--version",
+    "retval": 0,
+    "stdout": """Version 0.5\n"""
+}

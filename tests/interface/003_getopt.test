@@ -1,0 +1,7 @@
+{
+    "type": "interface",
+    "desc": "getopt missing argument (short option)",
+    "input": "-c",
+    "retval": 2,
+    "stderr": """42sh: -c: option requieres an argument\n"""
+}

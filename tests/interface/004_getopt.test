@@ -1,0 +1,7 @@
+{
+    "type": "interface",
+    "desc": "getopt help",
+    "input": "--help",
+    "retval": 0,
+    "stdout": """Usage: .*"""
+}

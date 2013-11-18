@@ -1,0 +1,7 @@
+{
+    "type": "interface",
+    "desc": "getopt bad long option",
+    "input": "--foobar",
+    "retval": 2,
+    "stderr": """42sh: --foobar: invalid option\n.*"""
+}
