@@ -16,6 +16,14 @@ enum ast_word_kind
 };
 typedef enum ast_word_kind e_ast_word_kind;
 
+const char *word_kind_str[] =
+{
+    "WORD",
+    "SUBSTS_SHELL",
+    "SUBSTS_VAR",
+    "EXPAND_VAR",
+};
+
 /**
 ** @brief A word.
 */
@@ -70,6 +78,19 @@ enum ast_redirection_type
     REDIR_READ_WRITE,       /** <>  */
 };
 typedef enum ast_redirection_type e_ast_redirection_type;
+
+const char *redirection_type_str[] =
+{
+    ">",
+    ">>",
+    "<",
+    "<<",
+    "<<-",
+    "<&",
+    ">&",
+    ">|",
+    "<>",
+};
 
 /**
 ** @brief Redirections
