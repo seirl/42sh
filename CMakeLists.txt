@@ -122,6 +122,7 @@ add_library(parser OBJECT
     src/parser/parse_rule_redirection.c
     src/parser/parse_rule_shell_command.c
     src/parser/parse_rule_simple_command.c
+    src/parser/parse_rule_until.c
     src/parser/parse_rule_while.c
 
     src/parser/parse_assignment.c
