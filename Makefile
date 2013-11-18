@@ -9,6 +9,8 @@ clean:
 	$(RM) -r build
 	$(RM) common.cmake
 	$(RM) -r doc/html doc/latex
+	$(RM) -r tests/qdunittest/__pycache__
+	$(RM) 42sh
 
 check: all
 	cd build/tests && ./run_tests.py
