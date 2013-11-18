@@ -18,15 +18,14 @@ static s_ast_word_list *parse_word_list(s_parser *parser)
 
 static s_ast_word_list *parse_for_in(s_parser *parser)
 {
-    s_token *tok;
     s_ast_word_list *values;
 
     parser_shift_token(parser); /** shift 'in' */
+
     values = parse_word_list(parser);
-    tok = lex_token(parser->lexer);
-    if (!(tok->type == T_NEWLINE || tok->type == T_SEMI))
+
+    if (!parse_expect_newline_or_semi(parser))
         RETURN_PARSE_EXPECTED(parser, "; or newline");
-    token_free(tok);
 
     parse_expect_newlines(parser);
 

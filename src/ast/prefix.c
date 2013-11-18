@@ -18,8 +18,8 @@ void ast_prefix_delete(s_ast_prefix *pref)
         return;
 
     ast_prefix_delete(pref->next);
-
     ast_assignment_delete(pref->assignment);
     ast_redirection_list_delete(pref->redirection);
+
     sfree(pref);
 }

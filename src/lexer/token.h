@@ -59,6 +59,11 @@ void token_free(s_token *tok);
 */
 int token_to_word(s_token *token);
 
+/**
+** @brief Is this token a reserved word?
+*/
+int token_is_res_word(s_token *tok);
+
 // Debug functions
 void token_print(s_token *tok);
 

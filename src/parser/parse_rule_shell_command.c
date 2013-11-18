@@ -1,7 +1,7 @@
 #include "parser_private.h"
 #include "parser_macros.h"
 
-s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
+static s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
 {
     int subshell = 0;
 

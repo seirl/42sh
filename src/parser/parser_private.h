@@ -33,8 +33,6 @@ s_ast_simple_cmd *parse_rule_simple_command(s_parser *parser);
 s_ast_shell_cmd *parse_rule_shell_command(s_parser *parser);
 /** @brief Parse rule funcdec. */
 s_ast_funcdec *parse_rule_funcdec(s_parser *parser);
-/** @brief Parse rule for. */
-s_ast_for *parse_rule_for(s_parser *parser);
 /** @brief Parse rule redirection. */
 s_ast_redirection_list *parse_rule_redirection(s_parser *parser);
 /** @brief Parse rule prefix. */
@@ -43,16 +41,22 @@ s_ast_prefix *parse_rule_prefix(s_parser *parser);
 s_ast_element *parse_rule_elements(s_parser *parser);
 /** @brief Parse rule compound_list. */
 s_ast_list *parse_rule_compound_list(s_parser *parser, int first);
+/** @brief Parse rule for. */
+s_ast_for *parse_rule_for(s_parser *parser);
+/** @brief Parse rule if. */
+s_ast_if *parse_rule_if(s_parser *parser);
 /** @brief Parse rule do_group. */
 s_ast_list *parse_rule_do_group(s_parser *parser);
 
-// New ------------------------------------------------------------------------
-/** @brief New s_ast_list object. */
-s_ast_list *ast_list_new(void);
-
-// Custom ---------------------------------------------------------------------
+// Expect ---------------------------------------------------------------------
 /** @brief Grab as many newlines as you can! */
 void parse_expect_newlines(s_parser *parser);
+/** @brief Expect a token. */
+int parse_expect_token(s_parser *parser, e_token_type type);
+/** @brief Expect '\n' or ';' . */
+int parse_expect_newline_or_semi(s_parser *parser);
+
+// Utils ----------------------------------------------------------------------
 /** @brief Merge words. */
 s_ast_compound_word *parse_compound_word(s_parser *parser);
 /** @brief Handle assignment. */

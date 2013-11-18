@@ -15,5 +15,5 @@ s_ast_prefix *parse_rule_prefix(s_parser *parser) // TODO
     prefix->redirection = redirection;
     prefix->assignment = assignment;
 
-    return NULL;
+    return prefix;
 }

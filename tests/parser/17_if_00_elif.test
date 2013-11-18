@@ -1,0 +1,10 @@
+{
+    "desc": "rule if: basic",
+    "input": """if true; then
+    echo yes
+elif false; then
+    echo no
+fi
+""",
+    "output": "",
+}

@@ -74,6 +74,7 @@ add_library(lexer OBJECT
     src/lexer/char_utils.c
     src/lexer/token.c
     src/lexer/token_debug.c
+    src/lexer/token_utils.c
     src/lexer/location.c
     src/lexer/alias.c
 )
@@ -112,6 +113,7 @@ add_library(parser OBJECT
     src/parser/parse_rule_elements.c
     src/parser/parse_rule_for.c
     src/parser/parse_rule_funcdec.c
+    src/parser/parse_rule_if.c
     src/parser/parse_rule_input.c
     src/parser/parse_rule_list.c
     src/parser/parse_rule_pipeline.c

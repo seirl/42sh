@@ -196,6 +196,7 @@ struct ast_if
 {
     s_ast_list *predicate;
     s_ast_list *then_cmds;
+    s_ast_list *elif_predicate;
     s_ast_list *elif_cmds;
     s_ast_list *else_cmds;
 };
@@ -361,6 +362,7 @@ s_ast_cmd *ast_cmd_new(void);
 s_ast_compound_word *ast_compound_word_new(void);
 s_ast_element *ast_element_new(void);
 s_ast_for *ast_for_new(void);
+s_ast_if *ast_if_new(void);
 s_ast_input *ast_input_new(void);
 s_ast_io_number *ast_io_number_new(void);
 s_ast_list *ast_list_new(void);
