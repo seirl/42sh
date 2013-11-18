@@ -1,5 +1,64 @@
+   _____________________                              _____________________
+   `-._                 \           |\__/|           /                 _.-'
+       \                 \          |    |          /                 /
+        \                 `-_______/      \_______-'                 /
+         |                   _  _  ____      _                      |
+         |                 | || ||___ \ ___| |__                    |
+         |                 | || |_ __) / __| '_ \                   |
+         /                 |__   _/ __/\__ \ | | |                  \
+        /                     |_||_____|___/_| |_|                   \
+       /______________                                  ______________\
+                      `----._        HS24        _.----'
+                             `--.            .--'
+                                 `-.      .-'
+                                    \    /
+                                     \  /
+                                      \/
 42sh
 ====
 
-To see 42sh(1) manpage:
-man -i /path/to/doc/42sh.man
+42sh is a shell which try (hard) to be a clone of bash --posix.
+
+Install
+=======
+The build system used by this project is CMake. A makefile wrap the procedure
+to launch the build.
+
+    $ make
+
+If all went well, a binary named '42sh' should be in the root directory of
+the project. You can also install the program with:
+
+    $ make install
+
+Documentation
+=============
+    User
+    ----
+        A manpage is available at ./doc/42sh.man.
+            $ man ./doc/42sh.man
+        Or just the following command if you installed it
+            $ man 42sh
+
+    Developer
+    ---------
+        The developer documentation can be generated with doxygen:
+            $ make doc
+            $ firefox doc/html/index.html
+
+Test suite
+==========
+We develop a test suite with the python programming language. To make sure
+everything work on your system, please use:
+    $ make fastcheck
+Or
+    $ make check
+To check for memory leaks
+
+AUTHORS
+=======
+    - Rémi « halfr » Audebert
+    - Nassim « nass » Eddequiouaq
+    - Adrien « schischi » Schildknecht
+    - Paul « Dettorer » Hervot
+    - Antoine « seirl » Pietri
