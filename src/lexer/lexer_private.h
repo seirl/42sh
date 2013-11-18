@@ -42,13 +42,35 @@ struct lexer
 ** The token is said to be delimited.
 */
 s_token *lex_release_token(s_lexer *lexer);
-
-/**
-** @brief Release current lookahead.
-*/
 s_token *lex_release_lookahead(s_lexer *lexer);
 
 int lex_delimit_token(s_lexer *lexer);
 int lex_eat_spaces(s_lexer *lexer);
+
+// char_utils.c
+int is_delimiter(char c);
+int is_quote(char c);
+int is_token_delimiter(char c);
+int is_operator(char c);
+int is_valid_operator(s_lexer *lexer, s_string *s);
+
+// lexer_pattern.c
+int handle_comment(s_lexer *lexer, char c, char prev);
+int handle_dollar(s_lexer *lexer, char c, char prev);
+int handle_quotes(s_lexer *lexer, char c, char prev);
+int handle_operator(s_lexer *lexer);
+int handle_assignment(s_lexer *lexer, char c);
+
+// lexer_word.c
+int handle_newline(s_lexer *lexer);
+int handle_eof(s_lexer *lexer);
+int handle_name(s_lexer *lexer);
+int handle_io_number(s_lexer *lexer);
+int handle_res_word(s_lexer *lexer);
+
+// lexer_fill.c
+int fill_until(s_lexer *lexer, int include_last);
+int fill_upto_delim(s_lexer *lexer);
+int fill_token(s_lexer *lexer);
 
 #endif /* !LEXER_PRIVATE_H */

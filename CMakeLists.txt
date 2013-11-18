@@ -64,19 +64,20 @@ add_library(fnmatch OBJECT
 )
 
 add_library(lexer OBJECT
+    src/lexer/alias.c
+    src/lexer/char_utils.c
     src/lexer/lexer.c
-    src/lexer/lexer_create.c
-    src/lexer/lexer_delete.c
-    src/lexer/lexer_delim.c
+    src/lexer/lexer_fill.c
     src/lexer/lexer_heredoc.c
     src/lexer/lexer_lookahead.c
-    src/lexer/lexer_release.c
-    src/lexer/char_utils.c
+    src/lexer/lexer_pattern.c
+    src/lexer/lexer_struct.c
+    src/lexer/lexer_word.c
+    src/lexer/location.c
     src/lexer/token.c
     src/lexer/token_debug.c
     src/lexer/token_utils.c
     src/lexer/location.c
-    src/lexer/alias.c
 )
 
 add_library(options OBJECT
