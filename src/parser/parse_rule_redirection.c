@@ -1,30 +1,6 @@
 #include "parser_private.h"
 #include "parser_macros.h"
 #include "string_utils.h"
-#include "smalloc.h"
-
-static s_ast_redirection_list *redirection_new(void)
-{
-    s_ast_redirection_list *redir = smalloc(sizeof (s_ast_redirection_list));
-
-    redir->word = NULL;
-    redir->io = NULL;
-    redir->type = 0;
-    redir->heredoc = NULL;
-    redir->heredoc_delim = NULL;
-    redir->next = NULL;
-
-    return redir;
-}
-
-static s_ast_io_number *io_numbre_new(void)
-{
-    s_ast_io_number *io = smalloc(sizeof (s_ast_io_number));
-
-    io->io_number = 0;
-
-    return io;
-}
 
 static int parse_redirection_type(s_parser *parser, e_ast_redirection_type *redir)
 {
@@ -54,7 +30,7 @@ static s_ast_io_number *parse_io_number(s_parser *parser)
         return NULL;
     }
 
-    s_ast_io_number *io = io_numbre_new();
+    s_ast_io_number *io = ast_io_number_new();
     io->io_number = tok->value.integer;
     token_free(tok);
     parser_shift_token(parser);
@@ -96,7 +72,7 @@ s_ast_redirection_list *parse_rule_redirection(s_parser *parser)
     if (redir_type == REDIR_HEREDOC || redir_type == REDIR_HEREDOC_STRIP)
         heredoc_delim = parse_heredoc_delim(parser);
 
-    s_ast_redirection_list *redirection = redirection_new();
+    s_ast_redirection_list *redirection = ast_redirection_new();
     redirection->io = io;
     redirection->word = word;
     redirection->heredoc_delim = heredoc_delim;

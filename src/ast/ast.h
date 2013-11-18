@@ -355,10 +355,39 @@ struct ast_input
 typedef struct ast_input s_ast_input;
 
 // Functions ------------------------------------------------------------------
+s_ast_and_or *ast_and_or_new(void);
+s_ast_assignment *ast_assignment_new(void);
+s_ast_cmd *ast_cmd_new(void);
 s_ast_compound_word *ast_compound_word_new(void);
+s_ast_element *ast_element_new(void);
+s_ast_for *ast_for_new(void);
+s_ast_input *ast_input_new(void);
+s_ast_io_number *ast_io_number_new(void);
+s_ast_list *ast_list_new(void);
+s_ast_pipeline *ast_pipeline_new(void);
+s_ast_prefix *ast_prefix_new(void);
+s_ast_redirection_list *ast_redirection_new(void);
+s_ast_shell_cmd *ast_shell_cmd_new(void);
+s_ast_simple_cmd *ast_simple_cmd_new(void);
 s_ast_word *ast_word_new(void);
+s_ast_word_list *ast_word_list_new(void);
 
-void ast_word_delete(s_ast_word *word);
+void ast_and_or_delete(s_ast_and_or *ao);
+void ast_assignment_delete(s_ast_assignment *ass);
+void ast_case_delete(s_ast_case *casee);
+void ast_cmd_delete(s_ast_cmd *cmd);
 void ast_compound_word_delete(s_ast_compound_word *cw);
+void ast_element_delete(s_ast_element *elem);
+void ast_for_delete(s_ast_for *forr);
+void ast_func_dec_delete(s_ast_funcdec *fd);
+void ast_if_delete(s_ast_if *iff);
+void ast_list_delete(s_ast_list *list);
+void ast_prefix_delete(s_ast_prefix *pref);
+void ast_redirection_list_delete(s_ast_redirection_list *redir);
+void ast_shell_cmd_delete(s_ast_shell_cmd *cmd);
+void ast_simple_cmd_delete(s_ast_simple_cmd *cmd);
+void ast_until_delete(s_ast_until *until);
+void ast_while_delete(s_ast_while *whilee);
+void ast_word_delete(s_ast_word *word);
 
 #endif /* !AST_H */

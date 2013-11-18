@@ -1,27 +1,5 @@
 #include "parser_private.h"
 #include "parser_macros.h"
-#include "smalloc.h"
-
-static s_ast_for *for_new(void)
-{
-    s_ast_for *for_n = smalloc(sizeof (s_ast_for));
-
-    for_n->cmd_list = NULL;
-    for_n->values = NULL;
-    for_n->identifier = NULL;
-
-    return for_n;
-}
-
-static s_ast_word_list *wl_new(void)
-{
-    s_ast_word_list *wl = smalloc(sizeof (s_ast_word_list));
-
-    wl->next = NULL;
-    wl->word = NULL;
-
-    return wl;
-}
 
 static s_ast_word_list *parse_word_list(s_parser *parser)
 {
@@ -30,7 +8,7 @@ static s_ast_word_list *parse_word_list(s_parser *parser)
     if (!(cw = parse_compound_word(parser)))
         return NULL;
 
-    s_ast_word_list *wl = wl_new();
+    s_ast_word_list *wl = ast_word_list_new();
 
     wl->word = cw;
     wl->next = parse_word_list(parser);
@@ -78,7 +56,7 @@ s_ast_for *parse_rule_for(s_parser *parser)
     if (!(list = parse_rule_do_group(parser)))
         RETURN_PARSE_EXPECTED(parser, "do group");
 
-    s_ast_for *for_n = for_new();
+    s_ast_for *for_n = ast_for_new();
     for_n->identifier = identifier;
     for_n->cmd_list = list;
     for_n->values = values;

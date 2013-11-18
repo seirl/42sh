@@ -1,17 +1,5 @@
 #include "parser_private.h"
 #include "parser_macros.h"
-#include "smalloc.h"
-
-static s_ast_pipeline *pipeline_new(void)
-{
-    s_ast_pipeline *pipeline = smalloc(sizeof (s_ast_pipeline));
-
-    pipeline->inverted = 0;
-    pipeline->cmd = NULL;
-    pipeline->next = NULL;
-
-    return pipeline;
-}
 
 static int parse_bang(s_parser *parser, int first)
 {
@@ -58,7 +46,7 @@ s_ast_pipeline *parse_rule_pipeline(s_parser *parser, int first)
     if (!(cmd = parse_rule_command(parser)))
         return NULL;
 
-    s_ast_pipeline *pipeline = pipeline_new();
+    s_ast_pipeline *pipeline = ast_pipeline_new();
     pipeline->cmd = cmd;
     pipeline->inverted = inverted;
 

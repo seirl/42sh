@@ -1,15 +1,5 @@
 #include "parser_private.h"
-#include "smalloc.h"
 #include "log.h"
-
-static s_ast_input *ast_input_new(void)
-{
-    s_ast_input *ret = smalloc(sizeof (s_ast_input));
-
-    ret->list = NULL;
-
-    return ret;
-}
 
 s_ast_input *parse_rule_input(s_parser *parser)
 {

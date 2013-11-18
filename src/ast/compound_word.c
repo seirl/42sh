@@ -17,4 +17,5 @@ void ast_compound_word_delete(s_ast_compound_word *cw)
         return;
     ast_compound_word_delete(cw->next);
     ast_word_delete(cw->word);
+    sfree(cw);
 }

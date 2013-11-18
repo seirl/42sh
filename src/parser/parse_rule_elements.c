@@ -1,17 +1,5 @@
 #include "parser_private.h"
-#include "smalloc.h"
 #include "string_utils.h"
-
-static s_ast_element *element_new(void)
-{
-    s_ast_element *element = smalloc(sizeof (s_ast_element));
-
-    element->next = NULL;
-    element->word = NULL;
-    element->redirection = NULL;
-
-    return element;
-}
 
 s_ast_element *parse_rule_elements(s_parser *parser)
 {
@@ -24,7 +12,7 @@ s_ast_element *parse_rule_elements(s_parser *parser)
     if (!word && !redirection)
         return NULL;
 
-    s_ast_element *element = element_new();
+    s_ast_element *element = ast_element_new();
 
     element->word = word;
     element->redirection = redirection;

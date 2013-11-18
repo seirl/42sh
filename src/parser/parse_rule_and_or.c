@@ -1,17 +1,5 @@
 #include "parser_private.h"
 #include "token.h"
-#include "smalloc.h"
-
-static s_ast_and_or *and_or_new(void)
-{
-    s_ast_and_or *and_or = smalloc(sizeof (s_ast_and_or));
-
-    and_or->and_or = AST_CMD_AND;
-    and_or->next = NULL;
-    and_or->pipeline = NULL;
-
-    return and_or;
-}
 
 s_ast_and_or *parse_rule_and_or(s_parser *parser)
 {
@@ -19,7 +7,7 @@ s_ast_and_or *parse_rule_and_or(s_parser *parser)
     if (!(pipeline = parse_rule_pipeline(parser, 1)))
         return NULL;
 
-    s_ast_and_or *and_or = and_or_new();
+    s_ast_and_or *and_or = ast_and_or_new();
     and_or->pipeline = pipeline;
 
     s_token *tok = lex_look_token(parser->lexer);

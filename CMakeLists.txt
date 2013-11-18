@@ -137,8 +137,28 @@ add_library(exec OBJECT
 )
 
 add_library(ast OBJECT
+
+    src/ast/and_or.c
+    src/ast/assignment.c
+    src/ast/case.c
+    src/ast/command.c
     src/ast/compound_word.c
+    src/ast/element.c
+    src/ast/for.c
+    src/ast/funcdec.c
+    src/ast/if.c
+    src/ast/input.c
+    src/ast/io_number.c
+    src/ast/list.c
+    src/ast/pipeline.c
+    src/ast/prefix.c
+    src/ast/redirection.c
+    src/ast/shell_command.c
+    src/ast/simple_command.c
+    src/ast/until.c
+    src/ast/while.c
     src/ast/word.c
+    src/ast/word_list.c
 )
 
 add_executable(../42sh
