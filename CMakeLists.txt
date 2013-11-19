@@ -110,6 +110,10 @@ add_library(input OBJECT
 
 add_library(ast_printer OBJECT
     src/ast_printer/ast_printer.c
+    src/ast_printer/cmds.c
+    src/ast_printer/ctrl.c
+    src/ast_printer/elements.c
+    src/ast_printer/words.c
     src/ast_printer/ast_printer.h
 )
 

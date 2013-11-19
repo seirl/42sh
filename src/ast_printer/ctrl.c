@@ -53,6 +53,7 @@ void print_ast_if(s_ast_if *n, void *prev, FILE *out)
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
     print_cmd_list(n->predicate, n, out);
     print_cmd_list(n->then_cmds, n, out);
+    print_ast_else(n->else_clause, n, out);
 }
 
 void print_ast_while(s_ast_while *n, void *prev, FILE *out)
