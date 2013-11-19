@@ -3,5 +3,4 @@
     "desc": "Env get a value in a non-singleton env",
     "input": "3",
     "output": """baz""",
-    "skip": True
 }

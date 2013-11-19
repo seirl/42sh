@@ -1,4 +1,6 @@
+#define _GNU_SOURCE
 #include <stdlib.h>
+#include <string.h>
 #include "env.h"
 #include "hashtbl.h"
 
@@ -10,9 +12,9 @@ static s_hashtbl *env_get_ptr(void)
     return env_var;
 }
 
-void env_set(char *name, char *value)
+void env_set(char *value, char *name)
 {
-    hashtbl_set(env_get_ptr(), name, value);
+    hashtbl_set(env_get_ptr(), strdup(value), strdup(name));
 }
 
 char *env_get(char *name)

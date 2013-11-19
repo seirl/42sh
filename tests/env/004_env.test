@@ -3,5 +3,4 @@
     "desc": "Env multiple set, unset and get",
     "input": "4",
     "output": """baz_bar test_bar bar_bar foo_bar (null)""",
-    "skip": True
 }

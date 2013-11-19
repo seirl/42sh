@@ -10,34 +10,34 @@ int test_0()
 int test_1()
 {
     env_set("foo", "bar");
-    printf("%s", env_get("foo"));
+    printf("%s", env_get("bar"));
     return 0;
 }
 
 int test_2()
 {
     env_set("foo", "bar");
-    env_unset("foo");
-    printf("%s", env_get("foo"));
+    env_unset("bar");
+    printf("%s", env_get("bar"));
     return 0;
 }
 
 int test_3()
 {
-    env_set("foo", "bar");
-    env_set("foo", "baz");
+    env_set("bar", "foo");
+    env_set("baz", "foo");
     printf("%s", env_get("foo"));
     return 0;
 }
 
 int test_4()
 {
-    env_set("foo", "foo_bar");
-    env_set("toto", "tata");
-    env_set("bar", "bar_bar");
-    env_set("baz", "baz_bar");
+    env_set("foo_bar", "foo");
+    env_set("tata", "toto");
+    env_set("bar_bar", "bar");
+    env_set("baz_bar", "baz");
     env_unset("toto");
-    env_set("test", "test_bar");
+    env_set("test_bar", "test");
     printf("%s %s %s %s %s", env_get("baz"), env_get("test"),
                              env_get("bar"), env_get("foo"),
                              env_get("toto"));

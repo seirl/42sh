@@ -1,7 +1,7 @@
 #ifndef ENV_H
 # define ENV_H
 
-void env_set(char *name, char *value);
+void env_set(char *value, char *name);
 char *env_get(char *name);
 void env_unset(char *name);
 void env_free(void);

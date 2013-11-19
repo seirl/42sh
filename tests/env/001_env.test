@@ -3,5 +3,5 @@
     "desc": "Env add and get a value",
     "input": "1",
     "output": """bar""",
-    "skip": True
+    "output": """foo"""
 }
