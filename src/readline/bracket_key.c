@@ -24,7 +24,7 @@ static void do_left(s_term *term)
 
 static void do_up(s_term *term)
 {
-    (void)term;
+    (void)term; // TODO: fix "undefined reference to get_history"
     //term->hist_current = get_history(++(term->hist_pos));
 }
 
