@@ -21,17 +21,10 @@ static int parse_bang(s_parser *parser, int first)
 static s_ast_pipeline *sub_parse_rule_pipeline(s_parser *parser,
                                                s_ast_pipeline *pipeline)
 {
-    s_token *tok;
-    parser_shift_token(parser); /** shift ! */
+    parser_shift_token(parser); /** shift | */
 
-    tok = lex_look_token(parser->lexer);
-    if (tok->type == T_NEWLINE)
-    {
-        parser_shift_token(parser);
-        maybe_parse_heredoc(parser, pipeline->cmd);
-        parse_expect_newlines(parser);
-    }
-    token_free(tok);
+    parse_heredoc_here(parser, pipeline->cmd);
+
     if (!(pipeline->next = parse_rule_pipeline(parser, 0)))
         return NULL;
     return pipeline;

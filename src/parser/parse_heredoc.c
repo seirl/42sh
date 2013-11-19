@@ -84,24 +84,29 @@ int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd)
 
     delim = redir->heredoc_delim->word->str; /** FIXME: merge compound word */
 
-    if (redir->type == REDIR_HEREDOC
-        && !(tok = lex_heredoc(parser->lexer, delim)))
-        RETURN_PARSE_EXPECTED_INT(parser, delim);
-    else if (redir->type == REDIR_HEREDOC_STRIP
-            && !(tok = lex_heredoc_strip(parser->lexer, delim)))
-        RETURN_PARSE_EXPECTED_INT(parser, delim);
-    else
-        assert("Well, no.");
+    tok = redir->type == REDIR_HEREDOC ? lex_heredoc(parser->lexer, delim)
+                                       : lex_heredoc_strip(parser->lexer,
+                                                           delim);
 
-    s_ast_heredoc *heredoc = smalloc(sizeof (s_ast_heredoc));
+    s_ast_heredoc *heredoc = ast_heredoc_new();
     heredoc->heredoc = string_duplicate(tok->value.str);
     token_free(tok);
 
     redir->heredoc = heredoc;
-    string_free(delim);
     ast_compound_word_delete(redir->heredoc_delim);
-    redir->heredoc_delim = NULL;
     redir->heredoc_delim = NULL;
 
     return 1;
+}
+
+void parse_heredoc_here(s_parser *parser, s_ast_cmd *cmds)
+{
+    s_token *tok = lex_look_token(parser->lexer);
+    if (tok->type == T_NEWLINE)
+    {
+        parser_shift_token(parser);
+        maybe_parse_heredoc(parser, cmds);
+        parse_expect_newlines(parser);
+    }
+    token_free(tok);
 }

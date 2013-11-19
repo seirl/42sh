@@ -69,8 +69,9 @@ s_ast_compound_word *parse_compound_word(s_parser *parser);
 s_ast_assignment *parse_assignment(s_parser *parser);
 /** @brief Handle heredoc body. */
 int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd);
+/** @brief Handle heredoc body. */
+void parse_heredoc_here(s_parser *parser, s_ast_cmd *cmd);
 
-// Parse tools ----------------------------------------------------------------
 s_ast_word *word_of_token(s_token *tok);
 void parser_shift_token(s_parser *parser);
 void parser_shift_word(s_parser *parser);

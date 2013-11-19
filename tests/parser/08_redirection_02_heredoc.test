@@ -5,5 +5,4 @@ hello
 FOO
 """,
     "output": "",
-    "skip": True,
 }

@@ -13,6 +13,11 @@ s_ast_while *ast_while_new(void)
 
 void ast_while_delete(s_ast_while *whilee)
 {
-    (void) whilee;
-    // TODO
+    if (!whilee)
+        return;
+
+    ast_list_delete(whilee->cmds);
+    ast_list_delete(whilee->predicate);
+
+    sfree(whilee);
 }

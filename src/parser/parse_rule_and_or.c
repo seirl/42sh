@@ -26,7 +26,7 @@ s_ast_and_or *parse_rule_and_or(s_parser *parser)
     token_free(tok);
     parser_shift_token(parser);
 
-    parse_expect_newlines(parser);
+    parse_heredoc_here(parser, pipeline->cmd);
 
     and_or->next = parse_rule_and_or(parser);
 

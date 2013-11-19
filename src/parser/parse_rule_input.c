@@ -1,6 +1,30 @@
 #include "parser_private.h"
 #include "log.h"
 
+static void pipeline_heredoc(s_parser *parser, s_ast_pipeline *pipeline)
+{
+    if (!pipeline)
+        return;
+    maybe_parse_heredoc(parser, pipeline->cmd);
+    pipeline_heredoc(parser, pipeline->next);
+}
+
+static void and_or_heredoc(s_parser *parser, s_ast_and_or *ao)
+{
+    if (!ao)
+        return;
+    pipeline_heredoc(parser, ao->pipeline);
+    and_or_heredoc(parser, ao->next);
+}
+
+static void list_heredoc_here(s_parser *parser, s_ast_list *list)
+{
+    if (!list)
+        return;
+    and_or_heredoc(parser, list->and_or);
+    list_heredoc_here(parser, list->next);
+}
+
 s_ast_input *parse_rule_input(s_parser *parser)
 {
     s_token *tok = lex_look_token(parser->lexer);
@@ -23,6 +47,10 @@ s_ast_input *parse_rule_input(s_parser *parser)
     if (!(tok->type == T_NEWLINE
         || tok->type == T_EOF))
         LOG(ERROR, "parser: unexpected 'input' token.", NULL);
+
+    if (tok->type == T_NEWLINE)
+        list_heredoc_here(parser, ast->list);
+
     token_free(tok);
 
     return ast;

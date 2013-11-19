@@ -7,5 +7,4 @@ world
 BAR
 """,
     "output": "",
-    "skip": True,
 }
