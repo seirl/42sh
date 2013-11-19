@@ -2,7 +2,7 @@
 #include "shopt.h"
 #include "macros.h"
 
-static void version()
+static void version(void)
 {
     fprintf(stdout, "Version "VERSION"\n");
 }

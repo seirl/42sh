@@ -1,9 +1,9 @@
 #include <unistd.h>
-#include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 
 #include "sighandler.h"
 
@@ -45,7 +45,7 @@ static void segfault_callback()
 }
 
 
-void signal_init()
+void signal_init(void)
 {
     struct sigaction action;
     action.sa_flags = 0;

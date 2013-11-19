@@ -6,9 +6,9 @@
 
 enum special_key
 {
-#define X(Name, Code1, Code2) Name,
-#include "special_keys.def"
-#undef X
+# define X(Name, Code1, Code2) Name,
+# include "special_keys.def"
+# undef X
 };
 typedef enum special_key e_special_key;
 

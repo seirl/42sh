@@ -42,7 +42,7 @@ int shopt_get(const char *shopt)
     return -1;
 }
 
-void shopt_print()
+void shopt_print(void)
 {
     size_t size;
     s_shopt *shell_options = shopt_get_ptr(&size);

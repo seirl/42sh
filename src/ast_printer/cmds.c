@@ -24,7 +24,7 @@ void print_shell_cmd(s_ast_shell_cmd *n, void *prev, FILE *out)
 #define X(U1, Type, Sub, U2)                                    \
     else if (n->ctrl_structure == Type)                         \
         print_ ## Sub(n->ctrl.Sub, n, out);
-# include "shell_command.def"
+#include "shell_command.def"
 #undef X
 }
 

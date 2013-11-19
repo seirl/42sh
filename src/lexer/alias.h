@@ -7,6 +7,6 @@
 void alias_set(s_string *alias, s_string *value);
 void alias_unset(s_string *alias);
 s_string *alias_get(s_string *alias);
-void alias_free();
+void alias_free(void);
 
 #endif /* !ALIAS_H */

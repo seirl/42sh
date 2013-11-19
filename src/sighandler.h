@@ -7,6 +7,6 @@ struct sig_state
 };
 typedef struct sig_state s_sig_state;
 
-void signal_init();
+void signal_init(void);
 
 #endif /* !SIGHANDLER_H */

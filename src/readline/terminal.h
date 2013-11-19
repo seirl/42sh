@@ -29,7 +29,7 @@ struct terminal
 };
 typedef struct terminal s_term;
 
-s_term *term_get();
-void term_close();
+s_term *term_get(void);
+void term_close(void);
 
 #endif /* !TERMINAL_H */

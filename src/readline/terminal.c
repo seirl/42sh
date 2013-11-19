@@ -7,7 +7,7 @@
 
 static s_term *g_term = NULL;
 
-static s_term *term_init()
+static s_term *term_init(void)
 {
     s_term *term = smalloc(sizeof (struct terminal));
     if (tcgetattr(STDIN_FILENO, &term->restore_state) != 0)
@@ -32,7 +32,7 @@ static s_term *term_init()
     return term;
 }
 
-s_term *term_get()
+s_term *term_get(void)
 {
     if (g_term == NULL)
         g_term = term_init();
@@ -40,7 +40,7 @@ s_term *term_get()
     return g_term;
 }
 
-void term_close()
+void term_close(void)
 {
     if (!g_term)
         return;

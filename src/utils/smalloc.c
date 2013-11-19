@@ -1,7 +1,7 @@
 #include "log.h"
 #include "smalloc.h"
 
-static u_smalloc_bucket **get_bucket()
+static u_smalloc_bucket **get_bucket(void)
 {
     static u_smalloc_bucket **buckets = NULL;
     if (buckets == NULL)
@@ -110,7 +110,7 @@ void sfree(void *ptr)
     free(free_ptr);
 }
 
-void smalloc_clean()
+void smalloc_clean(void)
 {
     u_smalloc_bucket **buckets = get_bucket();
 #ifdef CONCHITA

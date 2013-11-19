@@ -19,7 +19,6 @@ static int parse_redirection_type(s_parser *parser,
 #undef X
 
     token_free(tok);
-
     return 0;
 }
 

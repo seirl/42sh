@@ -6,9 +6,9 @@
 
 enum bracket_key
 {
-#define X(Name, Char1, Char2, Fun) Name,
-#include "bracket_key.def"
-#undef X
+# define X(Name, Char1, Char2, Fun) Name,
+# include "bracket_key.def"
+# undef X
 };
 typedef enum bracket_key e_bracket_key;
 

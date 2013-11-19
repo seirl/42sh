@@ -1,6 +1,6 @@
 #include "alias.h"
 
-static s_hashtbl *alias_get_ptr()
+static s_hashtbl *alias_get_ptr(void)
 {
     static s_hashtbl *aliases = NULL;
     if (aliases == NULL)
@@ -24,7 +24,7 @@ s_string *alias_get(s_string *alias)
     return hashtbl_get(alias_get_ptr(), alias);
 }
 
-void alias_free()
+void alias_free(void)
 {
     hashtbl_free(alias_get_ptr());
 }
