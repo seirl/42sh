@@ -33,7 +33,7 @@ static int load_rc(const char *file)
     return 0;
 }
 
-int rc_file_load()
+int rc_file_load(void)
 {
     load_rc("/etc/42shrc");
     char *home = getenv("HOME");
