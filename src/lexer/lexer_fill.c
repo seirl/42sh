@@ -28,6 +28,13 @@ int lex_eat_spaces(s_lexer *lexer)
     return ret;
 }
 
+static void lexer_until_reset(s_lexer *lexer)
+{
+    lexer->quoted = 0;
+    lexer->sur.end = 0;
+    lexer->sur.count = 0;
+}
+
 int fill_until(s_lexer *lexer, int include_last)
 {
     char c;
@@ -42,23 +49,15 @@ int fill_until(s_lexer *lexer, int include_last)
             if (lexer->sur.count == 0)
                 break;
         }
-        if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == '\0'))
-        {
+        if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == 0))
             lexer->sur.count += 1;
-            if (lexer->sur.count == 0)
-            {
-                ;//syntax error
-            }
-        }
         string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
         update_quote(lexer, c, prev);
         prev = c;
     }
     if (include_last && c != 0)
         string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
-    lexer->quoted = 0;
-    lexer->sur.end = 0;
-    lexer->sur.count = 0;
+    lexer_until_reset(lexer);
     return c != 0;
 }
 

@@ -21,16 +21,16 @@ struct debug_info
 };
 typedef struct debug_info s_debug_info;
 
-void my_log(e_log_level level, s_debug_info debug, char *fmt, ...);
+void my_log(e_log_level level, s_debug_info debug, char *Fmt, ...);
 
-# define LOG(Level, fmt, ...)                     \
+# define LOG(Level, Fmt, ...)                     \
     do {                                          \
         s_debug_info debug =                      \
         {                                         \
             .file = __FILE__,                     \
             .line = __LINE__                      \
         };                                        \
-        my_log(Level, debug, fmt, __VA_ARGS__);   \
-    } while(0)
+        my_log(Level, debug, Fmt, __VA_ARGS__);   \
+    } while (0)
 
 #endif

@@ -7,7 +7,8 @@ static s_shopt *shopt_get_ptr(size_t *size)
 {
     static s_shopt shell_options[] =
     {
-#define X(Name, Value) { Name, Value },
+#define X(Name, Value) \
+        { Name, Value },
 #include "shopt.def"
 #undef X
     };

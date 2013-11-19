@@ -4,7 +4,8 @@ static s_hashtbl *alias_get_ptr()
 {
     static s_hashtbl *aliases = NULL;
     if (aliases == NULL)
-        aliases = hashtbl_init(hash_string, cmp_string, free_string, free_string);
+        aliases = hashtbl_init(hash_string, cmp_string, free_string,
+                              free_string);
     return aliases;
 }
 

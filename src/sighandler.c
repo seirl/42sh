@@ -42,8 +42,6 @@ static void segfault_callback()
         execvp(gdb_args[0], gdb_args);
         exit(1);
     }
-    //int status = 0;
-    //waitpid(pid_gdb, &status, 0);
 }
 
 
