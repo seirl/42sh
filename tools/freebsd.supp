@@ -18,3 +18,13 @@
    fun:fputs
    ...
 }
+{
+   <freebsd>
+   Memcheck:Leak
+   fun:malloc
+   obj:/lib/libc.so.7
+   obj:/lib/libc.so.7
+   obj:/lib/libc.so.7
+   fun:fwrite
+   ...
+}
