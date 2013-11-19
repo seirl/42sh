@@ -23,6 +23,7 @@ s_token *token_duplicate(const s_token *tok)
 {
     s_token_value value;
     value.str = string_duplicate(tok->value.str);
+    value.integer = tok->value.integer;
     return (token_create(tok->type, value, tok->location, tok->concat));
 }
 
