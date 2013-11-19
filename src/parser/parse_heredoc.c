@@ -86,6 +86,8 @@ int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd)
     tok = redir->type == REDIR_HEREDOC ? lex_heredoc(parser->lexer, delim)
                                        : lex_heredoc_strip(parser->lexer,
                                                            delim);
+    if (!tok)
+        RETURN_PARSE_EXPECTED_INT(parser, "here-doc delimiter");
 
     s_ast_heredoc *heredoc = ast_heredoc_new();
     heredoc->heredoc = string_duplicate(tok->value.str);

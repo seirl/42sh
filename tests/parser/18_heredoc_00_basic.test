@@ -7,5 +7,6 @@ test test
 testtest
 EOF""",
     "output": "",
-    "skip": True,
+    "stderr": ...,
+    "retval": 1,
 }
