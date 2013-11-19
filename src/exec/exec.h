@@ -19,6 +19,8 @@
 # include "smalloc.h"
 # include "hashtbl.h"
 # include "string_utils.h"
+# include "shell_funcs.h"
+# include "shell_vars.h"
 # include "shell.h"
 
 struct redir_context
@@ -38,8 +40,6 @@ extern s_shell shell;
 
 s_string *expand_word(s_ast_word *word);
 s_string *expand_compound(s_ast_compound_word *word);
-void variable_add(s_string *var_name, s_string *var_value);
-void function_add(s_ast_shell_cmd *cmd, s_string *var_value);
 void exec_assignment(s_ast_assignment *assign);
 int redir_list_len(s_ast_redirection_list *redir);
 s_redir_context *save_redir_context(s_ast_redirection_list *redir);

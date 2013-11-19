@@ -155,6 +155,8 @@ add_library(exec OBJECT
     src/exec/exec_cmds.c
     src/exec/exec_or_and.c
     src/exec/exec_pipes.c
+    src/exec/shell_vars.c
+    src/exec/shell_funcs.c
 )
 
 add_library(ast OBJECT

@@ -14,20 +14,10 @@ s_string *expand_compound(s_ast_compound_word *word)
     return NULL;
 }
 
-void variable_add(s_string *var_name, s_string *var_value)
-{
-    HASHTBL_SET(shell.vars, var_value, var_name);
-}
-
-void function_add(s_ast_shell_cmd *cmd, s_string *func_name)
-{
-    HASHTBL_SET(shell.funcs, cmd, func_name->buf);
-}
-
 void exec_assignment(s_ast_assignment *assign)
 {
     s_string *value = expand_compound(assign->value);
-    variable_add(assign->name, value);
+    vars_set(assign->name, value);
 }
 
 handler builtin_handler(char *name)
@@ -247,14 +237,12 @@ int exec_program(char **cmd_argv, s_ast_prefix *prefixes)
 
 void exec_cmd_word(s_ast_compound_word *word)
 {
-    s_ast_shell_cmd *func_body = NULL;
-    int changed = 0;
     int len = compound_word_len(word);
     handler callback = NULL;
     char **cmd_argv = compword_to_argv(word, len);
 
-    HASHTBL_GET(shell.funcs, cmd_argv[0], func_body, changed);
-    if (changed)
+    s_ast_shell_cmd *func_body = funcs_get(cmd_argv[0]);
+    if (func_body)
         exec_shell_cmd(func_body);
     else
     {
@@ -333,20 +321,15 @@ void exec_elements_redir(s_ast_element *elt)
 void exec_simple_cmd(s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
-    s_ast_shell_cmd *func_body = NULL;
-    int changed = 0;
     handler callback = NULL;
     exec_elements_redir(cmd->elements);
     char **cmd_argv = elements_to_argv(cmd->elements, len);
 
-    if (shell.funcs)
+    s_ast_shell_cmd *func_body = funcs_get(cmd_argv[0]);
+    if (func_body)
     {
-        HASHTBL_GET(shell.funcs, cmd_argv[0], func_body, changed);
-        if (changed)
-        {
-            exec_prefixes(cmd->prefixes);
-            exec_shell_cmd(func_body);
-        }
+        exec_prefixes(cmd->prefixes);
+        exec_shell_cmd(func_body);
     }
     else
     {
@@ -411,7 +394,7 @@ void exec_for(s_ast_for *for_cmd)
     while (for_cmd->values
            && (value = expand_compound(for_cmd->values->word)))
     {
-        variable_add(expand_word(for_cmd->identifier), value);
+        vars_set(expand_word(for_cmd->identifier), value);
         exec_ast_list(for_cmd->cmd_list);
         for_cmd->values = for_cmd->values->next;
     }
@@ -464,7 +447,7 @@ void exec_shell_cmd_node(s_ast_shell_cmd *shell_cmd,
 
 void exec_func_dec(s_ast_funcdec *funcdec)
 {
-    function_add(funcdec->shell_cmd, funcdec->name);
+    funcs_set(funcdec->name->buf, funcdec->shell_cmd);
 }
 
 void exec_funcdec_node(s_ast_funcdec *funcdec,

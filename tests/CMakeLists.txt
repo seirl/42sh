@@ -69,6 +69,7 @@ add_executable(test_exec
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>

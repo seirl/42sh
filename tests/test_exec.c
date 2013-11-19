@@ -33,10 +33,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    shell.funcs = NULL;
-    shell.fun_count = 0;
-    shell.vars = NULL;
-    shell.var_count = 0;
     shell.builtins = NULL;
     shell.built_count = 0;
     shell.status = 0;
@@ -46,7 +42,7 @@ int main(int argc, char **argv)
     s_ast_input *ast;
 
     str = argv[1];
-    lexer = lex_create(dummy_getc, dummy_topc, "<test>");
+    lexer = lex_create(dummy_getc, dummy_topc, NULL, "<test>");
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {
