@@ -3,7 +3,6 @@
 #include "bracket_key.h"
 #include "wrapper.h"
 
-#include <stdio.h>
 static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
 {
     switch (key)
