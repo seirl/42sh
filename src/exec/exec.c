@@ -1,6 +1,6 @@
 #include "exec.h"
 
-s_shell shell;
+s_shell g_shell;
 
 void exec_ast_list(s_ast_list *list)
 {

@@ -10,7 +10,7 @@ void restore_redir_context(s_redir_context *context)
 s_redir_context *exec_redirection(s_ast_redirection_list *redir)
 {
     s_redir_context *context = save_redir_context(redir);
-    shell.status = set_redir(redir);
+    g_shell.status = set_redir(redir);
     return context;
 }
 

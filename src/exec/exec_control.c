@@ -3,7 +3,7 @@
 void exec_else(s_ast_else *else_cmd)
 {
     exec_ast_list(else_cmd->elif_predicate);
-    if (!shell.status)
+    if (!g_shell.status)
         exec_ast_list(else_cmd->elif_cmds);
     else
         exec_ast_list(else_cmd->else_cmds);
@@ -12,7 +12,7 @@ void exec_else(s_ast_else *else_cmd)
 void exec_if(s_ast_if *if_cmd)
 {
     exec_ast_list(if_cmd->predicate);
-    if (!shell.status)
+    if (!g_shell.status)
         exec_ast_list(if_cmd->then_cmds);
     /* FIXME: elif */
     else
@@ -22,7 +22,8 @@ void exec_if(s_ast_if *if_cmd)
 
 void exec_while(s_ast_while *while_cmd)
 {
-    for (exec_ast_list(while_cmd->predicate); !shell.status;
+    for (exec_ast_list(while_cmd->predicate);
+         !g_shell.status;
          exec_ast_list(while_cmd->predicate))
     {
         exec_ast_list(while_cmd->cmds);
@@ -31,7 +32,8 @@ void exec_while(s_ast_while *while_cmd)
 
 void exec_until(s_ast_until *until_cmd)
 {
-    for (exec_ast_list(until_cmd->predicate); shell.status;
+    for (exec_ast_list(until_cmd->predicate);
+         g_shell.status;
          exec_ast_list(until_cmd->predicate))
     {
         exec_ast_list(until_cmd->cmds);

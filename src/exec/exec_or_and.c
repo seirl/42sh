@@ -9,7 +9,7 @@ void exec_and_node(s_ast_and_or *node)
     }
     if (node->pipeline)
         exec_pipe_node(node->pipeline);
-    if (shell.status == 0 && node->next)
+    if (g_shell.status == 0 && node->next)
         exec_andor_node(node->next);
 }
 

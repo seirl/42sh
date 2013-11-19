@@ -37,7 +37,7 @@ typedef struct pipe
     pid_t *process;
 } s_pipe;
 
-extern s_shell shell;
+extern s_shell g_shell;
 
 /** @brief Initialize the shell. */
 void init_shell(void);

@@ -33,9 +33,9 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    shell.builtins = NULL;
-    shell.built_count = 0;
-    shell.status = 0;
+    g_shell.builtins = NULL;
+    g_shell.built_count = 0;
+    g_shell.status = 0;
 
     s_lexer *lexer;
     s_parser *parser;

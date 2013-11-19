@@ -73,7 +73,7 @@ int exec_pipe(s_pipe *pipe_struct,
         {
             pipe_child_job(i, len, curr_pipe, old_pipe);
             exec_cmd_node(pipe_cmds[i]);
-            if (shell.status < 0)
+            if (g_shell.status < 0)
                 fprintf(stderr, "Failed to execute command.\n");
             exit(1);
         }
@@ -82,7 +82,7 @@ int exec_pipe(s_pipe *pipe_struct,
             process_add(pid, pipe_struct);
             pipe_parent_job(i, len, &old_pipe, curr_pipe);
             if (i == len - 1)
-                waitpid(pid, &shell.status, 0);
+                waitpid(pid, &g_shell.status, 0);
         }
     }
     return 0;
@@ -96,7 +96,7 @@ static void wait_pipe(pid_t main, s_pipe *pipe)
     if (main == 0)
     {
         waitpid((proc = proc_get_next(pipe)), &st, 0);
-        shell.status = st;
+        g_shell.status = st;
     }
     proc = proc_get_next(pipe);
     while (proc >= 0)
@@ -104,7 +104,7 @@ static void wait_pipe(pid_t main, s_pipe *pipe)
         kill(proc, SIGPIPE);
         waitpid(proc, &st, 0);
         proc = proc_get_next(pipe);
-        shell.status = st;
+        g_shell.status = st;
     }
 }
 
@@ -123,7 +123,7 @@ void exec_pipe_node(s_ast_pipeline *node)
         if (res != 0)
         {
             fprintf(stderr, "Fail to exec pipe node");
-            shell.status = -1;
+            g_shell.status = -1;
         }
         wait_pipe(!res, pipe);
         sfree(pipe->process);

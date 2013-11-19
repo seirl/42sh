@@ -71,8 +71,8 @@ void exec_simple_cmd(s_ast_simple_cmd *cmd)
     else if ((callback = builtin_handler(cmd_argv[0])))
     {
         exec_prefixes(cmd->prefixes);
-        shell.status = callback(cmd_argv);
+        g_shell.status = callback(cmd_argv);
     }
     else
-        shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);
+        g_shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);
 }

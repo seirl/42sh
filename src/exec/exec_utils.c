@@ -2,9 +2,9 @@
 
 void init_shell(void)
 {
-    shell.builtins = NULL;
-    shell.built_count = 0;
-    shell.status = 0;
+    g_shell.builtins = NULL;
+    g_shell.built_count = 0;
+    g_shell.status = 0;
 }
 
 s_string *expand_word(s_ast_word *word)
@@ -29,10 +29,10 @@ void exec_assignment(s_ast_assignment *assign)
 
 handler builtin_handler(char *name)
 {
-    if (!shell.builtins || !shell.built_count)
+    if (!g_shell.builtins || !g_shell.built_count)
         return NULL;
-    for (unsigned int i = 0; i < shell.built_count; ++i)
-        if (!strcmp(shell.builtins[i].name, name))
-            return shell.builtins[i].callback;
+    for (unsigned int i = 0; i < g_shell.built_count; ++i)
+        if (!strcmp(g_shell.builtins[i].name, name))
+            return g_shell.builtins[i].callback;
     return NULL;
 }
