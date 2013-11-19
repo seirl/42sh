@@ -39,18 +39,7 @@ int main(int argc, char **argv)
     str = argv[1];
     lexer = lex_create(dummy_getc, dummy_topc, NULL, "<test>");
     parser = parser_create(lexer);
-    if ((ast = parse_rule_input(parser)))
-    {
-        ast_input_delete(ast);
-        if (parser_eof(parser))
-            ret = 0;
-        else
-        {
-            LOG(ERROR, "Garbage in the lexer after parsing", NULL);
-            ret = 1;
-        }
-    }
-    else
+    if (!(ast = parse_rule_input(parser)) || !parser_diagnostic(parser))
         ret = 1;
 
     parser_delete(parser);
