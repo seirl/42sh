@@ -4,6 +4,7 @@
 -std=c99
 -Isrc/
 -Isrc/ast
+-Isrc/ast_printer
 -Isrc/env
 -Isrc/exec
 -Isrc/expand
