@@ -8,10 +8,12 @@
 #include "input_file.h"
 #include "lexer_private.h"
 #include "readline.h"
+#include "log.h"
 
 s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
 {
     s_string *input;
+    FILE *f;
     if (cmd)
     {
         input = string_create_from(cmd);
@@ -19,13 +21,14 @@ s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
     }
     if (file)
     {
-        FILE *f = fopen(file, "r");
+        if ((f = fopen(file, "r")) == NULL)
+            RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", file);
         return lex_create(input_file_getc, input_file_topc, f, "file");
     }
     *repeat = isatty(STDIN_FILENO);
     if (!*repeat)
     {
-        FILE *f = fdopen(STDIN_FILENO, "r");
+        f = fdopen(STDIN_FILENO, "r");
         return lex_create(input_file_getc, input_file_topc, f, "stdin");
     }
     input = readline("42sh> ");
