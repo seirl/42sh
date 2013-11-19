@@ -23,7 +23,9 @@ void hashtbl_set(s_hashtbl *h, void *value, void *key)
         if (!h->cmp(it->key, key))
         {
             h->free_value(it->value);
+            h->free_key(it->key);
             it->value = value;
+            it->key = key;
             return;
         }
     }

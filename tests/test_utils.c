@@ -9,6 +9,13 @@
 int test_1()
 {
     s_hashtbl *h = hashtbl_init(hash_char, cmp_char, free_char, free_char);
+    hashtbl_free(h);
+    return 0;
+}
+
+int test_2()
+{
+    s_hashtbl *h = hashtbl_init(hash_char, cmp_char, free_char, free_char);
     hashtbl_set(h, strdup("foo"), strdup("bar"));
     if (hashtbl_get(h, "bar") == NULL)
         return 1;
@@ -19,11 +26,38 @@ int test_1()
     return 0;
 }
 
+int test_3()
+{
+    s_hashtbl *h = hashtbl_init(hash_char, cmp_char, free_char, free_char);
+    hashtbl_set(h, strdup("foo"), strdup("bar"));
+    hashtbl_set(h, strdup("baz"), strdup("bar"));
+    if (hashtbl_get(h, "bar") == NULL)
+        return 1;
+    hashtbl_free(h);
+    return 0;
+}
+
+int test_4()
+{
+    s_hashtbl *h = hashtbl_init(hash_char, cmp_char, free_char, free_char);
+    hashtbl_unset(h, "bar");
+    hashtbl_free(h);
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
-    (void)argc;
-    (void)argv;
-    if (test_1())
+    if (argc < 2)
         return 1;
+    int f = atoi(argv[1]);
+    if (f == 1)
+        return test_1();
+    if (f == 2)
+        return test_2();
+    if (f == 3)
+        return test_3();
+    if (f == 4)
+        return test_4();
+    return 0;
     return 0;
 }
