@@ -10,7 +10,7 @@
 
 static s_history g_hist;
 
-void open_history(void)
+void history_open(void)
 {
     if (!env_get("HISTFILE"))
         env_set("HISTFILE", "~/.sh_history");
@@ -30,7 +30,7 @@ void open_history(void)
     g_hist.last_file_entry = g_hist.lines->hd;
 }
 
-void close_history(void)
+void history_close(void)
 {
     // TODO: Write history
     if (g_hist.lines)
@@ -39,7 +39,7 @@ void close_history(void)
         g_hist.last_file_entry = NULL;
 }
 
-s_hist_entry *get_history(int n)
+s_hist_entry *history_get(int n)
 {
     return h_list_nth(g_hist.lines, n);
 }

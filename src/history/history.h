@@ -32,8 +32,8 @@ typedef struct history s_history;
 ** @param n The number from the end of the wanted command line.
 ** @return an s_string representing the wanted command line.
 */
-s_hist_entry *get_history(int n);
-void open_history(void);
-void close_history(void);
+s_hist_entry *history_get(int n);
+void history_open(void);
+void history_close(void);
 
 #endif /* !HISTORY_H */
