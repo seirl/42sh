@@ -8,6 +8,6 @@
 **
 ** @return NULL if a fatal error occured, the input line otherwise.
 */
-s_string *readline();
+s_string *readline(char *prompt);
 
 #endif /* !READLINE_H */

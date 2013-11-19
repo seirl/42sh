@@ -17,14 +17,14 @@ static s_string *readline_close(s_term *term, e_next_action ret)
     return input;
 }
 
-s_string *readline()
+s_string *readline(char *prompt)
 {
     s_term *term = term_get();
     if (term == NULL)
         return NULL;
     char c;
 
-    printf("%s", env_get("PS1"));
+    printf("%s", prompt);
     fflush(stdout);
     e_next_action ret;
     while (1)

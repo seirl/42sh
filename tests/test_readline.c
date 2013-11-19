@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    s_string *line = readline();
+    s_string *line = readline("test$ ");
     while (1)
     {
         if (string_equal(line, "exit"))
@@ -13,7 +13,7 @@ int main(void)
         printf("\nRead: [%s]\n", line->buf);
         string_free(line);
 
-        line = readline();
+        line = readline("test$ ");
     }
 
     string_free(line);
