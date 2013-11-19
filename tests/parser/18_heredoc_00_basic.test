@@ -7,4 +7,5 @@ test test
 testtest
 EOF""",
     "output": "",
+    "skip": True,
 }
