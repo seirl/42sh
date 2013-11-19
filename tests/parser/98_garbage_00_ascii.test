@@ -1,0 +1,7 @@
+{
+    "desc": "garbage: ascii",
+    "input": "irudsfc ___ qskdj ][] [)() ^$^ if lol @[[",
+    "output": "",
+    "stderr": ...,
+    "retval": 1
+}

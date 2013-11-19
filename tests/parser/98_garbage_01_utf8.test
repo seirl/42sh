@@ -1,0 +1,8 @@
+{
+    "desc": "garbage: utf-8",
+    "input": " ajbk [][ç'' '_'è_ç'è é ][][][ é()())(ùùù♥♥",
+    "output": "",
+    "stderr": ...,
+    "retval": 1,
+    "skip": True,
+}
