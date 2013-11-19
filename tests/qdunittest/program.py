@@ -51,7 +51,7 @@ class TestProgram(unittest.TestProgram):
         parser.add_option("-d", "--debug", action="store_true", default=False,
             help="Start debugging right away on fail")
 
-        parser.add_option("-t", "--timeout", default=5.0, type=float,
+        parser.add_option("-t", "--timeout", default=10.0, type=float,
             help="General timeout in seconds for each test.")
 
         parser.add_option("-m", "--without-valgrind", default=False,
