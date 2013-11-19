@@ -1,35 +1,66 @@
-#include <string.h>
+#include <stdlib.h>
 #include "hashtbl.h"
 
-unsigned long hash_string(s_string *s)
+s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
+        int (*cmp)(void *, void *),
+        void (*free_key)(void *),
+        void (*free_value)(void *))
 {
-    return hash_char(s->buf);
+    s_hashtbl *h = malloc(sizeof (s_hashtbl));
+    h->hash = hash;
+    h->cmp = cmp;
+    h->free_key = free_key;
+    h->free_value = free_value;
+    h->bucket = malloc(sizeof (s_hash_elt *) * HASHTBL_SIZE);
+    return h;
 }
 
-int cmp_string(s_string *s1, s_string *s2)
+void hashtbl_set(s_hashtbl *h, void *value, void *key)
 {
-    return strcmp(s1->buf, s2->buf);
-}
-
-unsigned long hash_char(char *s)
-{
-    unsigned long hash = 5381;
-    int c;
-    for (int i = 0; s[i]; ++i)
+    unsigned long hash = h->hash(key) % HASHTBL_SIZE;
+    for (s_hash_elt *it = h->bucket[hash]; it; it = it->next)
     {
-        c = s[i];
-        hash = ((hash << 5) + hash) + c;
+        if (!h->cmp(it->key, key))
+        {
+            h->free_value(it->value);
+            it->value = value;
+            return;
+        }
     }
-
-    return hash;
+    s_hash_elt *new_elt = malloc(sizeof (s_hash_elt));
+    new_elt->next = h->bucket[hash];
+    new_elt->key = key;
+    new_elt->value = value;
+    h->bucket[hash] = new_elt;
 }
 
-int cmp_char(char *s1, char *s2)
+void *hashtbl_get(s_hashtbl *h, void *key)
 {
-    return strcmp(s1, s2);
+    unsigned long hash = h->hash(key) % HASHTBL_SIZE;
+    for (s_hash_elt *it = h->bucket[hash]; it; it = it->next)
+    {
+        if (!h->cmp(it->key, key))
+            return it->value;
+    }
+    return NULL;
 }
 
-void null_free(void *foo)
+void hashtbl_unset(s_hashtbl *h, void *key)
 {
-    (void)foo;
+    unsigned long hash = h->hash(key) % HASHTBL_SIZE;
+    s_hash_elt *it = NULL;
+    s_hash_elt *prev = NULL;
+    for (it = h->bucket[hash]; it; it = it->next)
+    {
+        if (!h->cmp(it->key, key))
+            break;
+        prev = it;
+    }
+    if (it)
+    {
+        if (prev)
+            prev->next = it->next;
+        else
+            h->bucket[hash] = it->next;
+    }
 }

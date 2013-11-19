@@ -1,120 +1,42 @@
 #ifndef HASHTBL_H
 # define HASHTBL_H
 
-# include <stdlib.h>
-# include "string_utils.h"
-# include "list.h"
+# define HASHTBL_SIZE 100
 
-# define HASHTBL(Type, Keytype, Name)                                        \
-    struct item_##Name                                                       \
-    {                                                                        \
-        Keytype key;                                                         \
-        Type value;                                                          \
-    };                                                                       \
-    typedef struct item_##Name s_item_##Name;                                \
-    LIST(s_item_##Name, items_##Name);                                       \
-    struct Name                                                              \
-    {                                                                        \
-        s_items_##Name **bucket;                                             \
-        size_t size;                                                         \
-        unsigned long(*hash)(Keytype);                                       \
-        int(*cmp)(Keytype, Keytype);                                         \
-        s_item_##Name *it;                                                   \
-    };                                                                       \
-    typedef struct Name s_##Name
+struct hash_elt
+{
+    void *value;
+    void *key;
+    struct hash_elt *next;
+};
+typedef struct hash_elt s_hash_elt;
 
-# define HASHTBL_FUN(Name, Fvalue, Fkey)                                     \
-    void free_##Name(s_item_##Name item)                                     \
-    {                                                                        \
-        Fvalue(item.key);                                                    \
-        Fkey(item.value);                                                    \
-    }
+struct hashtbl
+{
+    unsigned long (*hash)(void *);
+    int (*cmp)(void *, void *);
+    void (*free_key)(void *);
+    void (*free_value)(void *);
+    s_hash_elt **bucket;
+};
+typedef struct hashtbl s_hashtbl;
 
-# define HASHTBL_INIT(Table, Size, Hash, Cmp, F)                             \
-    do {                                                                     \
-        size_t i;                                                            \
-        Table = malloc(sizeof (*Table));                                     \
-        Table->hash = Hash;                                                  \
-        Table->cmp = Cmp;                                                    \
-        Table->size = Size;                                                  \
-        Table->bucket = malloc(sizeof (*Table->bucket) * Size);              \
-        for (i = 0; i < Size; ++i)                                           \
-            LIST_INIT(Table->bucket[i], F);                                  \
-    } while (0)
+s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
+        int (*cmp)(void *, void *),
+        void (*free_key)(void *),
+        void (*free_value)(void *));
+void hashtbl_set(s_hashtbl *h, void *value, void *key);
+void *hashtbl_get(s_hashtbl *h, void *key);
+void hashtbl_unset(s_hashtbl *h, void *key);
 
-# define HASHTBL_SET(Table, Value, Key)                                      \
-    do {                                                                     \
-        int index = Table->hash(Key) % Table->size;                          \
-        LIST_FOREACH(Table->bucket[index])                                   \
-        {                                                                    \
-            if (!Table->cmp(Table->bucket[index]->it->data.key, Key))        \
-            {                                                                \
-                LIST_REMOVE(Table->bucket[index], Table->bucket[index]->it); \
-                break;                                                       \
-            }                                                                \
-        }                                                                    \
-        Table->it = malloc(sizeof (*Table->it));                             \
-        Table->it->key = Key;                                                \
-        Table->it->value = Value;                                            \
-        LIST_INSERT_HEAD(Table->bucket[index], *Table->it);                  \
-        free(Table->it);                                                     \
-    } while (0)
+// hash_char.c
+unsigned long hash_char(void *s);
+int cmp_char(void *s1, void *s2);
+void free_char(void *s);
 
-# define HASHTBL_GET(Table, Key, Ret, Changed)                               \
-    do {                                                                     \
-        int index = Table->hash(Key) % Table->size;                          \
-        Changed = 0;                                                         \
-        LIST_FOREACH(Table->bucket[index])                                   \
-        {                                                                    \
-            if (!Table->cmp(Table->bucket[index]->it->data.key, Key))        \
-            {                                                                \
-                Ret = Table->bucket[index]->it->data.value;                  \
-                Changed = 1;                                                 \
-                break;                                                       \
-            }                                                                \
-        }                                                                    \
-    } while (0)
-
-# define HASHTBL_DEL(Table, Key)                                             \
-    do {                                                                     \
-        int index = Table->hash(Key) % Table->size;                          \
-        LIST_FOREACH(Table->bucket[index])                                   \
-        {                                                                    \
-            if (!Table->cmp(Table->bucket[index]->it->data.key, Key))        \
-            {                                                                \
-                LIST_REMOVE(Table->bucket[index],                            \
-                           Table->bucket[index]->it);                        \
-                break;                                                       \
-            }                                                                \
-        }                                                                    \
-    } while (0)
-
-# define HASHTBL_FREE(Table)                                                 \
-    do {                                                                     \
-        size_t i;                                                            \
-        for (i = 0; i < Table->size; ++i)                                    \
-            LIST_FREE(Table->bucket[i]);                                     \
-        free(Table->bucket);                                                 \
-        free(Table);                                                         \
-    } while (0)
-
-# define HASHTBL_DEBUG(Table)                                                \
-    do {                                                                     \
-        size_t i;                                                            \
-        for (i = 0; i < Table->size; ++i)                                    \
-        {                                                                    \
-            fprintf(stderr, "\n%ld : ", i);                                  \
-            LIST_FOREACH(Table->bucket[i])                                   \
-                fprintf(stderr, "%d -> ",                                    \
-                       Table->bucket[i]->it->data.value);                    \
-        }                                                                    \
-        fprintf(stderr, "\n");                                               \
-    } while (0)
-
-unsigned long hash_string(s_string *s);
-int cmp_string(s_string *s1, s_string *s2);
-unsigned long hash_char(char *s);
-int cmp_char(char *s1, char *s2);
-void null_free(void *foo);
+// hash_string.c
+unsigned long hash_string(void *s);
+int cmp_string(void *s1, void *s2);
+void free_string(void *s);
 
 #endif /* !HASHTBL_H */
