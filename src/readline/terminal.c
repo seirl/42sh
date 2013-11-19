@@ -29,6 +29,7 @@ static s_term *term_init(void)
     term->input_index = 0;
     term->hist_current = NULL;
     term->hist_pos = 0;
+    term->prompt = NULL;
     return term;
 }
 

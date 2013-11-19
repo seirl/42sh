@@ -29,6 +29,7 @@ struct terminal
     size_t input_index;
     s_hist_entry *hist_current;
     size_t hist_pos;
+    char *prompt;
 };
 typedef struct terminal s_term;
 

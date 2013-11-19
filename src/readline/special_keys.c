@@ -29,7 +29,7 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
             return RETURN; // TODO: return only if no '\' escape.
         case CTRL_C:
             printf("%s\n", "^C");
-            printf("%s", env_get("PS1")); // TODO: use prompt instead
+            printf("%s", term->prompt);
             string_reset(term->input);
             term->input_index = 0;
             fflush(stdout);
