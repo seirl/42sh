@@ -19,5 +19,6 @@ void ast_list_delete(s_ast_list *list)
 
     ast_list_delete(list->next);
     ast_and_or_delete(list->and_or);
+
     sfree(list);
 }

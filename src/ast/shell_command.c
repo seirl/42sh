@@ -19,6 +19,7 @@ void ast_shell_cmd_delete(s_ast_shell_cmd *cmd)
         return;
 
     ast_list_delete(cmd->cmd_list);
+
     switch (cmd->ctrl_structure)
     {
     case AST_FOR:

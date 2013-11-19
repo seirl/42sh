@@ -19,6 +19,7 @@ s_ast_if *parse_rule_if(s_parser *parser)
         RETURN_PARSE_EXPECTED(parser, "fi");
 
     s_ast_if *myif = ast_if_new();
+
     myif->predicate = predicate;
     myif->then_cmds = then_cmds;
     myif->else_clause = else_clause;

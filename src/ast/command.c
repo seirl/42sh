@@ -22,5 +22,6 @@ void ast_cmd_delete(s_ast_cmd *cmd)
     ast_func_dec_delete(cmd->func_dec);
     ast_shell_cmd_delete(cmd->shell_cmd);
     ast_redirection_list_delete(cmd->redirections);
+
     sfree(cmd);
 }

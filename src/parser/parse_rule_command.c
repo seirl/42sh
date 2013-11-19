@@ -33,7 +33,7 @@ s_ast_cmd *parse_rule_command(s_parser *parser)
 
     /** We must not process reserved words */
     if (next_word_is_res_word(parser))
-        return NULL;
+        return post_process_cmd(cmd);
 
     tok = lex_look_word(parser->lexer);
     if (tok && tok->type == T_FUNCTION_NAME)
