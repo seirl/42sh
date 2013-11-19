@@ -4,6 +4,9 @@
 # include "terminal.h"
 # include "key.h"
 
+/**
+** @brief A special key
+*/
 enum special_key
 {
 # define X(Name, Code1, Code2) Name,
@@ -12,6 +15,9 @@ enum special_key
 };
 typedef enum special_key e_special_key;
 
+/**
+** @brief Handle special a key
+*/
 e_next_action handle_special_char(s_term *term, char c);
 
 #endif /* !SPECIAL_KEYS_H */

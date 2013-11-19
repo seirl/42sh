@@ -37,8 +37,12 @@ s_string *readline(char *prompt)
             break;
         if (ret == PRINT && isprint(c))
         {
+            // Insert the character in the current line buffer
             string_insertc(term->input, c, term->input_index);
             term->input_index++;
+
+            // Pass the terminal into insert mode, insert the character then
+            // return to edit mode.
             my_tputs(tgetstr("im", NULL));
             printf("%c", c);
             fflush(stdout);

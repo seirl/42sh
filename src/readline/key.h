@@ -3,6 +3,9 @@
 
 # include "terminal.h"
 
+/**
+** @brief What readline should do after handling the current key
+*/
 enum next_action
 {
     CONTINUE,
@@ -12,6 +15,9 @@ enum next_action
 };
 typedef enum next_action e_next_action;
 
+/**
+** @brief Handle the next key
+*/
 e_next_action getkey(s_term *term, char *c);
 
 #endif /* !KEY_H */

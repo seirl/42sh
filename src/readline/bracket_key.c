@@ -8,6 +8,7 @@ static void do_right(s_term *term)
 {
     if (term->input_index < term->input->len)
     {
+        // Move cursor to the left
         my_tputs(tgetstr("nd", NULL));
         term->input_index++;
     }
@@ -17,6 +18,7 @@ static void do_left(s_term *term)
 {
     if (term->input_index > 0)
     {
+        // Move cursor to the right
         my_tputs(tgetstr("le", NULL));
         term->input_index--;
     }

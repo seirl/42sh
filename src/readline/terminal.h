@@ -9,6 +9,9 @@
 
 # define TERM_NAME "xterm"
 
+/**
+** @brief Terminal informations
+*/
 struct terminal
 {
     struct termios termios;
@@ -29,7 +32,14 @@ struct terminal
 };
 typedef struct terminal s_term;
 
+/**
+** @brief Get terminal informations
+*/
 s_term *term_get(void);
+
+/**
+** @brief Close and free the resources of a terminal informations structure
+*/
 void term_close(void);
 
 #endif /* !TERMINAL_H */
