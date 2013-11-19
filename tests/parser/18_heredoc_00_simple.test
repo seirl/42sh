@@ -1,0 +1,17 @@
+{
+    "desc": "heredoc: basic",
+    "input": """a=<<EOF
+    la canneberge péremptoire
+    la canneberge péremptoire
+    la canneberge péremptoire
+    la canneberge péremptoire
+    la canneberge péremptoire
+    EOF
+    echo $a""",
+    "output": "la canneberge péremptoire
+    la canneberge péremptoire
+    la canneberge péremptoire
+    la canneberge péremptoire
+    la canneberge péremptoire
+    ",
+}
