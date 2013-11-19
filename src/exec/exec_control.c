@@ -22,8 +22,7 @@ void exec_if(s_ast_if *if_cmd)
 
 void exec_while(s_ast_while *while_cmd)
 {
-    for (exec_ast_list(while_cmd->predicate);
-         !shell.status;
+    for (exec_ast_list(while_cmd->predicate); !shell.status;
          exec_ast_list(while_cmd->predicate))
     {
         exec_ast_list(while_cmd->cmds);
@@ -32,8 +31,7 @@ void exec_while(s_ast_while *while_cmd)
 
 void exec_until(s_ast_until *until_cmd)
 {
-    for (exec_ast_list(until_cmd->predicate);
-         shell.status;
+    for (exec_ast_list(until_cmd->predicate); shell.status;
          exec_ast_list(until_cmd->predicate))
     {
         exec_ast_list(until_cmd->cmds);

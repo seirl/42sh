@@ -29,7 +29,8 @@ typedef struct hist_list s_hist_list;
 */
 struct history
 {
-# undef lines // TODO: See if it is really needed (lines is defined en term.h)
+// TODO: See if it is really needed (lines is defined en term.h)
+# undef lines
     s_hist_list *lines;
     s_hist_entry *last_file_entry;
 };

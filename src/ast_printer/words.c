@@ -15,8 +15,8 @@ void print_word(s_ast_word *w, void *prev, FILE *out)
     if (!w)
         return;
     s_string *c = clean(w->str);
-    fprintf(out, "node_%lu [label=\"word '%s' (%s)\", shape=triangle];\n", ph(w),
-            c->buf, word_kind_str[w->kind]);
+    fprintf(out, "node_%lu [label=\"word '%s' (%s)\", shape=triangle];\n",
+            ph(w), c->buf, word_kind_str[w->kind]);
     string_free(c);
     fprintf(out, "node_%lu -> node_%lu [color=blue];\n", ph(prev), ph(w));
 }
