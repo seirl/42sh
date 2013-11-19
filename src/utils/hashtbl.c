@@ -22,8 +22,10 @@ void hashtbl_set(s_hashtbl *h, void *value, void *key)
     {
         if (!h->cmp(it->key, key))
         {
-            h->free_value(it->value);
-            h->free_key(it->key);
+            if (h->free_value)
+                h->free_value(it->value);
+            if (h->free_key)
+                h->free_key(it->key);
             it->value = value;
             it->key = key;
             return;
@@ -64,8 +66,10 @@ void hashtbl_unset(s_hashtbl *h, void *key)
             prev->next = it->next;
         else
             h->bucket[hash] = it->next;
-        h->free_key(it->key);
-        h->free_value(it->value);
+        if (h->free_key)
+            h->free_key(it->key);
+        if (h->free_value)
+            h->free_value(it->value);
         free(it);
     }
 }
@@ -80,8 +84,10 @@ void hashtbl_free(s_hashtbl *h)
         while (it)
         {
             tmp = it->next;
-            h->free_key(it->key);
-            h->free_value(it->value);
+            if (h->free_key)
+                h->free_key(it->key);
+            if (h->free_value)
+                h->free_value(it->value);
             free(it);
             it = tmp;
         }

@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+#include <string.h>
 #include "shell_funcs.h"
 
 static s_hashtbl *funcs_get_ptr(int reset)
@@ -6,13 +8,13 @@ static s_hashtbl *funcs_get_ptr(int reset)
     if (reset)
         funcs = NULL;
     else if (funcs == NULL)
-        funcs = hashtbl_init(hash_char, cmp_char, free_char, free_char);
+        funcs = hashtbl_init(hash_char, cmp_char, free_char, NULL);
     return funcs;
 }
 
 void funcs_set(char *name, s_ast_shell_cmd *value)
 {
-    hashtbl_set(funcs_get_ptr(0), name, value);
+    hashtbl_set(funcs_get_ptr(0), value, strdup(name));
 }
 
 s_ast_shell_cmd *funcs_get(char *name)
