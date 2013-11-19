@@ -25,47 +25,7 @@ static pid_t proc_get_next(s_pipe *pipe)
     return process;
 }
 
-int pipe_cmd_count(s_ast_pipeline *node)
-{
-    int count = 0;
-    while (node)
-    {
-        count += 1;
-        node = node->next;
-    }
-    return count;
-}
-
-s_ast_cmd **pipe_cmd_array(s_ast_pipeline *node, int len)
-{
-    s_ast_cmd **pipe_cmds = smalloc(sizeof (s_ast_pipeline *) * len);
-
-    for (int i = 0; i < len; ++i)
-    {
-        pipe_cmds[i] = node->cmd;
-        node = node->next;
-    }
-    return pipe_cmds;
-}
-
-void exec_pipe_setio(int pipe[2], int io)
-{
-    /* io == 1 : input, io == 0: output */
-    if (io)
-    {
-        close(pipe[1]);
-        dup2(pipe[0], 0);
-        close(pipe[0]);
-    }
-    else
-    {
-        close(pipe[0]);
-        dup2(pipe[1], 1);
-        close(pipe[1]);
-    }
-}
-
-void pipe_child_job(int cmd_index,
+static void pipe_child_job(int cmd_index,
                     int max_index,
                     int curr_pipe[2],
                     int old_pipe[2])
@@ -76,13 +36,13 @@ void pipe_child_job(int cmd_index,
         exec_pipe_setio(curr_pipe, 0);
 }
 
-void close_pipe(int pipe[2])
+static void close_pipe(int pipe[2])
 {
     close(pipe[0]);
     close(pipe[1]);
 }
 
-void pipe_parent_job(int index,
+static void pipe_parent_job(int index,
                      int max,
                      int (*old_pipe)[2],
                      int new_pipe[2])

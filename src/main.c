@@ -7,7 +7,7 @@
 #include "log.h"
 #include "ast_printer.h"
 #include "smalloc.h"
-
+#include "exec.h"
 #include "token.h"
 
 static int parse_input(s_lexer *lexer)
@@ -27,6 +27,13 @@ static int parse_input(s_lexer *lexer)
     }
     parser_delete(parser);
     return 0;
+}
+
+static void init_shell(void)
+{
+    shell.builtins = NULL;
+    shell.built_count = 0;
+    shell.status = 0;
 }
 
 int main(int argc, char *argv[])
