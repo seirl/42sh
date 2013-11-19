@@ -6,7 +6,7 @@ void exec_prefixes(s_ast_prefix *prefix)
     {
         if (prefix->redirection)
         {
-            s_redir_context *cont =  exec_redirection(prefix->redirection);
+            s_redir_context *cont = exec_redirection(prefix->redirection);
             if (prefix->assignment)
                 exec_assignment(prefix->assignment);
             restore_redir_context(cont);
