@@ -39,6 +39,19 @@ add_executable(test_parser
     $<TARGET_OBJECTS:string>
 )
 
+add_executable(test_ast_printer
+    test_ast_printer.c
+
+    $<TARGET_OBJECTS:ast>
+    $<TARGET_OBJECTS:ast_printer>
+    $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:lexer>
+    $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:parser>
+    $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:string>
+)
+
 add_executable(test_fnmatch
     test_fnmatch.c
     $<TARGET_OBJECTS:fnmatch>

@@ -14,8 +14,10 @@ void print_word(s_ast_word *w, void *prev, FILE *out)
 {
     if (!w)
         return;
-    fprintf(out, "node_%lu [label=\"word '%s' (%s)\"];\n", ph(w), w->str->buf,
+    s_string *c = clean(w->str);
+    fprintf(out, "node_%lu [label=\"word '%s' (%s)\"];\n", ph(w), c->buf,
             word_kind_str[w->kind]);
+    string_free(c);
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(w));
 }
 
@@ -43,7 +45,10 @@ void print_heredoc(s_ast_heredoc *n, void *prev, FILE *out)
 {
     if (!n)
         return;
+
+    s_string *c = clean(n->heredoc);
     fprintf(out, "node_%lu [label=\"heredoc '%s'\"];\n", ph(n),
-            n->heredoc->buf);
+            c->buf);
+    string_free(c);
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
 }

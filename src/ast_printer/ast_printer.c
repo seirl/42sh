@@ -2,6 +2,11 @@
 #include "ast.h"
 #include "ast_printer.h"
 
+s_string *clean(s_string *s)
+{
+    return string_replace(s, "\"", "\\\"");
+}
+
 unsigned long int ph(void *ptr)
 {
     char *ptr_c = ptr;
@@ -18,7 +23,7 @@ void print_pipeline(s_ast_pipeline *node, void *prev, FILE *out)
     {
         fprintf(out, "node_%lu [label=\"Pipeline\"];\n", ph(p));
         if (p->next)
-            fprintf(out, "node_%lu -> node_%lu [label=\"||\"];\n", ph(p),
+            fprintf(out, "node_%lu -> node_%lu [label=\"|\"];\n", ph(p),
                     ph(p->next));
         print_cmd(p->cmd, p, out);
     }
@@ -28,8 +33,9 @@ void print_cmd_list(s_ast_list *n, void *prev, FILE *out)
 {
     if (!n)
         return;
-    fprintf(out, "node_%lu [label=\"cmd_list\"]\n", ph(n));
+    fprintf(out, "node_%lu [label=\"cmd_list\"];\n", ph(n));
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
+    fprintf(out, "node_%lu -> node_%lu;\n", ph(n), ph(n->and_or));
     for (s_ast_and_or *ao = n->and_or; ao; ao = ao->next)
     {
         fprintf(out, "node_%lu [label=\"and_or\"];\n", ph(ao));

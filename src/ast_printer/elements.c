@@ -6,8 +6,10 @@ void print_assignment(s_ast_assignment *n, void *prev, FILE *out)
 {
     if (!n)
         return;
+    s_string *c = clean(n->name);
     fprintf(out, "node_%lu [label=\"assignment '%s'\"];\n", ph(n),
-            n->name->buf);
+            c->buf);
+    string_free(c);
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
     print_compound_word(n->value, n, out);
 }
@@ -28,8 +30,8 @@ void print_redirection_list(s_ast_redirection_list *n, void *prev, FILE *out)
 {
     if (!n)
         return;
-    fprintf(out, "node_%lu [label=\"redirection '%s' (%d)\"];\n", ph(n),
-            redirection_type_str[n->type], n->io->io_number);
+    fprintf(out, "node_%lu [label=\"redirection '%s'\"];\n", ph(n),
+            redirection_type_str[n->type]);
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
     print_compound_word(n->word, n, out);
     print_compound_word(n->heredoc_delim, n, out);

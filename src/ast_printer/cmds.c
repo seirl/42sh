@@ -32,7 +32,9 @@ void print_func_dec(s_ast_funcdec *n, void *prev, FILE *out)
 {
     if (!n)
         return;
-    fprintf(out, "node_%lu [label=\"funcdec '%s'\"];\n", ph(n), n->name->buf);
+    s_string *c = clean(n->name);
+    fprintf(out, "node_%lu [label=\"funcdec '%s'\"];\n", ph(n), c->buf);
+    string_free(c);
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
     print_shell_cmd(n->shell_cmd, n, out);
 }
