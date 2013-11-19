@@ -22,7 +22,7 @@ static void usage(FILE *output)
 
 }
 
-int parse_options(int argc, char *argv[], char **cmd)
+int parse_options(int argc, char *argv[], char **cmd, char **file)
 {
     s_opt opt;
     char *arg;
@@ -53,6 +53,8 @@ int parse_options(int argc, char *argv[], char **cmd)
     }
     if (opt_get(&opt, "c", &arg))
         *cmd = arg;
+    if (opt_trailing_arg(&opt, 0))
+        *file = opt_trailing_arg(&opt, 0);
     opt_free(&opt);
     return 0;
 }

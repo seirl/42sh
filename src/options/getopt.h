@@ -52,7 +52,7 @@ typedef struct opt s_opt;
 int opt_parse(int argc, char *argv[], s_opt *opt);
 int opt_get(s_opt *opt, const char *s, void *res);
 int opt_is_set(s_opt *opt, const char *arg, const char *name);
-char *opt_trailing_argv(s_opt *opt, unsigned int i);
+char *opt_trailing_arg(s_opt *opt, unsigned int i);
 void opt_free(s_opt *opt);
 
 #endif /* !GETOPT_H */

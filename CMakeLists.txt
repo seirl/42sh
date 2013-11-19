@@ -105,6 +105,7 @@ add_library(history OBJECT
 add_library(input OBJECT
     src/input/input.c
     src/input/input_string.c
+    src/input/input_file.c
 )
 
 add_library(ast_printer OBJECT

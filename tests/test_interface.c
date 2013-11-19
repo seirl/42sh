@@ -5,7 +5,8 @@
 int main(int argc, char *argv[])
 {
     char *cmd;
-    int ret = parse_options(argc, argv, &cmd);
+    char *file;
+    int ret = parse_options(argc, argv, &cmd, &file);
     if (ret)
         return ret;
 
