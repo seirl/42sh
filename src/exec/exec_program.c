@@ -54,28 +54,25 @@ void restore_redir_contexts(s_redir_context **contexts)
 void exec_simple_cmd(s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
-    handler callback = NULL;
+    handler callback;
     char **cmd_argv = elements_to_argv(cmd->elements, len);
     s_redir_context **contexts = exec_elements_redir(cmd->elements);
-    if (!cmd_argv[0])
-        return;
-    s_ast_shell_cmd *func_body = funcs_get(cmd_argv[0]);
+    s_ast_shell_cmd *func_body;
 
-    if (func_body)
+    if (!cmd_argv[0])
+        exec_prefixes(cmd->prefixes);
+    else if ((func_body = funcs_get(cmd_argv[0])))
     {
         exec_prefixes(cmd->prefixes);
         exec_shell_cmd(func_body);
         restore_redir_contexts(contexts);
         sfree(cmd_argv);
     }
-    else
+    else if ((callback = builtin_handler(cmd_argv[0])))
     {
-        if ((callback = builtin_handler(cmd_argv[0])) != NULL)
-        {
-            exec_prefixes(cmd->prefixes);
-            shell.status = callback(cmd_argv);
-        }
-        else
-            shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);
+        exec_prefixes(cmd->prefixes);
+        shell.status = callback(cmd_argv);
     }
+    else
+        shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);
 }
