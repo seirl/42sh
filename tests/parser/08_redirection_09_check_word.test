@@ -1,0 +1,7 @@
+{
+    "desc": "rule redirection: simple",
+    "input": "cat <",
+    "output": "",
+    "stderr": ...,
+    "retval": 1,
+}

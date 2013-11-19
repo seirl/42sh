@@ -1,0 +1,7 @@
+{
+    "desc": "rule redirection: bad",
+    "input": "<",
+    "output": "",
+    "stderr": ...,
+    "retval": 1,
+}
