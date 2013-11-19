@@ -14,25 +14,19 @@ READLINE
 
 LEXER
 =====
-    Done:
-        -
     Todo:
         - lex_name
           http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230
 
 PARSER
 ======
-    Done:
-        -
     Todo:
-        -
+        - Handle partial input
 
 EXPANSION
 =========
-    Done:
-        -
     Todo:
-        -
+        - All forms of expansion
 
 EVALUATION
 ==========
@@ -46,7 +40,6 @@ EVALUATION
 
 TESTS
 =====
-    Done:
-        -
     Todo:
-        -
+        - (v08) compare with a posix shell
+        - (v08) multithread tests
