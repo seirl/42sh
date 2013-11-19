@@ -34,9 +34,11 @@ void history_close(void)
 {
     // TODO: Write history
     if (g_hist.lines)
+    {
         h_list_delete(g_hist.lines);
         g_hist.lines = NULL;
         g_hist.last_file_entry = NULL;
+    }
 }
 
 s_hist_entry *history_get(int n)
