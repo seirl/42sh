@@ -9,7 +9,7 @@ static void exec_redir_write(s_ast_redirection_list *redir,
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
                    O_CREAT | O_WRONLY | O_TRUNC,
-                   666)) == -1)
+                   0644)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
@@ -77,7 +77,7 @@ static void exec_redir_clobber(s_ast_redirection_list *redir,
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
                    O_CREAT | O_WRONLY | O_TRUNC,
-                   666)) == -1)
+                   0644)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
