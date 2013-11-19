@@ -31,6 +31,11 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir)
     int unused = 0;
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
+    if (!redir->heredoc || !redir->heredoc->heredoc)
+    {
+        fprintf(stderr, "here-document command failed\n");
+        return;
+    }
     unused += write(redir->io->io_number,
                     redir->heredoc->heredoc->buf,
                     redir->heredoc->heredoc->len);
