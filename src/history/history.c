@@ -42,16 +42,18 @@ static void history_open(void)
     g_hist = malloc(sizeof (s_history));
     g_hist->lines = h_list_init();
     char *line = NULL;
-    size_t line_len = 0;
+    size_t buf_size = 0;
+    int line_len = 0;
 
     // Create the history entries
-    while (getline(&line, &line_len, hist_file) != -1)
+    while ((line_len = getline(&line, &buf_size, hist_file)) != -1)
     {
-        if (*line)
+        if (*line && line[line_len - 1] == '\n')
             line[line_len - 1] = '\0';
         h_list_append(g_hist->lines, string_create_from(line));
     }
     g_hist->last_file_entry = g_hist->lines->hd;
+    fclose(hist_file);
 }
 
 void history_close(void)
@@ -63,6 +65,7 @@ void history_close(void)
     h_list_delete(g_hist->lines);
     g_hist->lines = NULL;
     g_hist->last_file_entry = NULL;
+    g_hist = NULL;
 }
 
 s_hist_entry *history_get(int n)

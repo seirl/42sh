@@ -4,7 +4,7 @@
 # include "terminal.h"
 # include "key.h"
 
-# define USE_HIST 0
+# define USE_HIST 1
 
 /**
 ** @brief All special keys beginning with a bracket

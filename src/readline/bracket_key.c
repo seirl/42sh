@@ -34,20 +34,24 @@ static void update_line(s_term *term, char *line)
     {
         my_tputs(tgetstr("le", NULL));
         my_tputs(tgetstr("dc", NULL));
+        term->input_index--;
     }
     my_tputs(tgetstr("ed", NULL));
 
     printf("%s", line);
+    fflush(stdout);
 }
 
 static void do_up(s_term *term)
 {
-    if (!USE_HIST || term->hist_pos >= history_size())
+    if (!USE_HIST || term->hist_pos + 1 >= history_size())
         return;
 
     term->hist_pos++;
     term->hist_current = history_get(term->hist_pos);
     update_line(term, term->hist_current->line->buf);
+    term->input = string_duplicate(term->hist_current->line);
+    term->input_index = term->input->len;
 }
 
 static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)

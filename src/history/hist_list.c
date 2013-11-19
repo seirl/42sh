@@ -17,10 +17,13 @@ void h_list_delete(s_hist_list *l)
     s_hist_entry *this = l->hd;
     while (this)
     {
-        free(this->line);
-        free(this->temp_line);
+        if (this->line)
+            string_free(this->line);
+        if (this->temp_line)
+            string_free(this->temp_line);
         l->hd = this->next;
         free(this);
+        this = l->hd;
     }
     free(l);
 }
