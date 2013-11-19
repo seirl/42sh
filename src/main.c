@@ -21,6 +21,9 @@ static int parse_input(s_lexer *lexer)
     {
         if (shopt_get("ast_print"))
             print_ast(ast, stdout);
+        exec_ast_input(ast);
+        vars_free();
+        funcs_free();
         ast_input_delete(ast);
     }
     parser_delete(parser);
