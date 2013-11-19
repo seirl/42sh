@@ -60,6 +60,7 @@ add_executable(test_readline
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:readline>
+    $<TARGET_OBJECTS:history>
 )
 
 add_executable(test_exec
