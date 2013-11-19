@@ -8,6 +8,7 @@
 #include "input_file.h"
 #include "lexer_private.h"
 #include "readline.h"
+#include "macros.h"
 #include "log.h"
 
 s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
