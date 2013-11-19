@@ -19,7 +19,7 @@ typedef struct hist_entry s_hist_entry;
 */
 struct hist_list
 {
-    size_t size;
+    int size;
     s_hist_entry *hd;
 };
 typedef struct hist_list s_hist_list;
@@ -51,6 +51,6 @@ void history_close(void);
 /**
 ** @brief Get the history size
 */
-size_t history_size(void);
+int history_size(void);
 
 #endif /* !HISTORY_H */

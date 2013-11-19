@@ -28,7 +28,7 @@ static void term_init(void)
     g_term->input = string_create(0);
     g_term->input_index = 0;
     g_term->hist_current = NULL;
-    g_term->hist_pos = 0;
+    g_term->hist_pos = -1;
     g_term->prompt = NULL;
 }
 

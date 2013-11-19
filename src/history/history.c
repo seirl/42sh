@@ -77,7 +77,7 @@ s_hist_entry *history_get(int n)
     return h_list_nth(g_hist->lines, n);
 }
 
-size_t history_size(void)
+int history_size(void)
 {
     if (!g_hist)
         history_open();
