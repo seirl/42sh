@@ -13,6 +13,11 @@ s_ast_until *ast_until_new(void)
 
 void ast_until_delete(s_ast_until *until)
 {
-    (void) until;
-    // TODO
+    if (!until)
+        return;
+
+    ast_list_delete(until->predicate);
+    ast_list_delete(until->cmds);
+
+    sfree(until);
 }

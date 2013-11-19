@@ -125,9 +125,6 @@ struct ast_element
 {
     s_ast_compound_word *word;
     s_ast_redirection_list *redirection;
-    // TODO: add T_SHELL_SUBST $()
-    // TODO: add T_VAR_EXP ${}
-    // TODO: add T_MATH_EXP $(())
     struct ast_element *next;
 };
 // typedef forward declared
@@ -389,11 +386,12 @@ s_ast_word_list *ast_word_list_new(void);
 void ast_and_or_delete(s_ast_and_or *ao);
 void ast_assignment_delete(s_ast_assignment *ass);
 void ast_case_delete(s_ast_case *casee);
+void ast_case_item_delete(s_ast_case_item *item);
 void ast_cmd_delete(s_ast_cmd *cmd);
 void ast_compound_word_delete(s_ast_compound_word *cw);
 void ast_element_delete(s_ast_element *elem);
-void ast_for_delete(s_ast_for *forr);
 void ast_else_delete(s_ast_else *myelse);
+void ast_for_delete(s_ast_for *forr);
 void ast_func_dec_delete(s_ast_funcdec *fd);
 void ast_heredoc_delete(s_ast_heredoc *hd);
 void ast_if_delete(s_ast_if *iff);
@@ -407,7 +405,7 @@ void ast_shell_cmd_delete(s_ast_shell_cmd *cmd);
 void ast_simple_cmd_delete(s_ast_simple_cmd *cmd);
 void ast_until_delete(s_ast_until *until);
 void ast_while_delete(s_ast_while *whilee);
-void ast_word_list_delete(s_ast_word_list *wl);
 void ast_word_delete(s_ast_word *word);
+void ast_word_list_delete(s_ast_word_list *wl);
 
 #endif /* !AST_H */
