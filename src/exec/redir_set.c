@@ -27,11 +27,12 @@ static void exec_redir_read(s_ast_redirection_list *redir, int fd)
 
 static void exec_redir_heredoc(s_ast_redirection_list *redir)
 {
+    int unused = 0;
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
-    write(redir->io->io_number,
-          redir->heredoc->heredoc->buf,
-          redir->heredoc->heredoc->len);
+    unused += write(redir->io->io_number,
+                    redir->heredoc->heredoc->buf,
+                    redir->heredoc->heredoc->len);
 }
 
 static void exec_redir_dupout(s_ast_redirection_list *redir,

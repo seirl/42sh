@@ -62,11 +62,11 @@ int exec_pipe(s_pipe *pipe_struct,
 {
     int curr_pipe[2];
     int old_pipe[2];
-
+    int unused = 0;
     for (int i = 0; i < len; ++i)
     {
         if (i < len - 1)
-            pipe(curr_pipe);
+            unused += pipe(curr_pipe);
         pid_t pid = fork();
         if (pid == 0)
         {
