@@ -40,7 +40,7 @@ typedef struct ast_compound_word s_ast_compound_word;
 
 struct ast_io_number
 {
-    unsigned io_number;
+    int io_number;
 };
 typedef struct ast_io_number s_ast_io_number;
 

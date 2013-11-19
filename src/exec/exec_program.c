@@ -14,7 +14,9 @@ void exec_argv(char **argv)
     exit((errno == ENOENT) ? 127 : 126);
 }
 
-int exec_program(char **cmd_argv, s_ast_prefix *prefixes)
+int exec_prog(char **cmd_argv,
+              s_redir_context **contexts,
+              s_ast_prefix *prefixes)
 {
     pid_t pid;
     int st;
@@ -33,6 +35,7 @@ int exec_program(char **cmd_argv, s_ast_prefix *prefixes)
         return 1;
     }
     waitpid(pid, &st, 0);
+    restore_redir_contexts(contexts);
     for (int i = 0; cmd_argv[i]; ++i)
         sfree(cmd_argv[i]);
     sfree(cmd_argv);
@@ -55,25 +58,35 @@ void exec_cmd_word(s_ast_compound_word *word)
             shell.status = callback(cmd_argv);
         }
         else
-            shell.status = exec_program(cmd_argv, NULL);
+            shell.status = exec_prog(cmd_argv, NULL, NULL);
     }
     for (int i = 0; i < len; ++i)
         sfree(cmd_argv[i]);
     sfree(cmd_argv);
 }
 
+void restore_redir_contexts(s_redir_context **contexts)
+{
+    if (!contexts)
+        return;
+    for (int i = 0; contexts[i]; ++i)
+        restore_redir_context(contexts[i]);
+    sfree(contexts);
+}
+
 void exec_simple_cmd(s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
     handler callback = NULL;
-    exec_elements_redir(cmd->elements);
     char **cmd_argv = elements_to_argv(cmd->elements, len);
+    s_redir_context **contexts = exec_elements_redir(cmd->elements);
     s_ast_shell_cmd *func_body = funcs_get(cmd_argv[0]);
 
     if (func_body)
     {
         exec_prefixes(cmd->prefixes);
         exec_shell_cmd(func_body);
+        restore_redir_contexts(contexts);
         sfree(cmd_argv);
     }
     else
@@ -84,6 +97,6 @@ void exec_simple_cmd(s_ast_simple_cmd *cmd)
             shell.status = callback(cmd_argv);
         }
         else
-            shell.status = exec_program(cmd_argv, cmd->prefixes);
+            shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);
     }
 }

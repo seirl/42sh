@@ -50,8 +50,9 @@ void exec_shell_cmd(s_ast_shell_cmd *shell_cmd)
 void exec_shell_cmd_node(s_ast_shell_cmd *shell_cmd,
                          s_ast_redirection_list *redir)
 {
-    exec_redirection(redir);
+    s_redir_context *cont = exec_redirection(redir);
     exec_shell_cmd(shell_cmd);
+    restore_redir_context(cont);
 }
 
 void exec_func_dec(s_ast_funcdec *funcdec)
@@ -62,8 +63,9 @@ void exec_func_dec(s_ast_funcdec *funcdec)
 void exec_funcdec_node(s_ast_funcdec *funcdec,
                        s_ast_redirection_list *redir)
 {
-    exec_redirection(redir);
+    s_redir_context *cont = exec_redirection(redir);
     exec_func_dec(funcdec);
+    restore_redir_context(cont);
 }
 
 void exec_cmd_node(s_ast_cmd *node)

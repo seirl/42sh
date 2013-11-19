@@ -50,17 +50,20 @@ s_redir_context *save_redir_context(s_ast_redirection_list *redir);
 int word_to_fd(s_string *str);
 int set_redir(s_ast_redirection_list *redir);
 void restore_redir_context(s_redir_context *context);
-void exec_redirection(s_ast_redirection_list *redir);
+void restore_redir_contexts(s_redir_context **contexts);
+s_redir_context *exec_redirection(s_ast_redirection_list *redir);
 int compound_word_len(s_ast_compound_word *word);
 char **compword_to_argv(s_ast_compound_word *word, int len);
 void exec_argv(char **argv);
-int exec_program(char **cmd_argv, s_ast_prefix *prefixes);
+int exec_prog(char **cmd_argv,
+              s_redir_context **contexts,
+              s_ast_prefix *prefixes);
 void exec_cmd_word(s_ast_compound_word *word);
 void exec_prefixes(s_ast_prefix *prefix);
 void exec_elements(s_ast_element *elt);
 int element_list_len(s_ast_element *elt);
 char **elements_to_argv(s_ast_element *element, int len);
-void exec_elements_redir(s_ast_element *elt);
+s_redir_context **exec_elements_redir(s_ast_element *elt);
 void exec_if(s_ast_if *if_cmd);
 void exec_while(s_ast_while *while_cmd);
 void exec_until(s_ast_until *until_cmd);
