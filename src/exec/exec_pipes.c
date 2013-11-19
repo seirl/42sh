@@ -106,7 +106,7 @@ int exec_pipe(s_pipe *pipe,
     for (int i = 0; i < len; ++i)
     {
         if (i < len - 1)
-            pipe2(curr_pipe, 0);
+            pipe(curr_pipe);
         pid_t pid = fork();
         if (pid == 0)
         {
