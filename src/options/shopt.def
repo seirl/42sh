@@ -1,4 +1,5 @@
 X("ast_print", 0)
+X("token_print", 0)
 X("dotglob", 0)
 X("expand_aliases", 1)
 X("extglob", 0)

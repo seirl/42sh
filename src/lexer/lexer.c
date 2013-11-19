@@ -5,7 +5,6 @@
 #include "lexer_private.h"
 #include "location.h"
 
-
 #undef getc
 s_token *lex_word(s_lexer *lexer)
 {
@@ -69,7 +68,6 @@ s_token *lex_token(s_lexer *lexer)
     } while (0);
 
     s_token *ret = lex_release_token(lexer);
-
     fill_token(lexer);
 
     if (ret->concat == -1)

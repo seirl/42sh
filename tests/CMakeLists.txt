@@ -5,6 +5,7 @@ file(COPY qdunittest run_tests.py DESTINATION .)
 add_executable(test_lexer
     test_lexer.c
     $<TARGET_OBJECTS:lexer>
+    $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:smalloc>
@@ -34,6 +35,7 @@ add_executable(test_parser
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>
@@ -45,6 +47,7 @@ add_executable(test_ast_printer
     $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:ast_printer>
     $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:parser>

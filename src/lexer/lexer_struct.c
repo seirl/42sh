@@ -2,6 +2,7 @@
 #include "lexer.h"
 #include "lexer_private.h"
 #include "smalloc.h"
+#include "shopt.h"
 
 s_lexer *lex_create(char (*lex_getc)(void *input_state),
                     char (*lex_topc)(void *input_state),
@@ -69,6 +70,8 @@ s_token *lex_release_token(s_lexer *lexer)
     tok = token_create(type, value, lexer->location, lexer->concat);
 
     lexer_reset(lexer);
+    if (shopt_get("token_print"))
+        token_print(tok);
 
     return tok;
 }

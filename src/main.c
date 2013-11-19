@@ -3,6 +3,8 @@
 #include "lexer.h"
 #include "parser.h"
 #include "input.h"
+#include "log.h"
+#include "smalloc.h"
 
 #include "token.h"
 
@@ -19,8 +21,19 @@ int main(int argc, char *argv[])
         if (lexer == NULL)
             break;
         s_parser *parser = parser_create(lexer);
-        (void)parser;
+        s_ast_input *ast;
+        if ((ast = parse_rule_input(parser)))
+        {
+            ast_input_delete(ast);
+            if (!parser_eof(parser))
+            {
+                LOG(ERROR, "Garbage in the lexer after parsing", NULL);
+                return 1;
+            }
+        }
+        parser_delete(parser);
         input_free(lexer, cmd, file);
     } while (repeat);
+    smalloc_clean();
     return EXIT_SUCCESS;
 }
