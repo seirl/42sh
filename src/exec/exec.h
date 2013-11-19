@@ -32,10 +32,11 @@ typedef struct redir_context s_redir_context;
 
 typedef struct pipe
 {
-        int nb_proc;
-        int next_proc;
-        pid_t *process;
+    int nb_proc;
+    int next_proc;
+    pid_t *process;
 } s_pipe;
+
 extern s_shell shell;
 
 void init_shell(void);

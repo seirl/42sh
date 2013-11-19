@@ -26,9 +26,9 @@ static pid_t proc_get_next(s_pipe *pipe)
 }
 
 static void pipe_child_job(int cmd_index,
-                    int max_index,
-                    int curr_pipe[2],
-                    int old_pipe[2])
+                           int max_index,
+                           int curr_pipe[2],
+                           int old_pipe[2])
 {
     if (cmd_index > 0)
         exec_pipe_setio(old_pipe, 1);
@@ -43,9 +43,9 @@ static void close_pipe(int pipe[2])
 }
 
 static void pipe_parent_job(int index,
-                     int max,
-                     int (*old_pipe)[2],
-                     int new_pipe[2])
+                            int max,
+                            int (*old_pipe)[2],
+                            int new_pipe[2])
 {
     if (index > 0)
         close_pipe(*old_pipe);
