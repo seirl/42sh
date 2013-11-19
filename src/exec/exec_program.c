@@ -80,6 +80,8 @@ void exec_simple_cmd(s_ast_simple_cmd *cmd)
     handler callback = NULL;
     char **cmd_argv = elements_to_argv(cmd->elements, len);
     s_redir_context **contexts = exec_elements_redir(cmd->elements);
+    if (!cmd_argv[0])
+        return;
     s_ast_shell_cmd *func_body = funcs_get(cmd_argv[0]);
 
     if (func_body)
