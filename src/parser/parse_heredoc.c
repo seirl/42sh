@@ -2,7 +2,6 @@
 
 #include "parser_private.h"
 #include "parser_macros.h"
-#include "smalloc.h"
 
 static int is_heredoc(const s_ast_redirection_list *redir)
 {

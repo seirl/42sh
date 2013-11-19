@@ -1,6 +1,5 @@
 #include "parser_private.h"
 #include "parser_macros.h"
-#include "smalloc.h"
 
 s_ast_funcdec *parse_rule_funcdec(s_parser *parser)
 {
