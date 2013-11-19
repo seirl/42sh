@@ -1,5 +1,12 @@
 #include "exec.h"
 
+void init_shell(void)
+{
+    shell.builtins = NULL;
+    shell.built_count = 0;
+    shell.status = 0;
+}
+
 s_string *expand_word(s_ast_word *word)
 {
     if (word)

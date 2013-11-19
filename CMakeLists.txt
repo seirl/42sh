@@ -153,8 +153,16 @@ add_library(parser OBJECT
 add_library(exec OBJECT
     src/exec/exec.c
     src/exec/exec_cmds.c
+    src/exec/exec_control.c
+    src/exec/exec_elements.c
     src/exec/exec_or_and.c
     src/exec/exec_pipes.c
+    src/exec/exec_program.c
+    src/exec/exec_redir.c
+    src/exec/exec_redir_utils.c
+    src/exec/exec_utils.c
+    src/exec/pipe_utils.c
+    src/exec/redir_set.c
     src/exec/shell_vars.c
     src/exec/shell_funcs.c
 )
@@ -202,6 +210,7 @@ add_executable(../42sh
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:input>
+    $<TARGET_OBJECTS:exec>
     $<TARGET_OBJECTS:history>
 )
 

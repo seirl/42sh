@@ -1,8 +1,7 @@
 #include "exec.h"
 
 static void exec_redir_write(s_ast_redirection_list *redir,
-                             int fd,
-                             int index)
+                             int fd)
 {
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
@@ -13,7 +12,7 @@ static void exec_redir_write(s_ast_redirection_list *redir,
     close(fd);
 }
 
-static void exec_redir_read(s_ast_redirection_list *redir, int fd, int index)
+static void exec_redir_read(s_ast_redirection_list *redir, int fd)
 {
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
@@ -22,9 +21,7 @@ static void exec_redir_read(s_ast_redirection_list *redir, int fd, int index)
     close(fd);
 }
 
-static void exec_redir_heredoc(s_ast_redirection_list *redir,
-                               int fd,
-                               int index)
+static void exec_redir_heredoc(s_ast_redirection_list *redir)
 {
     write(redir->io->io_number,
           redir->heredoc->heredoc->buf,
@@ -32,8 +29,7 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir,
 }
 
 static void exec_redir_dupout(s_ast_redirection_list *redir,
-                              int fd,
-                              int index)
+                              int fd)
 {
     s_string *filename = expand_compound(redir->word);
     fd = word_to_fd(filename);
@@ -45,8 +41,7 @@ static void exec_redir_dupout(s_ast_redirection_list *redir,
 }
 
 static void exec_redir_dupin(s_ast_redirection_list *redir,
-                             int fd,
-                             int index)
+                             int fd)
 {
     s_string *filename = expand_compound(redir->word);
     fd = word_to_fd(filename);
@@ -58,8 +53,7 @@ static void exec_redir_dupin(s_ast_redirection_list *redir,
 }
 
 static void exec_redir_clobber(s_ast_redirection_list *redir,
-                               int fd,
-                               int index)
+                               int fd)
 {
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
@@ -71,8 +65,7 @@ static void exec_redir_clobber(s_ast_redirection_list *redir,
 }
 
 static void exec_redir_readwrite(s_ast_redirection_list *redir,
-                                 int fd,
-                                 int index)
+                                 int fd)
 {
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf, O_CREAT | O_RDWR | O_TRUNC)) == -1)
@@ -82,8 +75,7 @@ static void exec_redir_readwrite(s_ast_redirection_list *redir,
 }
 
 static void exec_redir_writeup(s_ast_redirection_list *redir,
-                               int fd,
-                               int index)
+                               int fd)
 {
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
@@ -95,39 +87,36 @@ static void exec_redir_writeup(s_ast_redirection_list *redir,
 }
 
 static void exec_redir_type(s_ast_redirection_list *redir,
-                            int fd,
-                            int index)
+                            int fd)
 {
     if (redir->type == REDIR_WRITE)                 /** >   */
-        exec_redir_write(redir, fd, index);
+        exec_redir_write(redir, fd);
     else if (redir->type == REDIR_WRITE_UPDATE)     /** >>  */
-        exec_redir_writeup(redir, fd, index);
+        exec_redir_writeup(redir, fd);
     else if (redir->type == REDIR_READ)             /** <   */
-        exec_redir_read(redir, fd, index);
+        exec_redir_read(redir, fd);
     else if (redir->type == REDIR_HEREDOC)          /** <<  */
-        exec_redir_heredoc(redir, fd, index);
+        exec_redir_heredoc(redir);
     else if (redir->type == REDIR_HEREDOC_STRIP)    /** <<- */
-        exec_redir_heredoc(redir, fd, index);
+        exec_redir_heredoc(redir);
     else if (redir->type == REDIR_DUPLICATE_INPUT)  /** <&  */
-        exec_redir_dupin(redir, fd, index);
+        exec_redir_dupin(redir, fd);
     else if (redir->type == REDIR_DUPLICATE_OUTPUT) /** >&  */
-        exec_redir_dupout(redir, fd, index);
+        exec_redir_dupout(redir, fd);
     else if (redir->type == REDIR_CLOBBER)          /** >|  */
-        exec_redir_clobber(redir, fd, index);
+        exec_redir_clobber(redir, fd);
     else if (redir->type == REDIR_READ_WRITE)       /** <>  */
-        exec_redir_readwrite(redir, fd, index);
+        exec_redir_readwrite(redir, fd);
 }
 
 int set_redir(s_ast_redirection_list *redir)
 {
     int fd = 0;
-    int index = 0;
 
     while (redir)
     {
-        exec_redir_type(redir, fd, index);
+        exec_redir_type(redir, fd);
         redir = redir->next;
-        index += 1;
     }
     return 0;
 }

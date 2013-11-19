@@ -29,13 +29,6 @@ static int parse_input(s_lexer *lexer)
     return 0;
 }
 
-static void init_shell(void)
-{
-    shell.builtins = NULL;
-    shell.built_count = 0;
-    shell.status = 0;
-}
-
 int main(int argc, char *argv[])
 {
     char *file = NULL;
@@ -48,6 +41,7 @@ int main(int argc, char *argv[])
         s_lexer *lexer = input_to_lexer(cmd, file, &repeat);
         if (lexer == NULL || parse_input(lexer))
             break;
+        init_shell();
         input_free(lexer, cmd, file);
     } while (repeat);
     smalloc_clean();
