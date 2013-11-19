@@ -26,6 +26,9 @@ static int load_rc(const char *file)
                 LOG(ERROR, "Garbage in the lexer after parsing", NULL);
                 return 1;
             }
+            exec_ast_input(ast);
+            vars_free();
+            funcs_free();
         }
         parser_delete(parser);
         fclose(f);
