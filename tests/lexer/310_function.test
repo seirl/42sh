@@ -3,7 +3,7 @@
     "desc": "Function",
     "input": "a () { echo foo; }",
     "lexer": ['WTTTWWTTT'],
-    "output": """a	T_FUNCTION (0)
+    "output": """a	T_FUNCTION_NAME (0)
 (	T_LPAREN (0)
 )	T_RPAREN (0)
 {	T_LBRACE (0)

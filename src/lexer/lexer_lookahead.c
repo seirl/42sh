@@ -17,7 +17,12 @@ s_token *lex_look_word(s_lexer *lexer)
     s_token *tok = lex_look_token(lexer);
 
     if (token_to_word(tok))
+    {
+        if (tok->type == T_WORD && lexer->working_buffer->buf[0] == '(')
+            tok->type = T_FUNCTION_NAME;
+
         return tok;
+    }
 
     token_free(tok);
     return NULL;

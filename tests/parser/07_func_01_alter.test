@@ -1,0 +1,5 @@
+{
+    "desc": "rule funcdec: paren",
+    "input": "a () ( echo yes; )",
+    "output": "",
+}

@@ -370,6 +370,7 @@ s_ast_compound_word *ast_compound_word_new(void);
 s_ast_element *ast_element_new(void);
 s_ast_else *ast_else_new(void);
 s_ast_for *ast_for_new(void);
+s_ast_funcdec *ast_func_dec_new(void);
 s_ast_if *ast_if_new(void);
 s_ast_input *ast_input_new(void);
 s_ast_io_number *ast_io_number_new(void);

@@ -21,18 +21,26 @@ s_ast_cmd *parse_rule_command(s_parser *parser)
         return cmd;
     }
 
+    s_token *tok = lex_look_token(parser->lexer);
+    if (tok->type == T_FUNCTION)
+    {
+        token_free(tok);
+        parser_shift_token(parser);
+        cmd->func_dec = parse_rule_funcdec(parser);
+        return post_process_cmd(cmd);
+    }
+    token_free(tok);
+
     /** We must not process reserved words */
     if (next_word_is_res_word(parser))
         return NULL;
 
-    s_token *tok = lex_look_word(parser->lexer);
-    if (tok && tok->type == T_FUNCTION)
-    {
-        token_free(tok);
+    tok = lex_look_word(parser->lexer);
+    if (tok && tok->type == T_FUNCTION_NAME)
         cmd->func_dec = parse_rule_funcdec(parser);
-    }
     else
         cmd->simple_cmd = parse_rule_simple_command(parser);
+    token_free(tok);
 
     return post_process_cmd(cmd);
 }

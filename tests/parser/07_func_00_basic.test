@@ -1,0 +1,5 @@
+{
+    "desc": "rule funcdec: basic",
+    "input": "a () { echo yes; }",
+    "output": "",
+}

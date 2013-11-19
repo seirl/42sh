@@ -1,0 +1,6 @@
+{
+    "desc": "rule funcdec: bad0",
+    "input": "a () echo yes;",
+    "output": "",
+    "retval": 1,
+}

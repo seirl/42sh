@@ -7,7 +7,6 @@ static s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
 
     if (tok->type == T_LPAREN)
         subshell = 1;
-    token_free(tok);
 
     parser_shift_token(parser);
 
@@ -19,6 +18,12 @@ static s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
     shell_cmd->subshell = subshell;
     shell_cmd->cmd_list = list;
 
+    if (!parse_expect_token(parser, tok->type == T_LPAREN
+                                                 ? T_RPAREN : T_RBRACE))
+        RETURN_PARSE_EXPECTED(parser, "End of compound list");
+    parser_shift_token(parser);
+
+    token_free(tok);
     return shell_cmd;
 }
 

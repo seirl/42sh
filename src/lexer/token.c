@@ -28,6 +28,8 @@ s_token *token_duplicate(const s_token *tok)
 
 void token_free(s_token *tok)
 {
+    if (!tok)
+        return;
     if (tok->value.str)
         string_free(tok->value.str);
     sfree(tok);

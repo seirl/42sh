@@ -17,7 +17,7 @@ s_token *lex_word(s_lexer *lexer)
         tok = lex_token(lexer);
         token_to_word(tok);
         if (tok->type == T_WORD && lexer->working_buffer->buf[0] == '(')
-            tok->type = T_FUNCTION;
+            tok->type = T_FUNCTION_NAME;
         return tok;
     }
 
