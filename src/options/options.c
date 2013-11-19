@@ -48,9 +48,9 @@ int parse_options(int argc, char *argv[], char **cmd, char **file)
         ;
     }
     if (opt_get(&opt, "ast-print", NULL))
-    {
-        ;
-    }
+        shopt_set("ast_print", 1);
+    if (opt_get(&opt, "token-print", NULL))
+        shopt_set("token_print", 1);
     if (opt_get(&opt, "c", &arg))
         *cmd = arg;
     if (opt_trailing_arg(&opt, 0))

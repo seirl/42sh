@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include "options.h"
+#include "shopt.h"
 #include "lexer.h"
 #include "parser.h"
 #include "input.h"
 #include "log.h"
+#include "ast_printer.h"
 #include "smalloc.h"
 
 #include "token.h"
@@ -24,6 +26,8 @@ int main(int argc, char *argv[])
         s_ast_input *ast;
         if ((ast = parse_rule_input(parser)))
         {
+            if (shopt_get("ast_print"))
+                print_ast(ast, stdout);
             ast_input_delete(ast);
             if (!parser_eof(parser))
             {
