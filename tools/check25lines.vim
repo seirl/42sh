@@ -15,7 +15,7 @@ for i, line in enumerate(vim.current.buffer):
         if line[0] == '{':
             start = i
             empty_lines = 0
-        elif len(line) == 0:
+        elif len(line) <= 1:
             empty_lines += 1
         elif line[0] == '}':
             end = i
