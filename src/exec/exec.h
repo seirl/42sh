@@ -75,8 +75,6 @@ void exec_argv(char **argv);
 int exec_prog(char **cmd_argv,
               s_redir_context **contexts,
               s_ast_prefix *prefixes);
-/** @brief Execute a command represented by a compound list */
-void exec_cmd_word(s_ast_compound_word *word);
 /** @brief Execute a prefix list */
 void exec_prefixes(s_ast_prefix *prefix);
 /** @brief Execute an element list */

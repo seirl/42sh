@@ -42,29 +42,6 @@ int exec_prog(char **cmd_argv,
     return st;
 }
 
-void exec_cmd_word(s_ast_compound_word *word)
-{
-    int len = compound_word_len(word);
-    handler callback = NULL;
-    char **cmd_argv = compword_to_argv(word, len);
-
-    s_ast_shell_cmd *func_body = funcs_get(cmd_argv[0]);
-    if (func_body)
-        exec_shell_cmd(func_body);
-    else
-    {
-        if ((callback = builtin_handler(cmd_argv[0])) != NULL)
-        {
-            shell.status = callback(cmd_argv);
-        }
-        else
-            shell.status = exec_prog(cmd_argv, NULL, NULL);
-    }
-    for (int i = 0; i < len; ++i)
-        sfree(cmd_argv[i]);
-    sfree(cmd_argv);
-}
-
 void restore_redir_contexts(s_redir_context **contexts)
 {
     if (!contexts)
