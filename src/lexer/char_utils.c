@@ -41,4 +41,3 @@ int is_valid_operator(s_lexer *lexer, s_string *s)
 #undef X
     return 0;
 }
-

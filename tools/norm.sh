@@ -24,6 +24,7 @@ list_files() {
                 check_norm $f
                 files_stat $f
                 check_25 $f
+                check_last_line $f
             fi
         fi
     done
@@ -31,6 +32,10 @@ list_files() {
 
 files_stat() {
     LOC=$(($LOC + $(sed -n '/[^\ ]/p' $f | wc -l)))
+}
+
+check_last_line() {
+    [ -z $(tail -1 $f) ] && echo "Trailling white line in $f"
 }
 
 check_25() {
