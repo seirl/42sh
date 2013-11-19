@@ -1,97 +1,487 @@
 #include "exec.h"
 
-struct ast_node *get_funct_node(char *func_name)
+s_string *expand_word(s_ast_word *word)
 {
-    assert(func_name);
-    (void)func_name;
-    return NULL; /* FIXME */
+    if (word)
+        return word->str;
+    return NULL;
 }
 
-int is_function(char *func_name)
+s_string *expand_compound(s_ast_compound_word *word)
 {
-    assert(func_name);
-    (void)func_name;
-    return 0; /* FIXME */
+    if (word && word->word)
+        return word->word->str;
+    return NULL;
 }
 
-int is_builtin(char *name)
+void variable_add(s_string *var_name, s_string *var_value)
 {
-    assert(name);
-    (void)name;
-    return 0; /* FIXME */
+    HASHTBL_SET(shell.vars, var_value, var_name);
 }
 
-static void exec_cmd_prefix(char **pref)
+void function_add(s_ast_shell_cmd *cmd, s_string *func_name)
 {
-    assert(pref && pref[0]);
-    (void)pref;
-    /* for (int i = 0; pref[i] != NULL; ++i) */
+    HASHTBL_SET(shell.funcs, cmd, func_name->buf);
 }
 
-static void exec_func(char **func)
+void exec_assignment(s_ast_assignment *assign)
 {
-    assert(func && func[0]);
-    (void)func;
-    struct ast_node *func_node = get_funct_node(func[0]);
-    exec_node(func_node);
+    s_string *value = expand_compound(assign->value);
+    variable_add(assign->name, value);
 }
 
-static void exec_builtin(char *name, char **argv)
+handler builtin_handler(char *name)
 {
-    assert(name && argv);
-    (void)name;
-    (void)argv;
-    /* FIXME */
+    if (!shell.builtins || !shell.built_count)
+        return NULL;
+    for (unsigned int i = 0; i < shell.built_count; ++i)
+        if (!strcmp(shell.builtins[i].name, name))
+            return shell.builtins[i].callback;
+    return NULL;
 }
 
-static void exec_bin(char **argv)
+int redir_list_len(s_ast_redirection_list *redir)
 {
-    if (argv == NULL)
+    int count = 0;
+    while (redir)
     {
-        fprintf(stderr, "Wrong binary string.\n");
-        return;
+        count += 1;
+        redir = redir->next;
     }
-    execvp(argv[0], argv);
-    /* FIXME: test errors on errno */
+    return count;
 }
 
-static int exec_cmd_bin(struct cmd_node *cmd)
+s_redir_context *save_redir_context(s_ast_redirection_list *redir)
 {
-    int st = 0;
-    pid_t proc = fork();
+    int size = redir_list_len(redir);
+    s_redir_context *context = smalloc(sizeof (s_redir_context) * (size + 1));
 
-    if (proc < 0)
+    for (int i = 0; i < size; ++i)
     {
-        fprintf(stderr, "failed fork\n");
+        context[i].old_fd = redir->io->io_number;
+        context[i].tmp_fd = dup(redir->io->io_number);
+        redir = redir->next;
+    }
+    context[size].old_fd = -1;
+    return context;
+}
+
+int word_to_fd(s_string *str)
+{
+    long fd = 0;
+    char *endptr = NULL;
+
+    if (str->len == 0)
+        return -1;
+    if ((string_index(str, 0) == '-') && (string_index(str, 1) == '\0'))
+        return -2;
+    fd = strtol(str->buf, &endptr, 10);
+    if (endptr == str->buf || endptr != 0)
+        return -1;
+
+    return fd;
+}
+
+int set_redir(s_ast_redirection_list *redir)
+{
+    int fd = 0;
+    int index = 0;
+
+    while (redir)
+    {
+        if (redir->type == REDIR_WRITE)                 /** >   */
+        {
+            s_string *filename = expand_compound(redir->word);
+            if ((fd = open(filename->buf,
+                                  O_CREAT | O_WRONLY | O_TRUNC, 666)) == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            dup2(fd, redir->io->io_number);
+            close(fd);
+        }
+        else if (redir->type == REDIR_WRITE_UPDATE)     /** >>  */
+        {
+            s_string *filename = expand_compound(redir->word);
+            if ((fd = open(filename->buf,
+                           O_CREAT | O_WRONLY | O_APPEND, 666)) == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            dup2(fd, redir->io->io_number);
+            close(fd);
+        }
+        else if (redir->type == REDIR_READ)             /** <   */
+        {
+            s_string *filename = expand_compound(redir->word);
+            if ((fd = open(filename->buf, O_RDONLY)) == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            dup2(fd, redir->io->io_number);
+            close(fd);
+        }
+        else if (redir->type == REDIR_HEREDOC)          /** <<  */
+            write(redir->io->io_number,
+                  redir->heredoc->heredoc->buf,
+                  redir->heredoc->heredoc->len);
+        else if (redir->type == REDIR_HEREDOC_STRIP)    /** <<- */
+            write(redir->io->io_number,
+                  redir->heredoc->heredoc->buf,
+                  redir->heredoc->heredoc->len);
+        else if (redir->type == REDIR_DUPLICATE_INPUT)  /** <&  */
+        {
+            s_string *filename = expand_compound(redir->word);
+            fd = word_to_fd(filename);
+            if (fd == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            else if (fd == -2)
+                close(fd); /* FIXME error handling */
+            dup2(fd, redir->io->io_number);
+        }
+        else if (redir->type == REDIR_DUPLICATE_OUTPUT) /** >&  */
+        {
+            s_string *filename = expand_compound(redir->word);
+            fd = word_to_fd(filename);
+            if (fd == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            else if (fd == -2)
+                close(fd); /* FIXME error handling */
+            dup2(fd, redir->io->io_number);
+        }
+        else if (redir->type == REDIR_CLOBBER)          /** >|  */
+        {
+            s_string *filename = expand_compound(redir->word);
+            if ((fd = open(filename->buf,
+                           O_CREAT | O_WRONLY | O_TRUNC, 666)) == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            dup2(fd, redir->io->io_number);
+            close(fd);
+        }
+        else if (redir->type == REDIR_READ_WRITE)       /** <>  */
+        {
+            s_string *filename = expand_compound(redir->word);
+            if ((fd = open(filename->buf, O_CREAT | O_RDWR | O_TRUNC)) == -1)
+                fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+            dup2(fd, redir->io->io_number);
+            close(fd);
+        }
+        redir = redir->next;
+        index += 1;
+    }
+    return 0;
+}
+
+void restore_redir_context(s_redir_context *context)
+{
+    for (int i = 0; context[i].old_fd != -1; ++i)
+        dup2(context[i].tmp_fd, context[i].old_fd);
+    sfree(context);
+}
+
+void exec_redirection(s_ast_redirection_list *redir)
+{
+    s_redir_context *context;
+    context = save_redir_context(redir);
+    shell.status = set_redir(redir);
+    restore_redir_context(context);
+}
+
+int compound_word_len(s_ast_compound_word *word)
+{
+    int count = 0;
+
+    while (word)
+    {
+        count += 1;
+        word = word->next;
+    }
+    return count;
+}
+
+char **compword_to_argv(s_ast_compound_word *word, int len)
+{
+    char **cmd_argv = smalloc(sizeof (char *) * (len + 1));
+    s_string *str = NULL;
+
+    for (int i = 0; i < len; ++i)
+    {
+        str = expand_word(word->word);
+        cmd_argv[i] = smalloc(sizeof (char) * str->len);
+        memcpy(cmd_argv[i], str->buf, str->len);
+        word = word->next;
+    }
+    cmd_argv[len] = NULL;
+    return cmd_argv;
+}
+
+void exec_argv(char **argv)
+{
+    assert(argv && argv[0]);
+    execvp(argv[0], argv);
+    if (errno == ENOENT)
+    {
+        if (strchr(argv[0], '/') == NULL)
+            fprintf(stderr, "%s: command not found.\n", argv[0]);
+        else
+            fprintf(stderr, "%s: no such file or directory.\n", argv[0]);
+    }
+    exit((errno == ENOENT) ? 127 : 126);
+}
+
+int exec_program(char **cmd_argv, s_ast_prefix *prefixes)
+{
+    pid_t pid;
+    int st;
+
+    if ((pid = fork()) == -1)
+    {
+        fprintf(stderr, "Cannot fork.\n");
         return -1;
     }
-    if (proc == 0)
+    if (pid == 0)
     {
-        if (cmd->prefix != NULL)
-            exec_cmd_prefix(cmd->prefix);
-        exec_bin(cmd->argv);
+        exec_prefixes(prefixes);
+        exec_argv(cmd_argv);
         fprintf(stderr, "Execution flow corrupted.\n");
         assert(0);
         return 1;
     }
-    waitpid(proc, &st, 0);
+    waitpid(pid, &st, 0);
     return st;
 }
 
-void exec_cmd_node(struct cmd_node *cmd)
+void exec_cmd_word(s_ast_compound_word *word)
 {
-    assert(cmd);
-    if (cmd->argv == NULL)
-    {
-        if (cmd->prefix == NULL)
-            return;
-        else
-            exec_cmd_prefix(cmd->prefix);
-    }
-    if (is_function(cmd->argv[0]) > 0)
-        exec_func(cmd->argv);
-    else if (is_builtin(cmd->argv[0]) > 0)
-        exec_builtin(cmd->argv[0], cmd->argv);
+    s_ast_shell_cmd *func_body = NULL;
+    int changed = 0;
+    int len = compound_word_len(word);
+    handler callback = NULL;
+    char **cmd_argv = compword_to_argv(word, len);
+
+    HASHTBL_GET(shell.funcs, cmd_argv[0], func_body, changed);
+    if (changed)
+        exec_shell_cmd(func_body);
     else
-        status = exec_cmd_bin(cmd);
+    {
+        if ((callback = builtin_handler(cmd_argv[0])) != NULL)
+        {
+            shell.status = callback(cmd_argv);
+        }
+        else
+            shell.status = exec_program(cmd_argv, NULL);
+    }
+    for (int i = 0; i < len; ++i)
+        sfree(cmd_argv[i]);
+    sfree(cmd_argv);
+}
+
+void exec_prefixes(s_ast_prefix *prefix)
+{
+    while (prefix)
+    {
+        if (prefix->redirection)
+            exec_redirection(prefix->redirection);
+        if (prefix->assignment)
+            exec_assignment(prefix->assignment);
+        prefix = prefix->next;
+    }
+}
+
+int element_list_len(s_ast_element *elt)
+{
+    int count = 0;
+
+    while (elt)
+    {
+        if (elt->word)
+            count += 1;
+        elt = elt->next;
+    }
+    return count;
+}
+
+char **elements_to_argv(s_ast_element *element, int len)
+{
+    char **cmd_argv = smalloc(sizeof (char *) * (len + 1));
+    s_string *str = NULL;
+
+    for (int i = 0; i < len; ++i)
+    {
+        if (!element->word)
+        {
+            element = element->next;
+        }
+        else
+        {
+            if ((str = expand_compound(element->word)) == NULL)
+                return NULL;
+            cmd_argv[i] = smalloc(sizeof (char) * (str->len + 1));
+            memcpy(cmd_argv[i], str->buf, str->len);
+            cmd_argv[i][str->len] = '\0';
+        }
+        element = element->next;
+    }
+    cmd_argv[len] = NULL;
+    return cmd_argv;
+}
+
+void exec_elements_redir(s_ast_element *elt)
+{
+    while (elt)
+    {
+        if (elt->redirection)
+            exec_redirection(elt->redirection);
+        elt = elt->next;
+    }
+}
+
+void exec_simple_cmd(s_ast_simple_cmd *cmd)
+{
+    int len = element_list_len(cmd->elements);
+    s_ast_shell_cmd *func_body = NULL;
+    int changed = 0;
+    handler callback = NULL;
+    exec_elements_redir(cmd->elements);
+    char **cmd_argv = elements_to_argv(cmd->elements, len);
+
+    if (shell.funcs)
+    {
+        HASHTBL_GET(shell.funcs, cmd_argv[0], func_body, changed);
+        if (changed)
+        {
+            exec_prefixes(cmd->prefixes);
+            exec_shell_cmd(func_body);
+        }
+    }
+    else
+    {
+        if ((callback = builtin_handler(cmd_argv[0])) != NULL)
+        {
+            exec_prefixes(cmd->prefixes);
+            shell.status = callback(cmd_argv);
+        }
+        else
+            shell.status = exec_program(cmd_argv, cmd->prefixes);
+    }
+    /*
+    for (int i = 0; i < len; ++i)
+        sfree(cmd_argv[i]);
+    sfree(cmd_argv);
+    */
+}
+
+void exec_else(s_ast_else *else_cmd)
+{
+    exec_ast_list(else_cmd->elif_predicate);
+    if (!shell.status)
+        exec_ast_list(else_cmd->elif_cmds);
+    else
+        exec_ast_list(else_cmd->else_cmds);
+}
+
+void exec_if(s_ast_if *if_cmd)
+{
+    exec_ast_list(if_cmd->predicate);
+    if (!shell.status)
+        exec_ast_list(if_cmd->then_cmds);
+    /* FIXME: elif */
+    else
+        if (if_cmd->else_clause)
+            exec_else(if_cmd->else_clause);
+}
+
+void exec_while(s_ast_while *while_cmd)
+{
+    for (exec_ast_list(while_cmd->predicate);
+         !shell.status;
+         exec_ast_list(while_cmd->predicate))
+    {
+        exec_ast_list(while_cmd->cmds);
+    }
+}
+
+void exec_until(s_ast_until *until_cmd)
+{
+    for (exec_ast_list(until_cmd->predicate);
+         shell.status;
+         exec_ast_list(until_cmd->predicate))
+    {
+        exec_ast_list(until_cmd->cmds);
+    }
+}
+
+void exec_for(s_ast_for *for_cmd)
+{
+    s_string *value = NULL;
+    while (for_cmd->values
+           && (value = expand_compound(for_cmd->values->word)))
+    {
+        variable_add(expand_word(for_cmd->identifier), value);
+        exec_ast_list(for_cmd->cmd_list);
+        for_cmd->values = for_cmd->values->next;
+    }
+}
+
+void exec_subshell_cmd(s_ast_shell_cmd *shell_cmd)
+{
+    shell_cmd = shell_cmd;
+    fprintf(stderr, "SUBSHELL commands not implemented yet.\n");
+    return;
+}
+
+void exec_case(s_ast_case *node)
+{
+    node = node;
+    fprintf(stderr, "CASE commands not implemented yet.\n");
+    return;
+}
+
+void exec_shell_cmd(s_ast_shell_cmd *shell_cmd)
+{
+    if (shell_cmd->cmd_list)
+    {
+        if (shell_cmd->subshell == 1)
+            exec_subshell_cmd(shell_cmd);
+        else
+            exec_ast_list(shell_cmd->cmd_list);
+    }
+    else
+    {
+        if (shell_cmd->ctrl_structure == AST_IF)
+            exec_if(shell_cmd->ctrl.ast_if);
+        else if (shell_cmd->ctrl_structure == AST_FOR)
+            exec_for(shell_cmd->ctrl.ast_for);
+        else if (shell_cmd->ctrl_structure == AST_WHILE)
+            exec_while(shell_cmd->ctrl.ast_while);
+        else if (shell_cmd->ctrl_structure == AST_UNTIL)
+            exec_until(shell_cmd->ctrl.ast_until);
+        else if (shell_cmd->ctrl_structure == AST_CASE)
+            exec_case(shell_cmd->ctrl.ast_case);
+    }
+}
+
+void exec_shell_cmd_node(s_ast_shell_cmd *shell_cmd,
+                         s_ast_redirection_list *redir)
+{
+    exec_redirection(redir);
+    exec_shell_cmd(shell_cmd);
+}
+
+void exec_func_dec(s_ast_funcdec *funcdec)
+{
+    function_add(funcdec->shell_cmd, funcdec->name);
+}
+
+void exec_funcdec_node(s_ast_funcdec *funcdec,
+                       s_ast_redirection_list *redir)
+{
+    exec_redirection(redir);
+    exec_func_dec(funcdec);
+}
+
+void exec_cmd_node(s_ast_cmd *node)
+{
+    if (node->simple_cmd)
+        exec_simple_cmd(node->simple_cmd);
+    else if (node->shell_cmd)
+        exec_shell_cmd_node(node->shell_cmd, node->redirections);
+    else if (node->func_dec)
+        exec_funcdec_node(node->func_dec, node->redirections);
+    else
+        fprintf(stderr, "unkown command type.\n");
 }

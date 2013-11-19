@@ -1,126 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "smalloc.h"
+#include "ast.h"
+#include "lexer.h"
+#include "parser.h"
+#include "log.h"
 #include "exec.h"
 
-int main(void)
+char *str;
+size_t pos = 0;
+
+char dummy_getc(void *state)
 {
+    (void)state;
+    return str[pos++];
+}
 
-#if 0
-/*======================================================================*/
-/*======================================================================*/
-/*======================================================================*/
-            /* if command:  if      grep nass /etc/passwd   */
-            /*              then    touch nass              */
-            /*              else    ls -lsa                 */
-    char *grep_cmd = "grep";
-    char *grep_arg = "fass";
-    char *grep_arg2 = "/etc/passwd";
-    char **grep_cmd_str = malloc(sizeof (char *) * 4);
-    grep_cmd_str[0] = grep_cmd;
-    grep_cmd_str[1] = grep_arg;
-    grep_cmd_str[2] = grep_arg2;
-    grep_cmd_str[3] = NULL;
-    struct cmd_node grep_command_node = {
-        .argv = grep_cmd_str,
-        .prefix = NULL
-    };
-    union ast_node_child cond_child;
-    cond_child.cmd_n = grep_command_node;
-    struct ast_node cond_node = {
-        .next = cond_child,
-        .type = CMD
-    };
+char dummy_topc(void *state)
+{
+    (void)state;
+    return str[pos];
+}
 
-    char *touch_cmd = "touch";
-    char *touch_arg = "nass";
-    char **touch_cmd_str = malloc(sizeof (char *) * 3);
-    touch_cmd_str[0] = touch_cmd;
-    touch_cmd_str[1] = touch_arg;
-    touch_cmd_str[2] = NULL;
-    struct cmd_node touch_command_node = {
-        .argv = touch_cmd_str,
-        .prefix = NULL
-    };
-    union ast_node_child true_child;
-    true_child.cmd_n = touch_command_node;
-    struct ast_node true_node = {
-        .next = true_child,
-        .type = CMD
-    };
+int main(int argc, char **argv)
+{
+    int ret;
 
-    char *ls_cmd = "ls";
-    char *ls_arg = "-lsa";
-    char **ls_cmd_str = malloc(sizeof (char *) * 3);
-    ls_cmd_str[0] = ls_cmd;
-    ls_cmd_str[1] = ls_arg;
-    ls_cmd_str[2] = NULL;
-    struct cmd_node ls_command_node = {
-        .argv = ls_cmd_str,
-        .prefix = NULL
-    };
-    union ast_node_child false_child;
-    false_child.cmd_n = ls_command_node;
-    struct ast_node false_node = {
-        .next = false_child,
-        .type = CMD
-    };
+    if (argc < 2)
+    {
+        fputs("usage: test_parser <INPUT>\n", stderr);
+        return 1;
+    }
 
-    struct if_node if_node = {
-        .cond = &cond_node,
-        .if_true = &true_node,
-        .if_false = &false_node
-    };
-    union ast_node_child if_child;
-    if_child.if_n = if_node;
-    struct ast_node main_if_node;
-    main_if_node.next = if_child;
-    main_if_node.type = IF;
+    shell.funcs = NULL;
+    shell.fun_count = 0;
+    shell.vars = NULL;
+    shell.var_count = 0;
+    shell.builtins = NULL;
+    shell.built_count = 0;
+    shell.status = 0;
 
-    exec_node(&main_if_node);
-#endif
+    s_lexer *lexer;
+    s_parser *parser;
+    s_ast_input *ast;
 
-    char *grep_cmd = "grep";
-    char *grep_arg = "root";
-    char *grep_arg2 = "/etc/passwd";
-    char **grep_cmd_str = malloc(sizeof (char *) * 4);
-    grep_cmd_str[0] = grep_cmd;
-    grep_cmd_str[1] = grep_arg;
-    grep_cmd_str[2] = grep_arg2;
-    grep_cmd_str[3] = NULL;
-    struct cmd_node grep_command_node = {
-        .argv = grep_cmd_str,
-        .prefix = NULL
-    };
-    union ast_node_child first_child;
-    first_child.cmd_n = grep_command_node;
-    struct ast_node left_node = {
-        .next = first_child,
-        .type = CMD
-    };
+    str = argv[1];
+    lexer = lex_create(dummy_getc, dummy_topc, "<test>");
+    parser = parser_create(lexer);
+    if ((ast = parse_rule_input(parser)))
+    {
+        exec_ast_input(ast);
+        ast_input_delete(ast);
+        if (parser_eof(parser))
+            ret = 0;
+        else
+        {
+            LOG(ERROR, "Garbage in the lexer after parsing", NULL);
+            ret = 1;
+        }
+    }
+    else
+        ret = 1;
 
-    char *touch_cmd = "cat";
-    char **touch_cmd_str = malloc(sizeof (char *) * 2);
-    touch_cmd_str[0] = touch_cmd;
-    touch_cmd_str[1] = NULL;
-    struct cmd_node touch_command_node = {
-        .argv = touch_cmd_str,
-        .prefix = NULL
-    };
-    union ast_node_child second_child;
-    second_child.cmd_n = touch_command_node;
-    struct ast_node right_node = {
-        .next = second_child,
-        .type = CMD
-    };
-
-    struct binary_node pipe_node = {
-        .left = &left_node,
-        .right = &right_node
-    };
-    union ast_node_child pipe_child;
-    pipe_child.pipe_n = pipe_node;;
-    struct ast_node main_node;
-    main_node.next = pipe_child;
-    main_node.type = PIPE;
-
-    exec_node(&main_node);
-    return 0;
+    parser_delete(parser);
+    smalloc_clean();
+    return ret;
 }

@@ -20,14 +20,6 @@ add_executable(test_utils
     $<TARGET_OBJECTS:hashtbl>
 )
 
-add_executable(test_interface
-    test_interface.c
-    $<TARGET_OBJECTS:string>
-    $<TARGET_OBJECTS:log>
-    $<TARGET_OBJECTS:smalloc>
-    $<TARGET_OBJECTS:options>
-)
-
 add_executable(test_parser
     test_parser.c
 
@@ -72,8 +64,13 @@ add_executable(test_readline
 
 add_executable(test_exec
     test_exec.c
-    $<TARGET_OBJECTS:string>
+
+    $<TARGET_OBJECTS:ast>
+    $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:string>
     $<TARGET_OBJECTS:exec>
 )

@@ -1,57 +1,41 @@
 #include "exec.h"
 
-void exec_or_node(struct binary_node *node)
+void exec_and_node(s_ast_and_or *node)
 {
-    exec_node(node->left);
-    /*
-     * if status != 0: cond false
-     * if status == 0: cond true
-     */
-    if (status)
-        exec_node(node->right);
-    /*
-     * if status == 0, cond == true
-     * then: pass until an AND node is found
-     * which might set global condition value to false
-     */
-    else
+    if (!node)
     {
-        while (node->right->type == OR)
-            node = &node->right->next.or_n;
-        /*
-         * case:
-         * A || B || C && (D ...)
-         * if A then directly go to && token and eval D (right of &&)
-         */
-        if (node->right->type == AND)
-            exec_node(node->right->next.and_n.right);
+        fprintf(stderr, "Wrong '&&' command.\n");
+        return;
     }
+    if (node->pipeline)
+        exec_pipe_node(node->pipeline);
+    if (shell.status == 0 && node->next)
+        exec_andor_node(node->next);
 }
 
-void exec_and_node(struct binary_node *node)
+void exec_or_node(s_ast_and_or *node)
 {
-    exec_node(node->left);
-    /*
-     * if status != 0: cond false
-     * if status == 0: cond true
-     */
-    if (status == 0)
-        exec_node(node->right);
-    /*
-     * if status != 0, cond == false
-     * then: pass until an OR node is found
-     * which might set global condition value to true
-     */
-    else
+    if (!node)
     {
-        while (node->right->type == AND)
-        node = &node->right->next.and_n;
-        /*
-         * case:
-         * A && B && C || (D ...)
-         * if A then directly go to || token and eval D (right of ||)
-         */
-        if (node->right->type == OR)
-            exec_node(node->right->next.or_n.right);
+        fprintf(stderr, "Wrong '||' command.\n");
+        return;
     }
+    if (node->pipeline)
+        exec_pipe_node(node->pipeline);
+    if (node->next)
+        exec_andor_node(node->next);
+}
+
+void exec_andor_node(s_ast_and_or *node)
+{
+    if (!node)
+    {
+        fprintf(stderr, "Wrong '&&' or '||' command.\n");
+        return;
+    }
+    if (node->and_or == AST_CMD_AND)
+        exec_and_node(node);
+    else
+        exec_or_node(node);
+    node = node->next;
 }

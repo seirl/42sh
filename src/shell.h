@@ -1,9 +1,16 @@
 #ifndef SHELL_H
 # define SHELL_H
 
-HASHTBL(char *, s_ast_shell_cmd *, shell_funcs, null_free, null_free);
-HASHTBL(s_string *, s_string *, shell_vars, null_free, null_free);
-HASHTBL(char *, void *(handler)(), shell_builtins, null_free, null_free);
+HASHTBL(s_ast_shell_cmd *, char *, shell_funcs);
+HASHTBL(s_string *, s_string *, shell_vars);
+typedef int (*handler)(char **);
+
+struct builtin_entry
+{
+    char *name;
+    handler callback;
+};
+typedef struct builtin_entry s_builtin_entry;
 
 typedef struct shell
 {
@@ -11,7 +18,7 @@ typedef struct shell
     unsigned int fun_count;
     s_shell_vars *vars;
     unsigned int var_count;
-    s_shell_builtins *builtins;
+    s_builtin_entry *builtins;
     unsigned int built_count;
     int status;
 } s_shell;

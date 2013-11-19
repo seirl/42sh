@@ -1,6 +1,6 @@
 #include "exec.h"
 
-static s_pipe *init_pipe(void)
+static s_pipe *pipe_init(void)
 {
     s_pipe *pipe = smalloc(sizeof (s_pipe));
     pipe->next_proc = 0;
@@ -9,14 +9,14 @@ static s_pipe *init_pipe(void)
     return pipe;
 }
 
-static void add_process(pid_t pid, s_pipe *pipe)
+static void process_add(pid_t pid, s_pipe *pipe)
 {
     ++pipe->nb_proc;
     pipe->process = srealloc(pipe->process, pipe->nb_proc * sizeof (pid_t));
     pipe->process[pipe->nb_proc - 1] = pid;
 }
 
-static pid_t get_next_proc(s_pipe *pipe)
+static pid_t proc_get_next(s_pipe *pipe)
 {
     if (!pipe->nb_proc || pipe->next_proc >= pipe->nb_proc)
         return -1;
@@ -25,65 +25,106 @@ static pid_t get_next_proc(s_pipe *pipe)
     return process;
 }
 
-static pid_t exec_pipe_side_cmd(int fd_pipe[2],
-                         struct ast_node *side_node,
-                         s_pipe *pipe,
-                         e_side side)
+int pipe_cmd_count(s_ast_pipeline *node)
 {
-    int input = (side == RIGHT) ? 0 : 1;
-    int output = (side == RIGHT) ? 1 : 0;
-    pid_t pid = fork();
-
-    if (pid < 0)
-        return pid;
-    if (pid == 0)
+    int count = 0;
+    while (node)
     {
-        if (side == RIGHT)
-            dup2(fd_pipe[input], STDIN_FILENO);
-        else
-            dup2(fd_pipe[input], STDOUT_FILENO);
-        close(fd_pipe[output]);
-        if (side_node->type == CMD)
-            exec_cmd_node(&side_node->next.cmd_n);
-        else
-            exec_node(side_node);
-        exit(status);
+        count += 1;
+        node = node->next;
+    }
+    return count;
+}
+
+s_ast_cmd **pipe_cmd_array(s_ast_pipeline *node, int len)
+{
+    s_ast_cmd **pipe_cmds = smalloc(sizeof (s_ast_pipeline *) * len);
+
+    for (int i = 0; i < len; ++i)
+    {
+        pipe_cmds[i] = node->cmd;
+        node = node->next;
+    }
+    return pipe_cmds;
+}
+
+void exec_pipe_setio(int pipe[2], int io)
+{
+    /* io == 1 : input, io == 0: output */
+    if (io)
+    {
+        close(pipe[1]);
+        dup2(pipe[0], 0);
+        close(pipe[0]);
     }
     else
     {
-        close(fd_pipe[input]);
-        add_process(pid, pipe);
+        close(pipe[0]);
+        dup2(pipe[1], 1);
+        close(pipe[1]);
     }
-    return pid;
 }
 
-static int exec_pipe_cmd(s_pipe *p, struct binary_node *node)
+void pipe_child_job(int cmd_index,
+                    int max_index,
+                    int curr_pipe[2],
+                    int old_pipe[2])
 {
-    int fd_pipe[2];
-    if (pipe(fd_pipe) < 0)
-        return 0; /* pipe failed */
+    if (cmd_index > 0)
+        exec_pipe_setio(old_pipe, 1);
+    if (cmd_index < max_index - 1)
+        exec_pipe_setio(curr_pipe, 0);
+}
 
-    /* execute right node */
-    pid_t pid = exec_pipe_side_cmd(fd_pipe, node->right, p, RIGHT);
-    if (pid < 0)
-        return 0; /* fork failed */
+void close_pipe(int pipe[2])
+{
+    close(pipe[0]);
+    close(pipe[1]);
+}
 
-    if (node->left->type == PIPE)
+void pipe_parent_job(int index,
+                     int max,
+                     int (*old_pipe)[2],
+                     int new_pipe[2])
+{
+    if (index > 0)
+        close_pipe(*old_pipe);
+    if (index < max - 1)
     {
-        int tmp = dup(STDOUT_FILENO);
-        dup2(fd_pipe[1], STDOUT_FILENO);
-        close(fd_pipe[1]);
-        int res = exec_pipe_cmd(p, &node->left->next.pipe_n);
-        dup2(tmp, STDOUT_FILENO);
-        close(tmp);
-        return res;
+        (*old_pipe)[0] = new_pipe[0];
+        (*old_pipe)[1] = new_pipe[1];
     }
+}
 
-    /* else execute left node */
-    int res = exec_pipe_side_cmd(fd_pipe, node->left, p, LEFT);
-    if (res < 0) /* fork failed */
-        return 0;
-    return 1;
+int exec_pipe(s_pipe *pipe,
+              s_ast_cmd **pipe_cmds,
+              int len)
+{
+    int curr_pipe[2];
+    int old_pipe[2];
+
+    for (int i = 0; i < len; ++i)
+    {
+        if (i < len - 1)
+            pipe2(curr_pipe, 0);
+        pid_t pid = fork();
+        if (pid == 0)
+        {
+            pipe_child_job(i, len, curr_pipe, old_pipe);
+            exec_cmd_node(pipe_cmds[i]);
+            if (shell.status < 0)
+                fprintf(stderr, "Failed to execute command.\n");
+            exit(1);
+        }
+        else if (pid > 0)
+        {
+            process_add(pid, pipe);
+            pipe_parent_job(i, len, &old_pipe, curr_pipe);
+            if (i == len - 1)
+                waitpid(pid, &shell.status, 0);
+        }
+    }
+    return 0;
 }
 
 static void wait_pipe(pid_t main, s_pipe *pipe)
@@ -93,28 +134,39 @@ static void wait_pipe(pid_t main, s_pipe *pipe)
 
     if (main == 0)
     {
-        waitpid((proc = get_next_proc(pipe)), &st, 0);
-        status = st;
+        waitpid((proc = proc_get_next(pipe)), &st, 0);
+        shell.status = st;
     }
-    proc = get_next_proc(pipe);
+    proc = proc_get_next(pipe);
     while (proc >= 0)
     {
         kill(proc, SIGPIPE);
         waitpid(proc, &st, 0);
-        proc = get_next_proc(pipe);
+        proc = proc_get_next(pipe);
+        shell.status = st;
     }
 }
 
-void exec_pipe_node(struct binary_node *node)
+void exec_pipe_node(s_ast_pipeline *node)
 {
     assert(node);
-    s_pipe *pipe = init_pipe();
-    int res = exec_pipe_cmd(pipe, node);
-    if (res == 0)
+    int len = pipe_cmd_count(node);
+    s_ast_cmd **pipe_cmds = pipe_cmd_array(node, len);
+
+    if (len == 1)
+        exec_cmd_node(pipe_cmds[0]);
+    else if (len > 1)
     {
-        fprintf(stderr, "Fail to exec pipe node");
-        status = -1;
+        s_pipe *pipe = pipe_init();
+        int res = exec_pipe(pipe, pipe_cmds, len);
+        if (res != 0)
+        {
+            fprintf(stderr, "Fail to exec pipe node");
+            shell.status = -1;
+        }
+        wait_pipe(!res, pipe);
+        sfree(pipe);
     }
-    wait_pipe(!res, pipe);
-    sfree(pipe);
+    sfree(pipe_cmds);
 }
+

@@ -151,14 +151,10 @@ add_library(parser OBJECT
 )
 
 add_library(exec OBJECT
-    src/exec/exec_bang.c
     src/exec/exec.c
     src/exec/exec_cmds.c
-    src/exec/exec_control.c
-    src/exec/exec_func.c
     src/exec/exec_or_and.c
     src/exec/exec_pipes.c
-    src/exec/exec_redir.c
 )
 
 add_library(ast OBJECT
