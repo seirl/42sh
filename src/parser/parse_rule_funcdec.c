@@ -18,6 +18,8 @@ s_ast_funcdec *parse_rule_funcdec(s_parser *parser) // TODO
     if (!parse_expect_token(parser, T_RPAREN))
         RETURN_PARSE_EXPECTED(parser, ")");
 
+    parse_expect_newlines(parser);
+
     content = parse_rule_shell_command(parser);
     if (!content)
     {

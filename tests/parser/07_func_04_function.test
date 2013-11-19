@@ -1,0 +1,8 @@
+{
+    "desc": "rule funcdec: function",
+    "input": """function a() {
+echo yes
+echo oui
+}""",
+    "output": "",
+}
