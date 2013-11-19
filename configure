@@ -6,11 +6,12 @@ BUILD_TYPE=Release
 usage() {
     cat << EOF
 $0
-    --with-debug    Add debug flags
-    --with-coverage Add coverage flags
-    --with-gc       Enable garbage collector
-    --with-clang    Compile with clang
-    --help          Display this message
+    --with-debug          Add debug flags
+    --with-coverage       Add coverage flags
+    --with-gc             Enable garbage collector
+    --with-clang          Compile with clang
+    --with-optimizations  Compile with optimizations flags (-O3)
+    --help                Display this message
 EOF
 }
 
@@ -25,6 +26,9 @@ do
             CFLAGS=${CFLAGS}" -O0 -g3 -pg -fprofile-arcs -ftest-coverage"
             BUILD_TYPE=Debug
             COVERAGE="set(COVERAGE yes)"
+            ;;
+        --with-optimizations)
+            CFLAGS=${CFLAGS}" -O3 -march=native"
             ;;
         --with-gc)
             GARBAGE_COLLECTOR="add_definitions(-DCONCHITA)"
