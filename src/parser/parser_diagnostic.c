@@ -11,8 +11,8 @@ int parser_diagnostic(s_parser *parser)
     }
     else if (parser->status == PARSE_ERROR)
     {
-        LOG(ERROR, "Parse error", NULL);
-        return 1;
+        LOG(WARN, "Parse error", NULL);
+        return 0;
     }
-    return 0;
+    return 1;
 }

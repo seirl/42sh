@@ -16,14 +16,13 @@ static int parse_input(s_lexer *lexer)
     s_parser *parser = parser_create(lexer);
     s_ast_input *ast;
     ast = parse_rule_input(parser);
-    parser_diagnostic(parser);
-    if (ast)
+    if (parser_diagnostic(parser) && ast)
     {
         if (shopt_get("ast_print"))
             print_ast(ast, stdout);
         exec_ast_input(ast);
-        ast_input_delete(ast);
     }
+    ast_input_delete(ast);
     parser_delete(parser);
     return 0;
 }
