@@ -66,7 +66,7 @@ s_token *lex_release_token(s_lexer *lexer)
 
     type = lexer->token_type;
     value.str = string_moult(&(lexer->working_buffer));
-    value.integer = type == T_IO_NUMBER ? atoi(value.str->buf) : 0;
+    value.integer = type == T_IO_NUMBER ? atoi(value.str->buf) : 1;
     tok = token_create(type, value, lexer->location, lexer->concat);
 
     lexer_reset(lexer);

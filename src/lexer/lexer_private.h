@@ -49,28 +49,43 @@ s_token *lex_release_lookahead(s_lexer *lexer);
 int lex_delimit_token(s_lexer *lexer);
 int lex_eat_spaces(s_lexer *lexer);
 
-// char_utils.c
+// char utils -----------------------------------------------------------------
+/** @brief */
 int is_delimiter(char c);
+/** @brief */
 int is_quote(char c);
+/** @brief */
 int is_token_delimiter(char c);
+/** @brief */
 int is_operator(char c);
+/** @brief */
 int is_valid_operator(s_lexer *lexer, s_string *s);
 
-// lexer_pattern.c
+// pattern recognition --------------------------------------------------------
+/** @brief */
 int handle_comment(s_lexer *lexer, char c, char prev);
+/** @brief */
 int handle_dollar(s_lexer *lexer, char c, char prev);
+/** @brief */
 int handle_quotes(s_lexer *lexer, char c, char prev);
+/** @brief */
 int handle_operator(s_lexer *lexer);
+/** @brief */
 int handle_assignment(s_lexer *lexer, char c);
 
-// lexer_word.c
+// special words --------------------------------------------------------------
+/** @brief */
 int handle_newline(s_lexer *lexer);
+/** @brief */
 int handle_eof(s_lexer *lexer);
+/** @brief */
 int handle_name(s_lexer *lexer);
+/** @brief */
 int handle_io_number(s_lexer *lexer);
+/** @brief */
 int handle_res_word(s_lexer *lexer);
 
-// lexer_fill.c
+// buffer utils ---------------------------------------------------------------
 int fill_until(s_lexer *lexer, int include_last);
 int fill_upto_delim(s_lexer *lexer);
 int fill_token(s_lexer *lexer);
