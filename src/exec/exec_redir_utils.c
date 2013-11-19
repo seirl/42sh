@@ -13,8 +13,9 @@ int redir_list_len(s_ast_redirection_list *redir)
 
 void set_default_io_number(s_ast_redirection_list *redir)
 {
-    if (redir->io->io_number == 2)
+    if (!redir->io)
     {
+        redir->io = ast_io_number_new();
         if (redir->type == REDIR_WRITE)                 /** >   */
             redir->io->io_number = 1;
         else if (redir->type == REDIR_READ)             /** <   */
@@ -62,7 +63,7 @@ int word_to_fd(s_string *str)
     if ((string_index(str, 0) == '-') && (string_index(str, 1) == '\0'))
         return -2;
     fd = strtol(str->buf, &endptr, 10);
-    if (endptr == str->buf || endptr != 0)
+    if ((endptr != 0) && strcmp("", endptr))
         return -1;
 
     return fd;

@@ -61,6 +61,7 @@ int exec_prog(char **cmd_argv,
 void exec_cmd_word(s_ast_compound_word *word);
 void exec_prefixes(s_ast_prefix *prefix);
 void exec_elements(s_ast_element *elt);
+void set_default_io_number(s_ast_redirection_list *redir);
 int element_list_len(s_ast_element *elt);
 char **elements_to_argv(s_ast_element *element, int len);
 s_redir_context **exec_elements_redir(s_ast_element *elt);

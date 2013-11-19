@@ -133,6 +133,7 @@ int set_redir(s_ast_redirection_list *redir)
 
     while (redir)
     {
+        set_default_io_number(redir);
         exec_redir_type(redir, fd);
         redir = redir->next;
     }
