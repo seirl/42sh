@@ -48,6 +48,9 @@ class TestProgram(unittest.TestProgram):
         parser.add_option("-a", "--all", action="store_true", default=True,
             help="Execute the test suite on all categories.")
 
+        parser.add_option("-d", "--debug", action="store_true", default=False,
+            help="Start debugging right away on fail")
+
         parser.add_option("-t", "--timeout", default=5.0, type=float,
             help="General timeout in seconds for each test.")
 

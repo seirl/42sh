@@ -1,4 +1,5 @@
 import unittest
+import subprocess
 
 from .termcolors import colorize
 
@@ -16,6 +17,7 @@ class QDTestResult(unittest.TestResult):
                 and not options.final
                 and not options.categories)
         self.stream = stream
+        self.options = options
 
     def getShortDescription(self, test):
         return str(test)
@@ -82,11 +84,17 @@ class QDTestResult(unittest.TestResult):
 
     def addFailure(self, test, err):
         super().addFailure(test, err)
+
         if self.verbose:
             if self.stream.isatty():
                 self.stream.writeln(colorize("FAIL", fg="red"))
             else:
                 self.stream.writeln("FAIL")
+
+        if self.options.debug:
+            args = ["cgdb", "--args"]
+            args.extend(test.args)
+            subprocess.call(args)
 
     def printErrors(self):
         if self.verbose:

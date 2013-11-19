@@ -20,6 +20,8 @@ class QDTestCase(unittest.TestCase):
         return os.path.join(self.category, self.test_name)
 
     def start_program(self, args, with_valgrind=True):
+        self.args = args
+
         if with_valgrind:
             command = ["valgrind",
                 "--leak-check=full",
