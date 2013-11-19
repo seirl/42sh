@@ -26,8 +26,7 @@ s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
             RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", file);
         return lex_create(input_file_getc, input_file_topc, f, "file");
     }
-    *repeat = isatty(STDIN_FILENO);
-    if (!*repeat)
+    if (!(*repeat = isatty(STDIN_FILENO)))
     {
         f = fdopen(STDIN_FILENO, "r");
         return lex_create(input_file_getc, input_file_topc, f, "stdin");
