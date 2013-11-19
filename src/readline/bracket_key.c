@@ -3,28 +3,34 @@
 #include "bracket_key.h"
 #include "wrapper.h"
 
+static void do_right(s_term *term)
+{
+    if (term->input_index < term->input->len)
+    {
+        my_tputs(tgetstr("nd", NULL));
+        term->input_index++;
+    }
+}
+
+static void do_left(s_term *term)
+{
+    if (term->input_index > 0)
+    {
+        my_tputs(tgetstr("le", NULL));
+        term->input_index--;
+    }
+}
+
 static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
 {
     switch (key)
     {
-        case CHAR_UP:
+#define X(Name, Char1, Char2, fun)  \
+        case Name:                  \
+            fun;                    \
             break;
-        case CHAR_DOWN:
-            break;
-        case CHAR_RIGHT:
-            if (term->input_index < term->input->len)
-            {
-                my_tputs(tgetstr("nd", NULL));
-                term->input_index++;
-            }
-            break;
-        case CHAR_LEFT:
-            if (term->input_index > 0)
-            {
-                my_tputs(tgetstr("le", NULL));
-                term->input_index--;
-            }
-            break;
+#include "bracket_key.def"
+#undef X
         default:
             break;
     }
@@ -36,7 +42,7 @@ e_next_action handle_bracket_char(s_term *term)
     char c;
     char c2 = -1;
     read(STDIN_FILENO, &c, sizeof (char));
-#define X(Name, Char1, Char2)                               \
+#define X(Name, Char1, Char2, fun)                          \
     if (c == Char1)                                         \
     {                                                       \
         if (Char2 == 0)                                     \
