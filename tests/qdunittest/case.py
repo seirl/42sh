@@ -1,6 +1,9 @@
 import os
 import subprocess
 import unittest
+import difflib
+
+from unittest.util import safe_repr
 
 class QDTestCase(unittest.TestCase):
     def __init__(self, category, test_name, test, *args,
@@ -48,6 +51,30 @@ class QDTestCase(unittest.TestCase):
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
+
+    def assertMultiLineEqual(self, first, second, msg=None):
+        """Assert that two multi-line strings are equal."""
+        self.assertIsInstance(first, str, 'First argument is not a string')
+        self.assertIsInstance(second, str, 'Second argument is not a string')
+
+        if first != second:
+            # don't use difflib if the strings are too long
+            if (len(first) > self._diffThreshold or
+                len(second) > self._diffThreshold):
+                self._baseAssertEqual(first, second, msg)
+            firstlines = first.splitlines(keepends=True)
+            secondlines = second.splitlines(keepends=True)
+            if len(firstlines) == 1 and first.strip('\r\n') == first:
+                firstlines = [first + '\n']
+                secondlines = [second + '\n']
+            standardMsg = '%s != %s' % (safe_repr(first, True),
+                                        safe_repr(second, True))
+            diff = '\n' + ''.join(difflib.unified_diff(firstlines,
+                                                       secondlines,
+                                                       fromfile='reference',
+                                                       tofile='you'))
+            standardMsg = self._truncateMessage(standardMsg, diff)
+            self.fail(self._formatMessage(msg, standardMsg))
 
 class QDTestCaseShell(QDTestCase):
 

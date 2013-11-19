@@ -83,7 +83,8 @@ class QDTestResult(unittest.TestResult):
                 self.stream.writeln("ERROR")
 
     def addFailure(self, test, err):
-        super().addFailure(test, err)
+        exctype, value, tb = err
+        self.errors.append((test, str(value)))
 
         if self.verbose:
             if self.stream.isatty():

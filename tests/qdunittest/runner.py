@@ -71,14 +71,15 @@ class QDTestRunner:
                         pass
             result = self._make_result()
             subtest(result)
-            if not self.final:
-                result.print_summary(options=self.options, number=self.number)
 
             failures.extend(result.failures)
             errors.extend(result.errors)
             skipped.extend(result.skipped)
             unexpectedSuccesses.extend(result.unexpectedSuccesses)
             tests_run += result.testsRun
+
+            if not self.final:
+                result.print_summary(options=self.options, number=self.number)
 
             result = self._make_result()
 
