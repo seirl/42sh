@@ -21,7 +21,7 @@ void print_pipeline(s_ast_pipeline *node, void *prev, FILE *out)
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(node));
     for (s_ast_pipeline *p = node; p; p = p->next)
     {
-        fprintf(out, "node_%lu [label=\"Pipeline\"];\n", ph(p));
+        fprintf(out, "node_%lu [label=\"pipeline\"];\n", ph(p));
         if (p->next)
             fprintf(out, "node_%lu -> node_%lu [label=\"|\"];\n", ph(p),
                     ph(p->next));
