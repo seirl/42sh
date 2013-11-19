@@ -11,10 +11,36 @@ int redir_list_len(s_ast_redirection_list *redir)
     return count;
 }
 
+void set_default_io_number(s_ast_redirection_list *redir)
+{
+    if (redir->io->io_number == 2)
+    {
+        if (redir->type == REDIR_WRITE)                 /** >   */
+            redir->io->io_number = 1;
+        else if (redir->type == REDIR_READ)             /** <   */
+            redir->io->io_number = 0;
+        else if (redir->type == REDIR_HEREDOC)          /** <<  */
+            redir->io->io_number = 0;
+        else if (redir->type == REDIR_HEREDOC_STRIP)    /** <<- */
+            redir->io->io_number = 0;
+        else if (redir->type == REDIR_WRITE_UPDATE)     /** >>  */
+            redir->io->io_number = 1;
+        else if (redir->type == REDIR_DUPLICATE_INPUT)  /** <&  */
+            redir->io->io_number = 0;
+        else if (redir->type == REDIR_DUPLICATE_OUTPUT) /** >&  */
+            redir->io->io_number = 1;
+        else if (redir->type == REDIR_CLOBBER)          /** >|  */
+            redir->io->io_number = 1;
+        else if (redir->type == REDIR_READ_WRITE)       /** <>  */
+            redir->io->io_number = 0;
+    }
+}
+
 s_redir_context *save_redir_context(s_ast_redirection_list *redir)
 {
     int size = redir_list_len(redir);
     s_redir_context *context = smalloc(sizeof (s_redir_context) * (size + 1));
+    set_default_io_number(redir);
 
     for (int i = 0; i < size; ++i)
     {

@@ -3,7 +3,7 @@
 static void exec_redir_write(s_ast_redirection_list *redir,
                              int fd)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io  || redir->io->io_number == -2)
         redir->io->io_number = 1;
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
@@ -16,7 +16,7 @@ static void exec_redir_write(s_ast_redirection_list *redir,
 
 static void exec_redir_read(s_ast_redirection_list *redir, int fd)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
@@ -27,7 +27,7 @@ static void exec_redir_read(s_ast_redirection_list *redir, int fd)
 
 static void exec_redir_heredoc(s_ast_redirection_list *redir)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     write(redir->io->io_number,
           redir->heredoc->heredoc->buf,
@@ -37,7 +37,7 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir)
 static void exec_redir_dupout(s_ast_redirection_list *redir,
                               int fd)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 1;
     s_string *filename = expand_compound(redir->word);
     fd = word_to_fd(filename);
@@ -51,7 +51,7 @@ static void exec_redir_dupout(s_ast_redirection_list *redir,
 static void exec_redir_dupin(s_ast_redirection_list *redir,
                              int fd)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     s_string *filename = expand_compound(redir->word);
     fd = word_to_fd(filename);
@@ -65,7 +65,7 @@ static void exec_redir_dupin(s_ast_redirection_list *redir,
 static void exec_redir_clobber(s_ast_redirection_list *redir,
                                int fd)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 1;
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
@@ -79,10 +79,12 @@ static void exec_redir_clobber(s_ast_redirection_list *redir,
 static void exec_redir_readwrite(s_ast_redirection_list *redir,
                                  int fd)
 {
-    if (redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     s_string *filename = expand_compound(redir->word);
-    if ((fd = open(filename->buf, O_CREAT | O_RDWR | O_TRUNC)) == -1)
+    if ((fd = open(filename->buf,
+                   O_CREAT | O_RDWR | O_APPEND,
+                   666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
     close(fd);
@@ -91,11 +93,11 @@ static void exec_redir_readwrite(s_ast_redirection_list *redir,
 static void exec_redir_writeup(s_ast_redirection_list *redir,
                                int fd)
 {
-    if (redir->io->io_number == -2)
-        redir->io->io_number = 0;
+    if (!redir->io || redir->io->io_number == -2)
+        redir->io->io_number = 1;
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,
-                   O_CREAT | O_RDWR | O_APPEND,
+                   O_CREAT | O_RDWR | O_TRUNC,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
