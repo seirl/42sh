@@ -1,0 +1,6 @@
+{
+    "type": "env",
+    "desc": "Hashtbl get in a an empty env",
+    "input": "4",
+    "output": """baz_bar test_bar bar_bar foo_bar (null)"""
+}

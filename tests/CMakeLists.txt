@@ -20,6 +20,15 @@ add_executable(test_utils
     $<TARGET_OBJECTS:hashtbl>
 )
 
+add_executable(test_env
+    test_env.c
+    $<TARGET_OBJECTS:string>
+    $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:smalloc>
+    $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:env>
+)
+
 add_executable(test_parser
     test_parser.c
 

@@ -9,6 +9,7 @@ from .case import (QDTestCase,
         new_test_run_interface,
         new_test_run_lexer,
         new_test_run_parser,
+        new_test_run_env,
     )
 from .suite import QDTestSuite
 
@@ -19,6 +20,7 @@ class QDTestLoader(unittest.TestLoader):
             'lexer': new_test_run_lexer,
             'parser': new_test_run_parser,
             'utils': new_test_run_utils,
+            'env': new_test_run_env,
             'interface': new_test_run_interface,
             'fnmatch': new_test_run_fnmatch,
             '42sh': new_test_run_42sh,

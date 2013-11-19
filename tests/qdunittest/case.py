@@ -176,6 +176,36 @@ def new_test_run_parser(test, options):
 
     return QDTestCaseParser, test_parser
 
+class QDTestCaseEnv(QDTestCase):
+
+    def shortDescription(self):
+        return "{}[input: {}] [utils: {}]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('input', "None"),
+                self.test.get('env', "None"),
+            )
+
+def new_test_run_env(test, options):
+    def test_env(subself):
+        timeout = test.get('timeout', options.timeout)
+        input_string = test.get('input', "")
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+
+        command = ["./test_env", input_string]
+
+        env = subself.start_program(args=command,
+                with_valgrind=with_valgrind)
+        stdoutdata, stderrdata = env.communicate(b"", options.timeout)
+
+        if 'output' in test:
+            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
+                             "stdout differ")
+
+        retval = test.get('retval', 0)
+        subself.assertEqual(retval, env.returncode, "return value differ")
+
+    return QDTestCaseEnv, test_env
+
 class QDTestCaseUtils(QDTestCase):
 
     def shortDescription(self):
