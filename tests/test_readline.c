@@ -10,7 +10,7 @@ int main(void)
     {
         if (string_equal(line, "exit"))
             break;
-        printf("\nRead: [%s]\n", line->buf);
+        printf("Read: [%s]\n", line->buf);
         string_free(line);
 
         line = readline("test$ ");
