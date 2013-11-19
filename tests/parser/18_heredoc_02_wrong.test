@@ -1,0 +1,5 @@
+{
+    "desc": "heredoc: basic 2",
+    "input": """A=<<EOF coucou EOF""",
+    "output": "",
+}

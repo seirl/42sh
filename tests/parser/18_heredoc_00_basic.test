@@ -1,0 +1,10 @@
+{
+    "desc": "heredoc: basic",
+    "input": """cat <<EOF
+test   test
+test  test
+test test
+testtest
+EOF""",
+    "output": "",
+}
