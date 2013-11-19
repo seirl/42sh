@@ -9,6 +9,7 @@
 #include "smalloc.h"
 #include "exec.h"
 #include "token.h"
+#include "res_ctrl.h"
 
 static int parse_input(s_lexer *lexer)
 {
@@ -35,8 +36,10 @@ int main(int argc, char *argv[])
     char *cmd = NULL;
     int repeat = 0;
     int ret = parse_options(argc, argv, &cmd, &file);
-    if (ret)
+    if (ret == 2)
         return ret;
+    if (ret == 1)
+        rc_file_load();
     do {
         s_lexer *lexer = input_to_lexer(cmd, file, &repeat);
         if (lexer == NULL || parse_input(lexer))

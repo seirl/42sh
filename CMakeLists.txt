@@ -106,6 +106,7 @@ add_library(history OBJECT
 
 add_library(input OBJECT
     src/input/input.c
+    src/input/res_ctrl.c
     src/input/input_string.c
     src/input/input_file.c
 )
