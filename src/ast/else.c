@@ -8,6 +8,7 @@ s_ast_else *ast_else_new(void)
     myelse->elif_predicate = NULL;
     myelse->elif_cmds = NULL;
     myelse->else_cmds = NULL;
+    myelse->next_else = NULL;
 
     return myelse;
 }

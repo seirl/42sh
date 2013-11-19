@@ -22,7 +22,7 @@ static s_ast_pipeline *sub_parse_rule_pipeline(s_parser *parser,
                                                s_ast_pipeline *pipeline)
 {
     s_token *tok;
-    parser_shift_token(parser); /** shift | */
+    parser_shift_token(parser); /** shift ! */
 
     tok = lex_look_token(parser->lexer);
     if (tok->type == T_NEWLINE)

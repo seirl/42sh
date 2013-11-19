@@ -74,5 +74,6 @@ int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd);
 s_ast_word *word_of_token(s_token *tok);
 void parser_shift_token(s_parser *parser);
 void parser_shift_word(s_parser *parser);
+int next_word_is_res_word(s_parser *parser);
 
 #endif /* !PARSER_PRIVATE_H */

@@ -31,6 +31,8 @@ struct lexer
     int concat;
     //! Lookahead token
     s_token *lookahead;
+    //! Do we have to pre-fill the buffer?
+    int prefill;
 };
 
 /**

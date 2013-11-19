@@ -16,6 +16,8 @@ s_token *lex_word(s_lexer *lexer)
         token_free(tok);
         tok = lex_token(lexer);
         token_to_word(tok);
+        if (tok->type == T_WORD && lexer->working_buffer->buf[0] == '(')
+            tok->type = T_FUNCTION;
         return tok;
     }
 
@@ -37,12 +39,21 @@ s_token *lex_name(s_lexer *lexer)
     return NULL;
 }
 
+static void check_prefill(s_lexer *lexer)
+{
+    if (lexer->prefill)
+    {
+        fill_token(lexer);
+        lexer->prefill = 0;
+    }
+}
+
 s_token *lex_token(s_lexer *lexer)
 {
     if (lexer->lookahead)
         return lex_release_lookahead(lexer);
 
-    fill_token(lexer);
+    check_prefill(lexer);
 
     do {
         if (handle_eof(lexer))
@@ -58,7 +69,11 @@ s_token *lex_token(s_lexer *lexer)
     } while (0);
 
     s_token *ret = lex_release_token(lexer);
+
+    fill_token(lexer);
+
     if (ret->concat == -1)
         ret->concat = 0;
+
     return ret;
 }

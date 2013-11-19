@@ -1,0 +1,16 @@
+{
+    "type": "lexer",
+    "desc": "Function",
+    "input": "a () { echo foo; }",
+    "lexer": ['WTTTWWTTT'],
+    "output": """a	T_FUNCTION (0)
+(	T_LPAREN (0)
+)	T_RPAREN (0)
+{	T_LBRACE (0)
+echo	T_WORD (0)
+foo	T_WORD (0)
+;	T_SEMI (0)
+}	T_RBRACE (0)
+	T_EOF (0)
+"""
+}
