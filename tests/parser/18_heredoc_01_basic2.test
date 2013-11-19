@@ -1,5 +1,5 @@
 {
-    "desc": "heredoc: basic 2",
+    "desc": "heredoc: basic 2 (one line)",
     "input": """cat <<EOF coucou EOF""",
     "output": "",
 }

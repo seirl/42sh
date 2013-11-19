@@ -1,5 +1,5 @@
 {
-    "desc": "heredoc: basic 2",
+    "desc": "heredoc: wrong assignment",
     "input": """A=<<EOF coucou EOF""",
     "output": "",
 }
