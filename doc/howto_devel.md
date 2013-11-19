@@ -105,7 +105,9 @@ Hash Table
 \code{.c}
 #include "hashtbl.h"
 //value_type, key_type, name, fun_free_value, fun_free_key
-HASHTBL(char*, char*, my_table, null_free, null_free);
+HASHTBL(char*, char*, my_table);
+// a mettre dans un .c !!! pas de ; a la fin
+HASHTBL_FUN(my_table, null_free, null_free)
 
 int foo()
 {

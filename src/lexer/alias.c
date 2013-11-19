@@ -1,12 +1,13 @@
 #include "alias.h"
 
-HASHTBL(s_string*, s_string*, alias_table, null_free, null_free);
+HASHTBL(s_string*, s_string*, alias_table);
+HASHTBL_FUN(alias_table, null_free, null_free)
 
 static s_alias_table *alias_get_ptr()
 {
     static s_alias_table *aliases = NULL;
     if (aliases == NULL)
-        HASHTBL_INIT(aliases, 42, hash_string, cmp_string, NULL);
+        HASHTBL_INIT(aliases, 42, hash_string, cmp_string, free_alias_table);
     return aliases;
 }
 

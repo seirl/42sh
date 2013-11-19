@@ -5,13 +5,15 @@
 #include "string_utils.h"
 #include "smalloc.h"
 
-HASHTBL(char *, char *, ctable, null_free, null_free);
-HASHTBL(s_string *, s_string *, stable, string_free, string_free);
+HASHTBL(char *, char *, ctable);
+HASHTBL_FUN(ctable, null_free, null_free)
+HASHTBL(s_string *, s_string *, stable);
+HASHTBL_FUN(stable, string_free, string_free)
 
 static int test_1()
 {
     s_ctable *t;
-    HASHTBL_INIT(t, 10, hash_char, cmp_char, NULL);
+    HASHTBL_INIT(t, 10, hash_char, cmp_char, free_ctable);
     HASHTBL_FREE(t);
     return 0;
 }
@@ -43,7 +45,7 @@ static int value_is(s_ctable *t, char *key, char *res)
 static int test_2()
 {
     s_ctable *t;
-    HASHTBL_INIT(t, 10, my_hash, my_cmp, NULL);
+    HASHTBL_INIT(t, 10, my_hash, my_cmp, free_ctable);
     HASHTBL_SET(t, "0", "zero");
     HASHTBL_SET(t, "1", "un");
     HASHTBL_SET(t, "2", "deux");
@@ -63,7 +65,7 @@ static int test_2()
 static int test_3()
 {
     s_ctable *t;
-    HASHTBL_INIT(t, 10, my_hash, my_cmp, NULL);
+    HASHTBL_INIT(t, 10, my_hash, my_cmp, free_ctable);
     HASHTBL_SET(t, "0", "zero");
     if (!value_is(t, "zero", "0"))
         return 1;
@@ -77,7 +79,7 @@ static int test_3()
 static int test_4()
 {
     s_ctable *t;
-    HASHTBL_INIT(t, 10, my_hash, my_cmp, NULL);
+    HASHTBL_INIT(t, 10, my_hash, my_cmp, free_ctable);
     HASHTBL_DEL(t, "foo");
     HASHTBL_FREE(t);
     return 0;

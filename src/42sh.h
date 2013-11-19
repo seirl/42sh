@@ -1,9 +1,9 @@
 #ifndef 42SH_H
 # define 42SH_H
 
-HASHTBL(s_string *, s_ast_shell_cmd *, 42sh_funcs, null_free, null_free);
-HASHTBL(s_string *, s_string *, 42sh_vars, null_free, null_free);
-HASHTBL(char *, void *(handler)(), 42sh_builtins, null_free, null_free);
+HASHTBL(s_string *, s_ast_shell_cmd *, 42sh_funcs);
+HASHTBL(s_string *, s_string *, 42sh_vars);
+HASHTBL(char *, void *(handler)(), 42sh_builtins);
 
 typedef struct 42sh
 {

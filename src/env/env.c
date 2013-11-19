@@ -2,13 +2,14 @@
 #include "env.h"
 #include "hashtbl.h"
 
-HASHTBL(char*, char*, env, null_free, null_free);
+HASHTBL(char*, char*, env);
+HASHTBL_FUN(env, null_free, null_free)
 
 static s_env *env_get_ptr()
 {
     static s_env *env_var = NULL;
     if (env_var == NULL)
-        HASHTBL_INIT(env_var, 100, hash_char, cmp_char, NULL);
+        HASHTBL_INIT(env_var, 100, hash_char, cmp_char, free_env);
     return env_var;
 }
 
