@@ -3,6 +3,7 @@
 
 void print_word(s_ast_word *w, void *prev, FILE *out);
 void print_compound_word(s_ast_compound_word *w, void *prev, FILE *out);
+void print_word_list(s_ast_word_list *w, void *prev, FILE *out);
 void print_assignment(s_ast_assignment *n, void *prev, FILE *out);
 void print_redirection_list(s_ast_redirection_list *n, void *prev, FILE *out);
 void print_prefix(s_ast_prefix *n, void *prev, FILE *out);

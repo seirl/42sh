@@ -23,6 +23,7 @@ LINK_LIBRARIES(m ncurses)
 include_directories(src)
 include_directories(src/env)
 include_directories(src/ast)
+include_directories(src/ast_printer)
 include_directories(src/lexer)
 include_directories(src/fnmatch)
 include_directories(src/options)
@@ -107,6 +108,11 @@ add_library(input OBJECT
     src/input/input.h
 )
 
+add_library(ast_printer OBJECT
+    src/ast_printer/ast_printer.c
+    src/ast_printer/ast_printer.h
+)
+
 add_library(parser OBJECT
     src/parser/parser_create.c
     src/parser/parser_delete.c
@@ -181,6 +187,7 @@ add_executable(../42sh
     src/sighandler.c
 
     $<TARGET_OBJECTS:ast>
+    $<TARGET_OBJECTS:ast_printer>
     $<TARGET_OBJECTS:env>
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
