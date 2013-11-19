@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "lexer.h"
 #include "lexer_private.h"
 #include "smalloc.h"
@@ -56,13 +57,14 @@ s_token *lex_release_token(s_lexer *lexer)
 {
     s_token *tok;
     e_token_type type = T_WORD;
-    u_token_value value =
+    s_token_value value =
     {
         NULL
     };
 
     type = lexer->token_type;
     value.str = string_moult(&(lexer->working_buffer));
+    value.integer = type == T_IO_NUMBER ? atoi(value.str->buf) : 0;
     tok = token_create(type, value, lexer->location, lexer->concat);
 
     lexer_reset(lexer);

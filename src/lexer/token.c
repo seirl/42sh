@@ -3,7 +3,7 @@
 #include "string_utils.h"
 
 s_token *token_create(e_token_type type,
-                      u_token_value value,
+                      s_token_value value,
                       s_location location,
                       int concat)
 {
@@ -21,7 +21,7 @@ s_token *token_create(e_token_type type,
 
 s_token *token_duplicate(const s_token *tok)
 {
-    u_token_value value;
+    s_token_value value;
     value.str = string_duplicate(tok->value.str);
     return (token_create(tok->type, value, tok->location, tok->concat));
 }
