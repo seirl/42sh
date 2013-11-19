@@ -1,6 +1,7 @@
 {
     "type": "env",
-    "desc": "Hashtbl get in a an empty env",
+    "desc": "Env add and get a value",
     "input": "1",
-    "output": """bar"""
+    "output": """bar""",
+    "skip": True
 }

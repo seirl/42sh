@@ -1,6 +1,6 @@
 {
     "type": "env",
-    "desc": "Hashtbl get in a an empty env",
+    "desc": "Env get in a an empty env",
     "input": "0",
-    "output": """"""
+    "output": """""",
 }

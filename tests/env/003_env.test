@@ -1,6 +1,7 @@
 {
     "type": "env",
-    "desc": "Hashtbl get in a an empty env",
+    "desc": "Env get a value in a non-singleton env",
     "input": "3",
-    "output": """baz"""
+    "output": """baz""",
+    "skip": True
 }
