@@ -4,8 +4,7 @@
 
 static int write_char(int c)
 {
-    write(STDOUT_FILENO, &c, 1);
-    return 0;
+    return write(STDOUT_FILENO, &c, 1) == -1;
 }
 
 #include <stdio.h>

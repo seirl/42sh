@@ -48,19 +48,21 @@ e_next_action handle_bracket_char(s_term *term)
 {
     char c;
     char c2 = -1;
-    read(STDIN_FILENO, &c, sizeof (char));
-#define X(Name, Char1, Char2, Fun)                          \
-    if (c == Char1)                                         \
-    {                                                       \
-        if (Char2 == 0)                                     \
-            return handle_bracket_key(Name, term);          \
-        else                                                \
-        {                                                   \
-            if (c2 == -1)                                   \
-                read(STDIN_FILENO, &c2, sizeof (char));     \
-            if (c2 == Char2)                                \
-                return handle_bracket_key(Name, term);      \
-        }                                                   \
+    if (read(STDIN_FILENO, &c, sizeof (char)) == -1)
+        return ERROR;
+#define X(Name, Char1, Char2, Fun)                                  \
+    if (c == Char1)                                                 \
+    {                                                               \
+        if (Char2 == 0)                                             \
+            return handle_bracket_key(Name, term);                  \
+        else                                                        \
+        {                                                           \
+            if (c2 == -1)                                           \
+                if (read(STDIN_FILENO, &c2, sizeof (char)) == -1)   \
+                    return ERROR;                                   \
+            if (c2 == Char2)                                        \
+                return handle_bracket_key(Name, term);              \
+        }                                                           \
     }
 #include "bracket_key.def"
 #undef X
