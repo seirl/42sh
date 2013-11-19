@@ -13,6 +13,8 @@ s_ast_assignment *parse_assignment(s_parser *parser)
         token_free(tok);
         parser_shift_token(parser);
 
+        parser_shift_token(parser); /** Shift '=' */
+
         tok = lex_look_word(parser->lexer);
         if (tok && tok->concat)
             assignment->value = parse_compound_word(parser);
