@@ -1,0 +1,6 @@
+{
+    "desc": "bad: {}",
+    "input": "{}",
+    "stderr": ...,
+    "retval": 1,
+}

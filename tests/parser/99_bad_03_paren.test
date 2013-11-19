@@ -1,0 +1,6 @@
+{
+    "desc": "bad: paren",
+    "input": "()",
+    "stderr": ...,
+    "retval": 1,
+}

@@ -1,0 +1,6 @@
+{
+    "desc": "bad: semi",
+    "input": ";;;",
+    "output": "",
+    "retval": 1,
+}
