@@ -33,4 +33,4 @@ void my_log(e_log_level level, s_debug_info debug, char *Fmt, ...);
         my_log(Level, debug, Fmt, __VA_ARGS__);   \
     } while (0)
 
-#endif
+#endif /* !LOG_H */
