@@ -9,10 +9,15 @@ static void do_backspace(s_term *term)
     if (term->input->len > 0)
     {
         string_del_from_end(term->input, 1);
-        my_tputs(tgetstr("le", NULL)); //cursor left
-        my_tputs(tgetstr("dm", NULL)); //delete mode
-        my_tputs(tgetstr("dc", NULL)); //delete char
-        my_tputs(tgetstr("ed", NULL)); //edition mode
+
+        // cursor left
+        my_tputs(tgetstr("le", NULL));
+        // delete mode
+        my_tputs(tgetstr("dm", NULL));
+        // delete char
+        my_tputs(tgetstr("dc", NULL));
+        // edition mode
+        my_tputs(tgetstr("ed", NULL));
     }
 }
 
@@ -38,7 +43,8 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
         case BACKSPACE:
             do_backspace(term);
         default:
-            return CONTINUE; // Unrecognized key, just ignore it.
+            // Unrecognized key, ignore it.
+            return CONTINUE;
     }
 }
 
@@ -49,5 +55,6 @@ e_next_action handle_special_char(s_term *term, char c)
         return handle_special_key(Name, term);
 #include "special_keys.def"
 #undef X
-    return PRINT; // Unrecognized key, just ignore it.
+    // Unrecognized key, ignore it.
+    return PRINT;
 }

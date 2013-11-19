@@ -13,7 +13,8 @@ e_next_action getkey(s_term *term, char *c)
     if (isprint(*c))
         return PRINT;
 
-    if (*c == 27) // \x1b: escape
+    // \x1b: escape
+    if (*c == 27)
     {
         if (read(STDIN_FILENO, c, sizeof (char)) == -1)
             return ERROR;

@@ -26,6 +26,7 @@ static const char *redirection_type_str[] =
     ">|",
     "<>",
 };
+
 void print_redirection_list(s_ast_redirection_list *n, void *prev, FILE *out)
 {
     if (!n)

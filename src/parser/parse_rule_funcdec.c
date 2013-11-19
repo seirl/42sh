@@ -2,7 +2,8 @@
 #include "parser_macros.h"
 #include "smalloc.h"
 
-s_ast_funcdec *parse_rule_funcdec(s_parser *parser) // TODO
+// TODO
+s_ast_funcdec *parse_rule_funcdec(s_parser *parser)
 {
     s_string *name;
     s_ast_shell_cmd *content;

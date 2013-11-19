@@ -27,7 +27,8 @@ static s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
     return shell_cmd;
 }
 
-s_ast_shell_cmd *parse_rule_shell_command(s_parser *parser) // TODO
+// TODO
+s_ast_shell_cmd *parse_rule_shell_command(s_parser *parser)
 {
     s_token *tok;
 

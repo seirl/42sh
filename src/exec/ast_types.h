@@ -76,15 +76,15 @@ struct case_node
 
 enum redirect_type
 {
-    L_TO_R_S, // Left to right, simple: >
-    R_TO_L_S, // Right to left, simple: <
-    L_TO_R_D, // Left to right, double: >>
-    R_TO_L_D, // Right to left, double: <<
-    L_TO_R_SA, // Left to right, simple, and: >&
-    R_TO_L_SA, // Right to left, simple, and: <&
-    L_TO_R_SO, // Left to right, simple, or: >|
-    R_TO_L_DD, // Right to left, double, dash: <<-
-    LR_TO_RL // Bidirectionnal: <>
+    L_TO_R_S, //! @brief Left to right, simple: >
+    R_TO_L_S, //! @brief Right to left, simple: <
+    L_TO_R_D, //! @brief Left to right, double: >>
+    R_TO_L_D, //! @brief Right to left, double: <<
+    L_TO_R_SA, //! @brief Left to right, simple, and: >&
+    R_TO_L_SA, //! @brief Right to left, simple, and: <&
+    L_TO_R_SO, //! @brief Left to right, simple, or: >|
+    R_TO_L_DD, //! @brief Right to left, double, dash: <<-
+    LR_TO_RL //! @brief Bidirectionnal: <>
 };
 
 struct redir_node

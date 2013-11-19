@@ -1,6 +1,7 @@
 #include "parser_private.h"
 
-s_ast_prefix *parse_rule_prefix(s_parser *parser) // TODO
+// TODO
+s_ast_prefix *parse_rule_prefix(s_parser *parser)
 {
     s_ast_redirection_list *redirection;
     s_ast_assignment *assignment;
