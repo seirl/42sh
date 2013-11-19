@@ -13,7 +13,7 @@ int redir_list_len(s_ast_redirection_list *redir)
 
 void set_default_io_number(s_ast_redirection_list *redir)
 {
-    if (!redir->io)
+    if (redir && !redir->io)
     {
         redir->io = ast_io_number_new();
         if (redir->type == REDIR_WRITE)                 /** >   */
