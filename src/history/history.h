@@ -2,13 +2,26 @@
 # define HISTORY_H
 
 # include "string_utils.h"
-# include "list.h"
 
-LIST(s_string *, hist_lines);
+struct hist_entry
+{
+    s_string *line;
+    s_string *temp_line;
+    struct hist_entry *next;
+};
+typedef struct hist_entry s_hist_entry;
+
+struct hist_list
+{
+    size_t size;
+    s_hist_entry *hd;
+};
+typedef struct hist_list s_hist_list;
+
 struct history
 {
-    s_hist_lines *lines;
-    s_Node_hist_lines *last_file_entry;
+    s_hist_list *lines;
+    s_hist_entry *last_file_entry;
 };
 typedef struct history s_history;
 
@@ -18,7 +31,7 @@ typedef struct history s_history;
 ** @param n The number from the end of the wanted command line.
 ** @return an s_string representing the wanted command line.
 */
-s_string *get_history(int n);
+s_hist_entry *get_history(int n);
 void open_history(void);
 void close_history(void);
 
