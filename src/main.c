@@ -15,21 +15,13 @@ static int parse_input(s_lexer *lexer)
 {
     s_parser *parser = parser_create(lexer);
     s_ast_input *ast;
-    if ((ast = parse_rule_input(parser)))
+    ast = parse_rule_input(parser);
+    parser_diagnostic(parser);
+    if (ast)
     {
         if (shopt_get("ast_print"))
             print_ast(ast, stdout);
         ast_input_delete(ast);
-        if (!parser_eof(parser))
-        {
-            LOG(ERROR, "Garbage in the lexer after parsing", NULL);
-            return 1;
-        }
-        else if (parser_status(parser) == PARSE_ERROR)
-        {
-            LOG(ERROR, "Parse error", NULL);
-            return 1;
-        }
     }
     parser_delete(parser);
     return 0;

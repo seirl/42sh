@@ -31,6 +31,9 @@ s_ast_input *parse_rule_input(s_parser *parser);
 /** @brief Get parser status. */
 e_parser_status parser_status(s_parser *parser);
 
+/** @brief Display a health assessment of the parser. */
+int parser_diagnostic(s_parser *parser);
+
 /** @brief Parse done? */
 int parser_eof(s_parser *parser);
 

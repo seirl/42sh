@@ -17,9 +17,9 @@ void my_log(e_log_level level, s_debug_info debug, char *fmt, ...)
     }
     else if (level == WARN)
     {
-        fprintf(stdout, "%-17s", COLOR_YELLOW"[WARN]"COLOR_RESET);
-        vfprintf(stdout, fmt, ap);
-        fprintf(stdout, " at (%s:%d)\n", debug.file, debug.line);
+        fprintf(stderr, "%-17s", COLOR_YELLOW"[WARN]"COLOR_RESET);
+        vfprintf(stderr, fmt, ap);
+        fprintf(stderr, " at (%s:%d)\n", debug.file, debug.line);
     }
     else if (level == ERROR)
     {
