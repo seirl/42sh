@@ -21,9 +21,8 @@ static int parse_input(s_lexer *lexer)
     {
         if (shopt_get("ast_print"))
             print_ast(ast, stdout);
+        init_shell();
         exec_ast_input(ast);
-        vars_free();
-        funcs_free();
         ast_input_delete(ast);
     }
     parser_delete(parser);
@@ -44,8 +43,9 @@ int main(int argc, char *argv[])
         s_lexer *lexer = input_to_lexer(cmd, file, &repeat);
         if (lexer == NULL || parse_input(lexer))
             break;
-        init_shell();
         input_free(lexer, cmd, file);
+        vars_free();
+        funcs_free();
     } while (repeat);
     smalloc_clean();
     return EXIT_SUCCESS;
