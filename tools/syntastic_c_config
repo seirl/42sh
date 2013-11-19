@@ -1,3 +1,7 @@
+-Wall
+-Wextra
+-pedantic
+-std=c99
 -Isrc/
 -Isrc/ast
 -Isrc/env
