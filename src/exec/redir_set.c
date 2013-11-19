@@ -1,4 +1,5 @@
 #include "exec.h"
+#include "xsyscall.h"
 
 static void exec_redir_write(s_ast_redirection_list *redir,
                              int fd)
@@ -11,7 +12,7 @@ static void exec_redir_write(s_ast_redirection_list *redir,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
-    close(fd);
+    XCLOSE(fd);
 }
 
 static void exec_redir_read(s_ast_redirection_list *redir, int fd)
@@ -22,7 +23,7 @@ static void exec_redir_read(s_ast_redirection_list *redir, int fd)
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
-    close(fd);
+    XCLOSE(fd);
 }
 
 static void exec_redir_heredoc(s_ast_redirection_list *redir)
@@ -45,7 +46,7 @@ static void exec_redir_dupout(s_ast_redirection_list *redir,
     if (fd == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else if (fd == -2)
-        close(fd); /* FIXME error handling */
+        XCLOSE(fd); /* FIXME error handling */
     dup2(fd, redir->io->io_number);
 }
 
@@ -59,7 +60,7 @@ static void exec_redir_dupin(s_ast_redirection_list *redir,
     if (fd == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else if (fd == -2)
-        close(fd); /* FIXME error handling */
+        XCLOSE(fd); /* FIXME error handling */
     dup2(fd, redir->io->io_number);
 }
 
@@ -74,7 +75,7 @@ static void exec_redir_clobber(s_ast_redirection_list *redir,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
-    close(fd);
+    XCLOSE(fd);
 }
 
 static void exec_redir_readwrite(s_ast_redirection_list *redir,
@@ -88,7 +89,7 @@ static void exec_redir_readwrite(s_ast_redirection_list *redir,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
-    close(fd);
+    XCLOSE(fd);
 }
 
 static void exec_redir_writeup(s_ast_redirection_list *redir,
@@ -102,7 +103,7 @@ static void exec_redir_writeup(s_ast_redirection_list *redir,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     dup2(fd, redir->io->io_number);
-    close(fd);
+    XCLOSE(fd);
 }
 
 static void exec_redir_type(s_ast_redirection_list *redir,

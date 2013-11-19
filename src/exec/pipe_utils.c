@@ -1,4 +1,5 @@
 #include "exec.h"
+#include "xsyscall.h"
 
 int pipe_cmd_count(s_ast_pipeline *node)
 {
@@ -27,14 +28,14 @@ void exec_pipe_setio(int pipe[2], int io)
 {
     if (io)
     {
-        close(pipe[1]);
+        XCLOSE(pipe[1]);
         dup2(pipe[0], 0);
-        close(pipe[0]);
+        XCLOSE(pipe[0]);
     }
     else
     {
-        close(pipe[0]);
+        XCLOSE(pipe[0]);
         dup2(pipe[1], 1);
-        close(pipe[1]);
+        XCLOSE(pipe[1]);
     }
 }

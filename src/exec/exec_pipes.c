@@ -1,4 +1,5 @@
 #include "exec.h"
+#include "xsyscall.h"
 
 static s_pipe *pipe_init(void)
 {
@@ -38,8 +39,8 @@ static void pipe_child_job(int cmd_index,
 
 static void close_pipe(int pipe[2])
 {
-    close(pipe[0]);
-    close(pipe[1]);
+    XCLOSE(pipe[0]);
+    XCLOSE(pipe[1]);
 }
 
 static void pipe_parent_job(int index,
