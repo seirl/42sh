@@ -27,5 +27,5 @@ void env_unset(char *name)
 
 void env_free()
 {
-    //TODO
+    hashtbl_free(env_get_ptr());
 }

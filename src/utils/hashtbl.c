@@ -6,12 +6,12 @@ s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
         void (*free_key)(void *),
         void (*free_value)(void *))
 {
-    s_hashtbl *h = malloc(sizeof (s_hashtbl));
+    s_hashtbl *h = calloc(1, sizeof (s_hashtbl));
     h->hash = hash;
     h->cmp = cmp;
     h->free_key = free_key;
     h->free_value = free_value;
-    h->bucket = malloc(sizeof (s_hash_elt *) * HASHTBL_SIZE);
+    h->bucket = calloc(HASHTBL_SIZE, sizeof (s_hash_elt *));
     return h;
 }
 
@@ -62,5 +62,28 @@ void hashtbl_unset(s_hashtbl *h, void *key)
             prev->next = it->next;
         else
             h->bucket[hash] = it->next;
+        h->free_key(it->key);
+        h->free_value(it->value);
+        free(it);
     }
+}
+
+void hashtbl_free(s_hashtbl *h)
+{
+    s_hash_elt *it;
+    s_hash_elt *tmp;
+    for (int i = 0; i <  HASHTBL_SIZE; ++i)
+    {
+        it = h->bucket[i];
+        while (it)
+        {
+            tmp = it->next;
+            h->free_key(it->key);
+            h->free_value(it->value);
+            free(it);
+            it = tmp;
+        }
+    }
+    free(h->bucket);
+    free(h);
 }

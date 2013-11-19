@@ -28,6 +28,7 @@ s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
 void hashtbl_set(s_hashtbl *h, void *value, void *key);
 void *hashtbl_get(s_hashtbl *h, void *key);
 void hashtbl_unset(s_hashtbl *h, void *key);
+void hashtbl_free(s_hashtbl *h);
 
 // hash_char.c
 unsigned long hash_char(void *s);

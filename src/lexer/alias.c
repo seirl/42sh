@@ -25,5 +25,5 @@ s_string *alias_get(s_string *alias)
 
 void alias_free()
 {
-    //TODO
+    hashtbl_free(alias_get_ptr());
 }
