@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     e_token_type t = T_WORD;
 
     str = argv[1];
-    lexer = lex_create(dummy_getc, dummy_topc, "<test>");
+    lexer = lex_create(dummy_getc, dummy_topc, NULL, "<test>");
     if (argc == 2)
     {
         do {

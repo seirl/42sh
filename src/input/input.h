@@ -1,16 +1,8 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "string_utils.h"
+# include "lexer.h"
 
-struct input_state
-{
-    s_string *line;
-    size_t index;
-};
-typedef struct input_state s_input_state;
-
-char input_getc(void *lexer_state);
-char input_topc(void *lexer_state);
+s_lexer *input_to_lexer(char *cmd);
 
 #endif /* !INPUT_H */

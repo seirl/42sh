@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     s_ast_input *ast;
 
     str = argv[1];
-    lexer = lex_create(dummy_getc, dummy_topc, "<test>");
+    lexer = lex_create(dummy_getc, dummy_topc, NULL, "<test>");
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {

@@ -4,6 +4,7 @@
 
 s_lexer *lex_create(char (*lex_getc)(void *input_state),
                     char (*lex_topc)(void *input_state),
+                    void *input_state,
                     char *source)
 {
     s_lexer *lexer;
@@ -22,6 +23,7 @@ s_lexer *lex_create(char (*lex_getc)(void *input_state),
     lexer->concat = -1;
     lexer->lookahead = NULL;
     lexer->prefill = 1;
+    lexer->input_state = input_state;
 
     return lexer;
 }

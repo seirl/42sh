@@ -14,6 +14,7 @@ typedef struct lexer s_lexer;
 */
 s_lexer *lex_create(char (*lex_getc)(void *input_state),
                     char (*lex_topc)(void *input_state),
+                    void *input_state,
                     char *source);
 
 /**

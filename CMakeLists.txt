@@ -98,9 +98,13 @@ add_library(readline OBJECT
     src/readline/terminal.c
 )
 
+add_library(history OBJECT
+    #src/history/history.c
+)
+
 add_library(input OBJECT
     src/input/input.c
-    src/input/input.h
+    src/input/input_string.c
 )
 
 add_library(ast_printer OBJECT

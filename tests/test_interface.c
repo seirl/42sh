@@ -4,7 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-    int ret = parse_options(argc, argv);
+    char *cmd;
+    int ret = parse_options(argc, argv, &cmd);
     if (ret)
         return ret;
 

@@ -22,7 +22,7 @@ static void usage(FILE *output)
 
 }
 
-int parse_options(int argc, char *argv[])
+int parse_options(int argc, char *argv[], char **cmd)
 {
     s_opt opt;
     char *arg;
@@ -52,9 +52,7 @@ int parse_options(int argc, char *argv[])
         ;
     }
     if (opt_get(&opt, "c", &arg))
-    {
-        printf("Exec %s\n", arg);
-    }
+        *cmd = arg;
     opt_free(&opt);
     return 0;
 }
