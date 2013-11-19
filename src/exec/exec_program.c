@@ -33,6 +33,9 @@ int exec_program(char **cmd_argv, s_ast_prefix *prefixes)
         return 1;
     }
     waitpid(pid, &st, 0);
+    for (int i = 0; cmd_argv[i]; ++i)
+        sfree(cmd_argv[i]);
+    sfree(cmd_argv);
     return st;
 }
 
@@ -71,6 +74,7 @@ void exec_simple_cmd(s_ast_simple_cmd *cmd)
     {
         exec_prefixes(cmd->prefixes);
         exec_shell_cmd(func_body);
+        sfree(cmd_argv);
     }
     else
     {

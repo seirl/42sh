@@ -125,8 +125,8 @@ void exec_pipe_node(s_ast_pipeline *node)
             shell.status = -1;
         }
         wait_pipe(!res, pipe);
+        sfree(pipe->process);
         sfree(pipe);
     }
     sfree(pipe_cmds);
 }
-

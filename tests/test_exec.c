@@ -47,6 +47,11 @@ int main(int argc, char **argv)
     if ((ast = parse_rule_input(parser)))
     {
         exec_ast_input(ast);
+        /* free */
+        vars_free();
+        funcs_free();
+        /* free */
+
         ast_input_delete(ast);
         if (parser_eof(parser))
             ret = 0;

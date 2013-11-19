@@ -13,6 +13,7 @@ void exec_redirection(s_ast_redirection_list *redir)
     context = save_redir_context(redir);
     shell.status = set_redir(redir);
     restore_redir_context(context);
+    sfree(context);
 }
 
 int compound_word_len(s_ast_compound_word *word)
