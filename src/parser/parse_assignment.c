@@ -2,12 +2,13 @@
 
 s_ast_assignment *parse_assignment(s_parser *parser)
 {
+    s_ast_assignment *assignment = NULL;
     s_token *tok;
 
     tok = lex_look_token(parser->lexer);
     if (tok->type == T_ASSIGNMENT_WORD)
     {
-        s_ast_assignment *assignment = ast_assignment_new();
+        assignment = ast_assignment_new();
         assignment->name = string_duplicate(tok->value.str);
         token_free(tok);
         parser_shift_token(parser);
@@ -19,5 +20,5 @@ s_ast_assignment *parse_assignment(s_parser *parser)
     }
     token_free(tok);
 
-    return NULL;
+    return assignment;
 }
