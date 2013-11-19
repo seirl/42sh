@@ -39,7 +39,7 @@ void close_history(void)
         g_hist.last_file_entry = NULL;
 }
 
-s_hist_entry *query_history(int n)
+s_hist_entry *get_history(int n)
 {
     return h_list_nth(g_hist.lines, n);
 }

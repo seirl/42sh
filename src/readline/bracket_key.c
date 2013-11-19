@@ -2,6 +2,7 @@
 #include "key.h"
 #include "bracket_key.h"
 #include "wrapper.h"
+#include "history.h"
 
 static void do_right(s_term *term)
 {
@@ -19,6 +20,12 @@ static void do_left(s_term *term)
         my_tputs(tgetstr("le", NULL));
         term->input_index--;
     }
+}
+
+static void do_up(s_term *term)
+{
+    (void)term;
+    //term->hist_current = get_history(++(term->hist_pos));
 }
 
 static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)

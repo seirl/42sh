@@ -20,6 +20,7 @@ typedef struct hist_list s_hist_list;
 
 struct history
 {
+#undef lines
     s_hist_list *lines;
     s_hist_entry *last_file_entry;
 };

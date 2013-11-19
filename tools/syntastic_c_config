@@ -14,3 +14,4 @@
 -Isrc/parser
 -Isrc/readline
 -Isrc/utils
+-Isrc/history

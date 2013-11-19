@@ -5,6 +5,7 @@
 # include <curses.h>
 # include <term.h>
 # include "string_utils.h"
+# include "history.h"
 
 # define TERM_NAME "xterm"
 
@@ -23,6 +24,8 @@ struct terminal
     int height;
     s_string *input;
     size_t input_index;
+    s_hist_entry *hist_current;
+    size_t hist_pos;
 };
 typedef struct terminal s_term;
 

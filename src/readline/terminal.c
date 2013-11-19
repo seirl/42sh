@@ -27,6 +27,8 @@ static s_term *term_init()
     tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
     term->input = string_create(0);
     term->input_index = 0;
+    term->hist_current = NULL;
+    term->hist_pos = 0;
     return term;
 }
 
