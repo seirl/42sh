@@ -52,6 +52,9 @@ s_token *token_create(e_token_type type,
 */
 s_token *token_duplicate(const s_token *token);
 
+/**
+** @brief Free the token
+*/
 void token_free(s_token *tok);
 
 /**

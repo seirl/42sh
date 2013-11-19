@@ -57,15 +57,21 @@ static void lexer_reset(s_lexer *lexer)
 s_token *lex_release_token(s_lexer *lexer)
 {
     s_token *tok;
+    char *end = NULL;
     e_token_type type = T_WORD;
     s_token_value value =
     {
         NULL,
-        0
+        -2
     };
 
     type = lexer->token_type;
     value.str = string_moult(&(lexer->working_buffer));
+    if (type == T_IO_NUMBER)
+    {
+        int io = strtol(value.str->buf, &end, 10);
+        value.integer = !*end ? io : -2;
+    }
     value.integer = type == T_IO_NUMBER ? atoi(value.str->buf) : -2;
     tok = token_create(type, value, lexer->location, lexer->concat);
 
