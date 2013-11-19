@@ -96,7 +96,7 @@ void pipe_parent_job(int index,
     }
 }
 
-int exec_pipe(s_pipe *pipe,
+int exec_pipe(s_pipe *pipe_struct,
               s_ast_cmd **pipe_cmds,
               int len)
 {
@@ -118,7 +118,7 @@ int exec_pipe(s_pipe *pipe,
         }
         else if (pid > 0)
         {
-            process_add(pid, pipe);
+            process_add(pid, pipe_struct);
             pipe_parent_job(i, len, &old_pipe, curr_pipe);
             if (i == len - 1)
                 waitpid(pid, &shell.status, 0);

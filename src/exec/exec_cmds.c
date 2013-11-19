@@ -402,14 +402,23 @@ void exec_for(s_ast_for *for_cmd)
 
 void exec_subshell_cmd(s_ast_shell_cmd *shell_cmd)
 {
-    shell_cmd = shell_cmd;
+    if (!shell_cmd)
+    {
+        fprintf(stderr, "Invalid SUBSHELL command.\n");
+        return;
+    }
+    exec_shell_cmd(shell_cmd);
     fprintf(stderr, "SUBSHELL commands not implemented yet.\n");
     return;
 }
 
 void exec_case(s_ast_case *node)
 {
-    node = node;
+    if (!node)
+    {
+        fprintf(stderr, "Invalid CASE command.\n");
+        return;
+    }
     fprintf(stderr, "CASE commands not implemented yet.\n");
     return;
 }
