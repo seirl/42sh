@@ -4,6 +4,13 @@
 # include "lexer.h"
 # include "ast.h"
 
+enum parser_status
+{
+    PARSE_OK,
+    PARSE_ERROR,
+};
+typedef enum parser_status e_parser_status;
+
 typedef struct parser s_parser;
 
 /**
@@ -20,6 +27,9 @@ void parser_delete(s_parser *parser);
 
 /** @brief Parse rule input. */
 s_ast_input *parse_rule_input(s_parser *parser);
+
+/** @brief Get parser status. */
+e_parser_status parser_status(s_parser *parser);
 
 /** @brief Parse done? */
 int parser_eof(s_parser *parser);

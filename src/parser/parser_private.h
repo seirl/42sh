@@ -5,13 +5,6 @@
 # include "token.h"
 # include "ast.h"
 
-enum parser_status
-{
-    PARSE_OK,
-    PARSE_ERROR,
-};
-typedef enum parser_status e_parser_status;
-
 struct parser
 {
     s_lexer *lexer;

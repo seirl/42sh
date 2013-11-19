@@ -125,6 +125,7 @@ add_library(parser OBJECT
     src/parser/parser_delete.c
 
     src/parser/parser_utils.c
+    src/parser/parser_status.c
     src/parser/parse_expect.c
 
     src/parser/parse_rule_and_or.c

@@ -25,6 +25,11 @@ static int parse_input(s_lexer *lexer)
             LOG(ERROR, "Garbage in the lexer after parsing", NULL);
             return 1;
         }
+        else if (parser_status(parser) == PARSE_ERROR)
+        {
+            LOG(ERROR, "Parse error", NULL);
+            return 1;
+        }
     }
     parser_delete(parser);
     return 0;
