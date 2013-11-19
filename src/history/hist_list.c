@@ -15,7 +15,7 @@ s_hist_list *h_list_init(void)
 void h_list_delete(s_hist_list *l)
 {
     s_hist_entry *this = l->hd;
-    while(this)
+    while (this)
     {
         free(this->line);
         free(this->temp_line);

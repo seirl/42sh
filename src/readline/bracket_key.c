@@ -32,9 +32,9 @@ static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
 {
     switch (key)
     {
-#define X(Name, Char1, Char2, fun)  \
+#define X(Name, Char1, Char2, Fun)  \
         case Name:                  \
-            fun;                    \
+            Fun;                    \
             break;
 #include "bracket_key.def"
 #undef X
@@ -49,7 +49,7 @@ e_next_action handle_bracket_char(s_term *term)
     char c;
     char c2 = -1;
     read(STDIN_FILENO, &c, sizeof (char));
-#define X(Name, Char1, Char2, fun)                          \
+#define X(Name, Char1, Char2, Fun)                          \
     if (c == Char1)                                         \
     {                                                       \
         if (Char2 == 0)                                     \

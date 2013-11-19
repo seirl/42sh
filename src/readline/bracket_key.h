@@ -6,7 +6,7 @@
 
 enum bracket_key
 {
-#define X(Name, Char1, Char2, fun) Name,
+#define X(Name, Char1, Char2, Fun) Name,
 #include "bracket_key.def"
 #undef X
 };
