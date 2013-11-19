@@ -11,6 +11,7 @@ clean:
 	$(RM) -r tests/qdunittest/__pycache__
 	$(RM) 42sh
 	$(RM) audebe_r-42sh.tar.bz2
+	$(RM) doc/README.md
 
 distclean: clean
 	$(RM) common.cmake
@@ -35,4 +36,5 @@ export:
 	    | bzip2 > audebe_r-42sh.tar.bz2
 
 doc:
+	@ln README doc/README.md
 	doxygen

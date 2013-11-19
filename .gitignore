@@ -12,3 +12,6 @@ __pycache__
 build
 .*
 common.cmake
+doc/html
+doc/latex
+doc/README.md
