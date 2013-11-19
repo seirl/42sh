@@ -59,7 +59,8 @@ s_token *lex_release_token(s_lexer *lexer)
     e_token_type type = T_WORD;
     s_token_value value =
     {
-        NULL
+        NULL,
+        0
     };
 
     type = lexer->token_type;
