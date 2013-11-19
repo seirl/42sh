@@ -44,13 +44,13 @@ typedef struct history s_history;
 s_hist_entry *history_get(int n);
 
 /**
-** @brief Initialize the history
-*/
-void history_open(void);
-
-/**
 ** @brief Close the history and free it's ressources
 */
 void history_close(void);
+
+/**
+** @brief Get the history size
+*/
+size_t history_size(void);
 
 #endif /* !HISTORY_H */

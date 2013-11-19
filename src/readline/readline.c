@@ -11,6 +11,7 @@
 
 static s_string *readline_close(s_term *term, e_next_action ret)
 {
+    history_close();
     s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
     term_close();
     printf("\n");

@@ -22,6 +22,7 @@ void h_list_delete(s_hist_list *l)
         l->hd = this->next;
         free(this);
     }
+    free(l);
 }
 
 void h_list_append(s_hist_list *l, s_string *data)
@@ -32,6 +33,7 @@ void h_list_append(s_hist_list *l, s_string *data)
     new->next = l->hd;
 
     l->hd = new;
+    l->size++;
 }
 
 s_hist_entry *h_list_nth(s_hist_list *l, size_t n)
