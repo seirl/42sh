@@ -12,6 +12,7 @@ static s_history g_hist;
 
 void history_open(void)
 {
+    // Query and setup environment.
     if (!env_get("HISTFILE"))
         env_set("HISTFILE", "~/.sh_history");
     if (!env_get("HISTFILESIZE"))
@@ -25,6 +26,8 @@ void history_open(void)
     // HISTFILESIZE
     g_hist.lines = h_list_init();
     char *line = NULL;
+
+    // Create the history entries
     while (getline(&line, 0, hist_file))
         h_list_append(g_hist.lines, string_create_from(line));
     g_hist.last_file_entry = g_hist.lines->hd;
