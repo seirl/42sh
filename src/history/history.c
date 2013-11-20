@@ -57,6 +57,7 @@ static void history_open(void)
         if (*line && line[line_len - 1] == '\n')
             line[line_len - 1] = '\0';
         h_list_append(g_hist->lines, string_create_from(line));
+        free(line);
     }
     g_hist->last_file_entry = g_hist->lines->hd;
     fclose(hist_file);
@@ -90,6 +91,7 @@ void history_close(void)
     h_list_delete(g_hist->lines);
     g_hist->lines = NULL;
     g_hist->last_file_entry = NULL;
+    free(g_hist);
     g_hist = NULL;
 }
 
