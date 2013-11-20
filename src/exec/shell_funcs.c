@@ -2,6 +2,12 @@
 #include <string.h>
 #include "shell_funcs.h"
 
+void free_shell_cmd(void *shell_cmd)
+{
+    s_ast_shell_cmd *node = shell_cmd;
+    ast_shell_cmd_delete(node);
+}
+
 static s_hashtbl *funcs_get_ptr(int reset)
 {
     static s_hashtbl *funcs = NULL;
@@ -11,7 +17,7 @@ static s_hashtbl *funcs_get_ptr(int reset)
         funcs = hashtbl_init(hash_char,
                              cmp_char,
                              free_char,
-                             ast_shell_cmd_delete);
+                             free_shell_cmd);
     return funcs;
 }
 
