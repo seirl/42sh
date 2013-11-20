@@ -1,7 +1,12 @@
 {
-   <readline>
+   readline
    Memcheck:Leak
-   fun:*
+   ...
+   fun:tgetstr
+}
+{
+   readline2
+   Memcheck:Leak
    ...
    fun:tgetent
 }
