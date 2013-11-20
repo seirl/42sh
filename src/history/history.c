@@ -31,27 +31,23 @@ static void env_setup(void)
 static void history_open(void)
 {
     env_setup();
-
     int error;
+    FILE *hist_file;
 
     if ((error = access(env_get("HISTFILE"), F_OK)) == -1)
-    {
-        FILE *hist_file = fopen(env_get("HISTFILE"), "w");
-        fclose(hist_file);
-    }
+        if ((hist_file = fopen(env_get("HISTFILE"), "w")) != NULL)
+            fclose(hist_file);
+
     if ((error = access(env_get("HISTFILE"), R_OK)) == -1)
         return;
 
-    FILE *hist_file = fopen(env_get("HISTFILE"), "r");
-    // TODO: try to truncate the start of the file if there is more line than
-    // HISTFILESIZE
+    hist_file = fopen(env_get("HISTFILE"), "r");
     g_hist = malloc(sizeof (s_history));
     g_hist->lines = h_list_init();
     char *line = NULL;
     size_t buf_size = 0;
     int line_len = 0;
 
-    // Create the history entries
     while ((line_len = getline(&line, &buf_size, hist_file)) != -1)
     {
         if (*line && line[line_len - 1] == '\n')
@@ -60,6 +56,7 @@ static void history_open(void)
         free(line);
         line = NULL;
     }
+
     g_hist->last_file_entry = g_hist->lines->hd;
     fclose(hist_file);
 }
