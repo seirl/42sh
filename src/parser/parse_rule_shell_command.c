@@ -12,7 +12,10 @@ static s_ast_shell_cmd *parse_compound_list(s_parser *parser, s_token *tok)
 
     s_ast_list *list;
     if (!(list = parse_rule_compound_list(parser, 1)))
+    {
+        token_free(tok);
         RETURN_PARSE_EXPECTED(parser, "List");
+    }
 
     s_ast_shell_cmd *shell_cmd = ast_shell_cmd_new();
     shell_cmd->subshell = subshell;
