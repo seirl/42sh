@@ -62,9 +62,23 @@ static void history_open(void)
     fclose(hist_file);
 }
 
+static void history_write_rec(FILE *f, s_hist_entry *e)
+{
+    if (!e)
+        return;
+    history_write_rec(f, e->next);
+    fprintf(f, "%s\n", e->line->buf);
+}
+
 static void history_write(void)
 {
-    // TODO:
+    if (!g_hist)
+        history_open();
+    if (!g_hist)
+        return;
+    FILE *f = fopen(env_get("HISTFILE"), "w+");
+    history_write_rec(f, g_hist->lines->hd);
+    fclose(f);
 }
 
 void history_close(void)
