@@ -8,7 +8,7 @@ __pycache__
 *.pdf
 *.png
 *.core
-42sh
+./42sh
 build
 .*
 common.cmake
