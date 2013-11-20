@@ -91,7 +91,7 @@ def new_test_run_42sh(test, options):
 
         shell_args = test.get('args', [])
         with_valgrind = test.get('with_valgrind', not options.without_valgrind)
-        shell = subself.start_shell(["../42sh"] + shell_args,
+        shell = subself.start_program(args=["../../42sh"] + shell_args,
                 with_valgrind=with_valgrind)
 
         stdin_buf = test.get('stdin', None)
@@ -104,7 +104,7 @@ def new_test_run_42sh(test, options):
             subself.assertMultiLineEqual(test['stderr'], stderrdata.decode(),
                              "stderr differ")
         else:
-            subself.assertMultiLineEqual(b"", stderrdata.decode(),
+            subself.assertMultiLineEqual("", stderrdata.decode(),
                     "stderr differ")
 
         retval = test.get('retval', 0)
