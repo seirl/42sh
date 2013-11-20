@@ -35,7 +35,6 @@ void lex_delete(s_lexer *lexer)
     string_free(lexer->working_buffer);
     if (lexer->lookahead)
         token_free(lexer->lookahead);
-    sfree(lexer);
 }
 
 //! @brief Replace s with new s_string, return old value.

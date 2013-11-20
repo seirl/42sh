@@ -10,6 +10,7 @@
 #include "readline.h"
 #include "macros.h"
 #include "log.h"
+#include "smalloc.h"
 
 s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
 {
@@ -52,4 +53,5 @@ void input_free(s_lexer *lexer, char *cmd, char *file)
         FILE *f = lexer->input_state;
         fclose(f);
     }
+    sfree(lexer);
 }
