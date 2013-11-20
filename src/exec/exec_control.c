@@ -47,6 +47,7 @@ void exec_for(s_ast_for *for_cmd)
     while (values && (value = expand_compound(values->word)))
     {
         vars_set(expand_word(for_cmd->identifier), value);
+        value = NULL;
         exec_ast_list(for_cmd->cmd_list);
         values = values->next;
     }

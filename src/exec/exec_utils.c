@@ -26,6 +26,7 @@ void exec_assignment(s_ast_assignment *assign)
 {
     s_string *value = expand_compound(assign->value);
     vars_set(assign->name, value);
+    value = NULL;
 }
 
 f_handler builtin_handler(char *name)

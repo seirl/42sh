@@ -1,8 +1,32 @@
 #include "exec.h"
 
+void free_current_cmd(char **argv)
+{
+    int i = 0;
+    if (argv)
+    {
+        while (argv[i])
+        {
+            sfree(argv[i]);
+            i += 1;
+        }
+        sfree(argv);
+    }
+}
+
 void exec_argv(char **argv)
 {
     assert(argv && argv[0]);
+    if (!strcmp(argv[0], "exit"))
+    {
+        free_current_cmd(argv);
+        char *new_argv[] =
+        {
+            "exit\0",
+            NULL
+        };
+        execvp(new_argv[0], new_argv);
+    }
     execvp(argv[0], argv);
     if (errno == ENOENT)
     {

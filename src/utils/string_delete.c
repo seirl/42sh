@@ -32,6 +32,7 @@ char *string_release(s_string *s)
 
 void string_free(s_string *s)
 {
-    sfree(s->buf);
+    if (s->buff)
+        sfree(s->buf);
     sfree(s);
 }
