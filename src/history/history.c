@@ -58,6 +58,7 @@ static void history_open(void)
             line[line_len - 1] = '\0';
         h_list_append(g_hist->lines, string_create_from(line));
         free(line);
+        line = NULL;
     }
     g_hist->last_file_entry = g_hist->lines->hd;
     fclose(hist_file);
