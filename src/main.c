@@ -10,6 +10,7 @@
 #include "exec.h"
 #include "token.h"
 #include "res_ctrl.h"
+#include "env.h"
 
 static int parse_input(s_lexer *lexer)
 {
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
     } while (repeat);
     vars_free();
     funcs_free();
+    env_free();
     smalloc_clean();
     return EXIT_SUCCESS;
 }
