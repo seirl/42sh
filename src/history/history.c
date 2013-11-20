@@ -33,6 +33,12 @@ static void history_open(void)
     env_setup();
 
     int error;
+
+    if ((error = access(env_get("HISTFILE"), F_OK)) == -1)
+    {
+        FILE *hist_file = fopen(env_get("HISTFILE"), "w");
+        fclose(hist_file);
+    }
     if ((error = access(env_get("HISTFILE"), R_OK)) == -1)
         return;
 
