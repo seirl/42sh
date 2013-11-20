@@ -30,7 +30,10 @@ static int check_args(s_opt opt)
         return 3;
     }
     if (opt_get(&opt, "version", NULL))
+    {
         version();
+        return 3;
+    }
     if (opt_get(&opt, "ast-print", NULL))
         shopt_set("ast_print", 1);
     if (opt_get(&opt, "token-print", NULL))
