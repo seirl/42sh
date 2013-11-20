@@ -24,9 +24,9 @@ s_string *expand_compound(s_ast_compound_word *word)
 
 void exec_assignment(s_ast_assignment *assign)
 {
-    s_string *value = expand_compound(assign->value);
-    vars_set(assign->name, value);
-    value = NULL;
+    s_string *value = string_duplicate(expand_compound(assign->value));
+    s_string *name = string_duplicate(assign->name);
+    vars_set(name, value);
 }
 
 f_handler builtin_handler(char *name)

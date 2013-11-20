@@ -16,7 +16,8 @@ void ast_assignment_delete(s_ast_assignment *ass)
     if (!ass)
         return;
 
-    string_free(ass->name);
+    if (ass->name)
+        string_free(ass->name);
     ast_compound_word_delete(ass->value);
     sfree(ass);
 }
