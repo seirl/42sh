@@ -42,10 +42,14 @@ s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
 
 void input_free(s_lexer *lexer, char *cmd, char *file)
 {
-    s_string *str = lexer->input_state;
-    FILE *f = lexer->input_state;
     if (cmd)
+    {
+        s_string *str = lexer->input_state;
         string_free(str);
+    }
     else if (file)
+    {
+        FILE *f = lexer->input_state;
         fclose(f);
+    }
 }
