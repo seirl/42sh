@@ -62,9 +62,14 @@ static void history_open(void)
     fclose(hist_file);
 }
 
+static void history_write(void)
+{
+    // TODO:
+}
+
 void history_close(void)
 {
-    // TODO: Write history
+    history_write();
     if (!g_hist)
         return;
 
