@@ -295,7 +295,8 @@ struct ast_cmd
 };
 typedef struct ast_cmd s_ast_cmd;
 
-/** @brief Pipeline
+/**
+** @brief Pipeline
 **
 ** @code
 ** pipeline: ['!'] command ('|' ('\n')* command)*
