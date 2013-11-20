@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "env.h"
+#include "smalloc.h"
 
 int test_0()
 {
@@ -49,16 +50,18 @@ int main(int argc, char *argv[])
     if (argc < 2)
         return 1;
     int f = atoi(argv[1]);
+    int ret;
     if (f == 0)
-        return test_0();
+        ret = test_0();
     if (f == 1)
-        return test_1();
+        ret = test_1();
     if (f == 2)
-        return test_2();
+        ret = test_2();
     if (f == 3)
-        return test_3();
+        ret = test_3();
     if (f == 4)
-        return test_4();
+        ret = test_4();
     env_free();
-    return 0;
+    smalloc_clean();
+    return ret;
 }
