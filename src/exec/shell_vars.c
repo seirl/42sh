@@ -6,7 +6,7 @@ static s_hashtbl *vars_get_ptr(int reset)
     if (reset)
         vars = NULL;
     else if (vars == NULL)
-        vars = hashtbl_init(hash_string, cmp_string, free_string, free_string);
+        vars = hashtbl_init(hash_string, cmp_string, free_string, NULL);
     return vars;
 }
 
