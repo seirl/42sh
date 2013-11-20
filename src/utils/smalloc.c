@@ -104,7 +104,7 @@ void sfree(void *ptr)
     void *free_ptr = get_remove(meta, meta);
     if (free_ptr == NULL)
     {
-        LOG(ERROR, "Double free or malloc/sfree\n", NULL);
+        //LOG(ERROR, "Double free or malloc/sfree\n", NULL);
         return;
     }
     free(free_ptr);
