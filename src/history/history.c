@@ -18,7 +18,7 @@ static void env_setup(void)
     if (!env_get("HISTFILE"))
     {
         s_string *file_path = string_create_from(getenv("HOME"));
-        s_string *filename = string_create_from("/.sh_history");
+        s_string *filename = string_create_from("/.42sh_history");
         string_cat(file_path, filename);
         env_set(file_path->buf ,"HISTFILE");
         string_free(file_path);
