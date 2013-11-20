@@ -31,6 +31,7 @@ static int load_rc(const char *file)
             funcs_free();
         }
         parser_delete(parser);
+        sfree(lexer);
         fclose(f);
     }
     return 0;
