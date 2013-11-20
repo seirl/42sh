@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     if (argc < 2)
         return 1;
     int f = atoi(argv[1]);
-    int ret;
+    int ret = 0;
     if (f == 0)
         ret = test_0();
     if (f == 1)
