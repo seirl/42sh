@@ -26,6 +26,7 @@ struct terminal
     int width;
     int height;
     s_string *input;
+    s_string *backup_input;
     size_t input_index;
     s_hist_entry *hist_current;
     int hist_pos;

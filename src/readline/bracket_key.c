@@ -24,9 +24,9 @@ static void do_left(s_term *term)
     }
 }
 
-static void update_line(s_term *term, char *line)
+static void update_line(s_term *term, size_t end)
 {
-    while (term->input_index < term->input->len)
+    while (term->input_index < end)
         my_tputs(tgetstr("nd", NULL));
 
     my_tputs(tgetstr("dm", NULL));
@@ -38,7 +38,7 @@ static void update_line(s_term *term, char *line)
     }
     my_tputs(tgetstr("ed", NULL));
 
-    printf("%s", line);
+    printf("%s", term->input->buf);
     fflush(stdout);
 }
 
@@ -47,10 +47,25 @@ static void do_up(s_term *term)
     if (!USE_HIST || term->hist_pos + 1 >= history_size())
         return;
 
+    size_t end = term->input->len;
     term->hist_pos++;
-    term->hist_current = history_get(term->hist_pos);
-    update_line(term, term->hist_current->line->buf);
-    term->input = string_duplicate(term->hist_current->line);
+    term->input = history_get(term->hist_pos)->line;
+    update_line(term, end);
+    term->input_index = term->input->len;
+}
+
+static void do_down(s_term *term)
+{
+    if (!USE_HIST || term->hist_pos < 0)
+        return;
+
+    size_t end = term->input->len;
+    term->hist_pos--;
+    if (term->hist_pos == -1)
+        term->input = term->backup_input;
+    else
+        term->input = history_get(term->hist_pos)->line;
+    update_line(term, end);
     term->input_index = term->input->len;
 }
 
