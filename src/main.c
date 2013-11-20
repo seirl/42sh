@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
     char *cmd = NULL;
     int repeat = 0;
     int ret = parse_options(argc, argv, &cmd, &file);
+    if (ret == 3)
+        return 0;
     if (ret == 2)
         return ret;
     if (ret == 1)

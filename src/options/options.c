@@ -25,7 +25,10 @@ static void usage(FILE *output)
 static int check_args(s_opt opt)
 {
     if (opt_get(&opt, "help", NULL))
+    {
         usage(stdout);
+        return 3;
+    }
     if (opt_get(&opt, "version", NULL))
         version();
     if (opt_get(&opt, "ast-print", NULL))
