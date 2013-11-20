@@ -54,4 +54,9 @@ void history_close(void);
 */
 int history_size(void);
 
+/**
+** @brief Add a line to the history
+*/
+void history_add(s_string *line);
+
 #endif /* !HISTORY_H */

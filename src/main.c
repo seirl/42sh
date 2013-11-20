@@ -11,6 +11,7 @@
 #include "token.h"
 #include "res_ctrl.h"
 #include "env.h"
+#include "history.h"
 
 static int parse_input(s_lexer *lexer)
 {
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
             break;
         input_free(lexer, cmd, file);
     } while (repeat);
+    history_close();
     vars_free();
     funcs_free();
     env_free();

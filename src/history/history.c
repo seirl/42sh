@@ -85,3 +85,12 @@ int history_size(void)
         return g_hist->lines->size;
     return 0;
 }
+
+void history_add(s_string *line)
+{
+    if (!g_hist)
+        history_open();
+    if (!g_hist)
+        return;
+    h_list_append(g_hist->lines, line);
+}

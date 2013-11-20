@@ -9,13 +9,24 @@
 
 #include "wrapper.h"
 
+static int is_blank(s_string *line)
+{
+    if (!line)
+        return 1;
+    for (size_t i = 0; i < line->len; i++)
+        if (line->buf[i] != ' ' || line->buf[i] != '\t')
+            return 0;
+    return 1;
+}
+
 static s_string *readline_close(s_term *term, e_next_action ret)
 {
-    history_close();
     s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
     term_close();
     printf("\n");
     fflush(stdout);
+    if (!is_blank(input))
+        history_add(string_duplicate(input));
     return input;
 }
 
