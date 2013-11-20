@@ -42,6 +42,7 @@ int main(int argc, char **argv)
     if (!(ast = parse_rule_input(parser)) || !parser_diagnostic(parser))
         ret = 1;
 
+    ast_input_delete(ast);
     parser_delete(parser);
     smalloc_clean();
 
