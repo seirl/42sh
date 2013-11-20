@@ -24,7 +24,7 @@ char dummy_topc(void *state)
 
 int main(int argc, char **argv)
 {
-    int ret;
+    int ret = 0;
 
     if (argc < 2)
     {
