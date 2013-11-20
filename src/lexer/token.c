@@ -48,7 +48,8 @@ int token_to_word(s_token *token)
 #undef X
     if (token->type == T_ASSIGNMENT_WORD
        || token->type == T_IO_NUMBER
-       || token->type == T_WORD)
+       || token->type == T_WORD
+       || token->type == T_BANG)
     {
         token->type = T_WORD;
         return 1;
