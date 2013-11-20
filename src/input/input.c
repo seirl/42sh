@@ -12,13 +12,13 @@
 #include "log.h"
 #include "smalloc.h"
 
-s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
+s_lexer *input_to_lexer(char **cmd, char *file, int *repeat)
 {
     s_string *input;
     FILE *f;
-    if (cmd)
+    if (*cmd && !repeat)
     {
-        input = string_create_from(cmd);
+        input = string_create_from(*cmd);
         return lex_create(input_string_getc, input_string_topc, input, "cmd");
     }
     if (file)
@@ -38,6 +38,7 @@ s_lexer *input_to_lexer(char *cmd, char *file, int *repeat)
         *repeat = 0;
         return NULL;
     }
+    *cmd = "";
     return lex_create(input_string_getc, input_string_topc, input, "int");
 }
 

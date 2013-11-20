@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
         rc_file_load();
     init_shell();
     do {
-        s_lexer *lexer = input_to_lexer(cmd, file, &repeat);
+        s_lexer *lexer = input_to_lexer(&cmd, file, &repeat);
         if (lexer == NULL || parse_input(lexer))
             break;
         input_free(lexer, cmd, file);
