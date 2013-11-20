@@ -56,7 +56,8 @@ static void history_open(void)
         free(line);
         line = NULL;
     }
-    free(line);
+    if (line)
+        free(line);
 
     g_hist->last_file_entry = g_hist->lines->hd;
     fclose(hist_file);
