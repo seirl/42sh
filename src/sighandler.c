@@ -7,15 +7,6 @@
 
 #include "sighandler.h"
 
-static char *gdb_args[] =
-{
-    "gdb",
-    "-p",
-    NULL,
-    "-q",
-    NULL
-};
-
 static void segfault_callback()
 {
     fprintf(stderr, "[SEGFAULT] attaching gdb... have fun :)\n");
@@ -38,7 +29,7 @@ static void segfault_callback()
         dup2(stdout_pipe[1], STDOUT_FILENO);
         char pid_s[16];
         sprintf(pid_s, "%d", pid_parent);
-        gdb_args[2] = pid_s;
+        char *gdb_args[] = GDBARGS(pid_s);
         execvp(gdb_args[0], gdb_args);
         exit(1);
     }

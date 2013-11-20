@@ -21,7 +21,7 @@ int shopt_set(const char *shopt, int value)
 {
     size_t size;
     s_shopt *shell_options = shopt_get_ptr(&size);
-    for (size_t i = 0 ; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
     {
         if (!strcmp(shopt, shell_options[i].name))
         {
@@ -36,7 +36,7 @@ int shopt_get(const char *shopt)
 {
     size_t size;
     s_shopt *shell_options = shopt_get_ptr(&size);
-    for (size_t i = 0 ; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
         if (!strcmp(shopt, shell_options[i].name))
             return shell_options[i].value;
     return -1;
@@ -46,7 +46,7 @@ void shopt_print(void)
 {
     size_t size;
     s_shopt *shell_options = shopt_get_ptr(&size);
-    for (size_t i = 0 ; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
     {
         fprintf(stdout, "%s\t%s\n", shell_options[i].name,
                 shell_options[i].value == 1 ? "on" : "off");
@@ -96,7 +96,7 @@ int shopt_from_opt(s_opt *opt)
     s_shopt *shell_options = shopt_get_ptr(&size);
     if (shopt_check(opt, "O") == 0)
         return 1;
-    for (size_t i = 0 ; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
     {
         int ret = opt_is_set(opt, "O", shell_options[i].name);
         if (ret != -1)

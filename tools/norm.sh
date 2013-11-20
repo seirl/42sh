@@ -78,6 +78,9 @@ check_norm() {
     bad_pattern $1 " do$"
     bad_pattern $1 " if("
     bad_pattern $1 "sizeof("
+    bad_pattern $1 "[a-zA-Z]=" "Spacing"
+    bad_pattern $1 " ," "Spacing"
+    bad_pattern $1 ",[^ \\\"]" "Spacing"
     bad_pattern $1 '[^\ #].*=\ \{2,\}.*[^\\]$' "Multiple blank char"
     bad_pattern $1 '[^\ #].* \{2,\}=.*[^\\]$' "Multiple blank char"
     bad_pattern $1 "[a-zA-Z0-9]\*\ " "* at wrong place"
@@ -90,7 +93,7 @@ check_norm() {
 }
 
 if [ $# -ne 1 ]; then
-    echo "Usage ./moul.sh directory"
+    echo "Usage ./norm.sh directory"
     exit 0
 fi
 

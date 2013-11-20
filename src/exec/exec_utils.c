@@ -28,7 +28,7 @@ void exec_assignment(s_ast_assignment *assign)
     vars_set(assign->name, value);
 }
 
-handler builtin_handler(char *name)
+f_handler builtin_handler(char *name)
 {
     if (!g_shell.builtins || !g_shell.built_count)
         return NULL;

@@ -43,11 +43,11 @@ void exec_until(s_ast_until *until_cmd)
 void exec_for(s_ast_for *for_cmd)
 {
     s_string *value = NULL;
-    while (for_cmd->values
-           && (value = expand_compound(for_cmd->values->word)))
+    s_ast_word_list *values = for_cmd->values;
+    while (values && (value = expand_compound(values->word)))
     {
         vars_set(expand_word(for_cmd->identifier), value);
         exec_ast_list(for_cmd->cmd_list);
-        for_cmd->values = for_cmd->values->next;
+        values = values->next;
     }
 }

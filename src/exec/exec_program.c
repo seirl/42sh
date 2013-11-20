@@ -29,7 +29,7 @@ int exec_prog(char **cmd_argv,
     if (pid == 0)
     {
         exec_prefixes(prefixes);
-        g_shell.curr_argv= cmd_argv;
+        g_shell.curr_argv = cmd_argv;
         exec_argv(cmd_argv);
         fprintf(stderr, "Execution flow corrupted.\n");
         assert(0);
@@ -55,7 +55,7 @@ void restore_redir_contexts(s_redir_context **contexts)
 void exec_simple_cmd(s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
-    handler callback;
+    f_handler callback;
     char **cmd_argv = elements_to_argv(cmd->elements, len);
     s_redir_context **contexts = exec_elements_redir(cmd->elements);
     s_ast_shell_cmd *func_body;

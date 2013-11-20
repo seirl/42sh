@@ -4,7 +4,7 @@
 static void exec_redir_write(s_ast_redirection_list *redir,
                              int fd)
 {
-    if (!redir->io  || redir->io->io_number == -2)
+    if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 1;
     s_string *filename = expand_compound(redir->word);
     if ((fd = open(filename->buf,

@@ -5,8 +5,8 @@
 # include "location.h"
 
 /**
- ** @brief Type of a token.
- */
+** @brief Type of a token.
+*/
 enum token_type
 {
 # define X(Type, Str) Type,

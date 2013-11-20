@@ -1,12 +1,12 @@
 #ifndef SHELL_H
 # define SHELL_H
 
-typedef int (*handler)(char **);
+typedef int (*f_handler)(char **);
 
 struct builtin_entry
 {
     char *name;
-    handler callback;
+    f_handler callback;
 };
 typedef struct builtin_entry s_builtin_entry;
 

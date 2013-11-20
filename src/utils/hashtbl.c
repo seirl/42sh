@@ -2,9 +2,9 @@
 #include "hashtbl.h"
 
 s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
-        int (*cmp)(void *, void *),
-        void (*free_key)(void *),
-        void (*free_value)(void *))
+                        int (*cmp)(void *, void *),
+                        void (*free_key)(void *),
+                        void (*free_value)(void *))
 {
     s_hashtbl *h = calloc(1, sizeof (s_hashtbl));
     h->hash = hash;
@@ -78,7 +78,7 @@ void hashtbl_free(s_hashtbl *h)
 {
     s_hash_elt *it;
     s_hash_elt *tmp;
-    for (int i = 0; i <  HASHTBL_SIZE; ++i)
+    for (int i = 0; i < HASHTBL_SIZE; ++i)
     {
         it = h->bucket[i];
         while (it)

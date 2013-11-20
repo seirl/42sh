@@ -5,7 +5,7 @@ static u_smalloc_bucket **get_bucket(void)
 {
     static u_smalloc_bucket **buckets = NULL;
     if (buckets == NULL)
-        buckets = calloc(N_BUCKETS, sizeof (u_smalloc_bucket*));
+        buckets = calloc(N_BUCKETS, sizeof (u_smalloc_bucket *));
     return buckets;
 }
 
@@ -17,7 +17,7 @@ static size_t ptr_hash(void *ptr)
 }
 
 static u_smalloc_bucket *get_remove(u_smalloc_bucket *hash_ptr,
-        u_smalloc_bucket *meta)
+                                    u_smalloc_bucket *meta)
 {
     size_t hash = ptr_hash(hash_ptr);
     u_smalloc_bucket *tmp = get_bucket()[hash];

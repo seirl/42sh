@@ -53,7 +53,7 @@ void exec_simple_cmd(s_ast_simple_cmd *cmd);
 /** @brief Execute an assignment command */
 void exec_assignment(s_ast_assignment *assign);
 /** @brief Return the builtin function pointer corresponding to the name. */
-handler builtin_handler(char *name);
+f_handler builtin_handler(char *name);
 /** @brief Return the length of a redirection list */
 int redir_list_len(s_ast_redirection_list *redir);
 /** @brief Save a redirection context */
@@ -110,7 +110,7 @@ void exec_shell_cmd_node(s_ast_shell_cmd *shell_cmd,
 void exec_fund_dec(s_ast_funcdec *funcdec);
 /** @brief Execute a function declaration AST node */
 void exec_funcdec_node(s_ast_funcdec *funcdec,
-                         s_ast_redirection_list *redir);
+                       s_ast_redirection_list *redir);
 /** @brief Execute a command AST node */
 void exec_cmd_node(s_ast_cmd *node);
 /** @brief Execute an 'and' AST node */

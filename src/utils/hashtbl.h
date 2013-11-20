@@ -22,9 +22,9 @@ struct hashtbl
 typedef struct hashtbl s_hashtbl;
 
 s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
-        int (*cmp)(void *, void *),
-        void (*free_key)(void *),
-        void (*free_value)(void *));
+                        int (*cmp)(void *, void *),
+                        void (*free_key)(void *),
+                        void (*free_value)(void *));
 void hashtbl_set(s_hashtbl *h, void *value, void *key);
 void *hashtbl_get(s_hashtbl *h, void *key);
 void hashtbl_unset(s_hashtbl *h, void *key);
