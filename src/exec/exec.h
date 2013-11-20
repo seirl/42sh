@@ -39,6 +39,7 @@ typedef struct pipe
 
 extern s_shell g_shell;
 
+void shell_free(void);
 /** @brief A wrapper to ast_shell_cmd_delete. */
 void free_shell_cmd(void *shell_cmd);
 /** @brief Initialize the shell. */

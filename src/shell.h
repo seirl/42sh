@@ -14,6 +14,7 @@ typedef struct shell
 {
     s_builtin_entry *builtins;
     unsigned int built_count;
+    char **curr_argv;
     int status;
 } s_shell;
 

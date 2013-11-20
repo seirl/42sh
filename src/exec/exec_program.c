@@ -29,6 +29,7 @@ int exec_prog(char **cmd_argv,
     if (pid == 0)
     {
         exec_prefixes(prefixes);
+        g_shell.curr_argv= cmd_argv;
         exec_argv(cmd_argv);
         fprintf(stderr, "Execution flow corrupted.\n");
         assert(0);
@@ -72,6 +73,7 @@ void exec_simple_cmd(s_ast_simple_cmd *cmd)
     {
         exec_prefixes(cmd->prefixes);
         g_shell.status = callback(cmd_argv);
+        sfree(cmd_argv);
     }
     else
         g_shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);

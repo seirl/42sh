@@ -5,6 +5,7 @@ void init_shell(void)
     g_shell.builtins = NULL;
     g_shell.built_count = 0;
     g_shell.status = 0;
+    g_shell.curr_argv = NULL;
 }
 
 s_string *expand_word(s_ast_word *word)

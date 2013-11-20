@@ -47,8 +47,7 @@ int main(int argc, char *argv[])
         input_free(lexer, cmd, file);
     } while (repeat);
     history_close();
-    vars_free();
-    funcs_free();
+    shell_free();
     env_free();
     smalloc_clean();
     return EXIT_SUCCESS;
