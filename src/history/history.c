@@ -79,8 +79,11 @@ static void history_write(void)
     if (!g_hist)
         return;
     FILE *f = fopen(env_get("HISTFILE"), "w+");
-    history_write_rec(f, g_hist->lines->hd);
-    fclose(f);
+    if (f)
+    {
+        history_write_rec(f, g_hist->lines->hd);
+        fclose(f);
+    }
 }
 
 void history_close(void)
