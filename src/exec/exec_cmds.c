@@ -58,6 +58,7 @@ void exec_shell_cmd_node(s_ast_shell_cmd *shell_cmd,
 void exec_func_dec(s_ast_funcdec *funcdec)
 {
     funcs_set(funcdec->name->buf, funcdec->shell_cmd);
+    funcdec->shell_cmd = NULL;
 }
 
 void exec_funcdec_node(s_ast_funcdec *funcdec,

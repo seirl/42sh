@@ -8,7 +8,10 @@ static s_hashtbl *funcs_get_ptr(int reset)
     if (reset)
         funcs = NULL;
     else if (funcs == NULL)
-        funcs = hashtbl_init(hash_char, cmp_char, free_char, NULL);
+        funcs = hashtbl_init(hash_char,
+                             cmp_char,
+                             free_char,
+                             ast_shell_cmd_delete);
     return funcs;
 }
 
