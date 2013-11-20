@@ -8,8 +8,8 @@ static void do_backspace(s_term *term)
 {
     if (term->input_index > 0)
     {
-        string_del_from_end(term->input, 1);
         term->input_index--;
+        string_del_nth(term->input, term->input_index);
 
         // cursor left
         my_tputs(tgetstr("le", NULL));

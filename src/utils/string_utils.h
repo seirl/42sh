@@ -34,6 +34,7 @@ void string_ungetc(s_string *s);
 void string_rewind(s_string *s);
 char string_topc(s_string *s);
 
+void string_del_nth(s_string *str, size_t n);
 void string_del_from_end(s_string *str, size_t n);
 unsigned int string_search(const s_string *s, const char *needle);
 s_string *string_extract(const s_string *str, size_t start, size_t end);
