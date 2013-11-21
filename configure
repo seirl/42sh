@@ -36,6 +36,9 @@ do
         --with-clang)
             CLANG="set(CMAKE_C_COMPILER clang)"
             ;;
+        --with-gcc)
+            CLANG="set(CMAKE_C_COMPILER gcc)"
+            ;;
         --help)
             usage
             ;;
