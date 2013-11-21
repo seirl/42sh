@@ -3,24 +3,11 @@
 
 # include "macros.h"
 
-enum type
-{
-    e_int,
-    e_str,
-    e_void
-};
-typedef enum type e_type;
-
 /** @brief an argument entry */
 struct arg
 {
     //! the value
-    union
-    {
-        char *str;
-        int n;
-        double f;
-    } value;
+    char *str;
     //! is set ?
     int set;
     //! linked lists
@@ -37,8 +24,8 @@ struct param
     char *long_name;
     //! appear multiple time (+O -O)
     int multi;
-    //! type of the expected value
-    e_type type;
+    //! does the param have an option behind
+    int opt;
     //! the argument
     s_arg arg;
 };
@@ -48,14 +35,14 @@ typedef struct param s_param;
 /** @breif all the parsed options */
 struct opt
 {
+    //! number of valid arguments
+    unsigned int valid_count;
+    //! array containing the valid arguments
+    const s_param *valid_param;
     //! number of arguments
     unsigned int count;
     //! array containing the arguments
-# define X(S, L, T, M) + 1
-    s_param param[1 +
-# include "arg.def"
-    ];
-# undef X
+    s_param *param;
     //! trailing argument
     char **trailing;
     //! number of trailing argument
@@ -64,6 +51,10 @@ struct opt
 
 typedef struct opt s_opt;
 
+# define NEW_ARG \
+    { NULL, 0, NULL }
+
+s_opt *opt_init(const s_param *params, unsigned int size);
 /** @brief parse the command line and properly fill an opt struct */
 int opt_parse(int argc, char *argv[], s_opt *opt);
 /** @brief get the value of a short or long option */

@@ -3,52 +3,65 @@
 #include <string.h>
 #include "getopt.h"
 
-static int add_arg(s_opt *opt, s_param p, e_type t, char *o)
+s_opt *opt_init(const s_param *params, unsigned int size)
 {
-    if (t != e_void && o == NULL)
-        return -1;
-    if (t == e_void)
-        p.arg.value.str = NULL;
-    else if (t == e_str)
-        p.arg.value.str = o;
-    else if (t == e_int)
-        p.arg.value.n = atoi(o);
+    s_opt *ret = malloc(sizeof (s_opt));
+    ret->valid_param = params;
+    ret->valid_count = size;
+    ret->param = malloc(size * sizeof (s_param));
+    return ret;
+}
+
+static int add_arg(s_opt *opt, s_param p, char *o)
+{
+    if (p.opt == 0)
+        p.arg.str = NULL;
+    else
+    {
+        if (o != NULL)
+            p.arg.str = o;
+        else
+            return -1;
+    }
     p.arg.next = NULL;
     for (unsigned int i = 0; i < opt->count; ++i)
     {
         if (opt->param[i].short_name == p.short_name)
         {
             if (p.multi == 0)
-                return t != e_void;
+                return p.opt;
             s_arg *new_arg = malloc(sizeof (s_arg));
-            new_arg->value = p.arg.value;
+            new_arg->str = p.arg.str;
             new_arg->set = p.arg.set;
             new_arg->next = opt->param[i].arg.next;
             opt->param[i].arg.next = new_arg;
-            return t != e_void;
+            return p.opt;
         }
     }
     opt->param[opt->count++] = p;
-    return t != e_void;
+    return p.opt;
 }
 
 static int handle_long_arg(s_opt *opt, char *arg, char *o)
 {
     int ret;
     s_param p;
-#define X(S, L, T, M)                                                       \
-    if (strcmp("NULL", #L) && !strcmp(arg, #L))                             \
-    {                                                                       \
-        p.short_name = *#S;                                                 \
-        p.long_name = #L;                                                   \
-        p.type = e_##T;                                                     \
-        p.multi = M;                                                        \
-        if ((ret = add_arg(opt, p, e_##T, o)) == -1)                        \
-        RET_WITH(-2, PROGNAME": --%s: option requieres an argument\n", #L)  \
-        return ret;                                                         \
+
+    for (unsigned int i = 0; i < opt->valid_count; ++i)
+    {
+        if (opt->valid_param[i].long_name &&
+           !strcmp(opt->valid_param[i].long_name, arg))
+        {
+            p.short_name = opt->valid_param[i].short_name;
+            p.long_name = opt->valid_param[i].long_name;
+            p.multi = opt->valid_param[i].multi;
+            p.opt = opt->valid_param[i].opt;
+            if ((ret = add_arg(opt, p, o)) == -1)
+                RET_WITH(-2, PROGNAME": --%s: "
+                        "option requieres an argument\n", p.long_name)
+            return ret;
+        }
     }
-#include "arg.def"
-#undef X
     RET_WITH(-1, PROGNAME": --%s: invalid option\n", arg);
 }
 
@@ -56,23 +69,21 @@ static int handle_short_arg(s_opt *opt, char *arg, char *o, int set)
 {
     s_param p;
     int ret = -1;
-    for (int i = 0; arg[i]; ++i)
+    for (unsigned int i = 0; i < opt->valid_count; ++i)
     {
-#define X(S, L, T, M)                                                        \
-        if (*#S != '/' && *#S == arg[i])                                     \
-        {                                                                    \
-            p.short_name = *#S;                                              \
-            p.long_name = #L;                                                \
-            p.type = e_##T;                                                  \
-            p.multi = M;                                                     \
-            p.arg.set = set;                                                 \
-            ret = add_arg(opt, p, e_##T, arg[i + 1] ? NULL : o);             \
-            if (ret == -1)                                                   \
-                RET_WITH(-2, PROGNAME": -%c: option requieres an argument\n",\
-                        *#S)                                                 \
+        if (opt->valid_param[i].short_name ==  arg[0])
+        {
+            p.short_name = opt->valid_param[i].short_name;
+            p.long_name = opt->valid_param[i].long_name;
+            p.multi = opt->valid_param[i].multi;
+            p.opt = opt->valid_param[i].opt;
+            p.arg.set = set;
+            int ret = add_arg(opt, p, o);
+            if (ret == -1)
+                RET_WITH(-2, PROGNAME": -%c: "
+                        "option requieres an argument\n", p.short_name)
+            return ret;
         }
-#include "arg.def"
-#undef X
     }
     if (ret == -1)
         RET_WITH(-1, PROGNAME": -%s: invalid option\n", arg);
@@ -99,10 +110,11 @@ int opt_parse(int argc, char *argv[], s_opt *opt)
                 RET_WITH(1, "Trailing argv at position %d (%s)\n",
                         i - 1, opt->trailing[0]);
             if (argv[i][1] == '-')
-                ret = handle_long_arg(opt, &argv[i][2], argv[i + 1]);
+                ret = handle_long_arg(opt, &argv[i][2], 
+                        i + 1 == argc ? NULL : argv[i + 1]);
             else
-                ret = handle_short_arg(opt, &argv[i][1], argv[i + 1],
-                        argv[i][0] == '+');
+                ret = handle_short_arg(opt, &argv[i][1],
+                        i + 1 == argc ? NULL : argv[i + 1], argv[i][0] == '+');
             if (ret == -1 || ret == -2)
                 return -ret;
             i += ret;
@@ -124,7 +136,7 @@ static s_param *get_param(s_opt *opt, const char *s)
     else
     {
         for (unsigned int i = 0; i < opt->count; ++i)
-            if (!strcmp(opt->param[i].long_name, s))
+            if (opt->param[i].long_name && !strcmp(opt->param[i].long_name, s))
                 return &opt->param[i];
     }
     return NULL;
@@ -137,7 +149,7 @@ int opt_is_set(s_opt *opt, const char *arg, const char *name)
         return 0;
     for (s_arg *it = &(p->arg); it; it = it->next)
     {
-        if (!strcmp(name, it->value.str))
+        if (!strcmp(name, it->str))
             return it->set;
     }
     return -1;
@@ -145,17 +157,14 @@ int opt_is_set(s_opt *opt, const char *arg, const char *name)
 
 int opt_get(s_opt *opt, const char *s, void *res)
 {
-    int *ptr_int = res;
     char **ptr_str = res;
     if (s == NULL)
         return 0;
     s_param *p = get_param(opt, s);
     if (p == NULL)
         return 0;
-    if (p->type == e_int)
-        *ptr_int = p->arg.value.n;
-    if (p->type == e_str)
-        *ptr_str = p->arg.value.str;
+    if (p->opt)
+        *ptr_str = p->arg.str;
 
     return 1;
 }
@@ -183,4 +192,6 @@ void opt_free(s_opt *opt)
             }
         }
     }
+    free(opt->param);
+    free(opt);
 }

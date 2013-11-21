@@ -2,6 +2,17 @@
 #include "shopt.h"
 #include "macros.h"
 
+static const s_param main_param[] = 
+{
+    { 'c', NULL, 0, 1, NEW_ARG },
+    { 'O', NULL, 1, 1, NEW_ARG },
+    { '/', "norc", 0, 0, NEW_ARG },
+    { '/', "ast-print", 0, 0, NEW_ARG },
+    { '/', "token-print", 0, 0, NEW_ARG },
+    { '/', "version", 0, 0, NEW_ARG },
+    { '/', "help", 0, 0, NEW_ARG }
+};
+
 static void version(void)
 {
     fprintf(stdout, "Version "VERSION"\n");
@@ -43,26 +54,26 @@ static int check_args(s_opt opt)
 
 int parse_options(int argc, char *argv[], char **cmd, char **file)
 {
-    s_opt opt;
+    s_opt *opt = opt_init(main_param, 7);
     char *arg;
-    int ret = opt_parse(argc, argv, &opt);
+    int ret = opt_parse(argc, argv, opt);
     if (ret)
     {
         if (ret == 1)
             usage(stderr);
-        opt_free(&opt);
+        opt_free(opt);
         return 2;
     }
-    if (shopt_from_opt(&opt) == 1)
+    if (shopt_from_opt(opt) == 1)
     {
-        opt_free(&opt);
+        opt_free(opt);
         return 2;
     }
-    ret = check_args(opt);
-    if (opt_get(&opt, "c", &arg))
+    ret = check_args(*opt);
+    if (opt_get(opt, "c", &arg))
         *cmd = arg;
-    if (opt_trailing_arg(&opt, 0))
-        *file = opt_trailing_arg(&opt, 0);
-    opt_free(&opt);
+    if (opt_trailing_arg(opt, 0))
+        *file = opt_trailing_arg(opt, 0);
+    opt_free(opt);
     return ret;
 }

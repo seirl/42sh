@@ -79,13 +79,13 @@ static int shopt_check(s_opt *opt, const char *arg)
     {
         int ok = 0;
 #define X(Name, Value)                            \
-        if (!strcmp(Name, it->value.str))         \
+        if (!strcmp(Name, it->str))               \
             ok = 1;
 #include "shopt.def"
 #undef X
         if (ok == 0)
             RET_WITH(0, PROGNAME": %s: invalid shell option name\n",
-                    it->value.str);
+                    it->str);
     }
     return 1;
 }
