@@ -43,7 +43,8 @@ static int add_arg(s_opt *opt, s_param p, char *o)
 static int handle_long_arg(s_opt *opt, char *arg, char *o)
 {
     int ret;
-    s_param p = { 0 };
+    s_param p;
+    p.arg.set = 0;
 
     for (unsigned int i = 0; i < opt->valid_count; ++i)
     {
@@ -65,7 +66,8 @@ static int handle_long_arg(s_opt *opt, char *arg, char *o)
 
 static int handle_short_arg(s_opt *opt, char *arg, char *o, int set)
 {
-    s_param p = { 0 };
+    s_param p;
+    p.arg.set = 0;
     int ret = -1;
     for (unsigned int i = 0; i < opt->valid_count; ++i)
     {
