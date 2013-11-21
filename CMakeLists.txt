@@ -209,7 +209,7 @@ add_library(expand OBJECT
 
 add_executable(../42sh
     src/main.c
-    src/sighandler.c
+    src/utils/sighandler.c
 
     $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:ast_printer>
