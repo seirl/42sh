@@ -1,25 +1,16 @@
 #include "exec.h"
 
-s_shell g_shell;
-
-void shell_free(void)
+void exec_ast_list(s_shell *shell, s_ast_list *list)
 {
-    vars_free();
-    funcs_free();
-    if (g_shell.curr_argv)
-        sfree(g_shell.curr_argv);
-}
-
-void exec_ast_list(s_ast_list *list)
-{
-    while (list)
+    s_ast_list *tmp = list;
+    while (tmp)
     {
-        exec_andor_node(list->and_or);
-        list = list->next;
+        exec_andor_node(shell, tmp->and_or);
+        tmp = tmp->next;
     }
 }
 
-void exec_ast_input(s_ast_input *ast)
+void exec_ast_input(s_shell *shell, s_ast_input *ast)
 {
-    exec_ast_list(ast->list);
+    exec_ast_list(shell, ast->list);
 }

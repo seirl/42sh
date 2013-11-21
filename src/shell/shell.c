@@ -21,6 +21,13 @@ s_shell *shell_new(void)
     return shell;
 }
 
+void shell_setup(s_shell *shell, s_parser *parser, e_shell_repeat repeat)
+{
+    assert(!shell->parser && "There is already a parser setup.");
+    shell->parser = parser;
+    shell->repeat = repeat;
+}
+
 static int shell_read_eval(s_shell *shell)
 {
     s_ast_input *ast;
@@ -29,17 +36,10 @@ static int shell_read_eval(s_shell *shell)
     {
         if (shopt_get("ast_print"))
             print_ast(ast, stdout);
-        exec_ast_input(ast);
+        exec_ast_input(shell, ast);
     }
     ast_input_delete(ast);
     return 0;
-}
-
-void shell_setup(s_shell *shell, s_parser *parser, e_shell_repeat repeat)
-{
-    assert(!shell->parser && "There is already a parser setup.");
-    shell->parser = parser;
-    shell->repeat = repeat;
 }
 
 int shell_loop(s_shell *shell)
@@ -55,8 +55,6 @@ void shell_delete(s_shell *shell)
 {
     hashtbl_free(shell->env);
     // TODO: free shell->builtins;
-
-    parser_delete(shell->parser);
 
     sfree(shell);
 }

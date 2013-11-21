@@ -1,11 +1,16 @@
 #ifndef INPUT_H
 # define INPUT_H
 
+# include "shell.h"
+
 struct shell;
 
 typedef struct input s_input;
 
-s_input *input_create(struct shell *shell, char **cmd, char *file, int *repeat);
+s_input *input_create(struct shell *shell,
+                      char **cmd,
+                      char *file,
+                      e_shell_repeat repeat);
 void input_destroy(s_input *input);
 
 #endif /* !INPUT_H */

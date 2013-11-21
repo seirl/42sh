@@ -1,6 +1,10 @@
+#include <string.h>
+
 #include "builtins.h"
 
-f_handler builtin_handler(s_shell *shell, const char *name)
+#include "shell_private.h"
+
+f_handler builtins_find(s_shell *shell, const char *name)
 {
     if (shell->builtins || !shell->builtins_count)
         return NULL;

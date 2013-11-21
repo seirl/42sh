@@ -7,7 +7,7 @@ enum input_type
 {
     INPUT_FILE,
     INPUT_STRING,
-    INPUT_INTERACTIVE,
+    INPUT_INTERACTIVE
 };
 typedef enum input_type e_input_type;
 
@@ -26,5 +26,6 @@ struct input
 };
 
 s_input *input_new(void);
+void input_delete(s_input *input);
 
 #endif /* !INPUT_PRIVATE_H */

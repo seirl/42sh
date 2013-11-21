@@ -1,4 +1,6 @@
 #include "exec.h"
+
+#include "smalloc.h"
 #include "xsyscall.h"
 
 int pipe_cmd_count(s_ast_pipeline *node)

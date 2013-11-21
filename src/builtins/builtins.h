@@ -12,6 +12,6 @@ struct builtins
 };
 typedef struct builtins s_builtins;
 
-f_handler builtin_handler(s_shell *shell, const char *name);
+f_handler builtins_find(s_shell *shell, const char *name);
 
 #endif /* !BUILTINS_H */

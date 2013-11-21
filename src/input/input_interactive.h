@@ -1,7 +1,12 @@
-#ifndef INPUT_INTERACTIVE
-# define INPUT_INTERACTIVE
+#ifndef INPUT_INTERACTIVE_H
+# define INPUT_INTERACTIVE_H
 
-char input_interactive_getc(void *input_state);
-char input_interactive_topc(void *input_state);
+# include "input_private.h"
+# include "shell.h"
 
-#endif /* !INPUT_INTERACTIVE */
+s_input *input_interactive_create(s_shell *shell);
+void input_interactive_delete(s_input *input);
+char input_interactive_getc(s_input *input);
+char input_interactive_topc(s_input *input);
+
+#endif /* !INPUT_INTERACTIVE_H */

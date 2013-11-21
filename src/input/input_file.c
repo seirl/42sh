@@ -1,20 +1,36 @@
 #include <stdio.h>
+
 #include "input_file.h"
 
-s_input *input_file_create()
+s_input *input_file_create(FILE* f, const char *filename)
 {
+    s_input *input = input_new();
+
+    input->type = INPUT_FILE;
+    input->source = filename;
+    input->getc = input_file_getc;
+    input->topc = input_file_topc;
+    input->_input_state = f;
+
+    return input;
 }
 
-char input_file_getc(void *input_state)
+void input_file_delete(s_input *input)
 {
-    FILE *f = input_state;
+    FILE *f = input->_input_state;
+    fclose(f);
+}
+
+char input_file_getc(s_input *input)
+{
+    FILE *f = input->_input_state;
     char ret = fgetc(f);
     return ret == EOF ? 0 : ret;
 }
 
-char input_file_topc(void *input_state)
+char input_file_topc(s_input *input)
 {
-    FILE *f = input_state;
+    FILE *f = input->_input_state;
     int ret = fgetc(f);
     ungetc(ret, f);
     return ret == EOF ? 0 : ret;

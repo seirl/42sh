@@ -1,5 +1,7 @@
 #include "exec.h"
 
+#include "smalloc.h"
+
 int redir_list_len(s_ast_redirection_list *redir)
 {
     int count = 0;

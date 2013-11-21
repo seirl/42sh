@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "smalloc.h"
 #include "ast.h"
-#include "lexer.h"
-#include "parser.h"
-#include "log.h"
 #include "exec.h"
+#include "input_string.h"
+#include "lexer.h"
+#include "log.h"
+#include "parser.h"
+#include "smalloc.h"
 
 char *str;
 size_t pos = 0;
@@ -25,7 +26,7 @@ char dummy_topc(void *state)
 
 int main(int argc, char **argv)
 {
-    int ret;
+    int ret = 0;
 
     if (argc < 2)
     {
@@ -33,38 +34,35 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    g_shell.builtins = NULL;
-    g_shell.built_count = 0;
-    g_shell.status = 0;
-
+    s_shell *shell = shell_new();
+    s_input *input;
     s_lexer *lexer;
     s_parser *parser;
     s_ast_input *ast;
 
-    str = argv[1];
-    lexer = lex_create(dummy_getc, dummy_topc, NULL, "<test>");
+    input = input_string_create(string_create_from(argv[1]), "<INPUT>");
+    lexer = lex_create(input);
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {
-        exec_ast_input(ast);
-        /* free */
-        vars_free();
-        funcs_free();
-        /* free */
-
-        ast_input_delete(ast);
-        if (parser_eof(parser))
-            ret = 0;
-        else
+        if (!parser_diagnostic(parser))
+            ret = 1;
+        else if (!parser_eof(parser))
         {
             LOG(ERROR, "Garbage in the lexer after parsing", NULL);
             ret = 1;
         }
+        else
+            exec_ast_input(shell, ast);
+        ast_input_delete(ast);
     }
     else
         ret = 1;
 
     parser_delete(parser);
+    lex_delete(lexer);
+    input_destroy(input);
+    shell_delete(shell);
     smalloc_clean();
     return ret;
 }

@@ -1,7 +1,7 @@
 #ifndef SHELL_H
 # define SHELL_H
 
-# include "parser.h"
+struct parser;
 
 enum shell_repeat
 {
@@ -21,12 +21,14 @@ s_shell *shell_new(void);
 /**
 ** @brief Setup the shell for usage.
 */
-void shell_setup(s_shell *shell, s_parser *parser, e_shell_repeat repeat);
+void shell_setup(s_shell *shell,
+                 struct parser *parser,
+                 e_shell_repeat repeat);
 
 /**
-** @brief Descroy the shell.
+** @brief Delete the shell.
 */
-void shell_destroy(s_shell *shell);
+void shell_delete(s_shell *shell);
 
 /**
 ** @brief Start the read-eval loop.

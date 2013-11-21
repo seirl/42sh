@@ -11,7 +11,5 @@ int main(void)
         printf("Read: [%s]\n", line->buf);
         string_free(line);
     }
-
-    env_free();
     return 0;
 }

@@ -5,8 +5,6 @@
 # include "input.h"
 # include "token.h"
 
-struct input;
-
 typedef struct lexer s_lexer;
 
 /**
@@ -14,7 +12,7 @@ typedef struct lexer s_lexer;
 **
 ** Get ownership the input (will destroy it).
 */
-s_lexer *lex_create(struct input *input);
+s_lexer *lex_create(s_input *input);
 
 /**
 ** @brief Delete a lexer.

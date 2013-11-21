@@ -1,6 +1,7 @@
 #include "exec.h"
+#include "shell_private.h"
 
-void exec_and_node(s_ast_and_or *node)
+void exec_and_node(s_shell *shell, s_ast_and_or *node)
 {
     if (!node)
     {
@@ -8,12 +9,12 @@ void exec_and_node(s_ast_and_or *node)
         return;
     }
     if (node->pipeline)
-        exec_pipe_node(node->pipeline);
-    if (g_shell.status == 0 && node->next)
-        exec_andor_node(node->next);
+        exec_pipe_node(shell, node->pipeline);
+    if (shell->status == 0 && node->next)
+        exec_andor_node(shell, node->next);
 }
 
-void exec_or_node(s_ast_and_or *node)
+void exec_or_node(s_shell *shell, s_ast_and_or *node)
 {
     if (!node)
     {
@@ -21,12 +22,12 @@ void exec_or_node(s_ast_and_or *node)
         return;
     }
     if (node->pipeline)
-        exec_pipe_node(node->pipeline);
+        exec_pipe_node(shell, node->pipeline);
     if (node->next)
-        exec_andor_node(node->next);
+        exec_andor_node(shell, node->next);
 }
 
-void exec_andor_node(s_ast_and_or *node)
+void exec_andor_node(s_shell *shell, s_ast_and_or *node)
 {
     if (!node)
     {
@@ -34,8 +35,8 @@ void exec_andor_node(s_ast_and_or *node)
         return;
     }
     if (node->and_or == AST_CMD_AND)
-        exec_and_node(node);
+        exec_and_node(shell, node);
     else
-        exec_or_node(node);
+        exec_or_node(shell, node);
     node = node->next;
 }

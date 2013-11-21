@@ -1,4 +1,6 @@
 #include "exec.h"
+#include "shell_private.h"
+#include "env.h"
 
 s_string *expand_word(s_ast_word *word)
 {
@@ -14,9 +16,9 @@ s_string *expand_compound(s_ast_compound_word *word)
     return NULL;
 }
 
-void exec_assignment(s_ast_assignment *assign)
+void exec_assignment(s_shell *shell, s_ast_assignment *assign)
 {
     s_string *value = string_duplicate(expand_compound(assign->value));
     s_string *name = string_duplicate(assign->name);
-    vars_set(name, value);
+    env_set(shell, string_release(name), string_release(value));
 }

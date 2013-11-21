@@ -10,7 +10,7 @@
 
 struct shell
 {
-    /** Managed by us. */
+    /** Not managed by us. */
     s_parser *parser;
 
     /** Managed by us. */
@@ -19,6 +19,9 @@ struct shell
 
     /** Managed by the env module. */
     s_hashtbl *env;
+
+    /** Managed by us. */
+    s_hashtbl *functions;
 
     /** Managed by the history module. */
     s_history *history;

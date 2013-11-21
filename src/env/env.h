@@ -3,13 +3,13 @@
 
 # include "shell.h"
 
-/** @brief add a environnment variable, or change its value */
+/** @brief Add a environnment variable, or change its value. */
 void env_set(s_shell *shell, char *value, char *name);
-/** @brief get the value (or NULL) of an environnment variable */
+/** @brief Get the value (or NULL) of an environnment variable. */
 char *env_get(s_shell *shell, char *name);
-/** @brief unset an environnment variable */
+/** @brief Unset an environnment variable. */
 void env_unset(s_shell *shell, char *name);
-/** @brief free the environnment (unset all the variables) */
+/** @brief Free the environnment (unset all the variables). */
 void env_free(s_shell *shell);
 
 #endif /* !ENV_H */

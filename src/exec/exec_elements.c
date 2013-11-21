@@ -1,18 +1,20 @@
 #include "exec.h"
+#include "smalloc.h"
 
-void exec_prefixes(s_ast_prefix *prefix)
+void exec_prefixes(s_shell *shell, s_ast_prefix *prefix)
 {
     while (prefix)
     {
         if (prefix->redirection)
         {
-            s_redir_context *cont = exec_redirection(prefix->redirection);
+            s_redir_context *cont = exec_redirection(shell,
+                                                     prefix->redirection);
             if (prefix->assignment)
-                exec_assignment(prefix->assignment);
+                exec_assignment(shell, prefix->assignment);
             restore_redir_context(cont);
         }
         else if (prefix->assignment)
-            exec_assignment(prefix->assignment);
+            exec_assignment(shell, prefix->assignment);
         prefix = prefix->next;
     }
 }
@@ -68,7 +70,7 @@ char **elements_to_argv(s_ast_element *element, int len)
     return cmd_argv;
 }
 
-s_redir_context **exec_elements_redir(s_ast_element *elt)
+s_redir_context **exec_elements_redir(s_shell *shell, s_ast_element *elt)
 {
     int len = element_redir_list_len(elt);
     s_redir_context **contexts =
@@ -78,7 +80,7 @@ s_redir_context **exec_elements_redir(s_ast_element *elt)
     {
         if (elt->redirection)
         {
-            s_redir_context *cont = exec_redirection(elt->redirection);
+            s_redir_context *cont = exec_redirection(shell, elt->redirection);
             contexts[count] = cont;
             count += 1;
         }
