@@ -5,18 +5,13 @@
 
 int main(void)
 {
-    s_string *line = readline("test$ ");
-    while (1)
+    s_string *line;
+    while ((line = readline("test$ ")))
     {
-        if (string_equal(line, "exit"))
-            break;
         printf("Read: [%s]\n", line->buf);
         string_free(line);
-
-        line = readline("test$ ");
     }
 
-    string_free(line);
     env_free();
     return 0;
 }

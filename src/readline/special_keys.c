@@ -38,9 +38,7 @@ static e_next_action handle_special_key(e_special_key key, s_term *term)
         case CTRL_D:
             if (term->input->len != 0)
                 return CONTINUE;
-            string_puts(term->input, "exit");
-            printf("exit");
-            return RETURN;
+            return EOI;
         case BACKSPACE:
             do_backspace(term);
         default:

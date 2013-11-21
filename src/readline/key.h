@@ -11,7 +11,8 @@ enum next_action
     CONTINUE,
     PRINT,
     RETURN,
-    ERROR
+    ERROR,
+    EOI
 };
 typedef enum next_action e_next_action;
 

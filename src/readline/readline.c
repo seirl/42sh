@@ -21,9 +21,11 @@ static int is_blank(s_string *line)
 
 static s_string *readline_close(s_term *term, e_next_action ret)
 {
-    s_string *input = (ret == ERROR) ? NULL : string_duplicate(term->input);
+    s_string *input = (ret == EOI) ? NULL : string_duplicate(term->input);
+    // TODO: what to do when ret == ERROR ?
     term_close();
-    printf("\n");
+    if (input)
+        printf("\n");
     fflush(stdout);
     if (!is_blank(input))
         history_add(string_duplicate(input));
@@ -61,7 +63,7 @@ s_string *readline(char *prompt)
         ret = getkey(term, &c);
         if (ret == CONTINUE)
             continue;
-        if (ret == RETURN || ret == ERROR)
+        if (ret == RETURN || ret == ERROR || ret == EOI)
             break;
         if (ret == PRINT && isprint(c))
             do_print(c);
