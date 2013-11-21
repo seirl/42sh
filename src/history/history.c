@@ -6,44 +6,44 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
+
+#include "shell_private.h"
 #include "env.h"
 #include "history.h"
 #include "hist_list.h"
 
-static s_history *g_hist;
-
-static void env_setup(void)
+static void env_setup(s_shell *shell)
 {
     // Query and setup environment.
-    if (!env_get("HISTFILE"))
+    if (!env_get(shell, "HISTFILE"))
     {
         s_string *file_path = string_create_from(getenv("HOME"));
         s_string *filename = string_create_from("/.42sh_history");
         string_cat(file_path, filename);
-        env_set(file_path->buf, "HISTFILE");
+        env_set(shell, file_path->buf, "HISTFILE");
         string_free(file_path);
         string_free(filename);
     }
-    if (!env_get("HISTFILESIZE"))
-        env_set("500", "HISTFILESIZE");
+    if (!env_get(shell, "HISTFILESIZE"))
+        env_set(shell, "500", "HISTFILESIZE");
 }
 
-static void history_open(void)
+static void history_open(s_shell *shell)
 {
-    env_setup();
+    env_setup(shell);
     int error;
     FILE *hist_file;
 
-    if ((error = access(env_get("HISTFILE"), F_OK)) == -1)
-        if ((hist_file = fopen(env_get("HISTFILE"), "w")) != NULL)
+    if ((error = access(env_get(shell, "HISTFILE"), F_OK)) == -1)
+        if ((hist_file = fopen(env_get(shell, "HISTFILE"), "w")) != NULL)
             fclose(hist_file);
 
-    if ((error = access(env_get("HISTFILE"), R_OK)) == -1)
+    if ((error = access(env_get(shell, "HISTFILE"), R_OK)) == -1)
         return;
 
-    hist_file = fopen(env_get("HISTFILE"), "r");
-    g_hist = malloc(sizeof (s_history));
-    g_hist->lines = h_list_init();
+    hist_file = fopen(env_get(shell, "HISTFILE"), "r");
+    shell->history = malloc(sizeof (s_history));
+    shell->history->lines = h_list_init();
     char *line = NULL;
     size_t buf_size = 0;
     int line_len = 0;
@@ -52,14 +52,14 @@ static void history_open(void)
     {
         if (*line && line[line_len - 1] == '\n')
             line[line_len - 1] = '\0';
-        h_list_append(g_hist->lines, string_create_from(line));
+        h_list_append(shell->history->lines, string_create_from(line));
         free(line);
         line = NULL;
     }
     if (line)
         free(line);
 
-    g_hist->last_file_entry = g_hist->lines->hd;
+    shell->history->last_file_entry = shell->history->lines->hd;
     fclose(hist_file);
 }
 
@@ -71,56 +71,56 @@ static void history_write_rec(FILE *f, s_hist_entry *e)
     fprintf(f, "%s\n", e->line->buf);
 }
 
-static void history_write(void)
+static void history_write(s_shell *shell)
 {
-    if (!g_hist)
-        history_open();
-    if (!g_hist)
+    if (!shell->history)
+        history_open(shell);
+    if (!shell->history)
         return;
-    FILE *f = fopen(env_get("HISTFILE"), "w+");
+    FILE *f = fopen(env_get(shell, "HISTFILE"), "w+");
     if (f)
     {
-        history_write_rec(f, g_hist->lines->hd);
+        history_write_rec(f, shell->history->lines->hd);
         fclose(f);
     }
 }
 
-void history_close(void)
+void history_close(s_shell *shell)
 {
-    history_write();
-    if (!g_hist)
+    history_write(shell);
+    if (!shell->history)
         return;
 
-    h_list_delete(g_hist->lines);
-    g_hist->lines = NULL;
-    g_hist->last_file_entry = NULL;
-    free(g_hist);
-    g_hist = NULL;
+    h_list_delete(shell->history->lines);
+    shell->history->lines = NULL;
+    shell->history->last_file_entry = NULL;
+    free(shell->history);
+    shell->history = NULL;
 }
 
-s_hist_entry *history_get(int n)
+s_hist_entry *history_get(s_shell *shell, int n)
 {
-    if (!g_hist)
-        history_open();
-    if (!g_hist)
+    if (!shell->history)
+        history_open(shell);
+    if (!shell->history)
         return NULL;
-    return h_list_nth(g_hist->lines, n);
+    return h_list_nth(shell->history->lines, n);
 }
 
-int history_size(void)
+int history_size(s_shell *shell)
 {
-    if (!g_hist)
-        history_open();
-    if (g_hist && g_hist->lines)
-        return g_hist->lines->size;
+    if (!shell->history)
+        history_open(shell);
+    if (shell->history && shell->history->lines)
+        return shell->history->lines->size;
     return 0;
 }
 
-void history_add(s_string *line)
+void history_add(s_shell *shell, s_string *line)
 {
-    if (!g_hist)
-        history_open();
-    if (!g_hist)
+    if (!shell->history)
+        history_open(shell);
+    if (!shell->history)
         return;
-    h_list_append(g_hist->lines, line);
+    h_list_append(shell->history->lines, line);
 }

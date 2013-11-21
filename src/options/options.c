@@ -41,6 +41,7 @@ static int check_args(s_opt opt)
     return opt_get(&opt, "norc", NULL) == 0;
 }
 
+// TODO: use an enum as the return value
 int parse_options(int argc, char *argv[], char **cmd, char **file)
 {
     s_opt opt;

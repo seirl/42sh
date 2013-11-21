@@ -42,19 +42,19 @@ static void update_line(s_term *term, size_t end)
     fflush(stdout);
 }
 
-static void do_up(s_term *term)
+static void do_up(s_shell *shell, s_term *term)
 {
-    if (!USE_HIST || term->hist_pos + 1 >= history_size())
+    if (!USE_HIST || term->hist_pos + 1 >= history_size(shell))
         return;
 
     size_t end = term->input->len;
     term->hist_pos++;
-    term->input = history_get(term->hist_pos)->line;
+    term->input = history_get(shell, term->hist_pos)->line;
     update_line(term, end);
     term->input_index = term->input->len;
 }
 
-static void do_down(s_term *term)
+static void do_down(s_shell *shell, s_term *term)
 {
     if (!USE_HIST || term->hist_pos < 0)
         return;
@@ -64,12 +64,13 @@ static void do_down(s_term *term)
     if (term->hist_pos == -1)
         term->input = term->backup_input;
     else
-        term->input = history_get(term->hist_pos)->line;
+        term->input = history_get(shell, term->hist_pos)->line;
     update_line(term, end);
     term->input_index = term->input->len;
 }
 
-static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
+static e_next_action handle_bracket_key(s_shell *shell, e_bracket_key key,
+                                        s_term *term)
 {
     switch (key)
     {
@@ -85,25 +86,25 @@ static e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
     return CONTINUE;
 }
 
-e_next_action handle_bracket_char(s_term *term)
+e_next_action handle_bracket_char(s_shell *shell, s_term *term)
 {
     char c;
     char c2 = -1;
     if (read(STDIN_FILENO, &c, sizeof (char)) == -1)
         return ERROR;
-#define X(Name, Char1, Char2, Fun)                                  \
-    if (c == Char1)                                                 \
-    {                                                               \
-        if (Char2 == 0)                                             \
-            return handle_bracket_key(Name, term);                  \
-        else                                                        \
-        {                                                           \
-            if (c2 == -1)                                           \
-                if (read(STDIN_FILENO, &c2, sizeof (char)) == -1)   \
-                    return ERROR;                                   \
-            if (c2 == Char2)                                        \
-                return handle_bracket_key(Name, term);              \
-        }                                                           \
+#define X(Name, Char1, Char2, Fun)                                \
+    if (c == Char1)                                               \
+    {                                                             \
+        if (Char2 == 0)                                           \
+            return handle_bracket_key(shell, Name, term);         \
+        else                                                      \
+        {                                                         \
+            if (c2 == -1)                                         \
+                if (read(STDIN_FILENO, &c2, sizeof (char)) == -1) \
+                    return ERROR;                                 \
+            if (c2 == Char2)                                      \
+                return handle_bracket_key(shell, Name, term);     \
+        }                                                         \
     }
 #include "bracket_key.def"
 #undef X

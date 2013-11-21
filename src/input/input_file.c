@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "input_file.h"
 
+s_input *input_file_create()
+{
+}
+
 char input_file_getc(void *input_state)
 {
     FILE *f = input_state;

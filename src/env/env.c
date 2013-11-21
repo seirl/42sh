@@ -1,33 +1,27 @@
 #define _GNU_SOURCE
 #include <stdlib.h>
 #include <string.h>
+
+#include "shell_private.h"
 #include "env.h"
 #include "hashtbl.h"
 
-static s_hashtbl *env_get_ptr(void)
+void env_set(s_shell *shell, char *value, char *name)
 {
-    static s_hashtbl *env_var = NULL;
-    if (env_var == NULL)
-        env_var = hashtbl_init(hash_char, cmp_char, free_char, free_char);
-    return env_var;
+    hashtbl_set(shell->env, strdup(value), strdup(name));
 }
 
-void env_set(char *value, char *name)
+char *env_get(s_shell *shell, char *name)
 {
-    hashtbl_set(env_get_ptr(), strdup(value), strdup(name));
+    return hashtbl_get(shell->env, name);
 }
 
-char *env_get(char *name)
+void env_unset(s_shell *shell, char *name)
 {
-    return hashtbl_get(env_get_ptr(), name);
+    hashtbl_unset(shell->env, name);
 }
 
-void env_unset(char *name)
+void env_free(s_shell *shell)
 {
-    hashtbl_unset(env_get_ptr(), name);
-}
-
-void env_free(void)
-{
-    hashtbl_free(env_get_ptr());
+    hashtbl_free(shell->env);
 }

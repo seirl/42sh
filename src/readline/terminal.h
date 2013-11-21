@@ -4,6 +4,8 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+
+# include "shell.h"
 # include "string_utils.h"
 # include "history.h"
 
@@ -37,7 +39,7 @@ typedef struct terminal s_term;
 /**
 ** @brief Get terminal informations
 */
-s_term *term_get(void);
+s_term *term_get(s_shell *shell);
 
 /**
 ** @brief Close and free the resources of a terminal informations structure

@@ -21,19 +21,21 @@ add_definitions(-D_XOPEN_SOURCE)
 LINK_LIBRARIES(m ncurses)
 
 include_directories(src)
-include_directories(src/env)
 include_directories(src/ast)
 include_directories(src/ast_printer)
-include_directories(src/lexer)
+include_directories(src/builtins)
+include_directories(src/env)
+include_directories(src/exec)
+include_directories(src/expand)
 include_directories(src/fnmatch)
+include_directories(src/history)
+include_directories(src/input)
+include_directories(src/lexer)
 include_directories(src/options)
 include_directories(src/parser)
 include_directories(src/readline)
+include_directories(src/shell)
 include_directories(src/utils)
-include_directories(src/exec)
-include_directories(src/expand)
-include_directories(src/input)
-include_directories(src/history)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -71,13 +73,16 @@ add_library(fnmatch OBJECT
 add_library(lexer OBJECT
     src/lexer/alias.c
     src/lexer/char_utils.c
+
     src/lexer/lexer.c
     src/lexer/lexer_fill.c
     src/lexer/lexer_heredoc.c
+    src/lexer/lexer_input.c
     src/lexer/lexer_lookahead.c
     src/lexer/lexer_pattern.c
     src/lexer/lexer_struct.c
     src/lexer/lexer_word.c
+
     src/lexer/location.c
     src/lexer/token.c
     src/lexer/token_debug.c
@@ -207,6 +212,10 @@ add_library(expand OBJECT
     src/expand/expand_var.c
 )
 
+add_library(shell OBJECT
+    src/shell/shell.c
+)
+
 add_executable(../42sh
     src/main.c
     src/utils/sighandler.c
@@ -214,17 +223,18 @@ add_executable(../42sh
     $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:ast_printer>
     $<TARGET_OBJECTS:env>
+    $<TARGET_OBJECTS:exec>
     $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:history>
+    $<TARGET_OBJECTS:input>
     $<TARGET_OBJECTS:lexer>
-    $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:options>
+    $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:readline>
+    $<TARGET_OBJECTS:shell>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>
-    $<TARGET_OBJECTS:input>
-    $<TARGET_OBJECTS:exec>
-    $<TARGET_OBJECTS:history>
 )
 
 message(STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS})

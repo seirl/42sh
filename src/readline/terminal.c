@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "terminal.h"
 #include "env.h"
 #include "smalloc.h"
@@ -13,7 +14,7 @@ static s_term *get_term_ptr(int set, s_term *new_term)
     return term;
 }
 
-static void term_init(void)
+static void term_init(s_shell *shell)
 {
     get_term_ptr(1, smalloc(sizeof (struct terminal)));
     s_term *term = get_term_ptr(0, NULL);
@@ -23,7 +24,7 @@ static void term_init(void)
         term = NULL;
     }
     term->termios = term->restore_state;
-    term->name = env_get("TERM");
+    term->name = env_get(shell, "TERM");
     term->bp = smalloc(2048);
     if (tgetent(term->bp, term->name) <= 0)
         tgetent(term->bp, "xterm");
@@ -40,10 +41,10 @@ static void term_init(void)
     term->prompt = NULL;
 }
 
-s_term *term_get(void)
+s_term *term_get(s_shell *shell)
 {
     if (!get_term_ptr(0, NULL))
-        term_init();
+        term_init(shell);
 
     return get_term_ptr(0, NULL);
 }

@@ -1,6 +1,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+
 #include "lexer_private.h"
 
 #undef getc
@@ -20,10 +21,10 @@ int lex_eat_spaces(s_lexer *lexer)
 {
     char c;
     int ret = 0;
-    while ((c = lexer->topc(lexer->input_state)) == ' ' || c == '\t')
+    while ((c = lex_topc(lexer)) == ' ' || c == '\t')
     {
         ret = 1;
-        lexer->getc(lexer->input_state);
+        lex_getc(lexer);
     }
     return ret;
 }
@@ -41,7 +42,7 @@ int fill_until(s_lexer *lexer, int include_last)
     char prev = 0;
     while (1)
     {
-        c = lexer->topc(lexer->input_state);
+        c = lex_topc(lexer);
         if (lexer->quoted == 0 && prev != '\\'
            && (c == lexer->sur.end || c == '\0'))
         {
@@ -51,12 +52,12 @@ int fill_until(s_lexer *lexer, int include_last)
         }
         if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == 0))
             lexer->sur.count += 1;
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
         update_quote(lexer, c, prev);
         prev = c;
     }
     if (include_last && c != 0)
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
     lexer_until_reset(lexer);
     return c != 0;
 }
@@ -66,10 +67,10 @@ int fill_upto_delim(s_lexer *lexer)
     char c;
     char prev = 0;
     do {
-        c = lexer->topc(lexer->input_state);
+        c = lex_topc(lexer);
         if ((is_quote(c) || is_delimiter(c)) && prev != '\\')
             break;
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
         prev = c;
     } while (c != 0 && c != EOF);
     return 1;
@@ -85,7 +86,7 @@ static int handle_delim_and_quote(s_lexer *lexer, char c, char prev)
                 return 1;
             if (c == '\n')
                 string_putc(lexer->working_buffer,
-                           lexer->getc(lexer->input_state));
+                           lex_getc(lexer));
             else
                 handle_operator(lexer);
         }
@@ -103,7 +104,7 @@ int fill_token(s_lexer *lexer)
     lexer->concat = lexer->concat == -1 ? 0 : !spaces;
 
     do {
-        c = lexer->topc(lexer->input_state);
+        c = lex_topc(lexer);
         if (handle_comment(lexer, c, prev))
             break;
         if (handle_dollar(lexer, c, prev))
@@ -112,7 +113,7 @@ int fill_token(s_lexer *lexer)
             break;
         if (handle_delim_and_quote(lexer, c, prev))
             break;
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
         prev = c;
     } while (c != 0 && c != EOF);
     return 0;

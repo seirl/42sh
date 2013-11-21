@@ -1,5 +1,5 @@
-X(CHAR_UP, 65, 0, do_up(term))
-X(CHAR_DOWN, 66, 0, do_down(term))
+X(CHAR_UP, 65, 0, do_up(shell, term))
+X(CHAR_DOWN, 66, 0, do_down(shell, term))
 X(CHAR_RIGHT, 67, 0, do_right(term))
 X(CHAR_LEFT, 68, 0, do_left(term))
 X(CHAR_INSERT, 50, 126, break)
