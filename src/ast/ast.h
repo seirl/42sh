@@ -11,7 +11,7 @@ enum ast_word_kind
 {
     WORD,         /** a or 'a' or "a" */
     SUBSTS_SHELL, /** $(echo foo)     */
-    SUBSTS_VAR,   /** $(#argv)        */
+    SUBSTS_VAR,   /** ${#argv}        */
     EXPAND_VAR,   /** $a              */
 };
 typedef enum ast_word_kind e_ast_word_kind;

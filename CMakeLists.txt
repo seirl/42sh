@@ -31,6 +31,7 @@ include_directories(src/parser)
 include_directories(src/readline)
 include_directories(src/utils)
 include_directories(src/exec)
+include_directories(src/expand)
 include_directories(src/input)
 include_directories(src/history)
 
@@ -195,6 +196,10 @@ add_library(ast OBJECT
     src/ast/while.c
     src/ast/word.c
     src/ast/word_list.c
+)
+
+add_library(expand OBJECT
+    src/expand/expand.c
 )
 
 add_executable(../42sh
