@@ -200,6 +200,11 @@ add_library(ast OBJECT
 
 add_library(expand OBJECT
     src/expand/expand.c
+    src/expand/expand_simple_var.c
+    src/expand/expand_simple_word.c
+    src/expand/expand_substs_shell.c
+    src/expand/expand_substs_var.c
+    src/expand/expand_var.c
 )
 
 add_executable(../42sh
