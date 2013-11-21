@@ -32,9 +32,10 @@ s_lexer *input_to_lexer(char **cmd, char *file, int *repeat)
         f = fdopen(STDIN_FILENO, "r");
         return lex_create(input_file_getc, input_file_topc, f, "stdin");
     }
-    if ((input = readline("42sh$ ")) == NULL || !strcmp(input->buf, "exit"))
+    if ((input = readline("42sh$ ")) == NULL)
     {
-        string_free(input);
+        printf("exit\n");
+        fflush(stdout);
         *repeat = 0;
         return NULL;
     }
