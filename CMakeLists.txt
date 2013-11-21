@@ -34,6 +34,7 @@ include_directories(src/exec)
 include_directories(src/expand)
 include_directories(src/input)
 include_directories(src/history)
+include_directories(src/builtins)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -90,6 +91,10 @@ add_library(options OBJECT
     src/options/getopt.c
     src/options/getopt_struct.c
     src/options/shopt.c
+)
+
+add_library(builtins OBJECT
+    src/builtins/b_shopt.c
 )
 
 add_library(readline OBJECT
