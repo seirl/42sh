@@ -8,7 +8,7 @@
 #include "shell.h"
 #include "expand.h"
 
-static char *get_home(s_shell *shell, char *user)
+static char *get_home(const s_shell *shell, char *user)
 {
     (void)shell;
     char *home = NULL;
@@ -27,7 +27,7 @@ static char *get_home(s_shell *shell, char *user)
     return pw->pw_dir;
 }
 
-static int user_tilde(s_shell *shell, s_string *word, s_string *ret)
+static int user_tilde(const s_shell *shell, s_string *word, s_string *ret)
 {
     s_string *user = string_create(16);
     int offset = 0;
@@ -50,7 +50,7 @@ static int user_tilde(s_shell *shell, s_string *word, s_string *ret)
     return 1;
 }
 
-static int simple_tilde(s_shell *shell, s_string *word, s_string *ret)
+static int simple_tilde(const s_shell *shell, s_string *word, s_string *ret)
 {
     char c = string_topc(word);
     if (c == 0 || c == '/')
@@ -61,7 +61,7 @@ static int simple_tilde(s_shell *shell, s_string *word, s_string *ret)
     return 0;
 }
 
-static int operator_tilde(s_shell *shell, s_string *word, s_string *ret)
+static int operator_tilde(const s_shell *shell, s_string *word, s_string *ret)
 {
     (void)shell;
     char c = string_topc(word);
@@ -80,27 +80,29 @@ static int operator_tilde(s_shell *shell, s_string *word, s_string *ret)
     return 1;
 }
 
-static s_string *tilde_expansion(s_shell *shell, s_string *word)
+static s_string *tilde_expansion(const s_shell *shell, const s_string *word)
 {
     char c;
     s_string *ret = string_create(0);
-    for (c = string_getc(word); c; c = string_getc(word))
+    s_string *word_cpy = string_duplicate(word);
+    for (c = string_getc(word_cpy); c; c = string_getc(word_cpy))
     {
         if (c == '~')
         {
-            if (simple_tilde(shell, word, ret))
+            if (simple_tilde(shell, word_cpy, ret))
                 continue;
-            if (operator_tilde(shell, word, ret))
+            if (operator_tilde(shell, word_cpy, ret))
                 continue;
-            if (user_tilde(shell, word, ret))
+            if (user_tilde(shell, word_cpy, ret))
                 continue;
         }
         string_putc(ret, c);
     }
+    string_free(word_cpy);
     return ret;
 }
 
-s_string *expand_simple_word(s_shell *shell, s_string *word)
+s_string *expand_simple_word(const s_shell *shell, const s_string *word)
 {
     return tilde_expansion(shell, word);
 }

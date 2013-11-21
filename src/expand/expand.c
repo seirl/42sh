@@ -3,7 +3,7 @@
 #include "shell.h"
 #include "expand.h"
 
-static s_string *(*const expand_funcs[])(s_shell *, s_string *) =
+static s_string *(*const expand_funcs[])(const s_shell *, const s_string *) =
 {
     expand_simple_word,
     expand_substs_shell,
@@ -11,17 +11,16 @@ static s_string *(*const expand_funcs[])(s_shell *, s_string *) =
     expand_simple_var,
 };
 
-static s_string *expand_word(s_shell *shell, s_ast_word *word)
+static s_string *expand_word(const s_shell *shell, const s_ast_word *word)
 {
     string_rewind(word->str);
     return expand_funcs[word->kind](shell, word->str);
 }
 
-#include <stdio.h>
-s_string *expand(s_shell *shell, s_ast_compound_word *input)
+s_string *expand(const s_shell *shell, const s_ast_compound_word *input)
 {
     s_string *r = string_create(0);
-    for (s_ast_compound_word *cw = input; cw; cw = cw->next)
+    for (const s_ast_compound_word *cw = input; cw; cw = cw->next)
     {
         s_string *expanded_word = expand_word(shell, cw->word);
         string_cat(r, expanded_word);
