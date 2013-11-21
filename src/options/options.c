@@ -2,7 +2,7 @@
 #include "shopt.h"
 #include "macros.h"
 
-static const s_param main_param[] = 
+static const s_param main_param[] =
 {
     { 'c', NULL, 0, 1, NEW_ARG },
     { 'O', NULL, 1, 1, NEW_ARG },

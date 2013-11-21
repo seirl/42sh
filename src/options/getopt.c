@@ -3,26 +3,24 @@
 #include <string.h>
 #include "getopt.h"
 
-s_opt *opt_init(const s_param *params, unsigned int size)
+static int string_assign(char *str, s_param *p)
 {
-    s_opt *ret = malloc(sizeof (s_opt));
-    ret->valid_param = params;
-    ret->valid_count = size;
-    ret->param = malloc(size * sizeof (s_param));
-    return ret;
+    if (p->opt == 0)
+        p->arg.str = NULL;
+    else
+    {
+        if (str != NULL)
+            p->arg.str = str;
+        else
+            return -1;
+    }
+    return 0;
 }
 
 static int add_arg(s_opt *opt, s_param p, char *o)
 {
-    if (p.opt == 0)
-        p.arg.str = NULL;
-    else
-    {
-        if (o != NULL)
-            p.arg.str = o;
-        else
-            return -1;
-    }
+    if (string_assign(o, &p) == -1)
+        return -1;
     p.arg.next = NULL;
     for (unsigned int i = 0; i < opt->count; ++i)
     {
@@ -71,7 +69,7 @@ static int handle_short_arg(s_opt *opt, char *arg, char *o, int set)
     int ret = -1;
     for (unsigned int i = 0; i < opt->valid_count; ++i)
     {
-        if (opt->valid_param[i].short_name ==  arg[0])
+        if (opt->valid_param[i].short_name == arg[0])
         {
             p.short_name = opt->valid_param[i].short_name;
             p.long_name = opt->valid_param[i].long_name;
@@ -110,11 +108,12 @@ int opt_parse(int argc, char *argv[], s_opt *opt)
                 RET_WITH(1, "Trailing argv at position %d (%s)\n",
                         i - 1, opt->trailing[0]);
             if (argv[i][1] == '-')
-                ret = handle_long_arg(opt, &argv[i][2], 
-                        i + 1 == argc ? NULL : argv[i + 1]);
+                ret = handle_long_arg(opt, &argv[i][2],
+                                     i + 1 == argc ? NULL : argv[i + 1]);
             else
                 ret = handle_short_arg(opt, &argv[i][1],
-                        i + 1 == argc ? NULL : argv[i + 1], argv[i][0] == '+');
+                                      i + 1 == argc ? NULL : argv[i + 1],
+                                      argv[i][0] == '+');
             if (ret == -1 || ret == -2)
                 return -ret;
             i += ret;
@@ -174,24 +173,4 @@ char *opt_trailing_arg(s_opt *opt, unsigned int i)
     if (i >= opt->trailing_count)
         return NULL;
     return opt->trailing[i];
-}
-
-void opt_free(s_opt *opt)
-{
-    for (unsigned int i = 0; i < opt->count; ++i)
-    {
-        if (opt->param[i].arg.next)
-        {
-            s_arg *it = opt->param[i].arg.next;
-            s_arg *tmp;
-            while (it)
-            {
-                tmp = it->next;
-                free(it);
-                it = tmp;
-            }
-        }
-    }
-    free(opt->param);
-    free(opt);
 }

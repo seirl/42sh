@@ -88,6 +88,7 @@ add_library(lexer OBJECT
 add_library(options OBJECT
     src/options/options.c
     src/options/getopt.c
+    src/options/getopt_struct.c
     src/options/shopt.c
 )
 
