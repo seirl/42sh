@@ -45,6 +45,29 @@ int test_4()
     return 0;
 }
 
+unsigned long dummy_hash(void *s)
+{
+    char *str = s;
+    return str[0];
+}
+
+int test_5()
+{
+    s_hashtbl *h = hashtbl_init(dummy_hash, cmp_char, NULL, NULL);
+    hashtbl_set(h, "a", "bar");
+    hashtbl_set(h, "b", "baz");
+    hashtbl_set(h, "z", "baf");
+    hashtbl_set(h, "d", "xor");
+    hashtbl_set(h, "c", "baf");
+    s_hash_elt *it = NULL;
+    char *res;
+    while ((res = hashtbl_iter(h, &it)))
+        printf("%s\n", res);
+    hashtbl_free(h);
+    return 0;
+}
+
+
 int main(int argc, char *argv[])
 {
     if (argc < 2)
@@ -58,6 +81,7 @@ int main(int argc, char *argv[])
         return test_3();
     if (f == 4)
         return test_4();
-    return 0;
+    if (f == 5)
+        return test_5();
     return 0;
 }

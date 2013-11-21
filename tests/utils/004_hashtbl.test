@@ -1,6 +1,10 @@
 {
     "type": "utils",
-    "desc": "Hashtbl with s_string",
+    "desc": "Hashtbl iter",
     "input": "5",
-    "output": "",
+    "output": """d
+c
+b
+a
+""",
 }

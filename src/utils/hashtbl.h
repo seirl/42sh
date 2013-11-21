@@ -21,6 +21,7 @@ struct hashtbl
 };
 typedef struct hashtbl s_hashtbl;
 
+// hashtbl.c
 s_hashtbl *hashtbl_init(unsigned long (*hash)(void *),
                         int (*cmp)(void *, void *),
                         void (*free_key)(void *),
@@ -29,6 +30,9 @@ void hashtbl_set(s_hashtbl *h, void *value, void *key);
 void *hashtbl_get(s_hashtbl *h, void *key);
 void hashtbl_unset(s_hashtbl *h, void *key);
 void hashtbl_free(s_hashtbl *h);
+
+// hash_op.c
+void *hashtbl_iter(s_hashtbl *h, s_hash_elt **it);
 
 // hash_char.c
 unsigned long hash_char(void *s);
