@@ -221,6 +221,7 @@ add_executable(../42sh
     $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:ast_printer>
     $<TARGET_OBJECTS:env>
+    $<TARGET_OBJECTS:expand>
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:parser>

@@ -33,6 +33,7 @@ char string_getc(s_string *s);
 void string_ungetc(s_string *s);
 void string_rewind(s_string *s);
 char string_topc(s_string *s);
+char string_topc_n(s_string *s, unsigned n);
 
 void string_del_nth(s_string *str, size_t n);
 void string_del_from_end(s_string *str, size_t n);

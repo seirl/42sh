@@ -1,3 +1,4 @@
+#include "expand.h"
 #include "exec.h"
 
 void init_shell(void)
@@ -17,8 +18,10 @@ s_string *expand_word(s_ast_word *word)
 
 s_string *expand_compound(s_ast_compound_word *word)
 {
+    // FIXME shell should not be NULL !
     if (word && word->word)
-        return word->word->str;
+        return expand(NULL, word);
+        //return word->word->str;
     return NULL;
 }
 

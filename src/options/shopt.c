@@ -104,3 +104,7 @@ int shopt_from_opt(s_opt *opt)
     }
     return 0;
 }
+
+void shopt_update_env()
+{
+}

@@ -82,6 +82,8 @@ add_executable(test_exec
     test_exec.c
 
     $<TARGET_OBJECTS:ast>
+    $<TARGET_OBJECTS:expand>
+    $<TARGET_OBJECTS:env>
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:log>
