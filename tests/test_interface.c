@@ -5,12 +5,11 @@
 
 int main(int argc, char *argv[])
 {
-    char *cmd;
-    char *file;
+    char *src;
     s_shell *shell = shell_new();
-    int ret = parse_options(shell, argc, argv, &cmd, &file);
+    int ret = parse_options(shell, argc, argv, &src);
     shell_delete(shell);
-    if (ret == 2)
+    if (ret & E_ERROR)
         return ret;
 
     return EXIT_SUCCESS;

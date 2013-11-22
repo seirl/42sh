@@ -12,18 +12,17 @@
 int main(int argc, char *argv[])
 {
     s_shell *shell = shell_new();
-    char *file = NULL;
-    char *cmd = NULL;
-    int ret = parse_options(shell, argc, argv, &cmd, &file);
-    if (ret == 3)
-        return 0;
-    if (ret == 2)
-        return ret;
-    if (ret == 1)
+    char *src = NULL;
+    int ret = parse_options(shell, argc, argv, &src);
+    if (ret & E_RET)
+        return E_RET;
+    if (ret & E_ERROR)
+        return E_ERROR;
+    if (ret & E_RC)
         rc_file_load(shell);
 
     s_input *input;
-    if (!(input = input_create(shell, &cmd, file)))
+    if (!(input = input_create(shell, src, ret)))
         return EXIT_FAILURE; // XXX: Use error specific return code?
     s_lexer *lexer = lex_create(input);
     s_parser *parser = parser_create(lexer);
@@ -33,7 +32,6 @@ int main(int argc, char *argv[])
 
     parser_delete(parser);
     lex_delete(lexer);
-    input_destroy(input);
     shell_delete(shell);
 
     smalloc_clean();

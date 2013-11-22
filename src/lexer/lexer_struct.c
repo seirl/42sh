@@ -41,6 +41,7 @@ void lex_delete(s_lexer *lexer)
         token_free(lexer->lookahead);
 
     input_destroy(lexer->input);
+    sfree(lexer);
 }
 
 //! @brief Replace s with new s_string, return old value.

@@ -12,22 +12,20 @@
 #include "input_file.h"
 #include "shell.h"
 
-s_input *input_create(s_shell *shell,
-                      char **cmd,
-                      char *file)
+s_input *input_create(struct shell *shell, char *src, int mode)
 {
     s_string *input_str;
     FILE *f;
-    if (*cmd)
+    if (mode & SRC_STR)
     {
-        input_str = string_create_from(*cmd);
+        input_str = string_create_from(src);
         return input_string_create(input_str, "<cmd>");
     }
-    if (file)
+    if (mode & SRC_FILE)
     {
-        if ((f = fopen(file, "r")) == NULL)
-            RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", file);
-        return input_file_create(f, file);
+        if ((f = fopen(src, "r")) == NULL)
+            RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", src);
+        return input_file_create(f, src);
     }
     if (!isatty(STDIN_FILENO))
     {

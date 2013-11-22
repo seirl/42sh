@@ -18,7 +18,7 @@ s_input *input_file_create(FILE* f, const char *filename)
 
 void input_file_delete(s_input *input)
 {
-    FILE *f = input->_input_state;
+    FILE *nf = input->_input_state;
     fclose(f);
 }
 
