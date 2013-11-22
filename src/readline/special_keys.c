@@ -63,10 +63,8 @@ static e_next_action do_ctrl_e(s_term *term)
 
 static e_next_action do_ctrl_k(s_term *term)
 {
-    size_t pos = term->input_index;
-    do_ctrl_e(term);
-    while (term->input_index != pos)
-        do_backspace(term);
+    my_tputs(tgetstr("ce", NULL));
+    string_del_from_end(term->input, term->input->len - term->input_index);
     return CONTINUE;
 }
 
