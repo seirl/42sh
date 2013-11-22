@@ -38,5 +38,5 @@ char input_string_topc(s_input *input)
 int input_string_next(s_input *input)
 {
     // Always return 0
-    return input != input;
+    return input != input + 1 - 1;
 }
