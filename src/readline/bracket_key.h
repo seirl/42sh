@@ -18,8 +18,13 @@ enum bracket_key
 typedef enum bracket_key e_bracket_key;
 
 /**
-** @brief Handle a special key beginning with a bracket.
+** @brief Handle a special control sequenc beginning with a bracket.
 */
 e_next_action handle_bracket_char(s_term *term);
+
+/**
+** @brief Handle a particular special key
+*/
+e_next_action handle_bracket_key(e_bracket_key key, s_term *term);
 
 #endif /* !BRACKET_KEY_H */

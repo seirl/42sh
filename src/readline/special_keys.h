@@ -3,6 +3,7 @@
 
 # include "terminal.h"
 # include "key.h"
+# include "bracket_key.h"
 
 /**
 ** @brief A special key
