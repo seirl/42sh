@@ -4,6 +4,7 @@
 
 #include "env_private.h"
 #include "functions_private.h"
+#include "shopt.h"
 #include "smalloc.h"
 
 s_shell *shell_new(void)
@@ -12,6 +13,7 @@ s_shell *shell_new(void)
 
     env_create(shell);
     functions_init(shell);
+    shopt_create(shell);
 
     shell->builtins = NULL;
     shell->builtins_count = 0;

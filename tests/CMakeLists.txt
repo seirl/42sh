@@ -7,6 +7,7 @@ file(COPY qdunittest run_tests.py DESTINATION .)
 add_executable(test_fnmatch test_fnmatch.c $<TARGET_OBJECTS:fnmatch>)
 
 add_executable(test_interface test_interface.c $<TARGET_OBJECTS:options>)
+target_link_libraries(test_interface lib42sh)
 
 add_executable(test_ast_printer test_ast_printer.c)
 target_link_libraries(test_ast_printer lib42sh)

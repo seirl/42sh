@@ -10,7 +10,7 @@ static int shell_read_eval(s_shell *shell)
     ast = parse_rule_input(shell->parser);
     if (parser_diagnostic(shell->parser) && ast)
     {
-        if (shopt_get("ast_print"))
+        if (shopt_get(shell, "ast_print"))
             print_ast(ast, stdout);
         exec_ast_input(shell, ast);
     }

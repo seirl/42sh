@@ -22,7 +22,7 @@ static void usage(FILE *output)
 
 }
 
-static int check_args(s_opt opt)
+static int check_args(s_shell *shell, s_opt opt)
 {
     if (opt_get(&opt, "help", NULL))
     {
@@ -35,14 +35,14 @@ static int check_args(s_opt opt)
         return 3;
     }
     if (opt_get(&opt, "ast-print", NULL))
-        shopt_set("ast_print", 1);
+        shopt_set(shell, "ast_print", 1);
     if (opt_get(&opt, "token-print", NULL))
-        shopt_set("token_print", 1);
+        shopt_set(shell, "token_print", 1);
     return opt_get(&opt, "norc", NULL) == 0;
 }
 
 // TODO: use an enum as the return value
-int parse_options(int argc, char *argv[], char **cmd, char **file)
+int parse_options(s_shell *shell, int argc, char *argv[], char **cmd, char **file)
 {
     s_opt opt;
     char *arg;
@@ -54,12 +54,12 @@ int parse_options(int argc, char *argv[], char **cmd, char **file)
         opt_free(&opt);
         return 2;
     }
-    if (shopt_from_opt(&opt) == 1)
+    if (shopt_from_opt(shell, &opt) == 1)
     {
         opt_free(&opt);
         return 2;
     }
-    ret = check_args(opt);
+    ret = check_args(shell, opt);
     if (opt_get(&opt, "c", &arg))
         *cmd = arg;
     if (opt_trailing_arg(&opt, 0))

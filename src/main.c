@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     s_shell *shell = shell_new();
     char *file = NULL;
     char *cmd = NULL;
-    int ret = parse_options(argc, argv, &cmd, &file);
+    int ret = parse_options(shell, argc, argv, &cmd, &file);
     if (ret == 3)
         return 0;
     if (ret == 2)

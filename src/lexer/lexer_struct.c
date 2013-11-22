@@ -81,8 +81,9 @@ s_token *lex_release_token(s_lexer *lexer)
     tok = token_create(type, value, lexer->location, lexer->concat);
 
     lexer_reset(lexer);
-    if (shopt_get("token_print"))
-        token_print(tok);
+    //FIXME
+    //if (shopt_get("token_print"))
+    //    token_print(tok);
 
     return tok;
 }

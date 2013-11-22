@@ -7,6 +7,7 @@
 # include "hashtbl.h"
 # include "history.h"
 # include "parser.h"
+# include "shopt.h"
 
 struct shell
 {
@@ -19,6 +20,9 @@ struct shell
 
     /** Managed by the env module. */
     s_hashtbl *env;
+
+    /** Managed by the options module */
+    s_shopt shopt[SHOPT_COUNT];
 
     /** Managed by us. */
     s_hashtbl *functions;

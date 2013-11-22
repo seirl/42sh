@@ -2,54 +2,47 @@
 #include <stdio.h>
 #include <string.h>
 #include "shopt.h"
+#include "shell_private.h"
 
-static s_shopt *shopt_get_ptr(size_t *size)
+void shopt_create(s_shell *shell)
 {
-    static s_shopt shell_options[] =
-    {
+    int i = 0;
 #define X(Name, Value) \
-        { Name, Value },
+    shell->shopt[i].name = Name; \
+    shell->shopt[i].value = Value; \
+    ++i;
 #include "shopt.def"
 #undef X
-    };
-    *size = sizeof (shell_options) / sizeof (s_shopt);
-    return shell_options;
 }
 
 //1: set, 0: does not exist
-int shopt_set(const char *shopt, int value)
+int shopt_set(s_shell *shell, const char *shopt, int value)
 {
-    size_t size;
-    s_shopt *shell_options = shopt_get_ptr(&size);
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < SHOPT_COUNT; ++i)
     {
-        if (!strcmp(shopt, shell_options[i].name))
+        if (!strcmp(shopt, shell->shopt[i].name))
         {
-            shell_options[i].value = value;
+            shell->shopt[i].value = value;
             return 1;
         }
     }
     return 0;
 }
 
-int shopt_get(const char *shopt)
+int shopt_get(s_shell *shell, const char *shopt)
 {
-    size_t size;
-    s_shopt *shell_options = shopt_get_ptr(&size);
-    for (size_t i = 0; i < size; ++i)
-        if (!strcmp(shopt, shell_options[i].name))
-            return shell_options[i].value;
+    for (size_t i = 0; i < SHOPT_COUNT; ++i)
+        if (!strcmp(shopt, shell->shopt[i].name))
+            return shell->shopt[i].value;
     return -1;
 }
 
-void shopt_print(void)
+void shopt_print(s_shell *shell)
 {
-    size_t size;
-    s_shopt *shell_options = shopt_get_ptr(&size);
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < SHOPT_COUNT; ++i)
     {
-        fprintf(stdout, "%s\t%s\n", shell_options[i].name,
-                shell_options[i].value == 1 ? "on" : "off");
+        fprintf(stdout, "%s\t%s\n", shell->shopt[i].name,
+                shell->shopt[i].value == 1 ? "on" : "off");
     }
 }
 
@@ -90,17 +83,15 @@ static int shopt_check(s_opt *opt, const char *arg)
     return 1;
 }
 
-int shopt_from_opt(s_opt *opt)
+int shopt_from_opt(s_shell *shell, s_opt *opt)
 {
-    size_t size;
-    s_shopt *shell_options = shopt_get_ptr(&size);
     if (shopt_check(opt, "O") == 0)
         return 1;
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < SHOPT_COUNT; ++i)
     {
-        int ret = opt_is_set(opt, "O", shell_options[i].name);
+        int ret = opt_is_set(opt, "O", shell->shopt[i].name);
         if (ret != -1)
-            shell_options[i].value = ret;
+            shell->shopt[i].value = ret;
     }
     return 0;
 }
