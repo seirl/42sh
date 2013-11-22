@@ -9,8 +9,7 @@ typedef struct input s_input;
 
 s_input *input_create(struct shell *shell,
                       char **cmd,
-                      char *file,
-                      e_shell_repeat repeat);
+                      char *file);
 void input_destroy(s_input *input);
 
 #endif /* !INPUT_H */

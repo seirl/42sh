@@ -64,7 +64,6 @@ int main(int argc, char *argv[])
         ret = test_3(shell);
     if (f == 4)
         ret = test_4(shell);
-    env_free(shell);
     shell_delete(shell);
     smalloc_clean();
     return ret;

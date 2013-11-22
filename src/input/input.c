@@ -14,12 +14,11 @@
 
 s_input *input_create(s_shell *shell,
                       char **cmd,
-                      char *file,
-                      e_shell_repeat repeat)
+                      char *file)
 {
     s_string *input_str;
     FILE *f;
-    if (*cmd && !repeat)
+    if (*cmd)
     {
         input_str = string_create_from(*cmd);
         return input_string_create(input_str, "<cmd>");
@@ -30,7 +29,7 @@ s_input *input_create(s_shell *shell,
             RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", file);
         return input_file_create(f, file);
     }
-    if (!(repeat = isatty(STDIN_FILENO)))
+    if (!isatty(STDIN_FILENO))
     {
         f = fdopen(STDIN_FILENO, "r");
         return input_file_create(f, "<stdin>");

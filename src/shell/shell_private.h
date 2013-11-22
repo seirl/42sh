@@ -30,7 +30,7 @@ struct shell
 
     /** Error code of the shell. */
     int status;
-    e_shell_repeat repeat;
+    e_shell_state state;
 };
 
 #endif /* !SHELL_PRIVATE_H */

@@ -43,23 +43,23 @@ char input_interactive_getc(s_input *input)
     s_input_state_interactive *state = input->_input_state;
     char out;
     if (!state->buf)
-        state->buf = readline("42sh$ ");
+        state->buf = readline(state->shell, "42sh$ ");
     if ((out = string_getc(state->buf)))
         return out;
     string_free(state->buf);
-    state->buf = readline("42sh$ ");
-    return string_getc(state->buf);
+    state->buf = NULL;
+    return '\0';
 }
 
 char input_interactive_topc(s_input *input)
 {
-    s_input_state_interactive *state= input->_input_state;
+    s_input_state_interactive *state = input->_input_state;
     char out;
     if (!state->buf)
-        state->buf = readline("42sh$ ");
+        state->buf = readline(state->shell, "42sh$ ");
     if ((out = string_topc(state->buf)))
         return out;
     string_free(state->buf);
-    state->buf = readline("42sh$ ");
-    return string_topc(state->buf);
+    state->buf = NULL;
+    return '\0';
 }

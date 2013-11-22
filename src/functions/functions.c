@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "functions.h"
+#include "functions_private.h"
 #include "shell_private.h"
 
 static void functions_delete_entry(void *shell_cmd)

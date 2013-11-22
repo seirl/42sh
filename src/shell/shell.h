@@ -3,13 +3,12 @@
 
 struct parser;
 
-enum shell_repeat
+enum shell_state
 {
     SHELL_STOP,
-    SHELL_ONCE,
     SHELL_REPEAT,
 };
-typedef enum shell_repeat e_shell_repeat;
+typedef enum shell_state e_shell_state;
 
 typedef struct shell s_shell;
 
@@ -22,8 +21,7 @@ s_shell *shell_new(void);
 ** @brief Setup the shell for usage.
 */
 void shell_setup(s_shell *shell,
-                 struct parser *parser,
-                 e_shell_repeat repeat);
+                 struct parser *parser);
 
 /**
 ** @brief Delete the shell.

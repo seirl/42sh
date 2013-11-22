@@ -1,12 +1,14 @@
 #include <ctype.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+#include "readline.h"
+
+#include "env.h"
+#include "key.h"
 #include "string_utils.h"
 #include "terminal.h"
-#include "key.h"
-#include "env.h"
-
 #include "wrapper.h"
 
 static int is_blank(s_string *line)

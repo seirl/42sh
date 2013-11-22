@@ -1,10 +1,18 @@
 #define _GNU_SOURCE
 #include <stdlib.h>
+#include <assert.h>
 #include <string.h>
 
+#include "env_private.h"
+
 #include "shell_private.h"
-#include "env.h"
 #include "hashtbl.h"
+
+void env_create(s_shell *shell)
+{
+    assert(!shell->env);
+    shell->env = hashtbl_init(hash_char, cmp_char, free_char, free_char);
+}
 
 void env_set(s_shell *shell, char *value, char *name)
 {
@@ -23,5 +31,7 @@ void env_unset(s_shell *shell, char *name)
 
 void env_free(s_shell *shell)
 {
+    assert(shell->env);
     hashtbl_free(shell->env);
+    shell->env = NULL;
 }
