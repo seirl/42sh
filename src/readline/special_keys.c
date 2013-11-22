@@ -47,6 +47,20 @@ static e_next_action do_enter(s_term *term)
     return RETURN;
 }
 
+static e_next_action do_ctrl_a(s_term *term)
+{
+    while (term->input_index > 0)
+        handle_bracket_key(BRACKET_LEFT, term);
+    return CONTINUE;
+}
+
+static e_next_action do_ctrl_e(s_term *term)
+{
+    while (term->input_index < term->input->len)
+        handle_bracket_key(BRACKET_RIGHT, term);
+    return CONTINUE;
+}
+
 e_next_action handle_special_char(s_term *term, char c)
 {
 #define X(Name, Code1, Code2, Handler)             \
