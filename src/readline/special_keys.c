@@ -4,7 +4,7 @@
 #include "special_keys.h"
 #include "wrapper.h"
 
-static void do_backspace(s_term *term)
+static e_next_action do_backspace(s_term *term)
 {
     if (term->input_index > 0)
     {
@@ -20,38 +20,38 @@ static void do_backspace(s_term *term)
         // edition mode
         my_tputs(tgetstr("ed", NULL));
     }
+    return CONTINUE;
 }
 
-static e_next_action handle_special_key(e_special_key key, s_term *term)
+static e_next_action do_ctrl_c(s_term *term)
 {
-    switch (key)
-    {
-        case ENTER:
-            return RETURN; // TODO: return only if no '\' escape.
-        case CTRL_C:
-            printf("%s\n", "^C");
-            printf("%s", term->prompt);
-            string_reset(term->input);
-            term->input_index = 0;
-            fflush(stdout);
-            return CONTINUE;
-        case CTRL_D:
-            if (term->input->len != 0)
-                return CONTINUE;
-            return EOI;
-        case BACKSPACE:
-            do_backspace(term);
-        default:
-            // Unrecognized key, ignore it.
-            return CONTINUE;
-    }
+    printf("%s\n", "^C");
+    printf("%s", term->prompt);
+    string_reset(term->input);
+    term->input_index = 0;
+    fflush(stdout);
+    return CONTINUE;
+}
+
+static e_next_action do_ctrl_d(s_term *term)
+{
+    if (term->input->len != 0)
+        return CONTINUE;
+    return EOI;
+}
+
+static e_next_action do_enter(s_term *term)
+{
+    // TODO: return only when not escaped with '\'
+    term += 1;
+    return RETURN;
 }
 
 e_next_action handle_special_char(s_term *term, char c)
 {
-#define X(Name, Code1, Code2)                      \
+#define X(Name, Code1, Code2, Handler)             \
     if (c == Code1 || (Code2 != 0 && c == Code2))  \
-        return handle_special_key(Name, term);
+        return Handler;
 #include "special_keys.def"
 #undef X
     // Unrecognized key, ignore it.
