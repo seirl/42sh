@@ -21,4 +21,9 @@ typedef enum special_key e_special_key;
 */
 e_next_action handle_special_char(s_term *term, char c);
 
+/**
+** @brief Handle a particular special key
+*/
+e_next_action handle_special_key(s_term *term, e_special_key key);
+
 #endif /* !SPECIAL_KEYS_H */

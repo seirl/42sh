@@ -3,6 +3,7 @@
 
 # include "terminal.h"
 # include "key.h"
+# include "special_keys.h"
 
 # define USE_HIST 1
 
@@ -18,12 +19,12 @@ enum bracket_key
 typedef enum bracket_key e_bracket_key;
 
 /**
-** @brief Handle a special control sequenc beginning with a bracket.
+** @brief Handle a special control sequence beginning with a bracket.
 */
 e_next_action handle_bracket_char(s_term *term);
 
 /**
-** @brief Handle a particular special key
+** @brief Handle a particular special key (of bracket type)
 */
 e_next_action handle_bracket_key(e_bracket_key key, s_term *term);
 

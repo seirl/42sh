@@ -4,6 +4,14 @@
 #include "wrapper.h"
 #include "history.h"
 
+static void update_line(s_term *term)
+{
+    handle_special_key(term, CTRL_A);
+    my_tputs(tgetstr("ce", NULL));
+    printf("%s", term->input->buf);
+    fflush(stdout);
+}
+
 static e_next_action do_right(s_term *term)
 {
     if (term->input_index < term->input->len)
@@ -26,37 +34,14 @@ static e_next_action do_left(s_term *term)
     return CONTINUE;
 }
 
-static e_next_action update_line(s_term *term, size_t end)
-{
-    while (term->input_index < end)
-    {
-        my_tputs(tgetstr("nd", NULL));
-        term->input_index++;
-    }
-
-    my_tputs(tgetstr("dm", NULL));
-    while (term->input_index > 0)
-    {
-        my_tputs(tgetstr("le", NULL));
-        my_tputs(tgetstr("dc", NULL));
-        term->input_index--;
-    }
-    my_tputs(tgetstr("ed", NULL));
-
-    printf("%s", term->input->buf);
-    fflush(stdout);
-    return CONTINUE;
-}
-
 static e_next_action do_up(s_term *term)
 {
     if (!USE_HIST || term->hist_pos + 1 >= history_size())
         return CONTINUE;
 
-    size_t end = term->input->len;
     term->hist_pos++;
     term->input = history_get(term->hist_pos)->line;
-    update_line(term, end);
+    update_line(term);
     term->input_index = term->input->len;
     return CONTINUE;
 }
@@ -66,13 +51,12 @@ static e_next_action do_down(s_term *term)
     if (!USE_HIST || term->hist_pos < 0)
         return CONTINUE;
 
-    size_t end = term->input->len;
     term->hist_pos--;
     if (term->hist_pos == -1)
         term->input = term->backup_input;
     else
         term->input = history_get(term->hist_pos)->line;
-    update_line(term, end);
+    update_line(term);
     term->input_index = term->input->len;
     return CONTINUE;
 }

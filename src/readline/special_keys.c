@@ -76,6 +76,17 @@ static e_next_action do_ctrl_l(s_term *term)
     return CONTINUE;
 }
 
+e_next_action handle_special_key(s_term *term, e_special_key key)
+{
+#define X(Name, Code1, Code2, Handler)              \
+    if (key == Name)                                \
+        return Handler;
+#include "special_keys.def"
+#undef X
+    // Unrecognized key, ignore it.
+    return PRINT;
+}
+
 e_next_action handle_special_char(s_term *term, char c)
 {
 #define X(Name, Code1, Code2, Handler)             \
