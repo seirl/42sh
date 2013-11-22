@@ -61,6 +61,15 @@ static e_next_action do_ctrl_e(s_term *term)
     return CONTINUE;
 }
 
+static e_next_action do_ctrl_k(s_term *term)
+{
+    size_t pos = term->input_index;
+    do_ctrl_e(term);
+    while (term->input_index != pos)
+        do_backspace(term);
+    return CONTINUE;
+}
+
 e_next_action handle_special_char(s_term *term, char c)
 {
 #define X(Name, Code1, Code2, Handler)             \
