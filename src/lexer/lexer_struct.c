@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "lexer_private.h"
+#include "input_private.h"
 #include "smalloc.h"
 #include "shopt.h"
 
@@ -23,6 +24,14 @@ s_lexer *lex_create(s_input *input)
     lexer->prefill = 1;
 
     return lexer;
+}
+
+void lex_start(s_lexer *lexer)
+{
+    token_free(lexer->lookahead);
+    lexer->lookahead = NULL;
+    lexer->prefill = 1;
+    lexer->input->next(lexer->input);
 }
 
 void lex_delete(s_lexer *lexer)

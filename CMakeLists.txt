@@ -220,6 +220,7 @@ add_library(expand OBJECT
 
 add_library(shell OBJECT
     src/shell/shell.c
+    src/shell/shell_loop.c
     src/shell/shell_eval_file.c
     src/shell/res_ctrl.c
     src/functions/functions.c

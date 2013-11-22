@@ -13,5 +13,7 @@ void input_file_delete(s_input *input);
 char input_file_getc(s_input *input);
 /** @brief Get a char from a file. */
 char input_file_topc(s_input *input);
+/** @brief Not used by file input. */
+int input_file_next(s_input *input);
 
 #endif /* !INPUT_FILE_H */

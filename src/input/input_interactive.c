@@ -19,6 +19,7 @@ s_input *input_interactive_create(s_shell *shell)
     input->type = INPUT_INTERACTIVE;
     input->getc = input_interactive_getc;
     input->topc = input_interactive_topc;
+    input->next = input_interactive_next;
     s_input_state_interactive *state = smalloc(sizeof
                                                (s_input_state_interactive));
     state->shell = shell;
@@ -32,8 +33,6 @@ s_input *input_interactive_create(s_shell *shell)
 void input_interactive_delete(s_input *input)
 {
     s_input_state_interactive *state = input->_input_state;
-    // XXX: Is there something to cleanup the readline?
-
     string_free(state->buf);
     sfree(state);
 }
@@ -41,25 +40,19 @@ void input_interactive_delete(s_input *input)
 char input_interactive_getc(s_input *input)
 {
     s_input_state_interactive *state = input->_input_state;
-    char out;
-    if (!state->buf)
-        state->buf = readline(state->shell, "42sh$ ");
-    if ((out = string_getc(state->buf)))
-        return out;
-    string_free(state->buf);
-    state->buf = NULL;
-    return '\0';
+    return state->buf ? string_getc(state->buf) : '\0';
 }
 
 char input_interactive_topc(s_input *input)
 {
     s_input_state_interactive *state = input->_input_state;
-    char out;
-    if (!state->buf)
-        state->buf = readline(state->shell, "42sh$ ");
-    if ((out = string_topc(state->buf)))
-        return out;
+    return state->buf ? string_topc(state->buf) : '\0';
+}
+
+int input_interactive_next(s_input *input)
+{
+    s_input_state_interactive *state = input->_input_state;
     string_free(state->buf);
-    state->buf = NULL;
-    return '\0';
+    state->buf = readline(state->shell, "42sh$ ");
+    return !!state->buf;
 }

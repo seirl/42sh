@@ -2,4 +2,5 @@
     "desc": "rule input: empty",
     "input": "",
     "output": "",
+    "retval": 1,
 }

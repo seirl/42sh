@@ -32,7 +32,10 @@ char *string_release(s_string *s)
 
 void string_free(s_string *s)
 {
-    if (s->buf)
+    if (!s)
+        return;
+
+    if (s->buf) /** TODO: Remove this check and fix bugs elsewhere. */
         sfree(s->buf);
     sfree(s);
 }

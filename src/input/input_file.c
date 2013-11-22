@@ -10,6 +10,7 @@ s_input *input_file_create(FILE* f, const char *filename)
     input->source = filename;
     input->getc = input_file_getc;
     input->topc = input_file_topc;
+    input->next = input_file_next;
     input->_input_state = f;
 
     return input;
@@ -34,4 +35,10 @@ char input_file_topc(s_input *input)
     int ret = fgetc(f);
     ungetc(ret, f);
     return ret == EOF ? 0 : ret;
+}
+
+int input_file_next(s_input *input)
+{
+    // Always return 0
+    return input != input;
 }

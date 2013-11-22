@@ -1,10 +1,9 @@
+#include <assert.h>
+
 #include "shell_private.h"
 
-#include "ast_printer.h"
 #include "env_private.h"
 #include "functions_private.h"
-#include "exec.h"
-#include "shopt.h"
 #include "smalloc.h"
 
 s_shell *shell_new(void)
@@ -28,31 +27,6 @@ void shell_setup(s_shell *shell, s_parser *parser)
 {
     assert(!shell->parser && "There is already a parser setup.");
     shell->parser = parser;
-}
-
-static int shell_read_eval(s_shell *shell)
-{
-    s_ast_input *ast;
-    ast = parse_rule_input(shell->parser);
-    if (parser_diagnostic(shell->parser) && ast)
-    {
-        if (shopt_get("ast_print"))
-            print_ast(ast, stdout);
-        exec_ast_input(shell, ast);
-    }
-    if (!ast)
-        shell->state = SHELL_STOP;
-    ast_input_delete(ast);
-    return 0;
-}
-
-int shell_loop(s_shell *shell)
-{
-    int ret;
-    do {
-        ret = shell_read_eval(shell);
-    } while (shell->state != SHELL_STOP);
-    return ret;
 }
 
 void shell_delete(s_shell *shell)

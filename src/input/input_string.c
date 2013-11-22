@@ -12,6 +12,7 @@ s_input *input_string_create(s_string *str, const char *source)
     input->_input_state = str;
     input->getc = input_string_getc;
     input->topc = input_string_topc;
+    input->next = input_string_next;
 
     return input;
 }
@@ -32,4 +33,10 @@ char input_string_topc(s_input *input)
 {
     s_string *str = input->_input_state;
     return string_topc(str);
+}
+
+int input_string_next(s_input *input)
+{
+    // Always return 0
+    return input != input;
 }

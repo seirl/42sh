@@ -15,6 +15,13 @@ typedef struct lexer s_lexer;
 s_lexer *lex_create(s_input *input);
 
 /**
+** @brief Start a new sequence of lexing.
+**
+** Call the input for a new sequence of chars and clean the lexer lookahead.
+*/
+void lex_start(s_lexer *lexer);
+
+/**
 ** @brief Delete a lexer.
 */
 void lex_delete(s_lexer *lexer);
