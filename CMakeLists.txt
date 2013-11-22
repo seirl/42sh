@@ -104,6 +104,7 @@ add_library(readline OBJECT
     src/readline/wrapper.c
     src/readline/bracket_key.c
     src/readline/special_keys.c
+    src/readline/escape_keys.c
     src/readline/terminal.c
 )
 

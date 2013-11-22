@@ -4,6 +4,7 @@
 #include "key.h"
 #include "bracket_key.h"
 #include "special_keys.h"
+#include "escape_keys.h"
 
 e_next_action getkey(s_term *term, char *c)
 {
@@ -21,6 +22,8 @@ e_next_action getkey(s_term *term, char *c)
 
         if (*c == '[')
             handle_bracket_char(term);
+        else
+            handle_escape_char(term, *c);
         return CONTINUE;
     }
     return handle_special_char(term, *c);
