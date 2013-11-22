@@ -4,7 +4,7 @@
 #include "wrapper.h"
 #include "history.h"
 
-static void do_right(s_term *term)
+static e_next_action do_right(s_term *term)
 {
     if (term->input_index < term->input->len)
     {
@@ -12,9 +12,10 @@ static void do_right(s_term *term)
         my_tputs(tgetstr("nd", NULL));
         term->input_index++;
     }
+    return CONTINUE;
 }
 
-static void do_left(s_term *term)
+static e_next_action do_left(s_term *term)
 {
     if (term->input_index > 0)
     {
@@ -22,12 +23,16 @@ static void do_left(s_term *term)
         my_tputs(tgetstr("le", NULL));
         term->input_index--;
     }
+    return CONTINUE;
 }
 
-static void update_line(s_term *term, size_t end)
+static e_next_action update_line(s_term *term, size_t end)
 {
     while (term->input_index < end)
+    {
         my_tputs(tgetstr("nd", NULL));
+        term->input_index++;
+    }
 
     my_tputs(tgetstr("dm", NULL));
     while (term->input_index > 0)
@@ -40,24 +45,26 @@ static void update_line(s_term *term, size_t end)
 
     printf("%s", term->input->buf);
     fflush(stdout);
+    return CONTINUE;
 }
 
-static void do_up(s_term *term)
+static e_next_action do_up(s_term *term)
 {
     if (!USE_HIST || term->hist_pos + 1 >= history_size())
-        return;
+        return CONTINUE;
 
     size_t end = term->input->len;
     term->hist_pos++;
     term->input = history_get(term->hist_pos)->line;
     update_line(term, end);
     term->input_index = term->input->len;
+    return CONTINUE;
 }
 
-static void do_down(s_term *term)
+static e_next_action do_down(s_term *term)
 {
     if (!USE_HIST || term->hist_pos < 0)
-        return;
+        return CONTINUE;
 
     size_t end = term->input->len;
     term->hist_pos--;
@@ -67,21 +74,16 @@ static void do_down(s_term *term)
         term->input = history_get(term->hist_pos)->line;
     update_line(term, end);
     term->input_index = term->input->len;
+    return CONTINUE;
 }
 
 e_next_action handle_bracket_key(e_bracket_key key, s_term *term)
 {
-    switch (key)
-    {
-#define X(Name, Char1, Char2, Fun)  \
-        case Name:                  \
-            Fun;                    \
-            break;
+#define X(Name, Char1, Char2, Handler)  \
+        if (key == Name)                \
+            return Handler;
 #include "bracket_key.def"
 #undef X
-        default:
-            break;
-    }
     return CONTINUE;
 }
 
