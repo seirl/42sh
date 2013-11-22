@@ -36,7 +36,7 @@ static e_next_action do_left(s_term *term)
 
 static e_next_action do_up(s_term *term)
 {
-    if (!USE_HIST || term->hist_pos + 1 >= history_size())
+    if (term->hist_pos + 1 >= history_size())
         return CONTINUE;
 
     term->hist_pos++;
@@ -48,7 +48,7 @@ static e_next_action do_up(s_term *term)
 
 static e_next_action do_down(s_term *term)
 {
-    if (!USE_HIST || term->hist_pos < 0)
+    if (term->hist_pos < 0)
         return CONTINUE;
 
     term->hist_pos--;

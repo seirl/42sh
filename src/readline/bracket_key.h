@@ -5,8 +5,6 @@
 # include "key.h"
 # include "special_keys.h"
 
-# define USE_HIST 1
-
 /**
 ** @brief All special keys beginning with a bracket
 */
