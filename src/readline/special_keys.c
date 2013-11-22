@@ -68,6 +68,14 @@ static e_next_action do_ctrl_k(s_term *term)
     return CONTINUE;
 }
 
+static e_next_action do_ctrl_l(s_term *term)
+{
+    my_tputs(tgetstr("cl", NULL));
+    printf("%s%s", term->prompt, term->input->buf);
+    fflush(stdout);
+    return CONTINUE;
+}
+
 e_next_action handle_special_char(s_term *term, char c)
 {
 #define X(Name, Code1, Code2, Handler)             \
