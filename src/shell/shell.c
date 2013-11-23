@@ -9,7 +9,7 @@
 
 s_shell *shell_new(void)
 {
-    s_shell *shell = smalloc(sizeof (s_shell));
+    s_shell *shell = scalloc(1, sizeof (s_shell));
 
     env_create(shell);
     functions_init(shell);
