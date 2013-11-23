@@ -6,6 +6,7 @@
 #include "functions_private.h"
 #include "shopt.h"
 #include "smalloc.h"
+#include "history.h"
 
 s_shell *shell_new(void)
 {
@@ -32,6 +33,7 @@ void shell_setup(s_shell *shell, s_parser *parser)
 
 void shell_delete(s_shell *shell)
 {
+    history_close(shell);
     env_free(shell);
     functions_free(shell);
     builtins_free(shell);

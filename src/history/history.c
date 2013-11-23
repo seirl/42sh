@@ -8,6 +8,7 @@
 #include <errno.h>
 
 #include "shell_private.h"
+#include "smalloc.h"
 #include "env.h"
 #include "history.h"
 #include "hist_list.h"
@@ -42,7 +43,7 @@ static void history_open(s_shell *shell)
         return;
 
     hist_file = fopen(env_get(shell, "HISTFILE"), "r");
-    shell->history = malloc(sizeof (s_history));
+    shell->history = smalloc(sizeof (s_history));
     shell->history->lines = h_list_init();
     char *line = NULL;
     size_t buf_size = 0;
@@ -87,14 +88,14 @@ static void history_write(s_shell *shell)
 
 void history_close(s_shell *shell)
 {
-    history_write(shell);
     if (!shell->history)
         return;
+    history_write(shell);
 
     h_list_delete(shell->history->lines);
     shell->history->lines = NULL;
     shell->history->last_file_entry = NULL;
-    free(shell->history);
+    sfree(shell->history);
     shell->history = NULL;
 }
 
