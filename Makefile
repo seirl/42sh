@@ -31,6 +31,10 @@ readlinecheck: all
 norm:
 	tools/norm.sh src/
 
+cppcheck:
+	mkdir -p build
+	cppcheck --enable=all --xml src/ 2> build/cppcheck.xml
+
 export:
 	git archive HEAD --prefix=audebe_r-42sh/ \
 	    | bzip2 > audebe_r-42sh.tar.bz2
