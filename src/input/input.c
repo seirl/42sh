@@ -11,6 +11,7 @@
 #include "input_string.h"
 #include "input_file.h"
 #include "shell.h"
+#include "macros.h"
 
 s_input *input_create(struct shell *shell, char *src, int mode)
 {
