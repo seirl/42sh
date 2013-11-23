@@ -17,5 +17,5 @@ void token_print(s_token *tok)
 #include "operator.def"
 #undef X
     } while (0);
-    fprintf(stdout, " (%d)\n", tok->concat);
+    fprintf(stdout, " (%d)\n", tok->concat == -1 ? 0 : tok->concat);
 }

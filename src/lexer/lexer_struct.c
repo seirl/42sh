@@ -5,7 +5,7 @@
 #include "smalloc.h"
 #include "shopt.h"
 
-s_lexer *lex_create(s_input *input)
+s_lexer *lex_create(s_shell *shell, s_input *input)
 {
     s_lexer *lexer;
 
@@ -22,6 +22,7 @@ s_lexer *lex_create(s_input *input)
     lexer->concat = -1;
     lexer->lookahead = NULL;
     lexer->prefill = 1;
+    lexer->shell = shell;
 
     return lexer;
 }
@@ -82,9 +83,8 @@ s_token *lex_release_token(s_lexer *lexer)
     tok = token_create(type, value, lexer->location, lexer->concat);
 
     lexer_reset(lexer);
-    //FIXME
-    //if (shopt_get("token_print"))
-    //    token_print(tok);
+    if (lexer->shell && shopt_get(lexer->shell, "token_print"))
+        token_print(tok);
 
     return tok;
 }

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     s_input *input;
     if (!(input = input_create(shell, src, ret)))
         return EXIT_FAILURE; // XXX: Use error specific return code?
-    s_lexer *lexer = lex_create(input);
+    s_lexer *lexer = lex_create(shell, input);
     s_parser *parser = parser_create(lexer);
     shell_setup(shell, parser);
 

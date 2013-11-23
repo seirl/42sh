@@ -5,6 +5,7 @@
 # include "token.h"
 # include "location.h"
 # include "input.h"
+# include "shell.h"
 
 /**
 ** @brief Used to count the occurence of a char and his opposite
@@ -40,6 +41,8 @@ struct lexer
     s_token *lookahead;
     //! Do we have to pre-fill the buffer?
     int prefill;
+    //! Shell
+    s_shell *shell;
 };
 
 /**

@@ -12,7 +12,7 @@ typedef struct lexer s_lexer;
 **
 ** Get ownership the input (will destroy it).
 */
-s_lexer *lex_create(s_input *input);
+s_lexer *lex_create(s_shell *shell, s_input *input);
 
 /**
 ** @brief Start a new sequence of lexing.
