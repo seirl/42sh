@@ -30,7 +30,7 @@ static void split_assignment(char *arg, s_string *key, s_string *value)
     int side = 0;
     for (int i = 0; arg[i]; ++i)
     {
-        if (arg[i] == '=')
+        if (arg[i] == '=' && side == 0)
         {
             side = 1;
             continue;

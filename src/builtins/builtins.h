@@ -5,6 +5,7 @@
 
 int builtin_shopt(s_shell *shell, int argc, char *argv[]);
 int builtin_alias(s_shell *shell, int argc, char *argv[]);
+int builtin_unalias(s_shell *shell, int argc, char *argv[]);
 
 typedef int (*f_handler)(s_shell *shell, int argc, char *argv[]);
 

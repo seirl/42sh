@@ -17,5 +17,7 @@ s_string *alias_get(s_shell *shell, s_string *alias);
 void alias_free(s_shell *shell);
 /** @brief Print all the alias */
 void alias_print(s_shell *shell);
+/** @brief Remove all the alias entries */
+void alias_clear(s_shell *shell);
 
 #endif /* !ALIAS_H */
