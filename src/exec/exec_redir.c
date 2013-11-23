@@ -14,7 +14,7 @@ s_redir_context *exec_redirection(s_shell *shell,
                                   s_ast_redirection_list *redir)
 {
     s_redir_context *context = save_redir_context(redir);
-    shell->status = set_redir(redir);
+    shell->status = set_redir(shell, redir);
     return context;
 }
 

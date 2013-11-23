@@ -45,7 +45,7 @@ static int element_redir_list_len(s_ast_element *elt)
     return count;
 }
 
-char **elements_to_argv(s_ast_element *element, int len)
+char **elements_to_argv(s_shell *shell, s_ast_element *element, int len)
 {
     char **cmd_argv = smalloc(sizeof (char *) * (len + 1));
     s_string *str = NULL;
@@ -58,7 +58,7 @@ char **elements_to_argv(s_ast_element *element, int len)
         }
         else
         {
-            if ((str = expand_compound(element->word)) == NULL)
+            if ((str = expand_compound(shell, element->word)) == NULL)
                 return NULL;
             cmd_argv[i] = smalloc(sizeof (char) * (str->len + 1));
             memcpy(cmd_argv[i], str->buf, str->len);

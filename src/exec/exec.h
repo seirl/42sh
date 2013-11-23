@@ -103,7 +103,7 @@ void exec_ast_input(s_shell *shell, s_ast_input *ast);
 /** @brief Return the length of an element list */
 int element_list_len(s_ast_element *elt);
 /** @brief Convert an element list to an argument array */
-char **elements_to_argv(s_ast_element *element, int len);
+char **elements_to_argv(s_shell *shell, s_ast_element *element, int len);
 
 // Redirections ---------------------------------------------------------------
 
@@ -119,7 +119,7 @@ s_redir_context *save_redir_context(s_ast_redirection_list *redir);
 /** @brief Translates a word to a file descriptor if possible */
 int word_to_fd(s_string *str);
 /** @brief Apply a redirection list */
-int set_redir(s_ast_redirection_list *redir);
+int set_redir(s_shell *shell, s_ast_redirection_list *redir);
 /** @brief Restore a redirection context */
 void restore_redir_context(s_redir_context *context);
 /** @brief Restore a redirection context list */
@@ -132,7 +132,7 @@ int compound_word_len(s_ast_compound_word *word);
 /** @brief Expand a word to a string */
 s_string *expand_word(s_ast_word *word);
 /** @brief Expand a compound list to a string */
-s_string *expand_compound(s_ast_compound_word *word);
+s_string *expand_compound(s_shell *shell, s_ast_compound_word *word);
 /** @brief Return an argument array from a compound list */
 char **compword_to_argv(s_ast_compound_word *word, int len);
 

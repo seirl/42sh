@@ -10,18 +10,16 @@ s_string *expand_word(s_ast_word *word)
     return NULL;
 }
 
-s_string *expand_compound(s_ast_compound_word *word)
+s_string *expand_compound(s_shell *shell, s_ast_compound_word *word)
 {
-    // FIXME shell should not be NULL !
     if (word && word->word)
-        return expand(NULL, word);
-        //return word->word->str;
+        return expand(shell, word);
     return NULL;
 }
 
 void exec_assignment(s_shell *shell, s_ast_assignment *assign)
 {
-    s_string *value = string_duplicate(expand_compound(assign->value));
+    s_string *value = string_duplicate(expand_compound(shell, assign->value));
     s_string *name = string_duplicate(assign->name);
     env_set(shell, string_release(name), string_release(value));
 }

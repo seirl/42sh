@@ -39,10 +39,11 @@ void exec_until(s_shell *shell, s_ast_until *until_cmd)
 void exec_for(s_shell *shell, s_ast_for *for_cmd)
 {
     s_ast_word_list *values = for_cmd->values;
-    while (values && expand_compound(values->word))
+    while (values && expand_compound(shell, values->word))
     {
         s_string *id = string_duplicate(expand_word(for_cmd->identifier));
-        s_string *value = string_duplicate(expand_compound(values->word));
+        s_string *value = string_duplicate(expand_compound(shell,
+                                                          values->word));
         exec_ast_list(shell, for_cmd->cmd_list);
         env_set(shell, string_release(id), string_release(value));
         values = values->next;
