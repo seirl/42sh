@@ -1,6 +1,7 @@
 #ifndef KEY_H
 # define KEY_H
 
+# include "shell.h"
 # include "terminal.h"
 
 /**
@@ -19,6 +20,6 @@ typedef enum next_action e_next_action;
 /**
 ** @brief Handle the next key
 */
-e_next_action getkey(s_term *term, char *c);
+e_next_action getkey(s_shell *shell, s_term *term, char *c);
 
 #endif /* !KEY_H */

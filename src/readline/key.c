@@ -6,7 +6,7 @@
 #include "special_keys.h"
 #include "escape_keys.h"
 
-e_next_action getkey(s_term *term, char *c)
+e_next_action getkey(s_shell *shell, s_term *term, char *c)
 {
     if (read(STDIN_FILENO, c, sizeof (char)) == -1)
         return ERROR;
@@ -21,10 +21,10 @@ e_next_action getkey(s_term *term, char *c)
             return ERROR;
 
         if (*c == '[')
-            handle_bracket_char(term);
+            handle_bracket_char(shell, term);
         else
-            handle_escape_char(term, *c);
+            handle_escape_char(shell, term, *c);
         return CONTINUE;
     }
-    return handle_special_char(term, *c);
+    return handle_special_char(shell, term, *c);
 }

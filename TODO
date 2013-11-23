@@ -10,7 +10,7 @@ READLINE
     Done:
         -
     Todo:
-        -
+        - Use PS1
 
 LEXER
 =====
@@ -21,7 +21,7 @@ LEXER
 PARSER
 ======
     Todo:
-        - Handle partial input
+        - Handle partial input and report state of the parser to readline
 
 EXPANSION
 =========

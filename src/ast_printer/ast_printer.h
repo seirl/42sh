@@ -1,6 +1,10 @@
 #ifndef AST_PRINTER_H
 # define AST_PRINTER_H
 
+# include <stdio.h>
+# include "string_utils.h"
+# include "ast.h"
+
 s_string *clean(s_string *s);
 unsigned long int ph(void *ptr);
 void print_pipeline(s_ast_pipeline *node, void *prev, FILE *out);

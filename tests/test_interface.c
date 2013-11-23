@@ -1,13 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "options.h"
+#include "shell.h"
 
 int main(int argc, char *argv[])
 {
-    char *cmd;
-    char *file;
-    int ret = parse_options(argc, argv, &cmd, &file);
-    if (ret == 2)
+    char *src;
+    s_shell *shell = shell_new();
+    int ret = parse_options(shell, argc, argv, &src);
+    shell_delete(shell);
+    if (ret & E_ERROR)
         return ret;
 
     return EXIT_SUCCESS;

@@ -16,7 +16,7 @@ static char *get_home(const s_shell *shell, char *user)
 
     if (user == NULL)
     {
-        home = env_get("HOME");
+        home = env_get(shell, "HOME");
         if (home)
             return home;
     }
@@ -69,9 +69,9 @@ static int operator_tilde(const s_shell *shell, s_string *word, s_string *ret)
     if (c2 != 0 && c2 != '/')
         return 0;
     if (c == '+')
-        string_puts(ret, env_get("PWD"));
+        string_puts(ret, env_get(shell, "PWD"));
     else if (c == '-')
-        string_puts(ret, env_get("OLDPWD"));
+        string_puts(ret, env_get(shell, "OLDPWD"));
     else
         return 0;
     string_getc(word);

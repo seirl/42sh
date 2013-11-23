@@ -1,2 +1,2 @@
-X(ESCAPE_B, 'b', 0, do_b(term))
-X(ESCAPE_F, 'f', 0, do_f(term))
+X(ESCAPE_B, 'b', 0, do_b(shell, term))
+X(ESCAPE_F, 'f', 0, do_f(shell, term))

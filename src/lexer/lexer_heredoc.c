@@ -27,15 +27,15 @@ s_token *lex_heredoc(s_lexer *lexer, const s_string *delim)
     char c = 0;
     while (1)
     {
-        if ((c = lexer->topc(lexer)) == '\0') /** EOF */
+        if ((c = lex_topc(lexer)) == '\0') /** EOF */
             return NULL;
         if (c == '\n' && check_delim(lexer, delim))
         {
-            lexer->getc(lexer->input_state);
+            lex_getc(lexer);
             break;
         }
 
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
     }
     lexer->token_type = T_WORD;
     return lex_release_token(lexer);
@@ -47,22 +47,22 @@ s_token *lex_heredoc_strip(s_lexer *lexer, const s_string *delim)
     char last = '\n';
     while (1)
     {
-        if ((c = lexer->topc(lexer)) == '\0') /** EOF */
+        if ((c = lex_topc(lexer)) == '\0') /** EOF */
             return NULL;
         if ((last == '\n' || last == '\t') && c == '\t')
         {
             last = c;
-            lexer->getc(lexer);
+            lex_getc(lexer);
             continue;
         }
         last = c;
 
         if (c == '\n' && check_delim(lexer, delim))
         {
-            lexer->getc(lexer->input_state);
+            lex_getc(lexer);
             break;
         }
-        string_putc(lexer->working_buffer, lexer->getc(lexer));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
     }
     lexer->token_type = T_WORD;
     return lex_release_token(lexer);

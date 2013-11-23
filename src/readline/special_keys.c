@@ -47,17 +47,17 @@ static e_next_action do_enter(s_term *term)
     return RETURN;
 }
 
-static e_next_action do_ctrl_a(s_term *term)
+static e_next_action do_ctrl_a(s_shell *shell, s_term *term)
 {
     while (term->input_index > 0)
-        handle_bracket_key(BRACKET_LEFT, term);
+        handle_bracket_key(shell, BRACKET_LEFT, term);
     return CONTINUE;
 }
 
-static e_next_action do_ctrl_e(s_term *term)
+static e_next_action do_ctrl_e(s_shell *shell, s_term *term)
 {
     while (term->input_index < term->input->len)
-        handle_bracket_key(BRACKET_RIGHT, term);
+        handle_bracket_key(shell, BRACKET_RIGHT, term);
     return CONTINUE;
 }
 
@@ -76,7 +76,7 @@ static e_next_action do_ctrl_l(s_term *term)
     return CONTINUE;
 }
 
-e_next_action handle_special_key(s_term *term, e_special_key key)
+e_next_action handle_special_key(s_shell *shell, s_term *term, e_special_key key)
 {
 #define X(Name, Code1, Code2, Handler)              \
     if (key == Name)                                \
@@ -87,7 +87,7 @@ e_next_action handle_special_key(s_term *term, e_special_key key)
     return PRINT;
 }
 
-e_next_action handle_special_char(s_term *term, char c)
+e_next_action handle_special_char(s_shell *shell, s_term *term, char c)
 {
 #define X(Name, Code1, Code2, Handler)             \
     if (c == Code1 || (Code2 != 0 && c == Code2))  \

@@ -1,5 +1,8 @@
 #include "exec.h"
 
+#include "shell_private.h"
+#include "smalloc.h"
+
 void restore_redir_context(s_redir_context *context)
 {
     for (int i = 0; context[i].old_fd != -1; ++i)
@@ -7,10 +10,11 @@ void restore_redir_context(s_redir_context *context)
     sfree(context);
 }
 
-s_redir_context *exec_redirection(s_ast_redirection_list *redir)
+s_redir_context *exec_redirection(s_shell *shell,
+                                  s_ast_redirection_list *redir)
 {
     s_redir_context *context = save_redir_context(redir);
-    g_shell.status = set_redir(redir);
+    shell->status = set_redir(redir);
     return context;
 }
 

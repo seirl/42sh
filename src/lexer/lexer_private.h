@@ -4,6 +4,7 @@
 # include "lexer.h"
 # include "token.h"
 # include "location.h"
+# include "input.h"
 
 /**
 ** @brief Used to count the occurence of a char and his opposite
@@ -24,14 +25,8 @@ typedef struct surround s_surround;
 */
 struct lexer
 {
-    //! a function to eat a char from a stream
-    char (*getc)(void *input_state);
-    //! a function to get a char from a stream
-    char (*topc)(void *input_state);
-    //! the internal lexer_state
-    void *input_state;
-    //! Where does the characters come from.
-    char *source;
+    s_input *input;
+
     e_token_type token_type;
     //! a buffer in which the char are set
     s_string *working_buffer;
@@ -63,6 +58,10 @@ s_token *lex_release_token(s_lexer *lexer);
 **
 */
 s_token *lex_release_lookahead(s_lexer *lexer);
+
+// input utils ----------------------------------------------------------------
+char lex_getc(s_lexer *lexer);
+char lex_topc(s_lexer *lexer);
 
 /** @brief fill the buffer with a new delimited token */
 int lex_delimit_token(s_lexer *lexer);

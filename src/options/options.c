@@ -1,3 +1,4 @@
+#include "options.h"
 #include "getopt.h"
 #include "shopt.h"
 #include "macros.h"
@@ -33,26 +34,27 @@ static void usage(FILE *output)
 
 }
 
-static int check_args(s_opt opt)
+static int check_args(s_shell *shell, s_opt opt)
 {
     if (opt_get(&opt, "help", NULL))
     {
         usage(stdout);
-        return 3;
+        return E_RET;
     }
     if (opt_get(&opt, "version", NULL))
     {
         version();
-        return 3;
+        return E_RET;
     }
     if (opt_get(&opt, "ast-print", NULL))
-        shopt_set("ast_print", 1);
+        shopt_set(shell, "ast_print", 1);
     if (opt_get(&opt, "token-print", NULL))
-        shopt_set("token_print", 1);
-    return opt_get(&opt, "norc", NULL) == 0;
+        shopt_set(shell, "token_print", 1);
+    return opt_get(&opt, "norc", NULL) ? E_RC : 0;
 }
 
-int parse_options(int argc, char *argv[], char **cmd, char **file)
+e_option_return parse_options(s_shell *shell, int argc, char *argv[],
+                             char **source)
 {
     s_opt *opt = opt_init(main_param, 7);
     char *arg;
@@ -62,18 +64,24 @@ int parse_options(int argc, char *argv[], char **cmd, char **file)
         if (ret == 1)
             usage(stderr);
         opt_free(opt);
-        return 2;
+        return E_ERROR;
     }
-    if (shopt_from_opt(opt) == 1)
+    if (shopt_from_opt(shell, opt) == 1)
     {
         opt_free(opt);
-        return 2;
+        return E_ERROR;
     }
-    ret = check_args(*opt);
+    ret = check_args(shell, *opt);
     if (opt_get(opt, "c", &arg))
-        *cmd = arg;
-    if (opt_trailing_arg(opt, 0))
-        *file = opt_trailing_arg(opt, 0);
+    {
+        *source = arg;
+        ret += E_STR;
+    }
+    else if (opt_trailing_arg(opt, 0))
+    {
+        *source = opt_trailing_arg(opt, 0);
+        ret += E_FILE;
+    }
     opt_free(opt);
     return ret;
 }

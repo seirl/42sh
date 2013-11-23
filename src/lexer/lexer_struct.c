@@ -1,21 +1,18 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "lexer_private.h"
+#include "input_private.h"
 #include "smalloc.h"
 #include "shopt.h"
 
-s_lexer *lex_create(char (*lex_getc)(void *input_state),
-                    char (*lex_topc)(void *input_state),
-                    void *input_state,
-                    char *source)
+s_lexer *lex_create(s_input *input)
 {
     s_lexer *lexer;
 
     lexer = smalloc(sizeof (s_lexer));
 
-    lexer->getc = lex_getc;
-    lexer->topc = lex_topc;
-    lexer->source = source;
+    lexer->input = input;
+
     lexer->working_buffer = string_create(0);
     lexer->token_type = T_WORD;
     lexer->sur.begin = 0;
@@ -25,9 +22,16 @@ s_lexer *lex_create(char (*lex_getc)(void *input_state),
     lexer->concat = -1;
     lexer->lookahead = NULL;
     lexer->prefill = 1;
-    lexer->input_state = input_state;
 
     return lexer;
+}
+
+void lex_start(s_lexer *lexer)
+{
+    token_free(lexer->lookahead);
+    lexer->lookahead = NULL;
+    lexer->prefill = 1;
+    lexer->input->next(lexer->input);
 }
 
 void lex_delete(s_lexer *lexer)
@@ -35,6 +39,9 @@ void lex_delete(s_lexer *lexer)
     string_free(lexer->working_buffer);
     if (lexer->lookahead)
         token_free(lexer->lookahead);
+
+    input_destroy(lexer->input);
+    sfree(lexer);
 }
 
 //! @brief Replace s with new s_string, return old value.
@@ -75,8 +82,9 @@ s_token *lex_release_token(s_lexer *lexer)
     tok = token_create(type, value, lexer->location, lexer->concat);
 
     lexer_reset(lexer);
-    if (shopt_get("token_print"))
-        token_print(tok);
+    //FIXME
+    //if (shopt_get("token_print"))
+    //    token_print(tok);
 
     return tok;
 }

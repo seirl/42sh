@@ -2,6 +2,7 @@
 -Wextra
 -pedantic
 -std=c99
+
 -Isrc/
 -Isrc/ast
 -Isrc/ast_printer
@@ -9,9 +10,11 @@
 -Isrc/exec
 -Isrc/expand
 -Isrc/fnmatch
+-Isrc/history
+-Isrc/input
 -Isrc/lexer
 -Isrc/options
 -Isrc/parser
 -Isrc/readline
+-Isrc/shell
 -Isrc/utils
--Isrc/history

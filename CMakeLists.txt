@@ -18,23 +18,27 @@ if(COVERAGE)
 endif()
 
 add_definitions(-D_XOPEN_SOURCE)
+add_definitions(-D_XOPEN_SOURCE_EXTENDED)
+
 LINK_LIBRARIES(m ncurses)
 
 include_directories(src)
-include_directories(src/env)
 include_directories(src/ast)
 include_directories(src/ast_printer)
-include_directories(src/lexer)
+include_directories(src/builtins)
+include_directories(src/functions)
+include_directories(src/env)
+include_directories(src/exec)
+include_directories(src/expand)
 include_directories(src/fnmatch)
+include_directories(src/history)
+include_directories(src/input)
+include_directories(src/lexer)
 include_directories(src/options)
 include_directories(src/parser)
 include_directories(src/readline)
+include_directories(src/shell)
 include_directories(src/utils)
-include_directories(src/exec)
-include_directories(src/expand)
-include_directories(src/input)
-include_directories(src/history)
-include_directories(src/builtins)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -74,13 +78,16 @@ add_library(fnmatch OBJECT
 add_library(lexer OBJECT
     src/lexer/alias.c
     src/lexer/char_utils.c
+
     src/lexer/lexer.c
     src/lexer/lexer_fill.c
     src/lexer/lexer_heredoc.c
+    src/lexer/lexer_input.c
     src/lexer/lexer_lookahead.c
     src/lexer/lexer_pattern.c
     src/lexer/lexer_struct.c
     src/lexer/lexer_word.c
+
     src/lexer/location.c
     src/lexer/token.c
     src/lexer/token_debug.c
@@ -96,6 +103,7 @@ add_library(options OBJECT
 )
 
 add_library(builtins OBJECT
+    src/builtins/builtins.c
     src/builtins/b_shopt.c
 )
 
@@ -116,9 +124,14 @@ add_library(history OBJECT
 
 add_library(input OBJECT
     src/input/input.c
-    src/input/res_ctrl.c
+
+    src/input/input_new.c
+    src/input/input_delete.c
+    src/input/input_destroy.c
+
     src/input/input_string.c
     src/input/input_file.c
+    src/input/input_interactive.c
 )
 
 add_library(ast_printer OBJECT
@@ -176,8 +189,6 @@ add_library(exec OBJECT
     src/exec/exec_utils.c
     src/exec/pipe_utils.c
     src/exec/redir_set.c
-    src/exec/shell_vars.c
-    src/exec/shell_funcs.c
 )
 
 add_library(ast OBJECT
@@ -216,26 +227,40 @@ add_library(expand OBJECT
     src/expand/expand_var.c
 )
 
-add_executable(../42sh
-    src/main.c
-    src/utils/sighandler.c
+add_library(shell OBJECT
+    src/shell/shell.c
+    src/shell/shell_loop.c
+    src/shell/shell_eval_file.c
+    src/shell/res_ctrl.c
+    src/functions/functions.c
+)
 
+add_library(lib42sh STATIC
     $<TARGET_OBJECTS:ast>
     $<TARGET_OBJECTS:ast_printer>
+    $<TARGET_OBJECTS:builtins>
     $<TARGET_OBJECTS:env>
     $<TARGET_OBJECTS:expand>
+    $<TARGET_OBJECTS:exec>
     $<TARGET_OBJECTS:hashtbl>
+    $<TARGET_OBJECTS:history>
+    $<TARGET_OBJECTS:input>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:log>
     $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:readline>
+    $<TARGET_OBJECTS:shell>
     $<TARGET_OBJECTS:smalloc>
     $<TARGET_OBJECTS:string>
-    $<TARGET_OBJECTS:input>
-    $<TARGET_OBJECTS:exec>
-    $<TARGET_OBJECTS:history>
 )
+
+add_executable(../42sh
+    src/main.c
+    src/utils/sighandler.c
+)
+
+target_link_libraries(../42sh lib42sh)
 
 message(STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS})
 message(STATUS "CMAKE_CPP_FLAGS: " ${CMAKE_CPP_FLAGS})

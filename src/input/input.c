@@ -1,59 +1,36 @@
+#define GNU_SOURCE
+#define _POSIX_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "string_utils.h"
-#include "input.h"
+
+#include "input_interactive.h"
+
+#include "input_private.h"
 #include "input_string.h"
 #include "input_file.h"
-#include "lexer_private.h"
-#include "readline.h"
-#include "macros.h"
-#include "log.h"
-#include "smalloc.h"
+#include "shell.h"
 
-s_lexer *input_to_lexer(char **cmd, char *file, int *repeat)
+s_input *input_create(struct shell *shell, char *src, int mode)
 {
-    s_string *input;
+    s_string *input_str;
     FILE *f;
-    if (*cmd && !*repeat)
+    if (mode & SRC_STR)
     {
-        input = string_create_from(*cmd);
-        return lex_create(input_string_getc, input_string_topc, input, "cmd");
+        input_str = string_create_from(src);
+        return input_string_create(input_str, "<cmd>");
     }
-    if (file)
+    if (mode & SRC_FILE)
     {
-        if ((f = fopen(file, "r")) == NULL)
-            RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", file);
-        return lex_create(input_file_getc, input_file_topc, f, "file");
+        if ((f = fopen(src, "r")) == NULL)
+            RET_WITH(NULL, PROGNAME": %s: No such file or directory\n", src);
+        return input_file_create(f, src);
     }
-    if (!(*repeat = isatty(STDIN_FILENO)))
+    if (!isatty(STDIN_FILENO))
     {
         f = fdopen(STDIN_FILENO, "r");
-        return lex_create(input_file_getc, input_file_topc, f, "stdin");
+        return input_file_create(f, "<stdin>");
     }
-    if ((input = readline("42sh$ ")) == NULL) // TODO: use PS1
-    {
-        printf("exit\n");
-        fflush(stdout);
-        *repeat = 0;
-        return NULL;
-    }
-    *cmd = "";
-    return lex_create(input_string_getc, input_string_topc, input, "int");
-}
-
-void input_free(s_lexer *lexer, char *cmd, char *file)
-{
-    if (cmd)
-    {
-        s_string *str = lexer->input_state;
-        string_free(str);
-    }
-    else if (file)
-    {
-        FILE *f = lexer->input_state;
-        fclose(f);
-    }
-    sfree(lexer);
+    return input_interactive_create(shell);
 }

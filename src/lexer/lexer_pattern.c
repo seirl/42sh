@@ -5,14 +5,14 @@ int handle_operator(s_lexer *lexer)
 {
     char c;
     do {
-        c = lexer->topc(lexer->input_state);
+        c = lex_topc(lexer);
         string_putc(lexer->working_buffer, c);
         if (!is_valid_operator(lexer, lexer->working_buffer) || c == 0)
         {
             string_del_from_end(lexer->working_buffer, 1);
             return 1;
         }
-        lexer->getc(lexer->input_state);
+        lex_getc(lexer);
     } while (c != 0);
     return 0;
 }
@@ -25,7 +25,7 @@ int handle_quotes(s_lexer *lexer, char c, char prev)
     {
         lexer->sur.end = c;
         lexer->sur.count = 1;
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
+        string_putc(lexer->working_buffer, lex_getc(lexer));
         return fill_until(lexer, 1);
     }
     return 0;
@@ -37,8 +37,8 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
         return 0;
     if (c == '$')
     {
-        string_putc(lexer->working_buffer, lexer->getc(lexer->input_state));
-        c = lexer->topc(lexer->input_state);
+        string_putc(lexer->working_buffer, lex_getc(lexer));
+        c = lex_topc(lexer);
         if (c == '(' || c == '{')
         {
             lexer->sur.begin = c;
@@ -83,7 +83,7 @@ int handle_assignment(s_lexer *lexer, char c)
     {
         if (wbuf->len == 0)
         {
-            string_putc(wbuf, lexer->getc(lexer->input_state));
+            string_putc(wbuf, lex_getc(lexer));
             return 1;
         }
         for (size_t i = 0; i < wbuf->len; ++i)

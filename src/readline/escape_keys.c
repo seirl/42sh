@@ -10,25 +10,25 @@ static int current_is_blank(s_term *term)
     return (c == ' ') || (c == '\t');
 }
 
-static e_next_action do_b(s_term *term)
+static e_next_action do_b(s_shell *shell, s_term *term)
 {
     while (term->input_index > 0 && current_is_blank(term))
-        handle_bracket_key(BRACKET_LEFT, term);
+        handle_bracket_key(shell, BRACKET_LEFT, term);
     while (term->input_index > 0 && !current_is_blank(term))
-        handle_bracket_key(BRACKET_LEFT, term);
+        handle_bracket_key(shell, BRACKET_LEFT, term);
     return CONTINUE;
 }
 
-static e_next_action do_f(s_term *term)
+static e_next_action do_f(s_shell *shell, s_term *term)
 {
     while (term->input_index < term->input->len && current_is_blank(term))
-        handle_bracket_key(BRACKET_RIGHT, term);
+        handle_bracket_key(shell, BRACKET_RIGHT, term);
     while (term->input_index < term->input->len && !current_is_blank(term))
-        handle_bracket_key(BRACKET_RIGHT, term);
+        handle_bracket_key(shell, BRACKET_RIGHT, term);
     return CONTINUE;
 }
 
-e_next_action handle_escape_key(s_term *term, e_escape_key key)
+e_next_action handle_escape_key(s_shell *shell, s_term *term, e_escape_key key)
 {
 #define X(Name, Code1, Code2, Handler)              \
     if (key == Name)                                \
@@ -39,7 +39,7 @@ e_next_action handle_escape_key(s_term *term, e_escape_key key)
     return PRINT;
 }
 
-e_next_action handle_escape_char(s_term *term, char c)
+e_next_action handle_escape_char(s_shell *shell, s_term *term, char c)
 {
 #define X(Name, Code1, Code2, Handler)             \
     if (c == Code1 || (Code2 != 0 && c == Code2))  \

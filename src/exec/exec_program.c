@@ -1,5 +1,9 @@
 #include "exec.h"
 
+#include "shell_private.h"
+#include "smalloc.h"
+#include "functions.h"
+
 void free_current_cmd(char **argv)
 {
     int i = 0;
@@ -38,7 +42,8 @@ void exec_argv(char **argv)
     exit((errno == ENOENT) ? 127 : 126);
 }
 
-int exec_prog(char **cmd_argv,
+int exec_prog(s_shell *shell,
+              char **cmd_argv,
               s_redir_context **contexts,
               s_ast_prefix *prefixes)
 {
@@ -52,8 +57,8 @@ int exec_prog(char **cmd_argv,
     }
     if (pid == 0)
     {
-        exec_prefixes(prefixes);
-        g_shell.curr_argv = cmd_argv;
+        exec_prefixes(shell, prefixes);
+        shell->curr_argv = cmd_argv;
         exec_argv(cmd_argv);
         fprintf(stderr, "Execution flow corrupted.\n");
         assert(0);
@@ -76,29 +81,29 @@ void restore_redir_contexts(s_redir_context **contexts)
     sfree(contexts);
 }
 
-void exec_simple_cmd(s_ast_simple_cmd *cmd)
+void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
     f_handler callback;
     char **cmd_argv = elements_to_argv(cmd->elements, len);
-    s_redir_context **contexts = exec_elements_redir(cmd->elements);
+    s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
     s_ast_shell_cmd *func_body;
 
     if (!cmd_argv[0])
-        exec_prefixes(cmd->prefixes);
-    else if ((func_body = funcs_get(cmd_argv[0])))
+        exec_prefixes(shell, cmd->prefixes);
+    else if ((func_body = functions_get(shell, cmd_argv[0])))
     {
-        exec_prefixes(cmd->prefixes);
-        exec_shell_cmd(func_body);
+        exec_prefixes(shell, cmd->prefixes);
+        exec_shell_cmd(shell, func_body);
         restore_redir_contexts(contexts);
         sfree(cmd_argv);
     }
-    else if ((callback = builtin_handler(cmd_argv[0])))
+    else if ((callback = builtins_find(shell, cmd_argv[0])))
     {
-        exec_prefixes(cmd->prefixes);
-        g_shell.status = callback(cmd_argv);
+        exec_prefixes(shell, cmd->prefixes);
+        shell->status = callback(cmd_argv);
         sfree(cmd_argv);
     }
     else
-        g_shell.status = exec_prog(cmd_argv, contexts, cmd->prefixes);
+        shell->status = exec_prog(shell, cmd_argv, contexts, cmd->prefixes);
 }

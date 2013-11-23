@@ -2,6 +2,7 @@
 # define LEXER_H
 
 # include "string_utils.h"
+# include "input.h"
 # include "token.h"
 
 typedef struct lexer s_lexer;
@@ -9,13 +10,16 @@ typedef struct lexer s_lexer;
 /**
 ** @brief Create a new lexer.
 **
-** @param lex_getc A function that return a char
-** @return A lexer object.
+** Get ownership the input (will destroy it).
 */
-s_lexer *lex_create(char (*lex_getc)(void *input_state),
-                    char (*lex_topc)(void *input_state),
-                    void *input_state,
-                    char *source);
+s_lexer *lex_create(s_input *input);
+
+/**
+** @brief Start a new sequence of lexing.
+**
+** Call the input for a new sequence of chars and clean the lexer lookahead.
+*/
+void lex_start(s_lexer *lexer);
 
 /**
 ** @brief Delete a lexer.

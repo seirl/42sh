@@ -1,25 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "input_string.h"
 #include "lexer.h"
-#include "token.h"
 #include "smalloc.h"
 #include "string_utils.h"
-
-char *str;
-size_t pos = 0;
-
-char dummy_getc(void *state)
-{
-    (void)state;
-    return str[pos++];
-}
-
-char dummy_topc(void *state)
-{
-    (void)state;
-    return str[pos];
-}
+#include "token.h"
 
 int main(int argc, char **argv)
 {
@@ -29,12 +15,13 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    s_input *input;
     s_token *tok;
     s_lexer *lexer;
     e_token_type t = T_WORD;
 
-    str = argv[1];
-    lexer = lex_create(dummy_getc, dummy_topc, NULL, "<test>");
+    input = input_string_create(string_create_from(argv[1]), "<INPUT>");
+    lexer = lex_create(input);
     if (argc == 2)
     {
         do {

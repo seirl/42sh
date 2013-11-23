@@ -1,6 +1,7 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
+# include "shell.h"
 # include "string_utils.h"
 
 /**
@@ -42,21 +43,21 @@ typedef struct history s_history;
 ** @param n The number from the end of the wanted command line.
 ** @return an s_string representing the wanted command line.
 */
-s_hist_entry *history_get(int n);
+s_hist_entry *history_get(s_shell *shell, int n);
 
 /**
 ** @brief Close the history and free it's ressources
 */
-void history_close(void);
+void history_close(s_shell *shell);
 
 /**
 ** @brief Get the history size
 */
-int history_size(void);
+int history_size(s_shell *shell);
 
 /**
 ** @brief Add a line to the history
 */
-void history_add(s_string *line);
+void history_add(s_shell *shell, s_string *line);
 
 #endif /* !HISTORY_H */
