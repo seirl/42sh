@@ -35,7 +35,7 @@ static int foreach_opt(s_shell *shell, s_opt *opt, int value)
 int builtin_shopt(s_shell *shell, int argc, char *argv[])
 {
     int ret = 0;
-    s_opt *opt = opt_init(shopt_param , 3);
+    s_opt *opt = opt_init(shopt_param, 3);
     if (opt_parse(argc, argv, opt))
     {
         usage();

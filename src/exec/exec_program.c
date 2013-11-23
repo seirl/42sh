@@ -101,7 +101,7 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
     else if ((callback = builtins_find(shell, cmd_argv[0])))
     {
         exec_prefixes(shell, cmd->prefixes);
-        shell->status = callback(cmd_argv);
+        shell->status = callback(shell, len, cmd_argv);
         sfree(cmd_argv);
     }
     else

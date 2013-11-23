@@ -5,7 +5,7 @@
 
 int builtin_shopt(s_shell *shell, int argc, char *argv[]);
 
-typedef int (*f_handler)(char **);
+typedef int (*f_handler)(s_shell *shell, int argc, char *argv[]);
 
 struct builtins
 {
@@ -14,6 +14,8 @@ struct builtins
 };
 typedef struct builtins s_builtins;
 
+void builtins_create(s_shell *shell);
 f_handler builtins_find(s_shell *shell, const char *name);
+void builtins_free(s_shell *shell);
 
 #endif /* !BUILTINS_H */

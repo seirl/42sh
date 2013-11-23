@@ -14,9 +14,8 @@ s_shell *shell_new(void)
     env_create(shell);
     functions_init(shell);
     shopt_create(shell);
+    builtins_create(shell);
 
-    shell->builtins = NULL;
-    shell->builtins_count = 0;
     shell->curr_argv = NULL;
     shell->parser = NULL;
     shell->state = SHELL_REPEAT;
@@ -35,7 +34,7 @@ void shell_delete(s_shell *shell)
 {
     env_free(shell);
     functions_free(shell);
-    // TODO: free shell->builtins;
+    builtins_free(shell);
 
     sfree(shell);
 }
