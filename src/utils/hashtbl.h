@@ -32,7 +32,7 @@ void hashtbl_unset(s_hashtbl *h, void *key);
 void hashtbl_free(s_hashtbl *h);
 
 // hash_op.c
-void *hashtbl_iter(s_hashtbl *h, s_hash_elt **it);
+void *hashtbl_iter(s_hashtbl *h, void **key, s_hash_elt **it);
 
 // hash_char.c
 unsigned long hash_char(void *s);

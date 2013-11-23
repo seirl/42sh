@@ -61,7 +61,8 @@ int test_5()
     hashtbl_set(h, "c", "baf");
     s_hash_elt *it = NULL;
     char *res;
-    while ((res = hashtbl_iter(h, &it)))
+    void *key;
+    while ((res = hashtbl_iter(h, &key, &it)))
         printf("%s\n", res);
     hashtbl_free(h);
     return 0;

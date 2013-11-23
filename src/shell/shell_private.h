@@ -8,6 +8,7 @@
 # include "history.h"
 # include "parser.h"
 # include "shopt.h"
+# include "alias.h"
 
 struct shell
 {
@@ -29,6 +30,9 @@ struct shell
 
     /** Managed by the history module. */
     s_history *history;
+
+    /** Managed by the lexer module. */
+    s_hashtbl *aliases;
 
     char **curr_argv;
 

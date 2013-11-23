@@ -16,6 +16,7 @@ s_shell *shell_new(void)
     functions_init(shell);
     shopt_create(shell);
     builtins_create(shell);
+    alias_create(shell);
 
     shell->curr_argv = NULL;
     shell->parser = NULL;
@@ -37,6 +38,7 @@ void shell_delete(s_shell *shell)
     env_free(shell);
     functions_free(shell);
     builtins_free(shell);
+    alias_free(shell);
 
     sfree(shell);
 }

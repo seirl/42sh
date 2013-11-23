@@ -77,6 +77,7 @@ add_library(fnmatch OBJECT
 
 add_library(lexer OBJECT
     src/lexer/alias.c
+    src/lexer/alias_print.c
     src/lexer/char_utils.c
 
     src/lexer/lexer.c
@@ -105,6 +106,7 @@ add_library(options OBJECT
 add_library(builtins OBJECT
     src/builtins/builtins.c
     src/builtins/b_shopt.c
+    src/builtins/b_alias.c
 )
 
 add_library(readline OBJECT
