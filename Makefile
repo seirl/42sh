@@ -1,4 +1,5 @@
-.PHONY: all clean check export doc
+CPPCHECK=$(shell hash cppcheck 1>&2 2>/dev/null; echo $$?)
+.PHONY: all clean check export doc cppcheck
 
 all:
 	mkdir -p build
@@ -32,8 +33,10 @@ norm:
 	tools/norm.sh src/
 
 cppcheck:
+ifeq (${CPPCHECK}, 0)
 	mkdir -p build
 	cppcheck --enable=all --xml src/ 2> build/cppcheck.xml
+endif
 
 export:
 	git archive HEAD --prefix=audebe_r-42sh/ \
