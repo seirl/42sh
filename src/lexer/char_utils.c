@@ -7,9 +7,11 @@ int is_operator(char c)
            || c == '!' || c == '}' || c == '{' || c == '(' || c == ')');
 }
 
-int is_delimiter(char c)
+int is_delimiter(s_lexer *lexer, char c)
 {
-    return (c == 0 || c == '\t' || c == ' ' || c == '\n' || is_operator(c));
+    return (c == 0
+           || (lexer->blank_sep && (c == '\t' || c == ' ' || c == '\n'))
+           || is_operator(c));
 }
 
 int is_quote(char c)
@@ -23,9 +25,9 @@ int is_quote(char c)
     return 0;
 }
 
-int is_token_delimiter(char c)
+int is_token_delimiter(s_lexer *lexer, char c)
 {
-    return is_delimiter(c) || is_quote(c);
+    return is_delimiter(lexer, c) || is_quote(c);
 }
 
 int is_valid_operator(s_lexer *lexer, s_string *s)

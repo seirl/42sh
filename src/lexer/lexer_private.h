@@ -41,6 +41,8 @@ struct lexer
     s_token *lookahead;
     //! Do we have to pre-fill the buffer?
     int prefill;
+    //! blank char = separator ?
+    int blank_sep;
     //! Shell
     s_shell *shell;
 };
@@ -73,11 +75,11 @@ int lex_eat_spaces(s_lexer *lexer);
 
 // char utils -----------------------------------------------------------------
 /** @brief check if the current char is a delimiter according to the SCL */
-int is_delimiter(char c);
+int is_delimiter(s_lexer *lexer, char c);
 /** @brief check if the current char is a quote (', ", `) */
 int is_quote(char c);
 /** @brief check if the current char is a token delimiter (ie quote, blank) */
-int is_token_delimiter(char c);
+int is_token_delimiter(s_lexer *lexer, char c);
 /** @brief check if the current char is an operator */
 int is_operator(char c);
 /** @brief check if the wroking buffer contains an operator (SCL) */

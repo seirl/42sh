@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     e_token_type t = T_WORD;
 
     input = input_string_create(string_create_from(argv[1]), "<INPUT>");
-    lexer = lex_create(NULL, input);
+    lexer = lex_create(NULL, input, 1);
     if (argc == 2)
     {
         do {

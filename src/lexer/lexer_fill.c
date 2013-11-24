@@ -68,7 +68,12 @@ int fill_upto_delim(s_lexer *lexer)
     char prev = 0;
     do {
         c = lex_topc(lexer);
-        if ((is_quote(c) || is_delimiter(c)) && prev != '\\')
+        if ((is_quote(c)
+            || is_delimiter(lexer, c)
+            || c == ' '
+            || c == '\t'
+            || c == '\n')
+            && prev != '\\')
             break;
         string_putc(lexer->working_buffer, lex_getc(lexer));
         prev = c;
@@ -78,7 +83,7 @@ int fill_upto_delim(s_lexer *lexer)
 
 static int handle_delim_and_quote(s_lexer *lexer, char c, char prev)
 {
-    if ((is_delimiter(c) || is_quote(c) || c == '$') && prev != '\\')
+    if ((is_delimiter(lexer, c) || is_quote(c) || c == '$') && prev != '\\')
     {
         if (prev == 0)
         {
@@ -99,8 +104,10 @@ int fill_token(s_lexer *lexer)
 {
     char c;
     char prev = 0;
+    int spaces = 0;
 
-    int spaces = lex_eat_spaces(lexer);
+    if (lexer->blank_sep)
+        spaces = lex_eat_spaces(lexer);
     lexer->concat = lexer->concat == -1 ? 0 : !spaces;
 
     do {
