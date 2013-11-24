@@ -16,7 +16,7 @@ void strip_token(s_token *token)
     }
     else if (token->type == T_ARITHM)
     {
-        string_del_from_end(token->value.str, 1);
+        string_del_from_end(token->value.str, 2);
         string_del_nth(token->value.str, 0, 3);
     }
     else if (token->type == T_SQUOTE

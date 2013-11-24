@@ -53,6 +53,8 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
             lexer->sur.end = (c == '(') ? ')' : '}';
             lexer->sur.count = 1;
             fill_until(lexer, 1);
+            if (lexer->working_buffer->buf[2] == '(')
+                lexer->token_type = T_ARITHM;
         }
         else
             fill_upto_delim(lexer);

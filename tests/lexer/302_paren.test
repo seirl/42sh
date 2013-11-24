@@ -21,7 +21,7 @@ FOO	T_CMD_SUBST (0)
 &	T_AND (0)
 BAR	T_PARAM_EXPANSION (0)
 ;	T_SEMI (0)
-(1+1)	T_CMD_SUBST (0)
+1+1	T_ARITHM (0)
 	T_EOF (0)
 """
 }
