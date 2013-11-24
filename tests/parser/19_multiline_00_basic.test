@@ -1,7 +1,0 @@
-{
-    "desc": "multiline: basic",
-    "input": """
-echo lol""",
-    "output": "",
-    "skip": True
-}
