@@ -27,9 +27,9 @@ static void shopt_update_env(s_shell *shell)
 void shopt_create(s_shell *shell)
 {
     int i = 0;
-#define X(Name, Value) \
-    shell->shopt[i].name = Name; \
-    shell->shopt[i].value = Value; \
+#define X(Name, Value)              \
+    shell->shopt[i].name = Name;    \
+    shell->shopt[i].value = Value;  \
     ++i;
 #include "shopt.def"
 #undef X

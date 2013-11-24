@@ -147,7 +147,7 @@ int opt_is_set(s_opt *opt, const char *arg, const char *name)
 {
     s_param *p = get_param(opt, arg);
     if (p == NULL)
-        return 0;
+        return -1;
     for (s_arg *it = &(p->arg); it; it = it->next)
     {
         if (!strcmp(name, it->str))
