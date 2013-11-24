@@ -26,7 +26,5 @@ int shopt_get(s_shell *shell, const char *shopt);
 void shopt_print(s_shell *shell);
 /** @brief Set the value according to the command line */
 int shopt_from_opt(s_shell *shell, s_opt *opt);
-//* @brief Set the environnment variable SHELLOPTS*/
-void shopt_update_env();
 
 #endif /* !SHOPT_H */

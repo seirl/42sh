@@ -3,6 +3,26 @@
 #include <string.h>
 #include "shopt.h"
 #include "shell_private.h"
+#include "env.h"
+
+static void shopt_update_env(s_shell *shell)
+{
+    s_string *shell_opts = string_create(64);
+    int first = 0;
+    for (int i = 0; i < SHOPT_COUNT; ++i)
+    {
+        if (shell->shopt[i].value == 1)
+        {
+            if (first == 0)
+                first = 1;
+            else
+                string_putc(shell_opts, ':');
+            string_puts(shell_opts, shell->shopt[i].name);
+        }
+    }
+    env_set(shell, shell_opts->buf, "SHELLOPTS");
+    string_free(shell_opts);
+}
 
 void shopt_create(s_shell *shell)
 {
@@ -13,6 +33,7 @@ void shopt_create(s_shell *shell)
     ++i;
 #include "shopt.def"
 #undef X
+    shopt_update_env(shell);
 }
 
 //1: set, 0: does not exist
@@ -23,6 +44,7 @@ int shopt_set(s_shell *shell, const char *shopt, int value)
         if (!strcmp(shopt, shell->shopt[i].name))
         {
             shell->shopt[i].value = value;
+            shopt_update_env(shell);
             return 1;
         }
     }
@@ -93,9 +115,6 @@ int shopt_from_opt(s_shell *shell, s_opt *opt)
         if (ret != -1)
             shell->shopt[i].value = ret;
     }
+    shopt_update_env(shell);
     return 0;
-}
-
-void shopt_update_env()
-{
 }
