@@ -3,7 +3,7 @@
     "desc": "No assignement with words.",
     "input": """foo=bar""",
     "lexer": ["WWWT"],
-    "output": """foo	T_ASSIGNMENT_WORD (0)
+    "output": """foo	T_WORD (0)
 =	T_WORD (1)
 bar	T_WORD (1)
 	T_EOF (0)

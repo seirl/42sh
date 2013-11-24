@@ -51,5 +51,10 @@ int token_to_word(s_token *token)
     }
 #include "res_word.def"
 #undef X
+    if (token->type == T_ASSIGNMENT_WORD)
+    {
+        token->type = T_WORD;
+        return 1;
+    }
     return 0;
 }

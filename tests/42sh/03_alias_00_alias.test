@@ -2,5 +2,4 @@
     "desc": "Set alias",
     "args": ["-c", "alias foo=echo\nalias"],
     "stdout": "foo='echo'\n",
-    "skip": True
 }

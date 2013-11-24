@@ -1,0 +1,5 @@
+{
+    "desc": "misc: parse alias",
+    "input": "alias foo=bar",
+    "output": "",
+}
