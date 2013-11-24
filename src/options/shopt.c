@@ -20,7 +20,7 @@ static void shopt_update_env(s_shell *shell)
             string_puts(shell_opts, shell->shopt[i].name);
         }
     }
-    env_set(shell, shell_opts->buf, "SHELLOPTS");
+    env_force_set(shell, shell_opts->buf, "SHELLOPTS");
     string_free(shell_opts);
 }
 
@@ -34,6 +34,7 @@ void shopt_create(s_shell *shell)
 #include "shopt.def"
 #undef X
     shopt_update_env(shell);
+    env_chmod(shell, "SHELLOPTS", VAR_RDONLY);
 }
 
 //1: set, 0: does not exist
