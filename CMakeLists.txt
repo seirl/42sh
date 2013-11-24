@@ -113,6 +113,7 @@ add_library(builtins OBJECT
     src/builtins/b_alias.c
     src/builtins/b_unalias.c
     src/builtins/b_set.c
+    src/builtins/b_echo.c
 )
 
 add_library(readline OBJECT
