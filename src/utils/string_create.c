@@ -21,6 +21,8 @@ s_string *string_create(size_t size)
 s_string *string_create_from(const char *str)
 {
     s_string *s = string_create(32);
+    if (str == NULL)
+        return s;
     for (int i = 0; str[i]; ++i)
         string_putc(s, str[i]);
     return s;
