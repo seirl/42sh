@@ -56,12 +56,50 @@ static s_echo_arg parse_argv(s_shell *shell, int argc, char *argv[])
     return arg;
 }
 
+static const char escape_table[][2] =
+{
+    "a\n",
+    "b\b",
+    "e\27",
+    "E\27",
+    "f\f",
+    "n\n",
+    "r\r",
+    "t\t",
+    "v\v",
+    "\\\\"
+};
+
+static int print_char(s_echo_arg arg, char *str, int j)
+{
+    int escaped = 0;
+    if (str[j] == '\\')
+        escaped = 1;
+    if (str[j + escaped] != 0)
+    {
+        if (arg.e && escaped)
+        {
+            for (unsigned i = 0; i < sizeof (escape_table) / sizeof (char *);
+                ++i)
+            {
+                if (escape_table[i][0] == str[j + escaped])
+                {
+                    printf("%c", escape_table[i][1]);
+                    break;
+                }
+            }
+        }
+        printf("%c", str[j + escaped]);
+    }
+    return j + escaped;
+}
+
 static void do_echo(s_echo_arg arg, int argc)
 {
     for (int i = arg.pos; i < argc; ++i)
     {
         for (int j = 0; arg.argv[i][j]; ++j)
-            printf("%c", arg.argv[i][j]);
+            j = print_char(arg, arg.argv[i], j);
         if (i + 1 != argc)
             printf(" ");
     }
