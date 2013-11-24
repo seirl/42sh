@@ -5,7 +5,7 @@
     "output": """foo	T_ASSIGNMENT_WORD (0)
 =	T_WORD (1)
 $bar	T_NAME (1)
-'suffix'	T_WORD (1)
+'suffix'	T_SQUOTE (1)
 	T_EOF (0)
 """
 }

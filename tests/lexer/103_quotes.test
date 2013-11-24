@@ -3,7 +3,7 @@
     "desc": "Escaped quote",
     "input": """echo "quote\\"eof" eof""",
     "output": """echo	T_WORD (0)
-"quote\\"eof"	T_WORD (0)
+"quote\\"eof"	T_DQUOTE (0)
 eof	T_WORD (0)
 	T_EOF (0)
 """

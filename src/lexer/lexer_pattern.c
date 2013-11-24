@@ -23,6 +23,12 @@ int handle_quotes(s_lexer *lexer, char c, char prev)
         return 0;
     if (c == '\'' || c == '\"' || c == '`')
     {
+        if (c == '\'')
+            lexer->token_type = T_SQUOTE;
+        if (c == '\"')
+            lexer->token_type = T_DQUOTE;
+        if (c == '`')
+            lexer->token_type = T_BQUOTE;
         lexer->sur.end = c;
         lexer->sur.count = 1;
         string_putc(lexer->working_buffer, lex_getc(lexer));
@@ -39,8 +45,10 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
     {
         string_putc(lexer->working_buffer, lex_getc(lexer));
         c = lex_topc(lexer);
+        lexer->token_type = T_NAME;
         if (c == '(' || c == '{')
         {
+            lexer->token_type = c == '(' ? T_CMD_SUBST : T_PARAM_EXPANSION;
             lexer->sur.begin = c;
             lexer->sur.end = (c == '(') ? ')' : '}';
             lexer->sur.count = 1;

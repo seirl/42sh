@@ -2,8 +2,8 @@
     "type": "lexer",
     "desc": "Simple double quote",
     "input": """"echo" " foo'baz'\n"bar""",
-    "output": """"echo"	T_WORD (0)
-" foo'baz'\n"	T_WORD (0)
+    "output": """"echo"	T_DQUOTE (0)
+" foo'baz'\n"	T_DQUOTE (0)
 bar	T_WORD (1)
 	T_EOF (0)
 """
