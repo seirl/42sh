@@ -35,7 +35,6 @@ static s_ast_word_list *parse_for_in(s_parser *parser)
 s_ast_for *parse_rule_for(s_parser *parser)
 {
     s_token *tok;
-    s_ast_word *identifier;
     s_ast_word_list *values = NULL;
     s_ast_list *list;
 
@@ -43,7 +42,9 @@ s_ast_for *parse_rule_for(s_parser *parser)
     if (!(tok = lex_word(parser->lexer)))
         RETURN_PARSE_EXPECTED(parser, "for `name`");
 
-    identifier = word_of_token(tok);
+    s_ast_word *identifier = ast_word_new();
+    identifier->kind = WORD;
+    identifier->str = string_duplicate(tok->value.str);
     token_free(tok);
 
     parse_expect_newlines(parser);

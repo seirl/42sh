@@ -9,10 +9,14 @@ typedef struct ast_element s_ast_element;
 
 enum ast_word_kind
 {
-    WORD,         /** a or 'a' or "a" */
-    SUBSTS_SHELL, /** $(echo foo)     */
-    SUBSTS_VAR,   /** ${#argv}        */
-    EXPAND_VAR,   /** $a              */
+    WORD,             /** a or 'a' or "a"     */
+    EXPAND_NAME,      /** $a                  */
+    EXPAND_PARAM,     /** ${#argv}            */
+    EXPAND_CMD_SUBST, /** $(echo foo)         */
+    EXPAND_ARITHM,    /** $((4+2))            */
+    EXPAND_SQUOTE,    /** 'notexpand'         */
+    EXPAND_DQUOTE,    /** "recurs$ive expand" */
+    EXPAND_BQUOTE,    /** `simple expand`     */
 };
 typedef enum ast_word_kind e_ast_word_kind;
 

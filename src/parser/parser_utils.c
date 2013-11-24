@@ -1,22 +1,5 @@
 #include "parser_private.h"
 #include "token.h"
-#include "log.h"
-
-s_ast_word *word_of_token(s_token *tok)
-{
-    s_ast_word *word = ast_word_new();
-
-    if (tok->type == T_WORD)
-        word->kind = WORD;
-    else if (tok->type == T_NAME)
-        word->kind = EXPAND_VAR;
-    else
-        LOG(ERROR, "Bad word token type", NULL);
-
-    word->str = string_duplicate(tok->value.str);
-
-    return word;
-}
 
 int parser_eof(s_parser *parser)
 {

@@ -2,5 +2,4 @@
     "desc": "rule element: compound word",
     "input": "'a''b'",
     "output": "",
-    "skip": True
 }

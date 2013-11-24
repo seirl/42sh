@@ -27,6 +27,7 @@ s_token *lex_look_word(s_lexer *lexer)
 
     if (token_to_word(tok))
     {
+        // TODO halfr move out of the if
         if (tok->type == T_WORD && lexer->working_buffer->buf[0] == '(')
             tok->type = T_FUNCTION_NAME;
 

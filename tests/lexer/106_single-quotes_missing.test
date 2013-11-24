@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "Single token",
+    "input": "'a",
+    "output": ...,
+    "retval": 1,
+    "skip": True,
+}

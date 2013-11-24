@@ -38,23 +38,18 @@ void token_free(s_token *tok)
 
 int token_to_word(s_token *token)
 {
-#define X(Type, Str)                              \
-    if (token->type == Type)                      \
-    {                                             \
-        token->type = T_WORD;                     \
-        return 1;                                 \
+#define X(Type)               \
+    if (token->type == Type)  \
+        return 1;
+#include "token2word.def"
+#undef X
+#define X(Type, Str)          \
+    if (token->type == Type)  \
+    {                         \
+        token->type = T_WORD; \
+        return 1;             \
     }
 #include "res_word.def"
 #undef X
-    if (token->type == T_ASSIGNMENT_WORD
-       || token->type == T_IO_NUMBER
-       || token->type == T_WORD
-       || token->type == T_BANG)
-    {
-        token->type = T_WORD;
-        return 1;
-    }
-    if (token->type == T_NAME)
-        return 1;
     return 0;
 }
