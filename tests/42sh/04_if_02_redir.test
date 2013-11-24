@@ -1,0 +1,6 @@
+{
+    "desc": "if: basic",
+    "stdin": b"""if true; then echo yes; else echo false; fi >&2
+""",
+    "stderr": "yes\n",
+}

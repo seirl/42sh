@@ -1,0 +1,7 @@
+{
+    "desc": "if: with or",
+    "stdin": b"""if false | true; then echo yes; else echo false; fi
+""",
+    "stdout": "yes\n",
+    "skip": True,
+}

@@ -1,0 +1,16 @@
+{
+    "desc": "if: elif elif else",
+    "stdin": b"""
+    if false; then
+        echo if
+    elif false; then
+        echo elif
+    elif true; then
+        echo elif2
+    else
+        echo else
+    fi
+""",
+    "stdout": "elif2\n",
+    "skip": True,
+}
