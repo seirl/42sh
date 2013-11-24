@@ -17,9 +17,9 @@ void print_shell_cmd(s_ast_shell_cmd *n, void *prev, FILE *out)
 {
     if (!n)
         return;
-    fprintf(out, "node_%lu [label = \"shell_cmd '%s'\", style = filled, "
+    fprintf(out, "node_%lu [label = \"shell_cmd%s\", style = filled, "
                  "fillcolor = pink];\n", ph(n),
-            (n->subshell) ? "(subshell)" : "");
+            (n->subshell) ? " (subshell)" : "");
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
     if (n->cmd_list)
         print_cmd_list(n->cmd_list, n, out);

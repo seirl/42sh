@@ -12,6 +12,15 @@ s_token *lex_look_token(s_lexer *lexer)
     return token_duplicate(lexer->lookahead);
 }
 
+e_token_type lex_look_token_type(s_lexer *lexer)
+{
+    if (lexer->lookahead)
+        return lexer->lookahead->type;
+
+    lexer->lookahead = lex_token(lexer);
+    return lexer->lookahead->type;
+}
+
 s_token *lex_look_word(s_lexer *lexer)
 {
     s_token *tok = lex_look_token(lexer);

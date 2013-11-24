@@ -8,8 +8,9 @@ static void print_ast_case_item(s_ast_case_item *n, void *prev, FILE *out)
         return;
     fprintf(out, "node_%lu [label = \"case_item\"];\n", ph(n));
     fprintf(out, "node_%lu -> node_%lu;\n", ph(prev), ph(n));
-    print_word_list(n->matches, n, out);
+    print_word_list(n->match, n, out);
     print_cmd_list(n->cmd_list, n, out);
+    print_ast_case_item(n->next, n, out);
 }
 
 void print_ast_case(s_ast_case *n, void *prev, FILE *out)

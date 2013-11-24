@@ -1,0 +1,17 @@
+{
+    "desc": "rule case: long",
+    "input": """case a in
+    a)
+        echo foo;
+        for i in a b c; do
+            echo $i
+        done
+        ;;
+    (*)
+        echo bar > foo
+        a=42
+        echo $a
+        ;;
+    esac
+""",
+}

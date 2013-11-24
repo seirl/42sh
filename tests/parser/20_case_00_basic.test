@@ -1,0 +1,12 @@
+{
+    "desc": "rule case: basic",
+    "input": """case a in
+    a)
+        echo foo
+        ;;
+    *)
+        echo bar
+        ;;
+    esac
+""",
+}

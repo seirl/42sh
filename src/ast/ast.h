@@ -153,8 +153,9 @@ typedef struct ast_word_list s_ast_word_list;
 
 struct ast_case_item
 {
-    s_ast_word_list *matches;
+    s_ast_word_list *match;
     s_ast_list *cmd_list;
+    struct ast_case_item *next;
 };
 typedef struct ast_case_item s_ast_case_item;
 
@@ -363,6 +364,8 @@ typedef struct ast_input s_ast_input;
 // Functions ------------------------------------------------------------------
 s_ast_and_or *ast_and_or_new(void);
 s_ast_assignment *ast_assignment_new(void);
+s_ast_case *ast_case_new(void);
+s_ast_case_item *ast_case_item_new(void);
 s_ast_cmd *ast_cmd_new(void);
 s_ast_compound_word *ast_compound_word_new(void);
 s_ast_element *ast_element_new(void);
@@ -387,6 +390,7 @@ s_ast_word_list *ast_word_list_new(void);
 void ast_and_or_delete(s_ast_and_or *ao);
 void ast_assignment_delete(s_ast_assignment *ass);
 void ast_case_delete(s_ast_case *casee);
+void ast_case_delete(s_ast_case *caser);
 void ast_case_item_delete(s_ast_case_item *item);
 void ast_cmd_delete(s_ast_cmd *cmd);
 void ast_compound_word_delete(s_ast_compound_word *cw);

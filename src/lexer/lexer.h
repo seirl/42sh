@@ -28,6 +28,7 @@ void lex_delete(s_lexer *lexer);
 
 s_token *lex_token(s_lexer *lexer);
 s_token *lex_look_token(s_lexer *lexer);
+e_token_type lex_look_token_type(s_lexer *lexer);
 
 s_token *lex_word(s_lexer *lexer);
 s_token *lex_look_word(s_lexer *lexer);

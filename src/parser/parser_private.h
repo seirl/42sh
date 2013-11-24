@@ -40,12 +40,18 @@ s_ast_for *parse_rule_for(s_parser *parser);
 s_ast_while *parse_rule_while(s_parser *parser);
 /** @brief Parse rule until. */
 s_ast_until *parse_rule_until(s_parser *parser);
+/** @brief Parse rule case. */
+s_ast_case *parse_rule_case(s_parser *parser);
 /** @brief Parse rule if. */
 s_ast_if *parse_rule_if(s_parser *parser);
 /** @brief Parse rule else. */
 s_ast_else *parse_rule_else(s_parser *parser);
 /** @brief Parse rule do_group. */
 s_ast_list *parse_rule_do_group(s_parser *parser);
+/** @brief Parse rule case_clause. */
+s_ast_case_item *parse_rule_case_clause(s_parser *parser);
+/** @brief Parse rule case_item. */
+s_ast_case_item *parse_rule_case_item(s_parser *parser);
 
 // Expect ---------------------------------------------------------------------
 /** @brief Grab as many newlines as you can! */
