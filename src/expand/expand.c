@@ -6,9 +6,13 @@
 static s_string *(*const expand_funcs[])(const s_shell *, const s_string *) =
 {
     expand_simple_word,
-    expand_substs_shell,
-    expand_substs_var,
     expand_simple_var,
+    expand_substs_var,
+    expand_substs_shell,
+    NULL,
+    expand_squote,
+    NULL,
+    NULL,
 };
 
 static s_string *expand_word(const s_shell *shell, const s_ast_word *word)
