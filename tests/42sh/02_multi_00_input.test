@@ -1,0 +1,5 @@
+{
+    "desc": "multiple commands",
+    "args": ["-c", "echo hello; echo world"],
+    "stdout": "hello\nworld\n",
+}

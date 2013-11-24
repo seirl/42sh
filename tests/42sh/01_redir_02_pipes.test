@@ -1,0 +1,5 @@
+{
+    "desc": "pipes: hello",
+    "args": ["-c", "echo hello | cat | cat"],
+    "stdout": "hello\n",
+}
