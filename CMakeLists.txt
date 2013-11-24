@@ -91,7 +91,6 @@ add_library(lexer OBJECT
     src/lexer/lexer_pattern.c
     src/lexer/lexer_struct.c
     src/lexer/lexer_word.c
-    src/lexer/lexer_alias.c
     src/lexer/lexer_strip.c
 
     src/lexer/location.c
