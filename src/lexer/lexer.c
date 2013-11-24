@@ -51,7 +51,9 @@ s_token *lex_token(s_lexer *lexer)
 {
     if (lexer->lookahead)
         return lex_release_lookahead(lexer);
+
     check_prefill(lexer);
+
     do {
         if (handle_eof(lexer))
             break;

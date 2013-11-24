@@ -15,7 +15,6 @@ s_token *token_create(e_token_type type,
     tok->value = value;
     tok->location = location;
     tok->concat = concat;
-    tok->aliasable = 0;
 
     return tok;
 }
