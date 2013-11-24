@@ -31,6 +31,10 @@ s_ast_input *parse_rule_input(s_parser *parser);
 /** @brief Get parser status. */
 e_parser_status parser_status(s_parser *parser);
 
+
+/** @brief Parser ready to take input? */
+int parser_ready(s_parser *parser);
+
 /**
 ** @brief Display a health assessment of the parser.
 **

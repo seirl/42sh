@@ -11,6 +11,7 @@ int shell_eval_file(s_shell *shell, FILE *f, const char *filename)
     s_lexer *lexer = lex_create(shell, input);
     s_parser *parser = parser_create(lexer);
     s_ast_input *ast;
+    // TODO halfr use loop
     if ((ast = parse_rule_input(parser)))
     {
         if (parser_diagnostic(parser))

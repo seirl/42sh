@@ -27,11 +27,13 @@ s_lexer *lex_create(s_shell *shell, s_input *input)
     return lexer;
 }
 
-void lex_start(s_lexer *lexer)
+int lex_start(s_lexer *lexer)
 {
     token_free(lexer->lookahead);
     lexer->lookahead = NULL;
-    lexer->input->next(lexer->input);
+    if (lexer->working_buffer->len == 0)
+        lexer->prefill = 1;
+    return lexer->input->next(lexer->input) || lexer->working_buffer->len != 0;
 }
 
 void lex_delete(s_lexer *lexer)

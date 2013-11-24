@@ -19,7 +19,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input);
 **
 ** Call the input for a new sequence of chars and clean the lexer lookahead.
 */
-void lex_start(s_lexer *lexer);
+int lex_start(s_lexer *lexer);
 
 /**
 ** @brief Delete a lexer.

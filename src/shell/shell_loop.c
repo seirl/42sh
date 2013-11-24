@@ -7,6 +7,11 @@
 static int shell_read_eval(s_shell *shell)
 {
     s_ast_input *ast;
+    if (!parser_ready(shell->parser))
+    {
+        shell->state = SHELL_STOP;
+        return 0;
+    }
     ast = parse_rule_input(shell->parser);
     if (parser_diagnostic(shell->parser) && ast)
     {
@@ -14,8 +19,6 @@ static int shell_read_eval(s_shell *shell)
             print_ast(ast, stdout);
         exec_ast_input(shell, ast);
     }
-    if (!ast)
-        shell->state = SHELL_STOP;
     ast_input_delete(ast);
     return 0;
 }

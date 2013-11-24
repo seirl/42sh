@@ -155,10 +155,11 @@ add_library(parser OBJECT
     src/parser/parser_create.c
     src/parser/parser_delete.c
 
-    src/parser/parser_utils.c
-    src/parser/parser_status.c
-    src/parser/parser_diagnostic.c
     src/parser/parse_expect.c
+    src/parser/parser_diagnostic.c
+    src/parser/parser_ready.c
+    src/parser/parser_status.c
+    src/parser/parser_utils.c
 
     src/parser/parse_rule_and_or.c
     src/parser/parse_rule_case.c

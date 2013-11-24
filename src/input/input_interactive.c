@@ -2,8 +2,9 @@
 
 #include "input_string.h"
 #include "readline.h"
-#include "string_utils.h"
+#include "shell_private.h"
 #include "smalloc.h"
+#include "string_utils.h"
 
 struct input_state_interactive
 {

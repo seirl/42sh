@@ -37,6 +37,6 @@ char input_string_topc(s_input *input)
 
 int input_string_next(s_input *input)
 {
-    // Always return 0
-    return input != input + 1 - 1;
+    s_string *str = input->_input_state;
+    return str->len != str->read_pos;
 }

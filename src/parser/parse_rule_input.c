@@ -48,9 +48,6 @@ static s_ast_input *parse_rule_input_rec(s_parser *parser)
 
 s_ast_input *parse_rule_input(s_parser *parser)
 {
-    // Get a new sequence of chars
-    lex_start(parser->lexer);
-
     s_token *tok = lex_look_token(parser->lexer);
     if (tok->type == T_NEWLINE)
     {
