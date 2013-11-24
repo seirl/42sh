@@ -3,5 +3,5 @@
     "desc": "getopt version",
     "input": "--version",
     "retval": 0,
-    "stdout": """Version 0.5\n"""
+    "stdout": """Version 0.8\n"""
 }
