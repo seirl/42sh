@@ -6,6 +6,9 @@
         "gdb",         \
         "-p",          \
         Pid,           \
+        "-batch",      \
+        "-ex",         \
+        "bt full",     \
         "-q",          \
         NULL           \
     }

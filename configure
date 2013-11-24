@@ -19,7 +19,7 @@ for arg in "$@"
 do
     case "$arg" in
         --with-debug)
-            CFLAGS=${CFLAGS}" -g3 -gdwarf-2"
+            CFLAGS=${CFLAGS}" -g3 -gdwarf-2 -DCATCH_SEGFAULT"
             BUILD_TYPE=Debug
             ;;
         --with-coverage)

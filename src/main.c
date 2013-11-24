@@ -8,10 +8,12 @@
 #include "res_ctrl.h"
 #include "shopt.h"
 #include "smalloc.h"
+#include "sighandler.h"
 
 int main(int argc, char *argv[])
 {
     s_shell *shell = shell_new();
+    signal_init();
     char *src = NULL;
     int ret = parse_options(shell, argc, argv, &src);
     if (ret & E_RET)
