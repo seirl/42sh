@@ -111,6 +111,7 @@ add_library(builtins OBJECT
     src/builtins/b_shopt.c
     src/builtins/b_alias.c
     src/builtins/b_unalias.c
+    src/builtins/b_set.c
 )
 
 add_library(readline OBJECT
