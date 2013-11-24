@@ -20,7 +20,7 @@ int update_alias_delimiter(s_lexer *lexer)
 #include <stdio.h>
 void expand_alias(s_shell *shell, s_token *tok)
 {
-    if (tok->type == T_WORD && tok->aliasable == 1)
+    if (tok->type == T_WORD && tok->aliasable == 1 && shell)
     {
         s_string *alias = alias_get(shell, tok->value.str);
         if (alias)
