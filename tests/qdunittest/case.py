@@ -1,7 +1,9 @@
-import os
-import subprocess
-import unittest
 import difflib
+import os
+import shutil
+import subprocess
+import tempfile
+import unittest
 
 from unittest.util import safe_repr
 
@@ -78,6 +80,16 @@ class QDTestCase(unittest.TestCase):
 
 class QDTestCaseShell(QDTestCase):
 
+    def setUp(self):
+        self.startdir = os.getcwd()
+        self.tmpdir = tempfile.TemporaryDirectory()
+        shutil.copy("../../42sh", self.tmpdir.name)
+        os.chdir(self.tmpdir.name)
+
+    def tearDown(self):
+        self.tmpdir.cleanup()
+        os.chdir(self.startdir)
+
     def shortDescription(self):
         return "{}[args: {}]\nstdin: {}".format(
                 self.test["desc"] + "\n" if "desc" in self.test else "",
@@ -91,21 +103,21 @@ def new_test_run_42sh(test, options):
 
         shell_args = test.get('args', [])
         with_valgrind = test.get('with_valgrind', not options.without_valgrind)
-        shell = subself.start_program(args=["../../42sh"] + shell_args,
+        shell = subself.start_program(args=["./42sh"] + shell_args,
                 with_valgrind=with_valgrind)
 
         stdin_buf = test.get('stdin', None)
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
 
-        if 'stdout' in test:
-            subself.assertMultiLineEqual(test['stdout'], stdoutdata.decode(),
-                             "stdout differ")
-        if 'stderr' in test:
-            subself.assertMultiLineEqual(test['stderr'], stderrdata.decode(),
-                             "stderr differ")
-        else:
-            subself.assertMultiLineEqual("", stderrdata.decode(),
-                    "stderr differ")
+        subself.assertMultiLineEqual(test.get('stdout', ""),
+                                     stdoutdata.decode(),
+                                     "stdout differ")
+        subself.assertMultiLineEqual(test.get('stderr', ""),
+                                     stderrdata.decode(),
+                                     "stderr differ")
+
+        if 'custom' in test:
+            subself.assertTrue(test['custom'](), "custom check")
 
         retval = test.get('retval', 0)
         subself.assertEqual(shell.returncode, retval, "return value differ")
