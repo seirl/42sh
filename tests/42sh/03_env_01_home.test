@@ -1,0 +1,7 @@
+{
+    "desc": "env: HOME",
+    "stdin": b"""echo $HOME
+""",
+    "stdout": ...,
+    "skip": True,
+}

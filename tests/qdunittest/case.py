@@ -109,9 +109,12 @@ def new_test_run_42sh(test, options):
         stdin_buf = test.get('stdin', None)
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
 
-        subself.assertMultiLineEqual(test.get('stdout', ""),
-                                     stdoutdata.decode(),
-                                     "stdout differ")
+        if test.get('stdout') == ...:
+            subself.assertNotEqual("", stdoutdata.decode(), "stdout empty")
+        else:
+            subself.assertMultiLineEqual(test.get('stdout', ""),
+                                         stdoutdata.decode(),
+                                         "stdout differ")
         subself.assertMultiLineEqual(test.get('stderr', ""),
                                      stderrdata.decode(),
                                      "stderr differ")
