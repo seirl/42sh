@@ -1,0 +1,7 @@
+{
+    "desc": "redir: alt stderr",
+    "args": ["-c", "echo hello 2>&1 1>&2 1>out 2>err"],
+    "custom": lambda: (open("out").read() == "hello\n"
+                       and open("err").read() == ""),
+    "skip": True,
+}

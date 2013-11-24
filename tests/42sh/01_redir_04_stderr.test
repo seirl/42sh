@@ -1,0 +1,5 @@
+{
+    "desc": "redir: stderr",
+    "args": ["-c", "echo hello >&2 "],
+    "stderr": "hello\n",
+}
