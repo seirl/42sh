@@ -6,6 +6,11 @@ char lex_getc(s_lexer *lexer)
 {
     char c = lexer->input->getc(lexer->input);
 
+    if (c == '\n')
+        location_next_line(&lexer->location);
+    else
+        location_next_column(&lexer->location);
+
     return c;
 }
 

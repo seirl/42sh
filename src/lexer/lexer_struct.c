@@ -31,7 +31,6 @@ void lex_start(s_lexer *lexer)
 {
     token_free(lexer->lookahead);
     lexer->lookahead = NULL;
-    lexer->prefill = 1;
     lexer->input->next(lexer->input);
 }
 
