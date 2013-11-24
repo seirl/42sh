@@ -6,6 +6,7 @@
 #include "env_private.h"
 #include "shell_private.h"
 #include "hashtbl.h"
+#include "env.h"
 
 static void free_env_var(void *var)
 {
@@ -22,6 +23,12 @@ void env_create(s_shell *shell)
 
 void env_set(s_shell *shell, char *value, char *name)
 {
+    s_env_var *cur_var = hashtbl_get(shell->env, name);
+    if (cur_var && cur_var->type & VAR_RDONLY)
+    {
+        fprintf(stdout, PROGNAME": %s: readonly variable\n", name);
+        return;
+    }
     s_env_var *new_var = malloc(sizeof (s_env_var));
     new_var->type = 0;
     new_var->value = strdup(value);
