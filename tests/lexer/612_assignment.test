@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Quoted assignment word",
     "input": """'foo=bar'""",
-    "output": """'foo=bar'	T_SQUOTE (0)
+    "output": """foo=bar	T_SQUOTE (0)
 	T_EOF (0)
 """
 }

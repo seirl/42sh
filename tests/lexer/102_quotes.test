@@ -3,7 +3,7 @@
     "desc": "Backquote with double in it",
     "input": """echo `"echo" 'ls'`""",
     "output": """echo	T_WORD (0)
-`"echo" 'ls'`	T_BQUOTE (0)
+"echo" 'ls'	T_BQUOTE (0)
 	T_EOF (0)
 """
 }

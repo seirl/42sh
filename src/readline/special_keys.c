@@ -9,7 +9,7 @@ static e_next_action do_backspace(s_term *term)
     if (term->input_index > 0)
     {
         term->input_index--;
-        string_del_nth(term->input, term->input_index);
+        string_del_nth(term->input, term->input_index, 1);
 
         // cursor left
         my_tputs(tgetstr("le", NULL));

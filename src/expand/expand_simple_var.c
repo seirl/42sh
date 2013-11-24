@@ -6,5 +6,5 @@
 
 s_string *expand_simple_var(const s_shell *shell, const s_string *word)
 {
-    return string_create_from(env_get(shell, word->buf + 1));
+    return string_create_from(env_get(shell, word->buf));
 }

@@ -115,4 +115,7 @@ int fill_upto_delim(s_lexer *lexer);
 /** @brief fill the buffer with a new delimited token */
 int fill_token(s_lexer *lexer);
 
+/** @brief remove the useless part of a token */
+void strip_token(s_token *token);
+
 #endif /* !LEXER_PRIVATE_H */

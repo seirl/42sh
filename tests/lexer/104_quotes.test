@@ -3,9 +3,9 @@
     "desc": "Quoted string concatenation",
     "input": """echo 'foo'bar'baz'""",
     "output": """echo	T_WORD (0)
-'foo'	T_SQUOTE (0)
+foo	T_SQUOTE (0)
 bar	T_WORD (1)
-'baz'	T_SQUOTE (1)
+baz	T_SQUOTE (1)
 	T_EOF (0)
 """
 }

@@ -72,6 +72,6 @@ s_token *lex_token(s_lexer *lexer)
 
     if (ret->concat == -1)
         ret->concat = 0;
-
+    strip_token(ret);
     return ret;
 }

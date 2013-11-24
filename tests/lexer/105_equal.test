@@ -2,7 +2,7 @@
     "type": "lexer",
     "desc": "Single quote equal",
     "input": """'a'=bar""",
-    "output": """'a'	T_SQUOTE (0)
+    "output": """a	T_SQUOTE (0)
 =	T_WORD (1)
 bar	T_WORD (1)
 	T_EOF (0)

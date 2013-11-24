@@ -13,13 +13,13 @@ void string_del_from_end(s_string *str, size_t n)
     }
 }
 
-void string_del_nth(s_string *str, size_t n)
+void string_del_nth(s_string *str, size_t n, size_t len)
 {
     size_t i;
     for (i = 0; i < n; i++)
         continue;
-    for (; i < str->len; i++)
-        str->buf[i] = str->buf[i + 1];
+    for (; i + len <= str->len; i++)
+        str->buf[i] = str->buf[i + len];
     str->len--;
 }
 

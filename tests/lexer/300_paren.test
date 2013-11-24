@@ -6,7 +6,7 @@
 (	T_LPAREN (0)
 ls	T_WORD (0)
 )	T_RPAREN (0)
-$(FOO)	T_CMD_SUBST (0)
+FOO	T_CMD_SUBST (0)
 	T_EOF (0)
 """
 }
