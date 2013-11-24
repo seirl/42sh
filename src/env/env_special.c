@@ -19,11 +19,20 @@ static char *env_uid(void)
     return strdup(buf);
 }
 
+static char *env_pid(void)
+{
+    char buf[32];
+    snprintf(buf, 32, "%d", getpid());
+    return strdup(buf);
+}
+
 char *env_special(char *name)
 {
     if (!strcmp(name, "RANDOM"))
         return env_random();
     if (!strcmp(name, "UID"))
         return env_uid();
+    if (!strcmp(name, "$"))
+        return env_pid();
     return NULL;
 }
