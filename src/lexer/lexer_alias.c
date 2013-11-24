@@ -22,7 +22,6 @@ void expand_alias(s_shell *shell, s_token *tok)
 {
     if (tok->type == T_WORD && tok->aliasable == 1)
     {
-        printf("Alias %s\n", tok->value.str->buf);
         s_string *alias = alias_get(shell, tok->value.str);
         if (alias)
         {
