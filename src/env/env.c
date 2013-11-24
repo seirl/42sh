@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <time.h>
 
 #include "env_private.h"
 #include "shell_private.h"
@@ -18,6 +19,7 @@ static void free_env_var(void *var)
 void env_create(s_shell *shell)
 {
     assert(!shell->env);
+    srand(time(NULL));
     shell->env = hashtbl_init(hash_char, cmp_char, free_char, free_env_var);
 }
 
@@ -37,6 +39,9 @@ void env_set(s_shell *shell, char *value, char *name)
 
 char *env_get(const s_shell *shell, char *name)
 {
+    char *ret = env_special(name);
+    if (ret)
+        return ret;
     s_env_var *var = hashtbl_get(shell->env, name);
     return var ? var->value : NULL;
 }

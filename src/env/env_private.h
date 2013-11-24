@@ -14,5 +14,7 @@ typedef struct env_var s_env_var;
 void env_create(s_shell *shell);
 /** @brief Free the environnment. */
 void env_free(s_shell *shell);
+/** @brief handle special variables like random */
+char *env_special(char *name);
 
 #endif /* !ENV_PRIVATE_H */

@@ -57,6 +57,7 @@ add_library(log OBJECT
 
 add_library(env OBJECT
     src/env/env.c
+    src/env/env_special.c
     src/env/env_type.c
 )
 
