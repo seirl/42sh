@@ -59,7 +59,12 @@ static s_echo_arg parse_argv(s_shell *shell, int argc, char *argv[])
 static void do_echo(s_echo_arg arg, int argc)
 {
     for (int i = arg.pos; i < argc; ++i)
-        printf("%s ", arg.argv[i]);
+    {
+        for (int j = 0; arg.argv[i][j]; ++j)
+            printf("%c", arg.argv[i][j]);
+        if (i + 1 != argc)
+            printf(" ");
+    }
     if (arg.n == 0)
         printf("\n");
 }
