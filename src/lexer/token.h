@@ -35,6 +35,7 @@ struct token
     e_token_type type;
     s_token_value value;
     s_location location;
+    int aliasable;
     int concat;
 };
 typedef struct token s_token;

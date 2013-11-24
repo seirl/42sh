@@ -43,6 +43,8 @@ struct lexer
     int prefill;
     //! Shell
     s_shell *shell;
+    //! was the previous token a delimiter
+    int prev_delim;
 };
 
 /**
@@ -117,5 +119,10 @@ int fill_token(s_lexer *lexer);
 
 /** @brief remove the useless part of a token */
 void strip_token(s_token *token);
+
+/** @brief Update the status of the current token */
+int update_alias_delimiter(s_lexer *lexer);
+/** @brief Replace the current token with its alias */
+void expand_alias(s_shell *shell, s_token *tok);
 
 #endif /* !LEXER_PRIVATE_H */

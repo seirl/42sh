@@ -21,8 +21,9 @@ s_lexer *lex_create(s_shell *shell, s_input *input)
     lexer->quoted = 0;
     lexer->concat = -1;
     lexer->lookahead = NULL;
-    lexer->prefill = 1;
     lexer->shell = shell;
+    lexer->prev_delim = 1;
+    lexer->prefill = 1;
 
     return lexer;
 }
@@ -82,10 +83,12 @@ s_token *lex_release_token(s_lexer *lexer)
     }
     value.integer = type == T_IO_NUMBER ? atoi(value.str->buf) : -2;
     tok = token_create(type, value, lexer->location, lexer->concat);
+    tok->aliasable = update_alias_delimiter(lexer);
 
     lexer_reset(lexer);
     if (lexer->shell && shopt_get(lexer->shell, "token_print"))
         token_print(tok);
 
+    expand_alias(lexer->shell, tok);
     return tok;
 }
