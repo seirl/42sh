@@ -11,7 +11,8 @@ int is_delimiter(s_lexer *lexer, char c)
 {
     return (c == 0
            || (lexer->blank_sep && (c == '\t' || c == ' ' || c == '\n'))
-           || is_operator(c));
+           || (is_operator(c)
+               && (c != '!' || lexer->working_buffer->len == 0)));
 }
 
 int is_quote(char c)

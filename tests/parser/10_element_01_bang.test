@@ -1,5 +1,4 @@
 {
     "desc": "rule element: hello!",
     "input": "echo hello!",
-    "skip": True,
 }

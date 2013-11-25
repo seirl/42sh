@@ -1,0 +1,8 @@
+{
+    "type": "lexer",
+    "desc": "! in word",
+    "input": """h!""",
+    "output": """h!	T_WORD (0)
+	T_EOF (0)
+"""
+}
