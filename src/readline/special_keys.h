@@ -5,6 +5,7 @@
 # include "key.h"
 # include "bracket_key.h"
 # include "shell.h"
+# include "special_line_manipulation_keys.h"
 
 /**
 ** @brief A special key

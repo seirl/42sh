@@ -23,16 +23,6 @@ static e_next_action do_backspace(s_term *term)
     return CONTINUE;
 }
 
-static e_next_action do_ctrl_c(s_term *term)
-{
-    printf("%s\n", "^C");
-    printf("%s", term->prompt);
-    string_reset(term->input);
-    term->input_index = 0;
-    fflush(stdout);
-    return CONTINUE;
-}
-
 static e_next_action do_ctrl_d(s_term *term)
 {
     if (term->input->len != 0)
@@ -47,34 +37,6 @@ static e_next_action do_enter(s_term *term)
     return RETURN;
 }
 
-static e_next_action do_ctrl_a(s_shell *shell, s_term *term)
-{
-    while (term->input_index > 0)
-        handle_bracket_key(shell, BRACKET_LEFT, term);
-    return CONTINUE;
-}
-
-static e_next_action do_ctrl_e(s_shell *shell, s_term *term)
-{
-    while (term->input_index < term->input->len)
-        handle_bracket_key(shell, BRACKET_RIGHT, term);
-    return CONTINUE;
-}
-
-static e_next_action do_ctrl_k(s_term *term)
-{
-    my_tputs(tgetstr("ce", NULL));
-    string_del_from_end(term->input, term->input->len - term->input_index);
-    return CONTINUE;
-}
-
-static e_next_action do_ctrl_l(s_term *term)
-{
-    my_tputs(tgetstr("cl", NULL));
-    printf("%s%s", term->prompt, term->input->buf);
-    fflush(stdout);
-    return CONTINUE;
-}
 
 e_next_action handle_special_key(s_shell *shell, s_term *term, e_special_key key)
 {
