@@ -1,8 +1,13 @@
 #ifndef EXEC_H
 # define EXEC_H
 
-# define _POSIX_SOURCE
-# define _GNU_SOURCE
+# ifndef _POSIX_SOURCE
+#  define _POSIX_SOURCE
+# endif
+
+# ifndef _GNU_SOURCE
+#  define _GNU_SOURCE
+# endif
 
 # include <fcntl.h>
 # include <unistd.h>
@@ -19,6 +24,8 @@
 # include "ast.h"
 # include "string_utils.h"
 # include "shell.h"
+# include "match.h"
+# include "xsyscall.h"
 
 struct redir_context
 {
@@ -63,6 +70,8 @@ void exec_while(s_shell *shell, s_ast_while *while_cmd);
 void exec_until(s_shell *shell, s_ast_until *until_cmd);
 /** @brief Execute a 'for' command */
 void exec_for(s_shell *shell, s_ast_for *for_cmd);
+/** @brief Execute a 'case' command */
+void exec_case(s_shell *shell, s_ast_case *case_cmd);
 /** @brief Execute a shell command */
 void exec_shell_cmd(s_shell *shell, s_ast_shell_cmd *shell_cmd);
 /** @brief Execute a shell command AST node */
@@ -117,7 +126,7 @@ int redir_list_len(s_ast_redirection_list *redir);
 /** @brief Save a redirection context */
 s_redir_context *save_redir_context(s_ast_redirection_list *redir);
 /** @brief Translates a word to a file descriptor if possible */
-int word_to_fd(s_string *str);
+int word_to_fd(s_string *str, int mode);
 /** @brief Apply a redirection list */
 int set_redir(s_shell *shell, s_ast_redirection_list *redir);
 /** @brief Restore a redirection context */

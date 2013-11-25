@@ -13,18 +13,6 @@ static void exec_subshell_cmd(s_shell *shell, s_ast_shell_cmd *shell_cmd)
     return;
 }
 
-static void exec_case(s_shell *shell, s_ast_case *node) // TODO
-{
-    (void)shell;
-    if (!node)
-    {
-        fprintf(stderr, "Invalid CASE command.\n");
-        return;
-    }
-    fprintf(stderr, "CASE commands not implemented yet.\n");
-    return;
-}
-
 void exec_shell_cmd(s_shell *shell, s_ast_shell_cmd *shell_cmd)
 {
     if (shell_cmd->cmd_list)

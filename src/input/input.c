@@ -1,5 +1,11 @@
-#define GNU_SOURCE
-#define _POSIX_SOURCE
+#ifndef _GNU_SOURCE
+# define _GNU_SOURCE
+#endif
+
+#ifndef _POSIX_SOURCE
+# define _POSIX_SOURCE
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

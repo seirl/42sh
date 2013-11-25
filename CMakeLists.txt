@@ -197,6 +197,7 @@ add_library(parser OBJECT
 )
 
 add_library(exec OBJECT
+    src/match/fnmatch.c
     src/exec/exec.c
     src/exec/exec_cmds.c
     src/exec/exec_control.c
@@ -209,7 +210,6 @@ add_library(exec OBJECT
     src/exec/exec_utils.c
     src/exec/pipe_utils.c
     src/exec/redir_set.c
-    src/match/match.h
 )
 
 add_library(ast OBJECT
