@@ -23,7 +23,7 @@ void env_create(s_shell *shell)
     shell->env = hashtbl_init(hash_char, cmp_char, free_char, free_env_var);
 }
 
-void env_set(s_shell *shell, const char *value, const char *name)
+void env_set(s_shell *shell, char *value, char *name)
 {
     s_env_var *cur_var = hashtbl_get(shell->env, name);
     if (cur_var && cur_var->type & VAR_RDONLY)
