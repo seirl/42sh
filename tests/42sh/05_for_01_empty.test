@@ -1,0 +1,9 @@
+{
+    "desc": "for: empty",
+    "stdin": b"""
+for i in ; do
+    echo i
+done
+    """,
+    "stdout": "",
+}

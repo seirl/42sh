@@ -1,0 +1,8 @@
+{
+    "desc": "arith: unary plus",
+    "stdin": b"""a=42
+echo $((+a))
+""",
+    "stdout": "42\n",
+    "skip": True,
+}

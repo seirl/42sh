@@ -1,0 +1,9 @@
+{
+    "desc": "for: basic",
+    "stdin": b"""
+for i in a b c; do
+    echo i
+done
+    """,
+    "stdout": "i\ni\ni\n",
+}

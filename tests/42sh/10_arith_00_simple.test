@@ -1,0 +1,9 @@
+{
+    "desc": "arith: var",
+    "stdin": b"""a=42
+echo $((a))
+echo $(($a))
+""",
+    "stdout": "42\n42\n",
+    "skip": True,
+}

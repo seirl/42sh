@@ -1,0 +1,9 @@
+{
+    "desc": "for: redirect",
+    "stdin": b"""
+for i in a b c; do
+    echo i >& 2
+done
+    """,
+    "stderr": "i\ni\ni\n",
+}

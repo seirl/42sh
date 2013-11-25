@@ -1,0 +1,9 @@
+{
+    "desc": "for: alter",
+    "stdin": b"""
+for i do
+    echo i
+done
+    """,
+    "stdout": "",
+}
