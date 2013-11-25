@@ -7,18 +7,26 @@
 #include "expand.h"
 #include "env.h"
 
+typedef struct expand_params
+{
+    s_shell *shell;
+    const char *word;
+    const s_string *varname;
+    const s_string *varcont;
+    int only_unset;
+} s_expand_params;
+
 /*
 ** Use Alternative Value. If parameter is unset or null, null shall be
 ** substituted; otherwise, the expansion of word shall be substituted.
 */
-static s_string *expand_alternative(const char *word, const s_string *var,
-                                    int only_unset)
+static s_string *expand_alternative(s_expand_params *p)
 {
     // TODO: expand word
-    if (!var || (!var->buf[0] && !only_unset))
+    if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
         return string_create_from("");
     else
-        return string_create_from(word);
+        return string_create_from(p->word);
 }
 
 /*
@@ -26,14 +34,13 @@ static s_string *expand_alternative(const char *word, const s_string *var,
 ** shall be substituted; otherwise, the value of parameter shall be
 ** substituted.
 */
-static s_string *expand_default(const char *word, const s_string *var,
-                                int only_unset)
+static s_string *expand_default(s_expand_params *p)
 {
     // TODO: expand word
-    if (!var || (!var->buf[0] && !only_unset))
-        return string_create_from(word);
+    if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
+        return string_create_from(p->word);
     else
-        return string_duplicate(var);
+        return string_duplicate(p->varcont);
     return NULL;
 }
 
@@ -43,15 +50,16 @@ static s_string *expand_default(const char *word, const s_string *var,
 ** shall be substituted. Only variables, not positional parameters or special
 ** parameters, can be assigned in this way.
 */
-static s_string *expand_assign(const char *word, const s_string *var,
-                               s_shell *shell, int only_unset)
+static s_string *expand_assign(s_expand_params *p)
 {
-    (void) word;
-    (void) var;
-    (void) only_unset;
-    (void) shell;
+    // TODO: expand word
+    if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
+    {
+    //    char *name = strdup(p->varname->buf);
+    //    env_set(p->shell, p->word, name);
     //TODO
-    return NULL;
+    }
+    return string_create_from(env_get(p->shell, p->varname->buf));
 }
 
 /*
@@ -61,44 +69,44 @@ static s_string *expand_assign(const char *word, const s_string *var,
 ** status. Otherwise, the value of parameter shall be substituted. An
 ** interactive shell need not exit.
 */
-static s_string *expand_error(const char *word, const s_string *var,
-                              int only_unset)
+static s_string *expand_error(s_expand_params *p)
 {
-    (void) word;
-    (void) var;
-    (void) only_unset;
     //TODO
+    (void) p;
     return NULL;
 }
 
-static s_string *expand_del_prefix(const char *word, const s_string *var)
+static s_string *expand_del_prefix(s_expand_params *p)
 {
-    (void) word;
-    (void) var;
     //TODO
+    (void) p;
     return NULL;
 }
 
-static s_string *expand_del_suffix(const char *word, const s_string *var)
+static s_string *expand_del_suffix(s_expand_params *p)
 {
-    (void) word;
-    (void) var;
     //TODO
+    (void) p;
     return NULL;
 }
 
 s_string *expand_substs_param(s_shell *shell, const char *param,
-                              const s_string *var)
+                              const s_string *varname, const s_string *varcont)
 {
-    int only_unset = 1;
+    s_expand_params p;
+    p.only_unset = 1;
     if (param[0] == ':')
     {
         param++;
-        only_unset = 0;
+        p.only_unset = 0;
     }
+    p.shell = shell;
+    p.word = param + 1;
+    p.varname = varname;
+    p.varcont = varcont;
 #define X(Op, Func, ...)                        \
     if (param[0] == (#Op)[0])                   \
-        return Func(param + 1, __VA_ARGS__);
+        return Func(&p);
 #include "expand_params.def"
 #undef X
     return NULL;
@@ -126,13 +134,13 @@ s_string *expand_substs_var(s_shell *shell, const s_string *word)
     for (i = 0; word->buf[i] != '\0' && !among(word->buf[i], ":+-?=%#"); i++)
         string_putc(varname, word->buf[i]);
 
-    s_string *var_content = string_create_from(env_get(shell, varname->buf));
+    s_string *varcont = string_create_from(env_get(shell, varname->buf));
     if (!word->buf[i])
-        return var_content;
+        return varcont;
 
-    s_string *r = expand_substs_param(shell, word->buf + i, var_content);
+    s_string *r = expand_substs_param(shell, word->buf + i, varname, varcont);
 
     free(varname);
-    free(var_content);
+    free(varcont);
     return r;
 }
