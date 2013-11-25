@@ -1,0 +1,6 @@
+{
+    "desc": "!hello",
+    "args": ["-c", "echo !hello\n"],
+    "stdout": "!hello\n",
+    "skip": True,
+}
