@@ -44,7 +44,7 @@ static s_string *expand_default(const char *word, const s_string *var,
 ** parameters, can be assigned in this way.
 */
 static s_string *expand_assign(const char *word, const s_string *var,
-                               const s_shell *shell, int only_unset)
+                               s_shell *shell, int only_unset)
 {
     (void) word;
     (void) var;
@@ -87,7 +87,7 @@ static s_string *expand_del_suffix(const char *word, const s_string *var)
     return NULL;
 }
 
-s_string *expand_substs_param(const s_shell *shell, const char *param,
+s_string *expand_substs_param(s_shell *shell, const char *param,
                               const s_string *var)
 {
     int only_unset = 1;
@@ -112,7 +112,7 @@ static int among(char c, const char *s)
     return 0;
 }
 
-s_string *expand_substs_var(const s_shell *shell, const s_string *word)
+s_string *expand_substs_var(s_shell *shell, const s_string *word)
 {
     if (word->buf[0] == '#')
     {
