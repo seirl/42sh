@@ -2,7 +2,7 @@
 #include "shell_private.h"
 #include "env.h"
 
-void exec_else(s_shell *shell, s_ast_else *else_cmd)
+static void exec_else(s_shell *shell, s_ast_else *else_cmd)
 {
     exec_ast_list(shell, else_cmd->elif_predicate);
     if (!shell->status)
@@ -16,7 +16,6 @@ void exec_if(s_shell *shell, s_ast_if *if_cmd)
     exec_ast_list(shell, if_cmd->predicate);
     if (!shell->status)
         exec_ast_list(shell, if_cmd->then_cmds);
-    /* FIXME: elif */
     else
         if (if_cmd->else_clause)
             exec_else(shell, if_cmd->else_clause);
@@ -48,4 +47,45 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
         env_set(shell, string_release(id), string_release(value));
         values = values->next;
     }
+}
+
+static int exec_case_match(s_shell *shell,
+                           s_string *id,
+                           s_ast_word_list *match,
+                           s_ast_list *cmd)
+{
+    while (match)
+    {
+        s_string *val = expand_compound(shell, match->word);
+        if (!my_fnmatch(id->buf, val->buf))
+        {
+            exec_ast_list(shell, cmd);
+            return 0;
+        }
+        match = match->next;
+    }
+    return 1;
+}
+
+static void exec_clauses(s_shell *shell,
+                         s_string *id,
+                         s_ast_case_item *clauses)
+{
+    while (clauses)
+    {
+        if (!exec_case_match(shell,
+                             id,
+                             clauses->match,
+                             clauses->cmd_list))
+            return;
+        clauses = clauses->next;
+    }
+    shell->status = 0;
+}
+
+void exec_case(s_shell *shell, s_ast_case *case_cmd)
+{
+    assert(case-cmd && case_cmd->word && case_cmd->clauses);
+    s_string *id = expand_compound(shell, case_cmd->word);
+    exec_clauses(shell, id, case_cmd->clauses);
 }

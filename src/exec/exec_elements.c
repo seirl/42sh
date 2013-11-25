@@ -75,17 +75,24 @@ s_redir_context **exec_elements_redir(s_shell *shell, s_ast_element *elt)
     int len = element_redir_list_len(elt);
     s_redir_context **contexts =
         smalloc(sizeof (s_redir_context *) * (len + 1));
+    s_ast_redirection_list **elt_redirs =
+        smalloc(sizeof (s_ast_redirection_list *) * (len + 1));
     int count = 0;
+
     while (elt)
     {
         if (elt->redirection)
-        {
-            s_redir_context *cont = exec_redirection(shell, elt->redirection);
-            contexts[count] = cont;
-            count += 1;
-        }
+            elt_redirs[count++] = elt->redirection;
         elt = elt->next;
     }
+    elt_redirs[len] = NULL;
+    for (int i = 1; i <= count; ++i)
+    {
+            s_redir_context *cont =
+                exec_redirection(shell, elt_redirs[len - i]);
+            contexts[i - 1] = cont;
+    }
     contexts[len] = NULL;
+    sfree(elt_redirs);
     return contexts;
 }

@@ -5,8 +5,13 @@
 
 void restore_redir_context(s_redir_context *context)
 {
-    for (int i = 0; context[i].old_fd != -1; ++i)
-        dup2(context[i].tmp_fd, context[i].old_fd);
+    if (!context)
+        return;
+    if (context->old_fd != -1)
+    {
+        dup2(context->tmp_fd, context->old_fd);
+        XCLOSE(context->tmp_fd);
+    }
     sfree(context);
 }
 

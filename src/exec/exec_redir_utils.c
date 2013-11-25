@@ -55,7 +55,7 @@ s_redir_context *save_redir_context(s_ast_redirection_list *redir)
     return context;
 }
 
-int word_to_fd(s_string *str)
+int word_to_fd(s_string *str, int mode)
 {
     long fd = 0;
     char *endptr = NULL;
@@ -66,7 +66,7 @@ int word_to_fd(s_string *str)
         return -2;
     fd = strtol(str->buf, &endptr, 10);
     if ((endptr != 0) && strcmp("", endptr))
-        return -1;
+        fd = open(str->buf, mode);
 
     return fd;
 }
