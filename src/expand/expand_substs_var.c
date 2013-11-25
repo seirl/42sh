@@ -55,9 +55,11 @@ static s_string *expand_assign(s_expand_params *p)
     // TODO: expand word
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
     {
-    //    char *name = strdup(p->varname->buf);
-    //    env_set(p->shell, p->word, name);
-    //TODO
+        char *name = strdup(p->varname->buf);
+        char *value = strdup(p->word);
+        env_set(p->shell, value, name);
+        free(name);
+        free(value);
     }
     return string_create_from(env_get(p->shell, p->varname->buf));
 }
