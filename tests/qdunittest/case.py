@@ -89,6 +89,7 @@ class QDTestCaseShell(QDTestCase):
     def tearDown(self):
         self.tmpdir.cleanup()
         os.chdir(self.startdir)
+        self.startdir = ''
 
     def get_test_path(self):
         return os.path.join(self.startdir,
