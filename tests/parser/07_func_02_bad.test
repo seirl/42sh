@@ -2,5 +2,6 @@
     "desc": "rule funcdec: bad0",
     "input": "a () echo yes;",
     "output": "",
+    "stderr": ...,
     "retval": 1,
 }

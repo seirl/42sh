@@ -3,4 +3,5 @@
     "input": "a ; ;",
     "output": "",
     "stderr": ...,
+    "retval": 1,
 }

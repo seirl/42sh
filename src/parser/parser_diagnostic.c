@@ -1,12 +1,12 @@
 #include "parser_private.h"
 #include "log.h"
 
-int parser_diagnostic(s_parser *parser)
+e_parser_status parser_diagnostic(s_parser *parser)
 {
     if (parser->status == PARSE_ERROR)
     {
         LOG(WARN, "Parse error", NULL);
-        return 0;
+        return PARSE_ERROR;
     }
-    return 1;
+    return PARSE_OK;
 }

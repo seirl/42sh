@@ -1,0 +1,7 @@
+{
+    "desc": "bad begin pipe",
+    "stdin": b"| hello",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}

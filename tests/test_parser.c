@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {
-        if (!parser_diagnostic(parser))
+        if (parser_diagnostic(parser) != PARSE_OK)
             ret = 1;
         else if (!parser_eof(parser))
         {

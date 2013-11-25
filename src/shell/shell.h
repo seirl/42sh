@@ -3,6 +3,13 @@
 
 struct parser;
 
+enum shell_status
+{
+    SHELL_OK = 1,
+    SHELL_PARSE_ERROR = 2,
+};
+typedef enum shell_status e_shell_status;
+
 enum shell_state
 {
     SHELL_STOP,
@@ -31,6 +38,6 @@ void shell_delete(s_shell *shell);
 /**
 ** @brief Start the read-eval loop.
 */
-int shell_loop(s_shell *shell);
+e_shell_status shell_loop(s_shell *shell);
 
 #endif /* !SHELL_H */

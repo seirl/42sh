@@ -1,6 +1,7 @@
 {
-    "desc": "rule list: empty trailing ; token",
+    "desc": "rule list: bad empty trailing ; token",
     "input": "a & ;",
     "output": "",
     "stderr": ...,
+    "retval": 1,
 }

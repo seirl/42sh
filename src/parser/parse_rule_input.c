@@ -1,5 +1,5 @@
 #include "parser_private.h"
-#include "log.h"
+#include "parser_macros.h"
 
 static void pipeline_heredoc(s_parser *parser, s_ast_pipeline *pipeline)
 {
@@ -27,16 +27,16 @@ static void list_heredoc_here(s_parser *parser, s_ast_list *list)
 
 static s_ast_input *parse_rule_input_rec(s_parser *parser)
 {
-    s_ast_list *list;
-    if (!(list = parse_rule_list(parser)))
-        return NULL; /** Could not parse */
     s_ast_input *ast = ast_input_new();
-    ast->list = list;
+    ast->list = parse_rule_list(parser);
 
     s_token *tok = lex_token(parser->lexer);
     if (!(tok->type == T_NEWLINE
         || tok->type == T_EOF))
-        LOG(ERROR, "parser: unexpected 'input' token.", NULL);
+    {
+        ast_input_delete(ast);
+        RETURN_PARSE_UNEXPECTED(parser, tok);
+    }
 
     if (tok->type == T_NEWLINE)
         list_heredoc_here(parser, ast->list);

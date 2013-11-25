@@ -1,6 +1,6 @@
 {
     "desc": "bad: semi",
     "input": ";;;",
-    "output": "",
+    "stderr": ...,
     "retval": 1,
 }

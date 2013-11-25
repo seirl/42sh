@@ -40,7 +40,7 @@ int parser_ready(s_parser *parser);
 **
 ** @return 1 if ok, 0 on error
 */
-int parser_diagnostic(s_parser *parser);
+e_parser_status parser_diagnostic(s_parser *parser);
 
 /** @brief Parse done? */
 int parser_eof(s_parser *parser);
