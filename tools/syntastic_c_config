@@ -9,7 +9,7 @@
 -Isrc/env
 -Isrc/exec
 -Isrc/expand
--Isrc/fnmatch
+-Isrc/match
 -Isrc/history
 -Isrc/input
 -Isrc/lexer

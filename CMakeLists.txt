@@ -30,7 +30,7 @@ include_directories(src/functions)
 include_directories(src/env)
 include_directories(src/exec)
 include_directories(src/expand)
-include_directories(src/fnmatch)
+include_directories(src/match)
 include_directories(src/history)
 include_directories(src/input)
 include_directories(src/lexer)
@@ -73,8 +73,8 @@ add_library(string OBJECT
     src/utils/string_search.c
 )
 
-add_library(fnmatch OBJECT
-    src/fnmatch/fnmatch.c
+add_library(match OBJECT
+    src/match/fnmatch.c
 )
 
 add_library(lexer OBJECT
