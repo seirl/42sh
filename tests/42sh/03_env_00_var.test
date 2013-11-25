@@ -4,5 +4,4 @@
 echo $a
 """,
     "stdout": "42\n",
-    "skip": True,
 }

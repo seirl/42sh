@@ -3,5 +3,4 @@
     "stdin": b"""echo $HOME
 """,
     "stdout": ...,
-    "skip": True,
 }
