@@ -3,6 +3,7 @@
 #include "lexer_private.h"
 #include "smalloc.h"
 #include "alias.h"
+#include "shopt.h"
 
 int update_alias_delimiter(s_lexer *lexer)
 {
@@ -17,10 +18,10 @@ int update_alias_delimiter(s_lexer *lexer)
     return old;
 }
 
-#include <stdio.h>
 void expand_alias(s_shell *shell, s_token *tok)
 {
-    if (tok->type == T_WORD && tok->aliasable == 1 && shell)
+    if (tok->type == T_WORD && tok->aliasable == 1 && shell
+       && shopt_get(shell, "expand_aliases"))
     {
         s_string *alias = alias_get(shell, tok->value.str);
         if (alias)

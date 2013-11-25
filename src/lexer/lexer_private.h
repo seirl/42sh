@@ -43,6 +43,7 @@ struct lexer
     int prefill;
     //! blank char = separator ?
     int blank_sep;
+    int prev_delim;
     //! Shell
     s_shell *shell;
 };
@@ -119,5 +120,8 @@ int fill_token(s_lexer *lexer);
 
 /** @brief remove the useless part of a token */
 void strip_token(s_token *token);
+
+void expand_alias(s_shell *shell, s_token *tok);
+int update_alias_delimiter(s_lexer *lexer);
 
 #endif /* !LEXER_PRIVATE_H */
