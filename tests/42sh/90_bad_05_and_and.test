@@ -1,0 +1,7 @@
+{
+    "desc": "bad: empty && ",
+    "stdin": b"""true &&""",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}

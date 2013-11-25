@@ -1,0 +1,5 @@
+{
+    "desc": "multiple commands: and",
+    "args": ["-c", "echo a && echo b"],
+    "stdout": "a\nb\n",
+}
