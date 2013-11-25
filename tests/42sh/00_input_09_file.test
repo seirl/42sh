@@ -1,0 +1,6 @@
+{
+    "desc": "input file: hello, world!",
+    "setup": "echo 'echo hello, world!' > script",
+    "args": ["script"],
+    "stdout": "hello, world!\n",
+}

@@ -14,6 +14,25 @@ class QDTestCase(unittest.TestCase):
         self.category = category
         self.test_name = test_name
         self.test = test
+        self.startdir = os.getcwd()
+        self.use_tmpdir = False
+
+    def setup_tmpdir(self):
+        pass
+
+    def setUp(self):
+        if self.use_tmpdir:
+            self.tmpdir = tempfile.TemporaryDirectory()
+            self.setup_tmpdir()
+            os.chdir(self.tmpdir.name)
+        if 'setup' in self.test:
+            subprocess.call(self.test['setup'], shell=True)
+
+    def tearDown(self):
+        if self.use_tmpdir:
+            self.tmpdir.cleanup()
+            os.chdir(self.startdir)
+            self.startdir = ''
 
     def __str__(self):
         return self.test.get("desc", self.test_name)
@@ -80,16 +99,12 @@ class QDTestCase(unittest.TestCase):
 
 class QDTestCaseShell(QDTestCase):
 
-    def setUp(self):
-        self.startdir = os.getcwd()
-        self.tmpdir = tempfile.TemporaryDirectory()
-        shutil.copy("../../42sh", self.tmpdir.name)
-        os.chdir(self.tmpdir.name)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.use_tmpdir = True
 
-    def tearDown(self):
-        self.tmpdir.cleanup()
-        os.chdir(self.startdir)
-        self.startdir = ''
+    def setup_tmpdir(self):
+        shutil.copy("../../42sh", self.tmpdir.name)
 
     def get_test_path(self):
         return os.path.join(self.startdir,
