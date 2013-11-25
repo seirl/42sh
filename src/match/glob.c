@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <dirent.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -5,8 +7,6 @@
 #include <sys/types.h>
 
 #include "match.h"
-
-extern char *strdup(const char *s);
 
 /*
 ** On some Linux distributions, strchr() segfaults...
@@ -79,7 +79,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename)
     if (dp != NULL)
     {
         struct dirent *ep;
-        while (ep = readdir(dp))
+        while ((ep = readdir(dp)))
         {
             if (!my_fnmatch(basename, ep->d_name))
                 if (basename[0] == '.' || ep->d_name[0] != '.')
@@ -95,6 +95,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename)
         }
         closedir(dp);
     }
+    return g;
 }
 
 s_globr *my_glob(const char *pattern)
