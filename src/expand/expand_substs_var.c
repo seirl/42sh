@@ -7,38 +7,46 @@
 #include "expand.h"
 #include "env.h"
 
-static int among(char c, const char *s)
-{
-    while (*s)
-        if (c == *s++)
-            return 1;
-    return 0;
-}
-
-static s_string *expand_alternative(const char *param, const s_string *var,
+/*
+** Use Alternative Value. If parameter is unset or null, null shall be
+** substituted; otherwise, the expansion of word shall be substituted.
+*/
+static s_string *expand_alternative(const char *word, const s_string *var,
                                     int only_unset)
 {
-    (void) param;
-    (void) var;
-    (void) only_unset;
-    //TODO
-    return NULL;
+    // TODO: expand word
+    if (!var || (!var->buf[0] && !only_unset))
+        return string_create_from("");
+    else
+        return string_create_from(word);
 }
 
-static s_string *expand_default(const char *param, const s_string *var,
+/*
+** Use Default Values. If parameter is unset or null, the expansion of word
+** shall be substituted; otherwise, the value of parameter shall be
+** substituted.
+*/
+static s_string *expand_default(const char *word, const s_string *var,
                                 int only_unset)
 {
-    (void) param;
-    (void) var;
-    (void) only_unset;
-    //TODO
+    // TODO: expand word
+    if (!var || (!var->buf[0] && !only_unset))
+        return string_create_from(word);
+    else
+        return string_duplicate(var);
     return NULL;
 }
 
-static s_string *expand_assign(const char *param, const s_string *var,
+/*
+** Assign Default Values. If parameter is unset or null, the expansion of word
+** shall be assigned to parameter. In all cases, the final value of parameter
+** shall be substituted. Only variables, not positional parameters or special
+** parameters, can be assigned in this way.
+*/
+static s_string *expand_assign(const char *word, const s_string *var,
                                const s_shell *shell, int only_unset)
 {
-    (void) param;
+    (void) word;
     (void) var;
     (void) only_unset;
     (void) shell;
@@ -46,27 +54,34 @@ static s_string *expand_assign(const char *param, const s_string *var,
     return NULL;
 }
 
-static s_string *expand_error(const char *param, const s_string *var,
+/*
+** Indicate Error if Null or Unset. If parameter is unset or null, the
+** expansion of word (or a message indicating it is unset if word is omitted)
+** shall be written to standard error and the shell exits with a non-zero exit
+** status. Otherwise, the value of parameter shall be substituted. An
+** interactive shell need not exit.
+*/
+static s_string *expand_error(const char *word, const s_string *var,
                               int only_unset)
 {
-    (void) param;
+    (void) word;
     (void) var;
     (void) only_unset;
     //TODO
     return NULL;
 }
 
-static s_string *expand_del_prefix(const char *param, const s_string *var)
+static s_string *expand_del_prefix(const char *word, const s_string *var)
 {
-    (void) param;
+    (void) word;
     (void) var;
     //TODO
     return NULL;
 }
 
-static s_string *expand_del_suffix(const char *param, const s_string *var)
+static s_string *expand_del_suffix(const char *word, const s_string *var)
 {
-    (void) param;
+    (void) word;
     (void) var;
     //TODO
     return NULL;
@@ -83,10 +98,18 @@ s_string *expand_substs_param(const s_shell *shell, const char *param,
     }
 #define X(Op, Func, ...)                        \
     if (param[0] == (#Op)[0])                   \
-        return Func(param, __VA_ARGS__);
+        return Func(param + 1, __VA_ARGS__);
 #include "expand_params.def"
 #undef X
     return NULL;
+}
+
+static int among(char c, const char *s)
+{
+    while (*s)
+        if (c == *s++)
+            return 1;
+    return 0;
 }
 
 s_string *expand_substs_var(const s_shell *shell, const s_string *word)
