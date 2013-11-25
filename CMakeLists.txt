@@ -115,6 +115,10 @@ add_library(builtins OBJECT
     src/builtins/b_unalias.c
     src/builtins/b_set.c
     src/builtins/b_echo.c
+    src/builtins/b_exec.c
+    src/builtins/b_exit.c
+    src/builtins/b_source.c
+    src/builtins/b_cd.c
 )
 
 add_library(readline OBJECT
@@ -205,6 +209,7 @@ add_library(exec OBJECT
     src/exec/exec_utils.c
     src/exec/pipe_utils.c
     src/exec/redir_set.c
+    src/match/match.h
 )
 
 add_library(ast OBJECT
