@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Brace basic",
+    "string": "abtatacde",
+    "pattern": "ab{test,tata,toto}cde",
+    "output": "0"
+}

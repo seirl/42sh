@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Brace basic nomatch",
+    "string": "abtata,cde",
+    "pattern": "ab{test,tata,toto}cde",
+    "output": "1"
+}
