@@ -37,6 +37,11 @@ struct terminal
 typedef struct terminal s_term;
 
 /**
+** @brief Tell if the character at 'index' position on the input is a blank.
+*/
+int input_is_blank(s_term *term, size_t index);
+
+/**
 ** @brief Get terminal informations
 */
 s_term *term_get(s_shell *shell);

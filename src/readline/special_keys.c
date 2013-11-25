@@ -3,6 +3,7 @@
 #include "key.h"
 #include "special_keys.h"
 #include "wrapper.h"
+#include "terminal.h"
 
 static e_next_action do_backspace(s_term *term)
 {
@@ -37,6 +38,15 @@ static e_next_action do_enter(s_term *term)
     return RETURN;
 }
 
+static e_next_action do_ctrl_w(s_term *term)
+{
+    size_t *i = &(term->input_index);
+    while (*i > 0 && input_is_blank(term, *i - 1))
+        do_backspace(term);
+    while (*i > 0 && !input_is_blank(term, *i - 1))
+        do_backspace(term);
+    return CONTINUE;
+}
 
 e_next_action handle_special_key(s_shell *shell, s_term *term, e_special_key key)
 {

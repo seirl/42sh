@@ -41,6 +41,12 @@ static void term_init(s_shell *shell)
     term->prompt = NULL;
 }
 
+int input_is_blank(s_term *term, size_t index)
+{
+    char c = term->input->buf[index];
+    return (c == ' ') || (c == '\t');
+}
+
 s_term *term_get(s_shell *shell)
 {
     if (!get_term_ptr(0, NULL))
