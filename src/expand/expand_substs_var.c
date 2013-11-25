@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -73,9 +74,15 @@ static s_string *expand_assign(s_expand_params *p)
 */
 static s_string *expand_error(s_expand_params *p)
 {
-    //TODO
-    (void) p;
-    return NULL;
+    //TODO: expand word
+    //TODO: exit(1)
+    if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
+    {
+        fprintf(stderr, "%s: %s", p->varname->buf, p->word);
+        return NULL;
+    }
+    else
+        return string_create_from(env_get(p->shell, p->varname->buf));
 }
 
 static s_string *expand_del_prefix(s_expand_params *p)
