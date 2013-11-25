@@ -1,0 +1,9 @@
+{
+    "desc": "while: basic",
+    "stdin": b"""
+while false; do
+    echo fail
+done
+    """,
+    "stdout": "",
+}
