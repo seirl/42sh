@@ -1,0 +1,9 @@
+{
+    "desc": "hello, world!",
+    "stdin": b"""echo hello;
+echo world;
+""",
+    "stdout": """hello
+world
+""",
+}

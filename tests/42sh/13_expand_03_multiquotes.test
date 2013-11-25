@@ -1,0 +1,6 @@
+{
+    "desc": "quotes: simple quote echo 2 compound",
+    "args": ["-c", "echo 'a''b' \"c\"'d'"],
+    "stdout": "ab cd\n",
+    "skip": True,
+}
