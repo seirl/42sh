@@ -90,6 +90,10 @@ class QDTestCaseShell(QDTestCase):
         self.tmpdir.cleanup()
         os.chdir(self.startdir)
 
+    def get_test_path(self):
+        return os.path.join(self.startdir,
+                            os.path.join(self.category, self.test_name))
+
     def shortDescription(self):
         return "{}[args: {}]\nstdin: {}".format(
                 self.test["desc"] + "\n" if "desc" in self.test else "",
@@ -109,9 +113,12 @@ def new_test_run_42sh(test, options):
         stdin_buf = test.get('stdin', None)
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
 
-        subself.assertMultiLineEqual(test.get('stderr', ""),
-                                     stderrdata.decode(),
-                                     "stderr differ")
+        if test.get('stderr') == ...:
+            subself.assertNotEqual("", stderrdata.decode(), "stderr empty")
+        else:
+            subself.assertMultiLineEqual(test.get('stderr', ""),
+                                         stderrdata.decode(),
+                                         "stderr differ")
 
         if test.get('stdout') == ...:
             subself.assertNotEqual("", stdoutdata.decode(), "stdout empty")
