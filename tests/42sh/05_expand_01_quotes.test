@@ -1,0 +1,5 @@
+{
+    "desc": "quotes: simple quote echo",
+    "args": ["-c", "echo 'This is a test'"],
+    "stdout": "This is a test\n",
+}
