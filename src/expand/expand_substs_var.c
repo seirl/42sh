@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "string_utils.h"
 #include "ast.h"
-#include "shell.h"
-#include "expand.h"
 #include "env.h"
+#include "expand.h"
+#include "match.h"
+#include "shell.h"
+#include "string_utils.h"
 
 typedef struct expand_params
 {
@@ -87,16 +88,49 @@ static s_string *expand_error(s_expand_params *p)
 
 static s_string *expand_del_prefix(s_expand_params *p)
 {
-    //TODO
-    (void) p;
-    return NULL;
+    unsigned end_prefix = 0;
+    int largest = 0;
+    if (*p->word == '#')
+    {
+        p->word++;
+        largest = 1;
+    }
+    char *n = strdup(p->varcont->buf);
+    for (unsigned i = strlen(n); p->varcont->buf[i]; i--)
+    {
+        n[i] = '\0';
+        if (!my_fnmatch(p->word, n))
+        {
+            end_prefix = i;
+            if (largest)
+                break;
+        }
+    }
+    s_string *r = string_create_from(p->varcont->buf + end_prefix);
+    free(n);
+    return r;
 }
 
 static s_string *expand_del_suffix(s_expand_params *p)
 {
-    //TODO
-    (void) p;
-    return NULL;
+    unsigned start_suffix = 0;
+    int largest = 0;
+    if (*p->word == '%')
+    {
+        p->word++;
+        largest = 1;
+    }
+    for (unsigned i = 0; p->varcont->buf[i]; i++)
+        if (!my_fnmatch(p->word, p->varcont->buf + i))
+        {
+            start_suffix = i;
+            if (largest)
+                break;
+        }
+    char *n = strndup(p->varcont->buf, start_suffix);
+    s_string *r = string_create_from(n);
+    free(n);
+    return r;
 }
 
 s_string *expand_substs_param(s_shell *shell, const char *param,
