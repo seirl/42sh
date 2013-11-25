@@ -11,15 +11,33 @@ static s_ast_cmd *post_process_cmd(s_ast_cmd *cmd)
     return cmd;
 }
 
+static s_ast_cmd *parse_rule_shell_command_wrap(s_parser *parser)
+{
+    s_ast_shell_cmd *shell_cmd;
+    if ((shell_cmd = parse_rule_shell_command(parser)))
+    {
+        // No content means parse error
+        if (shell_cmd->ctrl.ast_if)
+        {
+            s_ast_cmd *cmd = ast_cmd_new();
+            cmd->shell_cmd = shell_cmd;
+            cmd->redirections = parse_rule_redirection(parser);
+            return cmd;
+        }
+        ast_shell_cmd_delete(shell_cmd);
+        return NULL;
+    }
+    return NULL;
+}
+
 s_ast_cmd *parse_rule_command(s_parser *parser)
 {
-    s_ast_cmd *cmd = ast_cmd_new();
+    s_ast_cmd *cmd;
 
-    if ((cmd->shell_cmd = parse_rule_shell_command(parser)))
-    {
-        cmd->redirections = parse_rule_redirection(parser);
+    if ((cmd = parse_rule_shell_command_wrap(parser)))
         return cmd;
-    }
+
+    cmd = ast_cmd_new();
 
     s_token *tok = lex_look_token(parser->lexer);
     if (tok->type == T_FUNCTION)

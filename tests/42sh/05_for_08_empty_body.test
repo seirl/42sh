@@ -1,0 +1,9 @@
+{
+    "desc": "for: bad empty body",
+    "stdin": b"""
+for i in a b c; do
+done
+    """,
+    "stderr": ...,
+    "retval": 2,
+}

@@ -1,0 +1,9 @@
+{
+    "desc": "bad: no do",
+    "stdin": b"""for i in a b c; do
+        echo i
+""",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}

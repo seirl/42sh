@@ -1,0 +1,9 @@
+{
+    "desc": "input: continuations",
+    "stdin": b"""
+echo hello \
+world
+""",
+    "stdout": """hello world
+""",
+}
