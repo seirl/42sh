@@ -9,6 +9,7 @@
 #include "ast.h"
 #include "env.h"
 #include "expand.h"
+#include "log.h"
 #include "match.h"
 #include "shell.h"
 #include "string_utils.h"
@@ -83,7 +84,10 @@ static s_string *expand_error(s_expand_params *p)
     //TODO: exit(1)
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
     {
-        fprintf(stderr, "%s: %s", p->varname->buf, p->word);
+        if (*p->word)
+            LOG(ERROR, "%s: %s", p->varname->buf, p->word);
+        else
+            LOG(ERROR, "%s: is unset", p->varname->buf);
         return NULL;
     }
     else
