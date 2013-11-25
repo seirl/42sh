@@ -1,0 +1,8 @@
+{
+    "desc": "function: define and call",
+    "stdin": b"""a() { echo hello; }
+a
+""",
+    "stdout": "hello\n",
+    "skip": True,
+}

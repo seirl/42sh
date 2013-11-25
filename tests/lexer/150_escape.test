@@ -1,0 +1,7 @@
+{
+    "desc": "Escape backslash",
+    "input": "h\\ello",
+    "output": """h\ello	T_WORD (0)
+	T_EOF (0)
+""",
+}

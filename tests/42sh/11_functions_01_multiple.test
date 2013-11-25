@@ -1,0 +1,10 @@
+{
+    "desc": "function: define and call recursive",
+    "stdin": b"""
+a() { echo hello; }
+b() { echo world; a; }
+b
+""",
+    "stdout": "hello\nworld\n",
+    "skip": True,
+}

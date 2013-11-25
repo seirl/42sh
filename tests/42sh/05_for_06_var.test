@@ -1,0 +1,13 @@
+{
+    "desc": "for: for use var",
+    "stdin": b"""
+for i in a b c; do
+    echo $i
+done
+""",
+    "stdout": """a
+b
+c
+""",
+    "skip": True,
+}

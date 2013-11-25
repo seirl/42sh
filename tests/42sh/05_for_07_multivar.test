@@ -1,0 +1,16 @@
+{
+    "desc": "for: for in for",
+    "stdin": b"""
+for i in a b; do
+    for j in a b; do
+        echo $i $j
+    done
+done
+""",
+    "stdout": """a a
+a b
+b a
+b b
+""",
+    "skip": True,
+}

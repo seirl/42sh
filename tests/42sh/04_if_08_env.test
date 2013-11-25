@@ -1,0 +1,7 @@
+{
+    "desc": "if: basic",
+    "stdin": b"""if $nonexistant; then echo yes; else echo no; fi
+""",
+    "stdout": "yes\n",
+    "skip": True,
+}

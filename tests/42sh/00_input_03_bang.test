@@ -1,0 +1,6 @@
+{
+    "desc": "hello, world!",
+    "args": ["-c", "echo hello, world!\n"],
+    "stdout": "hello, world!\n",
+    "skip": True,
+}
