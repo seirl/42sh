@@ -88,6 +88,7 @@ static s_string *expand_error(s_expand_params *p)
 
 static s_string *expand_del_prefix(s_expand_params *p)
 {
+    //TODO: expand word
     unsigned end_prefix = 0;
     int largest = 0;
     if (*p->word == '#')
@@ -113,6 +114,7 @@ static s_string *expand_del_prefix(s_expand_params *p)
 
 static s_string *expand_del_suffix(s_expand_params *p)
 {
+    //TODO: expand word
     unsigned start_suffix = 0;
     int largest = 0;
     if (*p->word == '%')
