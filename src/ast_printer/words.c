@@ -5,9 +5,13 @@
 static const char *word_kind_str[] =
 {
     "WORD",
-    "SUBSTS_SHELL",
-    "SUBSTS_VAR",
-    "EXPAND_VAR",
+    "EXPAND_NAME",
+    "EXPAND_PARAM",
+    "EXPAND_CMD_SUBST",
+    "EXPAND_ARITHM",
+    "SUBSTS_SQUOTE",
+    "SUBSTS_DQUOTE",
+    "SUBSTS_BQUOTE",
 };
 
 void print_word(s_ast_word *w, void *prev, FILE *out)
