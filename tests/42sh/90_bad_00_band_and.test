@@ -1,5 +1,5 @@
 {
-    "desc": "bad and and",
+    "desc": "bad: and and",
     "stdin": b"echo & &",
     "stdout": "",
     "stderr": ...,

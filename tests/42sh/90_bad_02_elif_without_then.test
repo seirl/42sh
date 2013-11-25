@@ -1,0 +1,13 @@
+{
+    "desc": "bad: elif without then",
+    "stdin": b"""
+if true; then
+    echo if
+elif true
+    echo elif
+fi
+""",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}

@@ -1,0 +1,13 @@
+{
+    "desc": "bad: empty case",
+    "stdin": b"""
+case a in
+    )
+        echo true
+        ;;
+esac
+""",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}

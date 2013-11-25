@@ -1,5 +1,5 @@
 {
-    "desc": "bad begin pipe",
+    "desc": "bad: begin pipe",
     "stdin": b"| hello",
     "stdout": "",
     "stderr": ...,

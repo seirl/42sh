@@ -1,0 +1,7 @@
+{
+    "desc": "bad: empty pipe",
+    "stdin": b"""echo a |""",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}

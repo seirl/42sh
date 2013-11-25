@@ -26,7 +26,7 @@ static s_ast_pipeline *sub_parse_rule_pipeline(s_parser *parser,
     parse_heredoc_here(parser, pipeline->cmd);
 
     if (!(pipeline->next = parse_rule_pipeline(parser, 0)))
-        return NULL;
+        RETURN_PARSE_EXPECTED(parser, "after |");
     return pipeline;
 }
 
