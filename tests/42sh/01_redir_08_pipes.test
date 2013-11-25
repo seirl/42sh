@@ -1,0 +1,5 @@
+{
+    "desc": "redir: multi pipes",
+    "args": ["-c", "echo foo |true|true| echo bar"],
+    "stdout": "bar\n",
+}

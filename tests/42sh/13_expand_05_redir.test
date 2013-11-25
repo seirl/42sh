@@ -1,0 +1,7 @@
+{
+    "desc": "expand: expand in redirection",
+    "stdin": b"""echo hello > 'a''b'
+cat ab
+""",
+    "stdout": "hello\n",
+}

@@ -1,0 +1,10 @@
+{
+    "desc": "bad: if no body",
+    "stdin": b"""if true
+        echo i
+fi
+""",
+    "stdout": "",
+    "stderr": ...,
+    "retval": 2,
+}
