@@ -241,6 +241,7 @@ add_library(expand OBJECT
     src/expand/expand_substs_var.c
     src/expand/expand_var.c
     src/expand/expand_squote.c
+    src/expand/expand_dquote.c
 )
 
 add_library(shell OBJECT
