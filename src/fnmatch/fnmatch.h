@@ -1,7 +1,7 @@
-#ifndef MY_FNMATCH_H
-# define MY_FNMATCH_H
+#ifndef FNMATCH_H
+# define FNMATCH_H
 
 int my_fnmatch(const char *pattern, const char *str);
 char **my_glob(const char *pattern, int *count);
 
-#endif /* !MY_FNMATCH_H */
+#endif /* !FNMATCH_H */
