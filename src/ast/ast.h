@@ -9,7 +9,7 @@ typedef struct ast_element s_ast_element;
 
 enum ast_word_kind
 {
-    WORD,             /** a or 'a' or "a"     */
+    WORD,             /** a                   */
     EXPAND_NAME,      /** $a                  */
     EXPAND_PARAM,     /** ${#argv}            */
     EXPAND_CMD_SUBST, /** $(echo foo)         */
