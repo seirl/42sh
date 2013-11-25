@@ -8,6 +8,11 @@ int builtin_alias(s_shell *shell, int argc, char *argv[]);
 int builtin_unalias(s_shell *shell, int argc, char *argv[]);
 int builtin_set(s_shell *shell, int argc, char *argv[]);
 int builtin_echo(s_shell *shell, int argc, char *argv[]);
+int builtin_exit(s_shell *shell, int argc, char *argv[]);
+int builtin_exec(s_shell *shell, int argc, char *argv[]);
+int builtin_source(s_shell *shell, int argc, char *argv[]);
+int builtin_cd(s_shell *shell, int argc, char *argv[]);
+
 
 typedef int (*f_handler)(s_shell *shell, int argc, char *argv[]);
 
