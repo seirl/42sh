@@ -14,6 +14,6 @@ char input_file_getc(s_input *input);
 /** @brief Get a char from a file. */
 char input_file_topc(s_input *input);
 /** @brief Not used by file input. */
-int input_file_next(s_input *input);
+int input_file_next(s_input *input, void *param);
 
 #endif /* !INPUT_FILE_H */

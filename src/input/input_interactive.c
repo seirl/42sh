@@ -50,10 +50,10 @@ char input_interactive_topc(s_input *input)
     return state->buf ? string_topc(state->buf) : '\0';
 }
 
-int input_interactive_next(s_input *input)
+int input_interactive_next(s_input *input, void *param)
 {
     s_input_state_interactive *state = input->_input_state;
     string_free(state->buf);
-    state->buf = readline(state->shell, "42sh$ ");
+    state->buf = readline(state->shell, param);
     return !!state->buf;
 }

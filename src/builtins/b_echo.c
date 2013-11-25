@@ -84,12 +84,12 @@ static int print_char(s_echo_arg arg, char *str, int j)
             {
                 if (escape_table[i][0] == str[j + escaped])
                 {
-                    printf("%c", escape_table[i][1]);
+                    putc(escape_table[i][1], stdout);
                     break;
                 }
             }
         }
-        printf("%c", str[j + escaped]);
+        putc(str[j + escaped], stdout);
     }
     return j + escaped;
 }
@@ -101,15 +101,16 @@ static void do_echo(s_echo_arg arg, int argc)
         for (int j = 0; arg.argv[i][j]; ++j)
             j = print_char(arg, arg.argv[i], j);
         if (i + 1 != argc)
-            printf(" ");
+            putc(' ', stdout);
     }
     if (arg.n == 0)
-        printf("\n");
+        putc('\n', stdout);
 }
 
 int builtin_echo(s_shell *shell, int argc, char *argv[])
 {
     s_echo_arg arg = parse_argv(shell, argc, argv);
     do_echo(arg, argc);
+    fflush(stdout);
     return 0;
 }

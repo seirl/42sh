@@ -54,12 +54,12 @@ static void do_print(s_shell *shell, char c)
 s_string *readline(s_shell *shell, char *prompt)
 {
     s_term *term = term_get(shell);
-    term->prompt = prompt;
     if (term == NULL)
         return NULL;
     char c;
 
-    s_string *s_prompt = string_create_from(prompt);
+    s_string *s_prompt = string_create_from(env_get(shell, prompt));
+    term->prompt = s_prompt->buf;
     prompt_expand(shell, s_prompt);
     printf("%s", s_prompt->buf);
     string_free(s_prompt);

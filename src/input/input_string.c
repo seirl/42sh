@@ -35,8 +35,9 @@ char input_string_topc(s_input *input)
     return string_topc(str);
 }
 
-int input_string_next(s_input *input)
+int input_string_next(s_input *input, void *param)
 {
+    (void)param;
     s_string *str = input->_input_state;
     return str->len != str->read_pos;
 }

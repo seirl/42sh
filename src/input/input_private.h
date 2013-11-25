@@ -22,7 +22,7 @@ struct input
     /** Get the next char from this input. */
     char (*topc)(struct input *input);
     /** Get the next part of the input. */
-    int (*next)(struct input *input);
+    int (*next)(struct input *input, void *param);
     /** Internal status of the input*/
     void *_input_state;
 };

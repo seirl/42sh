@@ -14,6 +14,6 @@ char input_string_getc(s_input *input);
 /** @brief Get a char from a string (input_state = s_string). */
 char input_string_topc(s_input *input);
 /** @brief Not used by string input. */
-int input_string_next(s_input *input);
+int input_string_next(s_input *input, void *param);
 
 #endif /* !INPUT_STRING_H */

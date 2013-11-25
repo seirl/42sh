@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "lexer_private.h"
+#include "input_private.h"
 
 #undef getc
 
@@ -46,12 +47,28 @@ int fill_until(s_lexer *lexer, int include_last)
         if (lexer->quoted == 0 && prev != '\\'
            && (c == lexer->sur.end || c == '\0'))
         {
-            lexer->sur.count -= 1;
-            if (lexer->sur.count == 0)
-                break;
+            if (c == 0)
+            {
+                lexer->input->next(lexer->input, "PS2");
+                continue;
+            }
+            else
+            {
+                lexer->sur.count -= 1;
+                if (lexer->sur.count == 0)
+                    break;
+            }
         }
-        if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == 0))
-            lexer->sur.count += 1;
+        else if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == 0))
+        {
+            if (c == 0)
+            {
+                lexer->input->next(lexer->input, "PS2");
+                continue;
+            }
+            else
+                lexer->sur.count += 1;
+        }
         string_putc(lexer->working_buffer, lex_getc(lexer));
         update_quote(lexer, c, prev);
         prev = c;

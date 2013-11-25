@@ -43,6 +43,7 @@ struct lexer
     int prefill;
     //! blank char = separator ?
     int blank_sep;
+    //! previous token was a delimiter ?
     int prev_delim;
     //! Shell
     s_shell *shell;

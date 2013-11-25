@@ -34,7 +34,8 @@ int lex_start(s_lexer *lexer)
     lexer->lookahead = NULL;
     if (lexer->working_buffer->len == 0)
         lexer->prefill = 1;
-    return lexer->input->next(lexer->input) || lexer->working_buffer->len != 0;
+    return (lexer->input->next(lexer->input, "PS1")
+           || lexer->working_buffer->len != 0);
 }
 
 void lex_delete(s_lexer *lexer)
