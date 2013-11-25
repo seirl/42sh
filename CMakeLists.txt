@@ -126,6 +126,7 @@ add_library(readline OBJECT
     src/readline/special_line_manipulation_keys.c
     src/readline/escape_keys.c
     src/readline/terminal.c
+    src/readline/prompt.c
 )
 
 add_library(history OBJECT

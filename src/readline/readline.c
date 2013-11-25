@@ -10,6 +10,7 @@
 #include "string_utils.h"
 #include "terminal.h"
 #include "wrapper.h"
+#include "prompt.h"
 
 static int is_blank(s_string *line)
 {
@@ -58,7 +59,10 @@ s_string *readline(s_shell *shell, char *prompt)
         return NULL;
     char c;
 
-    printf("%s", prompt);
+    s_string *s_prompt = string_create_from(prompt);
+    prompt_expand(shell, s_prompt);
+    printf("%s", s_prompt->buf);
+    string_free(s_prompt);
     fflush(stdout);
     e_next_action ret;
     while (1)
