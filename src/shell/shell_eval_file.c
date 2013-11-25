@@ -5,20 +5,18 @@
 #include "parser.h"
 #include "shell.h"
 
-int shell_eval_file(s_shell *shell, FILE *f, const char *filename)
+e_shell_status shell_eval_file(s_shell *shell, FILE *f, const char *filename)
 {
     s_input *input = input_file_create(f, filename);
     s_lexer *lexer = lex_create(shell, input, 1);
     s_parser *parser = parser_create(lexer);
-    s_ast_input *ast;
-    // TODO halfr use loop
-    if ((ast = parse_rule_input(parser)))
-    {
-        if (parser_diagnostic(parser))
-            exec_ast_input(shell, ast);
-    }
+    e_shell_status ret;
+
+    shell_setup(shell, parser);
+    ret = shell_loop(shell);
+
     parser_delete(parser);
     lex_delete(lexer);
     input_destroy(input);
-    return 1;
+    return ret;
 }
