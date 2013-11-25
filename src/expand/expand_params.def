@@ -1,0 +1,6 @@
+X(+, expand_alternative, var, only_unset)
+X(-, expand_default, var, only_unset)
+X(=, expand_assign, var, shell, only_unset)
+X(?, expand_error, var, only_unset)
+X(%, expand_del_prefix, var)
+X(#, expand_del_suffix, var)
