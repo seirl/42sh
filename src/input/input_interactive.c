@@ -1,3 +1,4 @@
+#include <string.h>
 #include "input_interactive.h"
 
 #include "input_string.h"
@@ -55,5 +56,7 @@ int input_interactive_next(s_input *input, void *param)
     s_input_state_interactive *state = input->_input_state;
     string_free(state->buf);
     state->buf = readline(state->shell, param);
+    if (!strcmp(param, "PS2"))
+        string_insertc(state->buf, '\n', 0);
     return !!state->buf;
 }
