@@ -52,7 +52,7 @@ s_string *expand_string(s_shell *shell, s_string *str, e_lexer_context lcon)
     s_token *tok;
     e_token_type t;
     s_string *ret = string_create(0);
-    s_string *sub;
+    s_string *sub = NULL;
 
     do {
         tok = lex_token(lexer);
@@ -70,7 +70,8 @@ s_string *expand_string(s_shell *shell, s_string *str, e_lexer_context lcon)
         if (t == T_EOF)
             break;
         string_cat(ret, sub);
-        string_free(sub);
+        if (sub)
+            string_free(sub);
         token_free(tok);
     } while (t != T_EOF);
     lex_delete(lexer);
