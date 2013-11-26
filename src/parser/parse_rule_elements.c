@@ -6,11 +6,9 @@ s_ast_element *parse_rule_elements(s_parser *parser)
     s_ast_compound_word *word = NULL;
     s_ast_redirection_list *redirection = NULL;
 
-    redirection = parse_rule_redirection(parser);
-    word = parse_compound_word(parser);
-
-    if (!word && !redirection)
-        return NULL;
+    if (!(redirection = parse_rule_redirection(parser)))
+        if (!(word = parse_compound_word(parser)))
+            return NULL;
 
     s_ast_element *element = ast_element_new();
 
