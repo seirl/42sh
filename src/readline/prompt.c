@@ -1,16 +1,52 @@
 #include <stdlib.h>
+#include <time.h>
 #include <string.h>
-#include <stdio.h>
 #include "string_utils.h"
 #include "env.h"
 
-static void prompt_replace(s_string *prompt, size_t pos, size_t len, char *rep)
+static size_t len_until(char *s, char c)
+{
+    size_t i;
+    for (i = 0; s[i] && s[i] != c; i++)
+        continue;
+    return i;
+}
+
+static void prompt_replace(s_string *prompt, size_t pos, size_t len, s_string *rep)
 {
     char *tmp = strdup(prompt->buf + pos + 1 + len);
     string_del_from_end(prompt, prompt->len - pos);
-    string_puts(prompt, rep);
+    string_puts(prompt, rep->buf);
     string_puts(prompt, tmp);
     free(tmp);
+    string_free(rep);
+}
+
+static s_string *get_time(s_string *prompt, size_t pos)
+{
+    char *format = "%a %b %d";
+    if (prompt)
+    {
+        format = malloc(sizeof (char) * (prompt->len + 2));
+        size_t end_pos = pos;
+        while (prompt->buf[end_pos] && prompt->buf[end_pos] != '}')
+            end_pos++;
+        strncpy(format, prompt->buf + pos, end_pos - pos);
+        format[end_pos - pos] = 0;
+    }
+
+    time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
+    if (!t)
+        return string_create_from("");
+
+    s_string *date = string_create(100);
+    strftime(date->buf, 100, format, tm);
+
+    if (prompt)
+        free(format);
+
+    return date;
 }
 
 void prompt_expand(s_shell *shell, s_string *prompt)
@@ -20,10 +56,10 @@ void prompt_expand(s_shell *shell, s_string *prompt)
     {
         if (prompt->buf[i] == '\\')
         {
-#define X(Name, Len, Rep)                                           \
+#define X(Name, Len, Pattern_len, Rep)                              \
             if  (!strncmp(prompt->buf + i + 1, Name, Len))          \
             {                                                       \
-                prompt_replace(prompt, i, Len, Rep);                \
+                prompt_replace(prompt, i, Pattern_len, Rep);        \
                 continue;                                           \
             }
 #include "prompt.def"
