@@ -70,7 +70,8 @@ static s_globr *glob_literal(s_globr *g, const char *filename)
     return g;
 }
 
-static s_globr *glob_match(s_globr *g, const char *dir, const char *basename)
+static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
+                           e_glob_flags f)
 {
     const char *cwd = getcwd(NULL, 0);
     if (!dir)
@@ -84,7 +85,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename)
         while ((ep = readdir(dp)))
         {
             if (!my_fnmatch(basename, ep->d_name))
-                if (basename[0] == '.' || ep->d_name[0] != '.')
+                if (basename[0] == '.' || ep->d_name[0] != '.' || f & DOTGLOB)
                 {
                     char *path = malloc(sizeof (char) + len_dir +
                                         strlen(ep->d_name) + 1);
@@ -100,19 +101,19 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename)
     return g;
 }
 
-s_globr *my_glob(const char *pattern)
+s_globr *my_glob(const char *pattern, e_glob_flags flags)
 {
     s_globr *g = globr_init();
     if (!has_magic(pattern))
         return glob_literal(g, pattern);
     const char *split = strrchr(pattern, '/');
     if (!split)
-        return glob_match(g, NULL, pattern);
+        return glob_match(g, NULL, pattern, flags);
     char *basename = strdup(split + 1);
     char *dirname = strndup(pattern, split - pattern);
     s_globr *dirs;
     if (strcmp(dirname, basename) && has_magic(dirname))
-        dirs = my_glob(dirname);
+        dirs = my_glob(dirname, flags);
     else
     {
         dirs = globr_init();
@@ -120,7 +121,7 @@ s_globr *my_glob(const char *pattern)
     }
     for (unsigned i = 0; i < dirs->count; i++)
         if (has_magic(basename))
-            glob_match(g, dirs->paths[i], basename);
+            glob_match(g, dirs->paths[i], basename, flags);
         else
             glob_literal(g, pattern);
     free(basename);

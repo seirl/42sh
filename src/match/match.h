@@ -14,11 +14,20 @@ typedef struct globr
     size_t size_max;
 } s_globr;
 
+
+typedef enum glob_flags
+{
+    DOTGLOB,
+    EXTGLOB,
+    NOCASEGLOB,
+    NULLGLOB,
+} e_glob_flags;
+
 /**
 ** The glob() function searches for all the pathnames matching pattern
 ** according to the rules used by the shell (see glob(7)).
 */
-s_globr *my_glob(const char *pattern);
+s_globr *my_glob(const char *pattern, e_glob_flags flags);
 
 /**
 ** The globfree() function frees the dynamically allocated storage from an
