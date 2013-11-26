@@ -114,7 +114,7 @@ int shopt_from_opt(s_shell *shell, s_opt *opt)
     {
         int ret = opt_is_set(opt, "O", shell->shopt[i].name);
         if (ret != -1)
-            shell->shopt[i].value = ret;
+            shell->shopt[i].value = !ret;
     }
     shopt_update_env(shell);
     return 0;
