@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "lexer.h"
 #include "lexer_private.h"
 #include "smalloc.h"
@@ -24,10 +25,11 @@ void expand_alias(s_shell *shell, s_token *tok)
        && shopt_get(shell, "expand_aliases"))
     {
         s_string *alias = alias_get(shell, tok->value.str);
-        if (alias)
+        if (alias && strcmp(alias->buf, tok->value.str->buf))
         {
             string_free(tok->value.str);
             tok->value.str = string_duplicate(alias);
+            expand_alias(shell, tok);
         }
     }
 }

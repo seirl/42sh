@@ -56,13 +56,9 @@ s_string *expand_dquote(s_shell *shell, s_string *word)
 {
     s_string *r;
 
-    //FIXME schischi: should be const... and this is an ugly hack
-    s_string *tmp = string_duplicate(word);
-    //r = expand_token(shell, tmp);
-    r = expand_string(shell, tmp, LEX_DQUOTE);
+    r = expand_string(shell, string_duplicate(word), LEX_DQUOTE);
     //TODO schischi
     //if (t == T_WORD)
     //    remove_special_backslash(sub);
-    string_free(tmp);
     return r;
 }
