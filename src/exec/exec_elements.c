@@ -63,6 +63,7 @@ char **elements_to_argv(s_shell *shell, s_ast_element *element, int len)
             cmd_argv[i] = smalloc(sizeof (char) * (str->len + 1));
             memcpy(cmd_argv[i], str->buf, str->len);
             cmd_argv[i][str->len] = '\0';
+            string_free(str);
         }
         element = element->next;
     }
