@@ -249,6 +249,7 @@ add_library(expand OBJECT
     src/expand/expand_var.c
     src/expand/expand_squote.c
     src/expand/expand_dquote.c
+    src/expand/backslash.c
 )
 
 add_library(shell OBJECT

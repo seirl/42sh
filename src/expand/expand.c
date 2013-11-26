@@ -46,6 +46,7 @@ s_string *expand(s_shell *shell, const s_ast_compound_word *input)
 
 static s_string *expand_with_type(s_shell *shell, s_token *tok)
 {
+    //TODO schischi: do while + check !dquote, !squote, remove backslash
 #define X(Ltok, Atok)                                     \
     if (tok->type == Ltok)                                \
         return expand_funcs[Atok](shell, tok->value.str);
