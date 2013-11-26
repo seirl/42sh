@@ -1,5 +1,4 @@
 #include "parser_private.h"
-#include "log.h"
 
 static s_ast_word *word_of_token(s_token *tok)
 {
@@ -12,8 +11,6 @@ static s_ast_word *word_of_token(s_token *tok)
         word->kind = Asttype;
 #include "wordtoken2ast.def"
 #undef X
-    else
-        return NULL;
 
     word->str = string_duplicate(tok->value.str);
 
@@ -32,12 +29,10 @@ s_ast_compound_word *parse_compound_word(s_parser *parser)
 
     s_ast_compound_word *cw = ast_compound_word_new();
 
-    // TODO halfr check other kind of word
     tok = lex_look_word(parser->lexer);
     if (tok)
     {
         if (tok->concat)
-            // XXX: Check for token type?
             cw->next = parse_compound_word(parser);
         token_free(tok);
     }
