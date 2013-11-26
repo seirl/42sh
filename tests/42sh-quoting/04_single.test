@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "Simple quote concat",
+    "stdin": b"""echo 'a'\''b'\n
+""",
+    "stdout": "a'b\n",
+    "skip": True
+}

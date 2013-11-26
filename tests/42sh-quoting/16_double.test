@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "Double quote multiple var",
+    "stdin": b"""foo=bar; bar=foo; echo "$foo$bar"\n
+""",
+    "stdout": "barfoo\n",
+    "skip": True
+}

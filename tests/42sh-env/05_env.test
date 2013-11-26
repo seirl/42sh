@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "SHELLOPTS",
+    "stdin": b"""echo $SHELLOPTS\n
+""",
+    "stdout": "expand_aliases:sourcepath\n",
+}

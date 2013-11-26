@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Simple quote special chars",
+    "stdin": b"""echo '"$\"'\n
+""",
+    "stdout": """"$\"\n""",
+}
