@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <libgen.h>
 #include "string_utils.h"
 #include "env.h"
 
@@ -38,7 +39,7 @@ static s_string *get_time(s_string *prompt, size_t pos)
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
     if (!t)
-        return string_create_from("");
+        return string_create(1);
 
     s_string *date = string_create(100);
     strftime(date->buf, 100, format, tm);
@@ -53,11 +54,26 @@ static s_string *get_hostname_until(s_shell *shell, char c)
 {
     char *hostname = env_get(shell, "HOSTNAME");
     if (!hostname)
-        return string_create_from("");
+        return string_create(1);
 
     s_string *res = string_create(strlen(hostname));
     strncpy(res->buf, hostname, len_until(hostname, c));
     return res;
+}
+
+static s_string *get_w(s_shell *shell, int use_basename)
+{
+    s_string *w;
+    if (use_basename)
+        w = string_create_from(basename(env_get(shell, "PWD")));
+    else
+        w = string_create_from(env_get(shell, "PWD"));
+    if (!w->buf)
+        return w;
+
+    if (env_get(shell, "HOME"))
+        string_replace(w, env_get(shell, "HOME"), "~");
+    return w;
 }
 
 void prompt_expand(s_shell *shell, s_string *prompt)
