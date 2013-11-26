@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Non-existent var",
+    "stdin": b"""echo $foo\n
+""",
+    "stdout": "\n",
+}

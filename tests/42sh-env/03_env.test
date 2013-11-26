@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "UID",
+    "stdin": b"""echo $UID\n
+""",
+    "stdout": ...,
+}
