@@ -1,2 +1,3 @@
 X(ESCAPE_B, 'b', 0, do_b(shell, term))
 X(ESCAPE_F, 'f', 0, do_f(shell, term))
+X(ESCAPE_DOT, '.', 0, do_dot(shell, term))
