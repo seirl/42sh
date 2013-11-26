@@ -3,4 +3,5 @@
     "desc": "$0... from command line",
     "args": ["-c", "echo $0; echo $1", "one", "two"],
     "stdout": "one\ntwo\n",
+    "skip": True,
 }
