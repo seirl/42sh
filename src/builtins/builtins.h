@@ -7,6 +7,7 @@ int builtin_shopt(s_shell *shell, int argc, char *argv[]);
 int builtin_alias(s_shell *shell, int argc, char *argv[]);
 int builtin_unalias(s_shell *shell, int argc, char *argv[]);
 int builtin_set(s_shell *shell, int argc, char *argv[]);
+int builtin_unset(s_shell *shell, int argc, char *argv[]);
 int builtin_echo(s_shell *shell, int argc, char *argv[]);
 int builtin_exit(s_shell *shell, int argc, char *argv[]);
 int builtin_exec(s_shell *shell, int argc, char *argv[]);

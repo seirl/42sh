@@ -116,6 +116,7 @@ add_library(builtins OBJECT
     src/builtins/b_alias.c
     src/builtins/b_unalias.c
     src/builtins/b_set.c
+    src/builtins/b_unset.c
     src/builtins/b_echo.c
     src/builtins/b_exec.c
     src/builtins/b_exit.c
