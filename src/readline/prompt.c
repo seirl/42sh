@@ -23,7 +23,6 @@ size_t prompt_replace(s_string *prompt, size_t pos, size_t len, s_string *rep)
     string_puts(prompt, tmp);
     free(tmp);
     string_free(rep);
-    // TODO: something is wrong with that.
     return replaced_len - 1;
 }
 
