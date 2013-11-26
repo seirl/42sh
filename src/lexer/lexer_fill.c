@@ -48,7 +48,7 @@ int fill_until(s_lexer *lexer, int include_last)
     while (1)
     {
         c = lex_topc(lexer);
-        if (lexer->quoted == 0 && prev != '\\'
+        if (lexer->quoted == 0 && (lexer->sur.end == '\'' || prev != '\\')
            && (c == lexer->sur.end || c == '\0'))
         {
             if (c == 0 && lexer->sur.end != '\n')
