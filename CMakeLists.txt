@@ -21,7 +21,7 @@ add_definitions(-D_GNU_SOURCE)
 add_definitions(-D_XOPEN_SOURCE)
 add_definitions(-D_XOPEN_SOURCE_EXTENDED)
 
-LINK_LIBRARIES(m ncurses)
+link_libraries(m ncurses)
 
 include_directories(src)
 include_directories(src/ast)
