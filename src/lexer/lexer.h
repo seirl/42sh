@@ -7,12 +7,20 @@
 
 typedef struct lexer s_lexer;
 
+enum lexer_context
+{
+    LEX_ALL,
+    LEX_SQUOTE,
+    LEX_DQUOTE,
+};
+typedef enum lexer_context e_lexer_context;
+
 /**
 ** @brief Create a new lexer.
 **
 ** Get ownership the input (will destroy it).
 */
-s_lexer *lex_create(s_shell *shell, s_input *input, int blank_sep);
+s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context);
 
 /**
 ** @brief Start a new sequence of lexing.

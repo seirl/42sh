@@ -42,7 +42,7 @@ struct lexer
     //! Do we have to pre-fill the buffer?
     int prefill;
     //! blank char = separator ?
-    int blank_sep;
+    e_lexer_context context;
     //! previous token was a delimiter ?
     int prev_delim;
     //! Shell

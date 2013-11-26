@@ -5,7 +5,7 @@
 #include "smalloc.h"
 #include "shopt.h"
 
-s_lexer *lex_create(s_shell *shell, s_input *input, int blank_sep)
+s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
 {
     s_lexer *lexer;
 
@@ -23,7 +23,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, int blank_sep)
     lexer->lookahead = NULL;
     lexer->prefill = 1;
     lexer->shell = shell;
-    lexer->blank_sep = blank_sep;
+    lexer->context = context;
 
     return lexer;
 }

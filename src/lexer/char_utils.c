@@ -10,9 +10,10 @@ int is_operator(char c)
 int is_delimiter(s_lexer *lexer, char c)
 {
     return (c == 0
-           || (lexer->blank_sep && (c == '\t' || c == ' ' || c == '\n'))
+           || (lexer->context == LEX_ALL
+              && (c == '\t' || c == ' ' || c == '\n'))
            || (is_operator(c)
-               && (c != '!' || lexer->working_buffer->len == 0)));
+              && (c != '!' || lexer->working_buffer->len == 0)));
 }
 
 int is_quote(char c)

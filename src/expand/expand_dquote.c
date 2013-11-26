@@ -26,7 +26,7 @@ static void remove_special_backslash(s_string *str)
 static s_string *expand_token(s_shell *shell, s_string *word)
 {
     s_input *input = input_string_create(word, "dquote");
-    s_lexer *lexer = lex_create(shell, input, 0);
+    s_lexer *lexer = lex_create(shell, input, LEX_DQUOTE);
     s_token *tok;
     e_token_type t;
     s_string *ret = string_create(0);

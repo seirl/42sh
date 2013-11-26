@@ -108,7 +108,7 @@ int fill_upto_delim(s_lexer *lexer)
 static int handle_delim_and_quote(s_lexer *lexer, char c, char prev)
 {
     if ((is_delimiter(lexer, c)
-        || (lexer->blank_sep && is_quote(c))
+        || (lexer->context == LEX_ALL && is_quote(c))
         || c == '$')
        && prev != '\\')
     {
@@ -133,7 +133,7 @@ int fill_token(s_lexer *lexer)
     char prev = 0;
     int spaces = 0;
 
-    if (lexer->blank_sep)
+    if (lexer->context == LEX_ALL)
         spaces = lex_eat_spaces(lexer);
     lexer->concat = lexer->concat == -1 ? 0 : !spaces;
 

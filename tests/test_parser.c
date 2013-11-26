@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     s_ast_input *ast;
 
     input = input_string_create(string_create_from(argv[1]), "<INPUT>");
-    lexer = lex_create(NULL, input, 1);
+    lexer = lex_create(NULL, input, LEX_ALL);
     parser = parser_create(lexer);
     if ((ast = parse_rule_input(parser)))
     {

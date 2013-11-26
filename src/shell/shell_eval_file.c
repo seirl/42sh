@@ -8,7 +8,7 @@
 e_shell_status shell_eval_file(s_shell *shell, FILE *f, const char *filename)
 {
     s_input *input = input_file_create(f, filename);
-    s_lexer *lexer = lex_create(shell, input, 1);
+    s_lexer *lexer = lex_create(shell, input, LEX_ALL);
     s_parser *parser = parser_create(lexer);
     e_shell_status ret;
 
