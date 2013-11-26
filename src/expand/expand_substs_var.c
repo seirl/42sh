@@ -30,7 +30,6 @@ typedef struct expand_params
 */
 static s_string *expand_alternative(s_expand_params *p)
 {
-    // TODO: expand word
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
         return string_create_from("");
     else
@@ -59,7 +58,6 @@ static s_string *expand_default(s_expand_params *p)
 */
 static s_string *expand_assign(s_expand_params *p)
 {
-    // TODO: expand word
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
     {
         s_string *exp = expand_string(p->shell, string_create_from(p->word),
@@ -79,7 +77,6 @@ static s_string *expand_assign(s_expand_params *p)
 */
 static s_string *expand_error(s_expand_params *p)
 {
-    //TODO: expand word
     //TODO: exit(1)
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
     {
@@ -100,7 +97,6 @@ static s_string *expand_error(s_expand_params *p)
 
 static s_string *expand_del_prefix(s_expand_params *p)
 {
-    //TODO: expand word
     unsigned end_prefix = 0;
     int largest = 0;
     if (*p->word == '#')
@@ -108,11 +104,13 @@ static s_string *expand_del_prefix(s_expand_params *p)
         p->word++;
         largest = 1;
     }
+    s_string *exp = expand_string(p->shell, string_create_from(p->word),
+            LEX_ALL);
     char *n = strdup(p->varcont->buf);
     for (unsigned i = strlen(n); i; i--)
     {
         n[i] = '\0';
-        if (!my_fnmatch(p->word, n))
+        if (!my_fnmatch(exp->buf, n))
         {
             end_prefix = i;
             if (largest)
@@ -120,13 +118,13 @@ static s_string *expand_del_prefix(s_expand_params *p)
         }
     }
     s_string *r = string_create_from(p->varcont->buf + end_prefix);
+    free(exp);
     free(n);
     return r;
 }
 
 static s_string *expand_del_suffix(s_expand_params *p)
 {
-    //TODO: expand word
     unsigned start_suffix = 0;
     int largest = 0;
     if (*p->word == '%')
@@ -134,8 +132,10 @@ static s_string *expand_del_suffix(s_expand_params *p)
         p->word++;
         largest = 1;
     }
+    s_string *exp = expand_string(p->shell, string_create_from(p->word),
+            LEX_ALL);
     for (unsigned i = 0; p->varcont->buf[i]; i++)
-        if (!my_fnmatch(p->word, p->varcont->buf + i))
+        if (!my_fnmatch(exp->buf, p->varcont->buf + i))
         {
             start_suffix = i;
             if (largest)
@@ -143,6 +143,7 @@ static s_string *expand_del_suffix(s_expand_params *p)
         }
     char *n = strndup(p->varcont->buf, start_suffix);
     s_string *r = string_create_from(n);
+    free(exp);
     free(n);
     return r;
 }
