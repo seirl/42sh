@@ -66,6 +66,9 @@ int main(int argc, char **argv)
     }
 
     lex_delete(lexer);
-    sfree(lexer);
+    input_destroy(input);
+
     smalloc_clean();
+
+    return EXIT_SUCCESS;
 }

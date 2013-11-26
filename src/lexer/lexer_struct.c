@@ -45,7 +45,6 @@ void lex_delete(s_lexer *lexer)
     if (lexer->lookahead)
         token_free(lexer->lookahead);
 
-    input_destroy(lexer->input);
     sfree(lexer);
 }
 
