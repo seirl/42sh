@@ -6,7 +6,7 @@
 echo	T_WORD (0)
 foo)bar	T_DQUOTE (0)
 foo)bar	T_SQUOTE (0)
-foo\)bar	T_WORD (0)
+foo)bar	T_WORD (0)
 )	T_RPAREN (0)
 	T_EOF (0)
 """

@@ -83,6 +83,7 @@ add_library(lexer OBJECT
     src/lexer/alias_print.c
     src/lexer/alias_clear.c
     src/lexer/char_utils.c
+    src/lexer/lexer_backslash.c
 
     src/lexer/lexer.c
     src/lexer/lexer_fill.c

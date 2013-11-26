@@ -4,5 +4,4 @@
     "output": """hello	T_WORD (0)
 	T_EOF (0)
 """,
-    "skip": True,
 }

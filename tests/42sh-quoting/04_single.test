@@ -1,8 +1,7 @@
 {
     "type": "42sh",
     "desc": "Simple quote concat",
-    "stdin": b"""echo 'a'\''b'\n
+    "stdin": b"""echo 'a'\\''b'\n
 """,
-    "stdout": "a'b\n",
-    "skip": True
+    "stdout": """a'b\n""",
 }
