@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "Do not expand alias on the same line",
+    "stdin": b"""alias foo=echo; foo foo\n
+""",
+    "stdout": """""",
+    "stderr": """foo: command not found.\n""",
+}

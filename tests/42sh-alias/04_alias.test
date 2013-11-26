@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Expand alias",
+    "stdin": b"""alias foo=echo\nfoo foo && foo a && echo foo\n
+""",
+    "stdout": """foo\na\nfoo\n""",
+}

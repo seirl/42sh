@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "Recursive aliases with a loop",
+    "stdin": b"""alias foo=bar\nalias bar=baz\nalias baz=foo\nfoo\n
+""",
+    "stdout": """""",
+    "stderr": ...,
+}
