@@ -1,7 +1,7 @@
 {
     "type": "lexer",
     "desc": "Every reserverd words",
-    "input": """if then else elif fi do done case esac while until for !in""",
+    "input": """if then else elif fi do done case esac while until ! for !in""",
     "output": """if	T_IF (0)
 then	T_THEN (0)
 else	T_ELSE (0)
@@ -13,6 +13,7 @@ case	T_CASE (0)
 esac	T_ESAC (0)
 while	T_WHILE (0)
 until	T_UNTIL (0)
+!	T_BANG (0)
 for	T_FOR (0)
 !	T_BANG (0)
 in	T_IN (0)

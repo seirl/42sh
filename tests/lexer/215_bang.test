@@ -4,7 +4,6 @@
     "input": """!hello""",
     "output": """!	T_BANG (0)
 hello	T_WORD (1)
-    T_EOF (0)
+	T_EOF (0)
 """,
-    "skip": True,
 }

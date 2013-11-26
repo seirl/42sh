@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "Alias without shopt expand_aliases",
+    "stdin": b"""alias foo=echo\nshopt -u expand_aliases\nfoo foo\n
+""",
+    "stdout": """""",
+    "stderr": ...,
+}
