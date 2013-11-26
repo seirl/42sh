@@ -61,9 +61,9 @@ s_token *lex_token(s_lexer *lexer)
             break;
         if (handle_name(lexer))
             break;
-        if (handle_res_word(lexer))
+        if (lexer->context == LEX_ALL && handle_res_word(lexer))
             break;
-        if (handle_io_number(lexer))
+        if (lexer->context == LEX_ALL && handle_io_number(lexer))
             break;
     } while (0);
 
