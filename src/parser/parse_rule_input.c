@@ -48,19 +48,14 @@ static s_ast_input *parse_rule_input_rec(s_parser *parser)
 
 s_ast_input *parse_rule_input(s_parser *parser)
 {
-    s_token *tok = lex_look_token(parser->lexer);
-    if (tok->type == T_NEWLINE)
+    e_token_type tok = lex_look_token_type(parser->lexer);
+    if (tok == T_NEWLINE)
     {
-        token_free(tok);
         parser_shift_token(parser);
         return ast_input_new(); /** a newline is a valid input */
     }
-    else if (tok->type == T_EOF)
-    {
-        token_free(tok);
+    else if (tok == T_EOF)
         return NULL;
-    }
-    token_free(tok);
 
     return parse_rule_input_rec(parser);
 }
