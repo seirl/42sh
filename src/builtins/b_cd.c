@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <string.h>
+#include "smalloc.h"
 #include "builtins.h"
 #include "macros.h"
 #include "string.h"
@@ -15,20 +16,26 @@
 # define _GNU_SOURCE
 #endif
 
+#define SHELL_PATH_MAX      4096
+
 static int cd_to_dir(s_shell *shell, char *dir)
 {
-    char *curr_dir = get_current_dir_name();
+    char *curr_dir = smalloc(SHELL_PATH_MAX);
+    curr_dir = getcwd(curr_dir, SHELL_PATH_MAX);
     char *new_path = NULL;
     if (chdir(dir))
     {
+        sfree(dir);
         fprintf(stderr, "42sh: cd: %s: No such file or directory\n", dir);
         return 1;
     }
     setenv("OLDPWD", curr_dir, 1);
     env_set(shell, curr_dir, "OLDPWD");
-    new_path = get_current_dir_name();
+    new_path = smalloc(SHELL_PATH_MAX);
+    new_path = getcwd(new_path, SHELL_PATH_MAX);
     setenv("PWD", new_path, 1);
     env_set(shell, new_path, "PWD");
+    sfree(dir);
     return 0;
 }
 
