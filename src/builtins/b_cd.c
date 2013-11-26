@@ -29,10 +29,12 @@ static int cd_to_dir(s_shell *shell, char *dir)
         sfree(dir);
         return 1;
     }
+    sfree(env_get(shell, "OLDPWD"));
     setenv("OLDPWD", curr_dir, 1);
     env_set(shell, curr_dir, "OLDPWD");
     new_path = scalloc(SHELL_PATH_MAX, sizeof (char));
     new_path = getcwd(new_path, SHELL_PATH_MAX);
+    sfree(env_get(shell, "PWD"));
     setenv("PWD", new_path, 1);
     env_set(shell, new_path, "PWD");
     sfree(dir);
