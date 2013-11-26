@@ -1,0 +1,16 @@
+{
+    "type": "42sh",
+    "desc": "function: $0",
+    "stding": b"""
+a () {
+    echo $0
+}
+b () {
+    echo $0
+}
+a 1 2
+b 1 2
+""",
+    "stdout": "a\nb\n",
+    "skip": True,
+}

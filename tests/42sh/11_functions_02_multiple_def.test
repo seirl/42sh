@@ -1,0 +1,9 @@
+{
+    "desc": "function: multiple definition",
+    "stdin": b"""
+a() { echo hello; }
+a() { echo world; }
+a
+""",
+    "stdout": "world\n",
+}

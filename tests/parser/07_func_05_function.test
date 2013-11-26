@@ -1,0 +1,5 @@
+{
+    "desc": "rule funcdec: function",
+    "input": """function a() { echo hello }""",
+    "output": "",
+}
