@@ -36,7 +36,7 @@ static s_string *readline_close(s_shell *shell, s_term *term,
     return input;
 }
 
-static void do_print(s_shell *shell, char c)
+void do_print(s_shell *shell, char c)
 {
     s_term *term = term_get(shell);
     // Insert the character in the current line buffer
@@ -59,7 +59,7 @@ s_string *readline(s_shell *shell, char *prompt)
     char c;
 
     s_string *s_prompt = string_create_from(env_get(shell, prompt));
-    prompt_expand(shell, s_prompt);
+    prompt_expand(shell, &s_prompt);
     printf("%s", s_prompt->buf);
     term->prompt = s_prompt->buf;
     fflush(stdout);

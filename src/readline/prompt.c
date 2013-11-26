@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "string_utils.h"
 #include "env.h"
+#include "lexer.h"
+#include "expand.h"
 
 static size_t len_until(char *s, char c)
 {
@@ -91,21 +93,21 @@ static s_string *get_octal(s_string *prompt, size_t pos)
     return string_create_from(res);
 }
 
-void prompt_expand(s_shell *shell, s_string *prompt)
+void prompt_expand(s_shell *shell, s_string **prompt)
 {
-    for (size_t i = 0; prompt->buf[i + 1]; i++)
+    for (size_t i = 0; (*prompt)->buf[i + 1]; i++)
     {
-        if (prompt->buf[i] == '\\')
+        if ((*prompt)->buf[i] == '\\')
         {
 #define X(Name, Len, Pattern_len, Rep)                              \
-            if  (!strncmp(prompt->buf + i + 1, Name, Len))          \
+            if  (!strncmp((*prompt)->buf + i + 1, Name, Len))          \
             {                                                       \
-                i += prompt_replace(prompt, i, Pattern_len, Rep);   \
+                i += prompt_replace(*prompt, i, Pattern_len, Rep);  \
                 continue;                                           \
             }
 #include "prompt.def"
 #undef X
         }
     }
-    // TODO: do regular expansion.
+    // TODO *prompt = expand_string(shell, string_duplicate(*prompt), LEX_ALL);
 }
