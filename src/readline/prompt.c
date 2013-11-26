@@ -49,6 +49,17 @@ static s_string *get_time(s_string *prompt, size_t pos)
     return date;
 }
 
+static s_string *get_hostname_until(s_shell *shell, char c)
+{
+    char *hostname = env_get(shell, "HOSTNAME");
+    if (!hostname)
+        return string_create_from("");
+
+    s_string *res = string_create(strlen(hostname));
+    strncpy(res->buf, hostname, len_until(hostname, c));
+    return res;
+}
+
 void prompt_expand(s_shell *shell, s_string *prompt)
 {
     (void)shell;
