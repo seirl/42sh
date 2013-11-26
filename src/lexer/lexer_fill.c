@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <stdio.h>
 
@@ -9,7 +10,10 @@
 
 static void update_quote(s_lexer *lexer, char c, char prev)
 {
-    if ((c == '\'' || c == '\"') && prev != '\\')
+    if ((c == '\'' || c == '\"')
+       && prev != '\\'
+       && lexer->sur.end != '\''
+       && lexer->sur.end != '\"')
     {
         if (lexer->quoted == c)
             lexer->quoted = 0;
@@ -47,9 +51,10 @@ int fill_until(s_lexer *lexer, int include_last)
         if (lexer->quoted == 0 && prev != '\\'
            && (c == lexer->sur.end || c == '\0'))
         {
-            if (c == 0)
+            if (c == 0 && lexer->sur.end != '\n')
             {
-                lexer->input->next(lexer->input, "PS2");
+                if (lexer->input->next(lexer->input, "PS2") == 0)
+                    exit(1);
                 continue;
             }
             else
@@ -59,11 +64,13 @@ int fill_until(s_lexer *lexer, int include_last)
                     break;
             }
         }
-        else if (prev && lexer->quoted == 0 && (c == lexer->sur.begin || c == 0))
+        else if (prev && lexer->quoted == 0
+                && (c == lexer->sur.begin || c == 0))
         {
-            if (c == 0)
+            if (c == 0 && lexer->sur.end != '\n')
             {
-                lexer->input->next(lexer->input, "PS2");
+                if (lexer->input->next(lexer->input, "PS2") == 0)
+                    exit(1);
                 continue;
             }
             else
@@ -100,7 +107,10 @@ int fill_upto_delim(s_lexer *lexer)
 
 static int handle_delim_and_quote(s_lexer *lexer, char c, char prev)
 {
-    if ((is_delimiter(lexer, c) || is_quote(c) || c == '$') && prev != '\\')
+    if ((is_delimiter(lexer, c)
+        || (lexer->blank_sep && is_quote(c))
+        || c == '$')
+       && prev != '\\')
     {
         if (prev == 0)
         {
