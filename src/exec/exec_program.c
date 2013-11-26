@@ -47,8 +47,10 @@ int exec_prog(s_shell *shell,
               s_redir_context **contexts,
               s_ast_prefix *prefixes)
 {
+    if (!strcmp(cmd_argv[0],"\0") || !strcmp(cmd_argv[0], ""))
+        return 0;
     pid_t pid;
-    int st;
+    int st = 0;
 
     if ((pid = fork()) == -1)
     {
@@ -81,6 +83,16 @@ void restore_redir_contexts(s_redir_context **contexts)
     sfree(contexts);
 }
 
+static void exec_func(s_shell *shell,
+                      s_ast_prefix *prefix,
+                      s_ast_shell_cmd *func_body,
+                      s_redir_context **contexts)
+{
+    exec_prefixes(shell, prefix);
+    exec_shell_cmd(shell, func_body);
+    restore_redir_contexts(contexts);
+}
+
 void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
@@ -89,23 +101,24 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
     s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
     s_ast_shell_cmd *func_body;
 
-    if (!cmd_argv)
-        return;
-    if (cmd_argv && !cmd_argv[0])
-        exec_prefixes(shell, cmd->prefixes);
-    else if ((func_body = functions_get(shell, cmd_argv[0])))
+    if (cmd_argv)
     {
-        exec_prefixes(shell, cmd->prefixes);
-        exec_shell_cmd(shell, func_body);
-        restore_redir_contexts(contexts);
-        sfree(cmd_argv);
-    }
-    else if ((callback = builtins_find(shell, cmd_argv[0])))
-    {
-        exec_prefixes(shell, cmd->prefixes);
-        shell->status = callback(shell, len, cmd_argv);
-        sfree(cmd_argv);
+        if (cmd_argv && !cmd_argv[0])
+            shell->status = exec_prefixes(shell, cmd->prefixes);
+        else if ((func_body = functions_get(shell, cmd_argv[0])))
+        {
+            exec_func(shell, cmd->prefixes, func_body, contexts);
+            sfree(cmd_argv);
+        }
+        else if ((callback = builtins_find(shell, cmd_argv[0])))
+        {
+            exec_prefixes(shell, cmd->prefixes);
+            shell->status = callback(shell, len, cmd_argv);
+            sfree(cmd_argv);
+        }
+        else
+           shell->status = exec_prog(shell, cmd_argv, contexts, cmd->prefixes);
     }
     else
-        shell->status = exec_prog(shell, cmd_argv, contexts, cmd->prefixes);
+        shell->status = 0;
 }

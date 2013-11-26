@@ -55,7 +55,7 @@ int exec_prog(s_shell *shell, char **cmd_argv,
               s_redir_context **contexts,
               s_ast_prefix *prefixes);
 /** @brief Execute a prefix list */
-void exec_prefixes(s_shell *shell, s_ast_prefix *prefix);
+int exec_prefixes(s_shell *shell, s_ast_prefix *prefix);
 /** @brief Execute an element list */
 void exec_elements(s_shell *shell, s_ast_element *elt);
 /** @brief Set IO_NUMBER to its default value

@@ -53,7 +53,8 @@ static void exec_redir_dupout(s_shell *shell, s_ast_redirection_list *redir,
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
-    fcntl(fd, F_DUPFD, redir->io->io_number);
+    /* We should use: fcntl(fd, F_DUPFD, redir->io->io_number) */
+    dup2(fd, redir->io->io_number);
 }
 
 static void exec_redir_dupin(s_shell *shell, s_ast_redirection_list *redir,

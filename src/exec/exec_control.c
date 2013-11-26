@@ -2,13 +2,19 @@
 #include "shell_private.h"
 #include "env.h"
 
-static void exec_else(s_shell *shell, s_ast_else *else_cmd)
+static void exec_else(s_shell *shell, s_ast_else *else_clause)
 {
-    exec_ast_list(shell, else_cmd->elif_predicate);
-    if (!shell->status)
-        exec_ast_list(shell, else_cmd->elif_cmds);
+    if (else_clause->elif_predicate)
+    {
+        exec_ast_list(shell, else_clause->elif_predicate);
+        if (!shell->status)
+            exec_ast_list(shell, else_clause->elif_cmds);
+        else
+            if (!else_clause->else_cmds)
+                exec_else(shell, else_clause->next_else);
+    }
     else
-        exec_ast_list(shell, else_cmd->else_cmds);
+        exec_ast_list(shell, else_clause->else_cmds);
 }
 
 void exec_if(s_shell *shell, s_ast_if *if_cmd)
