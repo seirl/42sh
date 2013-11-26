@@ -115,7 +115,7 @@ int handle_res_word(s_lexer *lexer);
 /** @brief fill the working buffer until the end of a char (surround field) */
 int fill_until(s_lexer *lexer, int include_last);
 /** @brief fill the buffer until a delimiter appear */
-int fill_upto_delim(s_lexer *lexer);
+int fill_upto_delim(s_lexer *lexer, char custom_delim);
 /** @brief fill the buffer with a new delimited token */
 int fill_token(s_lexer *lexer);
 

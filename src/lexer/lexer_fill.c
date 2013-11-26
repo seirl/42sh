@@ -86,7 +86,7 @@ int fill_until(s_lexer *lexer, int include_last)
     return c != 0;
 }
 
-int fill_upto_delim(s_lexer *lexer)
+int fill_upto_delim(s_lexer *lexer, char custom_delim)
 {
     char c;
     char prev = 0;
@@ -94,6 +94,7 @@ int fill_upto_delim(s_lexer *lexer)
         c = lex_topc(lexer);
         if ((is_quote(c)
             || is_delimiter(lexer, c)
+            || c == custom_delim
             || c == ' '
             || c == '\t'
             || c == '\n')
