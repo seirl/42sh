@@ -28,6 +28,7 @@ s_ast_compound_word *parse_compound_word(s_parser *parser)
     if (!(tok = lex_word(parser->lexer)))
         return NULL;
     word = word_of_token(tok);
+    token_free(tok);
 
     s_ast_compound_word *cw = ast_compound_word_new();
 
