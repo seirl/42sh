@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     parser_delete(parser);
     lex_delete(lexer);
     shell_delete(shell);
+    input_destroy(input);
 
     smalloc_clean();
     return ret;
