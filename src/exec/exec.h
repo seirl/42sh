@@ -18,6 +18,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <string.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <assert.h>
 

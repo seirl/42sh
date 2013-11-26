@@ -89,7 +89,9 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
     s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
     s_ast_shell_cmd *func_body;
 
-    if (!cmd_argv[0])
+    if (!cmd_argv)
+        return;
+    if (cmd_argv && !cmd_argv[0])
         exec_prefixes(shell, cmd->prefixes);
     else if ((func_body = functions_get(shell, cmd_argv[0])))
     {
