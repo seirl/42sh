@@ -24,7 +24,7 @@ size_t prompt_replace(s_string *prompt, size_t pos, size_t len, s_string *rep)
     free(tmp);
     string_free(rep);
     // TODO: something is wrong with that.
-    return replaced_len;
+    return replaced_len - 1;
 }
 
 static s_string *get_time(s_string *prompt, size_t pos)
