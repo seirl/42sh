@@ -109,7 +109,7 @@ static s_string *expand_del_prefix(s_expand_params *p)
         largest = 1;
     }
     char *n = strdup(p->varcont->buf);
-    for (unsigned i = strlen(n); p->varcont->buf[i]; i--)
+    for (unsigned i = strlen(n); i; i--)
     {
         n[i] = '\0';
         if (!my_fnmatch(p->word, n))
