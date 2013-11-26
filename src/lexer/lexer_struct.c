@@ -24,6 +24,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
     lexer->prefill = 1;
     lexer->shell = shell;
     lexer->context = context;
+    lexer->prev_delim = 1;
 
     return lexer;
 }
