@@ -4,6 +4,7 @@ void string_reset(s_string *s)
 {
     s->read_pos = 0;
     s->len = 0;
+    s->buf[0] = 0;
 }
 
 char *string_nullterminated(s_string *s)
