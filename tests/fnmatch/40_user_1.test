@@ -1,0 +1,7 @@
+{
+    "type": "fnmatch",
+    "desc": "Check unix username",
+    "string": "schischi",
+    "pattern": "[a-z_][a-z0-9_]*",
+    "output": "0"
+}
