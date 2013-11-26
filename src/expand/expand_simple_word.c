@@ -80,7 +80,7 @@ static int operator_tilde(s_shell *shell, s_string *word, s_string *ret)
     return 1;
 }
 
-static s_string *tilde_expansion(s_shell *shell, const s_string *word)
+static s_string *tilde_expansion(s_shell *shell, s_string *word)
 {
     char c;
     s_string *ret = string_create(0);
@@ -102,7 +102,7 @@ static s_string *tilde_expansion(s_shell *shell, const s_string *word)
     return ret;
 }
 
-s_string *expand_simple_word(s_shell *shell, const s_string *word)
+s_string *expand_simple_word(s_shell *shell, s_string *word)
 {
     return tilde_expansion(shell, word);
 }

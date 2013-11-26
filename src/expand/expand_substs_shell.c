@@ -3,7 +3,7 @@
 #include "shell.h"
 #include "expand.h"
 
-s_string *expand_substs_shell(s_shell *shell, const s_string *word)
+s_string *expand_substs_shell(s_shell *shell, s_string *word)
 {
     (void) shell;
     (void) word;

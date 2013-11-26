@@ -7,6 +7,7 @@
 #include "token.h"
 #include "input_string.h"
 
+#if 0
 static void remove_special_backslash(s_string *str)
 {
     for (int i = 0; str->buf[i]; ++i)
@@ -49,14 +50,19 @@ static s_string *expand_token(s_shell *shell, s_string *word)
     } while (t != T_EOF);
     return ret;
 }
+#endif
 
-s_string *expand_dquote(s_shell *shell, const s_string *word)
+s_string *expand_dquote(s_shell *shell, s_string *word)
 {
     s_string *r;
 
     //FIXME schischi: should be const... and this is an ugly hack
     s_string *tmp = string_duplicate(word);
-    r = expand_token(shell, tmp);
+    //r = expand_token(shell, tmp);
+    r = expand_string(shell, tmp, LEX_DQUOTE);
+    //TODO schischi
+    //if (t == T_WORD)
+    //    remove_special_backslash(sub);
     string_free(tmp);
     return r;
 }

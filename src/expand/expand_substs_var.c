@@ -13,13 +13,14 @@
 #include "match.h"
 #include "shell.h"
 #include "string_utils.h"
+#include "lexer.h"
 
 typedef struct expand_params
 {
     s_shell *shell;
-    const char *word;
-    const s_string *varname;
-    const s_string *varcont;
+    char *word;
+    s_string *varname;
+    s_string *varcont;
     int only_unset;
 } s_expand_params;
 
@@ -33,7 +34,7 @@ static s_string *expand_alternative(s_expand_params *p)
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
         return string_create_from("");
     else
-        return string_create_from(p->word);
+        return expand_string(p->shell, string_create_from(p->word), LEX_ALL);
 }
 
 /*
@@ -43,9 +44,8 @@ static s_string *expand_alternative(s_expand_params *p)
 */
 static s_string *expand_default(s_expand_params *p)
 {
-    // TODO: expand word
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
-        return string_create_from(p->word);
+        return expand_string(p->shell, string_create_from(p->word), LEX_ALL);
     else
         return string_duplicate(p->varcont);
     return NULL;
@@ -62,11 +62,10 @@ static s_string *expand_assign(s_expand_params *p)
     // TODO: expand word
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
     {
-        char *name = strdup(p->varname->buf);
-        char *value = strdup(p->word);
-        env_set(p->shell, value, name);
-        free(name);
-        free(value);
+        s_string *exp = expand_string(p->shell, string_create_from(p->word),
+                                     LEX_ALL);
+        env_set(p->shell, exp->buf, p->varname->buf);
+        string_free(exp);
     }
     return string_create_from(env_get(p->shell, p->varname->buf));
 }
@@ -85,7 +84,12 @@ static s_string *expand_error(s_expand_params *p)
     if (!p->varcont || (!p->varcont->buf[0] && !p->only_unset))
     {
         if (*p->word)
-            LOG(ERROR, "%s: %s", p->varname->buf, p->word);
+        {
+            s_string *exp = expand_string(p->shell,
+                                         string_create_from(p->word), LEX_ALL);
+            LOG(ERROR, "%s: %s", p->varname->buf, exp->buf);
+            string_free(exp);
+        }
         else
             LOG(ERROR, "%s: is unset", p->varname->buf);
         return NULL;
@@ -143,8 +147,8 @@ static s_string *expand_del_suffix(s_expand_params *p)
     return r;
 }
 
-s_string *expand_substs_param(s_shell *shell, const char *param,
-                              const s_string *varname, const s_string *varcont)
+s_string *expand_substs_param(s_shell *shell, char *param,
+                              s_string *varname, s_string *varcont)
 {
     s_expand_params p;
     p.only_unset = 1;
@@ -165,7 +169,7 @@ s_string *expand_substs_param(s_shell *shell, const char *param,
     return NULL;
 }
 
-static int among(char c, const char *s)
+static int among(char c, char *s)
 {
     while (*s)
         if (c == *s++)
@@ -173,11 +177,11 @@ static int among(char c, const char *s)
     return 0;
 }
 
-s_string *expand_substs_var(s_shell *shell, const s_string *word)
+s_string *expand_substs_var(s_shell *shell, s_string *word)
 {
     if (word->buf[0] == '#')
     {
-        const char *r = env_get(shell, word->buf + 1);
+        char *r = env_get(shell, word->buf + 1);
         return string_itoa(r ? strlen(r) : 0);
     }
 
@@ -193,7 +197,7 @@ s_string *expand_substs_var(s_shell *shell, const s_string *word)
 
     s_string *r = expand_substs_param(shell, word->buf + i, varname, varcont);
 
-    free(varname);
-    free(varcont);
+    string_free(varname);
+    string_free(varcont);
     return r;
 }
