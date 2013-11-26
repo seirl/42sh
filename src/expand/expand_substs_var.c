@@ -89,7 +89,7 @@ static s_string *expand_error(s_expand_params *p)
         }
         else
             LOG(ERROR, "%s: is unset", p->varname->buf);
-        return NULL;
+        return string_create_from("");
     }
     else
         return string_create_from(env_get(p->shell, p->varname->buf));
