@@ -10,10 +10,22 @@ X("s", 1, 1, string_create_from(env_get(shell, "0")))
 X("u", 1, 1, string_create_from(env_get(shell, "USER")))
 X("w", 1, 1, get_w(shell, 0))
 X("W", 1, 1, get_w(shell, 1))
+
 // TODO: check coding style
 X("$", 1, 1, string_create_from(env_get(shell, "UID") &&
                                 *env_get(shell, "UID") == '0' ? "#" : "$"))
-X("nnn", 3, 3, string_create(1))
+
+// TODO: find a better way.
+X("0", 1, 3, get_octal(prompt, i + 1))
+X("1", 1, 3, get_octal(prompt, i + 1))
+X("2", 1, 3, get_octal(prompt, i + 1))
+X("3", 1, 3, get_octal(prompt, i + 1))
+X("4", 1, 3, get_octal(prompt, i + 1))
+X("5", 1, 3, get_octal(prompt, i + 1))
+X("6", 1, 3, get_octal(prompt, i + 1))
+X("7", 1, 3, get_octal(prompt, i + 1))
+X("8", 1, 3, get_octal(prompt, i + 1))
+X("9", 1, 3, get_octal(prompt, i + 1))
 X("\\", 1, 1, string_create_from("\\"))
 X("[", 1, 1, string_create_from(""))
 X("]", 1, 1, string_create_from(""))

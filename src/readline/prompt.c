@@ -2,6 +2,7 @@
 #include <time.h>
 #include <string.h>
 #include <libgen.h>
+#include <stdio.h>
 #include "string_utils.h"
 #include "env.h"
 
@@ -79,9 +80,20 @@ static s_string *get_w(s_shell *shell, int use_basename)
     return w;
 }
 
+static s_string *get_octal(s_string *prompt, size_t pos)
+{
+    char oct[4];
+    strncpy(oct, prompt->buf + pos, 3);
+    oct[3] = 0;
+    char c = (oct[2] - '0') + 8 * (oct[1] - '0') + 8 * 8 * (oct[0] - '0');
+    char res[2];
+    res[0] = c;
+    res[1] = 0;
+    return string_create_from(res);
+}
+
 void prompt_expand(s_shell *shell, s_string *prompt)
 {
-    (void)shell;
     for (size_t i = 0; prompt->buf[i + 1]; i++)
     {
         if (prompt->buf[i] == '\\')
@@ -96,4 +108,5 @@ void prompt_expand(s_shell *shell, s_string *prompt)
 #undef X
         }
     }
+    // TODO: do regular expansion.
 }
