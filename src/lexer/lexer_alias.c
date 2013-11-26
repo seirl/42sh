@@ -38,7 +38,7 @@ static void expand_alias_rec(s_shell *shell, s_token *tok, s_hashtbl *h)
 void expand_alias(s_shell *shell, s_token *tok)
 {
     if (tok->type == T_WORD && tok->aliasable == 1 && shell
-       && shopt_get(shell, "expand_aliases"))
+        && shopt_get(shell, "expand_aliases"))
     {
         s_hashtbl *h = hashtbl_init(hash_string, cmp_string, NULL, NULL);
         s_string *word_copy = string_duplicate(tok->value.str);

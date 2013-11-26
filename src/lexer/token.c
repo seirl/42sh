@@ -11,10 +11,11 @@ s_token *token_create(e_token_type type,
 
     tok = smalloc(sizeof (s_token));
 
+    tok->aliasable = 0;
+    tok->concat = concat;
+    tok->location = location;
     tok->type = type;
     tok->value = value;
-    tok->location = location;
-    tok->concat = concat;
 
     return tok;
 }
