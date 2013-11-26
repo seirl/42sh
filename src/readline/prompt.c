@@ -13,14 +13,17 @@ static size_t len_until(char *s, char c)
     return i;
 }
 
-static void prompt_replace(s_string *prompt, size_t pos, size_t len, s_string *rep)
+size_t prompt_replace(s_string *prompt, size_t pos, size_t len, s_string *rep)
 {
     char *tmp = strdup(prompt->buf + pos + 1 + len);
+    size_t replaced_len = rep->len;
     string_del_from_end(prompt, prompt->len - pos);
     string_puts(prompt, rep->buf);
     string_puts(prompt, tmp);
     free(tmp);
     string_free(rep);
+    // TODO: something is wrong with that.
+    return replaced_len;
 }
 
 static s_string *get_time(s_string *prompt, size_t pos)
@@ -86,7 +89,7 @@ void prompt_expand(s_shell *shell, s_string *prompt)
 #define X(Name, Len, Pattern_len, Rep)                              \
             if  (!strncmp(prompt->buf + i + 1, Name, Len))          \
             {                                                       \
-                prompt_replace(prompt, i, Pattern_len, Rep);        \
+                i += prompt_replace(prompt, i, Pattern_len, Rep);   \
                 continue;                                           \
             }
 #include "prompt.def"
