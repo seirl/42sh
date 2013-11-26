@@ -1,4 +1,5 @@
 {
+    "type": "42sh",
     "desc": "bad: begin pipe",
     "stdin": b"| hello",
     "stdout": "",

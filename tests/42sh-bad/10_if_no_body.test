@@ -1,6 +1,7 @@
 {
-    "desc": "bad: no then",
-    "stdin": b"""if true;
+    "type": "42sh",
+    "desc": "bad: if no body",
+    "stdin": b"""if true
         echo i
 fi
 """,

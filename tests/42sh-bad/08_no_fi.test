@@ -1,8 +1,8 @@
 {
-    "desc": "bad: if no body",
-    "stdin": b"""if true
+    "type": "42sh",
+    "desc": "bad: no fi",
+    "stdin": b"""if true; then
         echo i
-fi
 """,
     "stdout": "",
     "stderr": ...,

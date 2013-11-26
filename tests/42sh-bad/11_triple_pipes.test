@@ -1,4 +1,5 @@
 {
+    "type": "42sh",
     "desc": "bad: triple |",
     "stdin": b"""echo foo ||| echo bar
 """,

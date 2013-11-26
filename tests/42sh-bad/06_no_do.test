@@ -1,4 +1,5 @@
 {
+    "type": "42sh",
     "desc": "bad: no do",
     "stdin": b"""for i in a b c;
         echo i

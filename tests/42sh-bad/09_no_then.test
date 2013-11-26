@@ -1,7 +1,9 @@
 {
-    "desc": "bad: no do",
-    "stdin": b"""for i in a b c; do
+    "type": "42sh",
+    "desc": "bad: no then",
+    "stdin": b"""if true;
         echo i
+fi
 """,
     "stdout": "",
     "stderr": ...,

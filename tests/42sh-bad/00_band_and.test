@@ -1,4 +1,5 @@
 {
+    "type": "42sh",
     "desc": "bad: and and",
     "stdin": b"echo & &",
     "stdout": "",

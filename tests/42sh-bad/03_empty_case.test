@@ -1,4 +1,5 @@
 {
+    "type": "42sh",
     "desc": "bad: empty case",
     "stdin": b"""
 case a in

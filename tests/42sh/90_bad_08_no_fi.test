@@ -1,9 +1,0 @@
-{
-    "desc": "bad: no fi",
-    "stdin": b"""if true; then
-        echo i
-""",
-    "stdout": "",
-    "stderr": ...,
-    "retval": 2,
-}
