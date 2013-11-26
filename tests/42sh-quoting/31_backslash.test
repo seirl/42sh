@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Backslash double",
+    "stdin": b"""echo \\f\\\\oo\n
+""",
+    "stdout": "f\\oo\n",
+}

@@ -12,8 +12,6 @@ s_string *expand_dquote(s_shell *shell, s_string *word)
     s_string *r;
 
     r = expand_string(shell, string_duplicate(word), LEX_DQUOTE);
-    //TODO schischi
-    //if (t == T_WORD)
-    //    remove_special_backslash(sub);
+    remove_special_backslash(r);
     return r;
 }
