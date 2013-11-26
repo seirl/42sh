@@ -118,7 +118,7 @@ static s_string *expand_del_prefix(s_expand_params *p)
         }
     }
     s_string *r = string_create_from(p->varcont->buf + end_prefix);
-    free(exp);
+    string_free(exp);
     free(n);
     return r;
 }
@@ -143,7 +143,7 @@ static s_string *expand_del_suffix(s_expand_params *p)
         }
     char *n = strndup(p->varcont->buf, start_suffix);
     s_string *r = string_create_from(n);
-    free(exp);
+    string_free(exp);
     free(n);
     return r;
 }
