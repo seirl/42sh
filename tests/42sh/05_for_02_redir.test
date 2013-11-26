@@ -6,4 +6,5 @@ for i in a b c; do
 done >& 2
     """,
     "stderr": "i\ni\ni\n",
+    "skip": True
 }
