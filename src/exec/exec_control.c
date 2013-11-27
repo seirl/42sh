@@ -1,6 +1,7 @@
 #include "exec.h"
 #include "shell_private.h"
 #include "env.h"
+#include "expand_wordlist.h"
 
 static void exec_else(s_shell *shell, s_ast_else *else_clause)
 {
@@ -73,6 +74,7 @@ void exec_until(s_shell *shell, s_ast_until *until_cmd)
 
 void exec_for(s_shell *shell, s_ast_for *for_cmd)
 {
+    expand_wordlist(shell, for_cmd->values);
     s_ast_word_list *values = for_cmd->values;
     while (values && expand_compound(shell, values->word))
     {
