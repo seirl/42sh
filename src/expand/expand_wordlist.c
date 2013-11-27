@@ -46,6 +46,8 @@ static char *expand_word_by_kind(s_shell *shell, s_ast_word *word)
         return string_release(expand_simple_word(shell, word->str));
     if (word->kind == EXPAND_ARITHM)
         return string_release(expand_arithm(shell, word->str));
+    if (word->kind == EXPAND_PARAM)
+        return string_release(expand_substs_var(shell, word->str));
     return NULL;
 }
 

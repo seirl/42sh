@@ -1,0 +1,9 @@
+{
+    "type": "42sh",
+    "desc": "IFS multiple var",
+    "stdin": b"""foo='foo bar'; bar='lol lul'; for a in $foo$bar; do echo $a;
+    done
+""",
+    "stdout": "foo\nbarlol\nlul\n",
+    "skip": True
+}

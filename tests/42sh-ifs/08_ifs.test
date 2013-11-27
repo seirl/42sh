@@ -1,0 +1,9 @@
+{
+    "type": "42sh",
+    "desc": "IFS multiple right and left concat",
+    "stdin": b"""foo='foo bar'; for a in lol${foo}lol; do echo $a;
+    done
+""",
+    "stdout": "lolfoo\nbarlol\n",
+    "skip": True
+}
