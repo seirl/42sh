@@ -17,6 +17,8 @@ static void string_itoa_rec(unsigned long n, s_string *s)
 s_string *string_itoa(long n)
 {
     s_string *s = string_create(0);
+    if (!n)
+        string_putc(s, '0');
     if (n < 0)
     {
         n = -n;
