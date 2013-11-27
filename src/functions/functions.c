@@ -37,4 +37,3 @@ void functions_free(s_shell *shell)
     hashtbl_free(shell->functions);
     shell->functions = NULL;
 }
-

@@ -48,4 +48,3 @@ void expand_alias(s_shell *shell, s_token *tok)
         hashtbl_free(h);
     }
 }
-
