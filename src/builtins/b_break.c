@@ -31,7 +31,6 @@ int builtin_break(s_shell *shell, int argc, char *argv[])
 {
     long n = 0;
     char *endptr = NULL;
-
     if (argc < 2)
         shell->breaks = 1;
     else if (argc > 2)
