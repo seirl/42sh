@@ -1,0 +1,12 @@
+{
+    "desc": "bad: elif",
+    "input": """
+if false; then
+    echo false
+elif ; then
+    echo false
+fi
+""",
+    "stderr": ...,
+    "retval": 1,
+}

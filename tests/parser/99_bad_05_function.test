@@ -1,0 +1,6 @@
+{
+    "desc": "bad: function",
+    "input": "function ()",
+    "stderr": ...,
+    "retval": 1,
+}

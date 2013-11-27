@@ -1,0 +1,6 @@
+{
+    "desc": "bad: function",
+    "input": "function a ( echo foo; ) { echo hello ; }",
+    "stderr": ...,
+    "retval": 1,
+}
