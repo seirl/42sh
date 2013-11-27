@@ -107,7 +107,6 @@ static void wait_pipe(s_shell *shell, pid_t main, s_pipe *pipe)
         kill(proc, SIGPIPE);
         waitpid(proc, &st, 0);
         proc = proc_get_next(pipe);
-        shell->status = st;
     }
 }
 

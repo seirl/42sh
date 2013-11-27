@@ -84,11 +84,11 @@ void exec_funcdec_node(s_shell *shell, s_ast_funcdec *funcdec,
 /** @brief Execute a command AST node */
 void exec_cmd_node(s_shell *shell, s_ast_cmd *node);
 /** @brief Execute an 'and' AST node */
-void exec_and_node(s_shell *shell, s_ast_and_or *node);
+void exec_and_node(s_shell *shell, s_ast_and_or *node, int force);
 /** @brief Execute an 'or' AST node */
-void exec_or_node(s_shell *shell, s_ast_and_or *node);
+void exec_or_node(s_shell *shell, s_ast_and_or *node, int force);
 /** @brief Execute a generic 'or/and' AST node */
-void exec_andor_node(s_shell *shell, s_ast_and_or *node);
+void exec_andor_node(s_shell *shell, s_ast_and_or *node, int force);
 /** @brief Return the number of piped commandes in a pipeline */
 int pipe_cmd_count(s_ast_pipeline *node);
 /** @brief Return a command array from a pipeline */
