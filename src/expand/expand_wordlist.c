@@ -37,7 +37,7 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
     //replace current word
     string_reset(word->str);
     int i;
-    for (i = 0; value[i] && value[i] != ' '; ++i) //TODO ifs
+    for (i = 0; value[i] && is_ifs(shell, value[i]); ++i)
         string_putc(word->str, value[i]);
     word->kind = WORD;
     //printf("Word is now %s\n", word->str->buf);
@@ -77,10 +77,11 @@ static s_ast_compound_word *split_compound_word(s_shell *shell, s_ast_compound_w
 
 static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
 {
-    s_ast_compound_word *it = NULL;
+    s_ast_compound_word *it = cw;
+    s_ast_compound_word *free_me = NULL;
     s_ast_word_list *nl;
     s_ast_word_list *prev = NULL;
-    for (it = cw; it; it = it->next)
+    while (it)
     {
         //printf("Garbage %s\n", it->word->str->buf);
         nl = smalloc(sizeof (s_ast_word_list));
@@ -97,6 +98,9 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
             nl->next = prev->next;
             prev->next = nl;
         }
+        free_me = it->next;
+        sfree(it);
+        it = free_me;
     }
 }
 
@@ -111,5 +115,4 @@ void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
         cw = split_compound_word(shell, wl->word);
         add_wl(elt, cw);
     }
-    //sfree(cw);
 }
