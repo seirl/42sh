@@ -4,7 +4,7 @@
 # include "getopt.h"
 # include "shell.h"
 
-# define SHOPT_COUNT 9
+# define SHOPT_COUNT 10
 
 //** @brief Store the state of a shell option */
 struct shopt
