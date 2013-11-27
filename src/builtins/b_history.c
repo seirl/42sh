@@ -4,6 +4,7 @@
 #include "shopt.h"
 #include "env.h"
 #include "history.h"
+#include "smalloc.h"
 
 static const s_param shopt_param[] =
 {
@@ -60,7 +61,7 @@ int builtin_history(s_shell *shell, int argc, char *argv[])
         usage();
         return 2;
     }
-    char *filename = malloc(sizeof (char) * 1024);
+    char *filename = smalloc(sizeof (char) * 1024);
     if (opt_get(opt, "c", NULL))
         history_clear(shell);
     else if (opt_get(opt, "r", &filename))
@@ -68,5 +69,7 @@ int builtin_history(s_shell *shell, int argc, char *argv[])
     else
         history_list(shell, opt);
 
+    opt_free(opt);
+    sfree(filename);
     return 0;
 }
