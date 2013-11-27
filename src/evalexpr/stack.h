@@ -18,13 +18,13 @@ void opstack_free(s_opstack *s);
 
 typedef struct numstack
 {
-    int *nums;
+    long *nums;
     size_t size;
     size_t size_max;
 } s_numstack;
 
 s_numstack *numstack_init(void);
-void numstack_push(s_numstack *s, int num);
+void numstack_push(s_numstack *s, long num);
 int numstack_pop(s_numstack *s);
 void numstack_free(s_numstack *s);
 

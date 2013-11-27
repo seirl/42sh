@@ -1,4 +1,4 @@
-int op_pow(int a, int b)
+long op_pow(long a, long b)
 {
-    return b ? ((b % 2) ? b : 1) * op_pow(a, b / 2) : 1;
+    return b ? ((b % 2) ? a : 1) * op_pow(a * a, b / 2) : 1;
 }

@@ -1,24 +1,24 @@
-int op_add(int a, int b)
+long op_add(long a, long b)
 {
     return a + b;
 }
 
-int op_sub(int a, int b)
+long op_sub(long a, long b)
 {
     return a - b;
 }
 
-int op_mul(int a, int b)
+long op_mul(long a, long b)
 {
     return a * b;
 }
 
-int op_div(int a, int b)
+long op_div(long a, long b)
 {
     return a / b;
 }
 
-int op_mod(int a, int b)
+long op_mod(long a, long b)
 {
     return a % b;
 }

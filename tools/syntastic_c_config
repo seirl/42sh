@@ -9,6 +9,7 @@
 -Isrc/env
 -Isrc/exec
 -Isrc/expand
+-Isrc/evalexpr
 -Isrc/match
 -Isrc/history
 -Isrc/input

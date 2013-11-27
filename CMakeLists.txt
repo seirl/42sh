@@ -224,6 +224,8 @@ add_library(evalexpr OBJECT
     src/evalexpr/opstack.c
     src/evalexpr/numstack.c
     src/evalexpr/ops.c
+    src/evalexpr/evalexpr.c
+    src/evalexpr/shuntingyard.c
     src/evalexpr/eval/base.c
     src/evalexpr/eval/bit.c
     src/evalexpr/eval/pow.c

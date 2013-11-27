@@ -11,6 +11,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    printf("%d", my_fnmatch(argv[1], argv[2]));
+    printf("%d\n", my_fnmatch(argv[1], argv[2]));
     return 0;
 }

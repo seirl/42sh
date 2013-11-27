@@ -1,24 +1,24 @@
-int op_bitand(int a, int b)
+long op_bitand(long a, long b)
 {
     return a & b;
 }
 
-int op_bitor(int a, int b)
+long op_bitor(long a, long b)
 {
     return a | b;
 }
 
-int op_xor(int a, int b)
+long op_xor(long a, long b)
 {
     return a ^ b;
 }
 
-int op_and(int a, int b)
+long op_and(long a, long b)
 {
     return a && b;
 }
 
-int op_or(int a, int b)
+long op_or(long a, long b)
 {
     return a || b;
 }

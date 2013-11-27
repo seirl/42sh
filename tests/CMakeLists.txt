@@ -8,6 +8,9 @@ add_executable(test_fnmatch test_fnmatch.c $<TARGET_OBJECTS:match>)
 
 add_executable(test_glob test_glob.c $<TARGET_OBJECTS:match>)
 
+add_executable(test_evalexpr test_evalexpr.c $<TARGET_OBJECTS:evalexpr>)
+target_link_libraries(test_evalexpr lib42sh)
+
 add_executable(test_interface test_interface.c $<TARGET_OBJECTS:options>)
 target_link_libraries(test_interface lib42sh)
 
