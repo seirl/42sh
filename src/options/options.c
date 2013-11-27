@@ -59,15 +59,10 @@ e_option_return parse_options(s_shell *shell, int argc, char *argv[],
     s_opt *opt = opt_init(main_param, 7);
     char *arg;
     int ret = opt_parse(argc, argv, opt);
-    if (ret)
+    if (ret || (shopt_from_opt(shell, opt) == 1))
     {
         if (ret == 1)
             usage(stderr);
-        opt_free(opt);
-        return E_ERROR;
-    }
-    if (shopt_from_opt(shell, opt) == 1)
-    {
         opt_free(opt);
         return E_ERROR;
     }
