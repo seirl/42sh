@@ -3,6 +3,8 @@
 
 #include "string_utils.h"
 
+#define UNUSED(Var) Var += 1;
+
 s_input *input_string_create(s_string *str, const char *source)
 {
     s_input *input = input_new();
@@ -37,7 +39,8 @@ char input_string_topc(s_input *input)
 
 int input_string_next(s_input *input, void *param)
 {
-    (void)param;
+    char *paramc = param;
+    UNUSED(paramc);
     s_string *str = input->_input_state;
     return str->len != str->read_pos;
 }

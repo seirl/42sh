@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "shell.h"
+#include "shell_private.h"
 #include "getopt.h"
 #include "shopt.h"
 #include "env.h"

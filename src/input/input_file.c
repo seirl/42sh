@@ -2,6 +2,8 @@
 
 #include "input_file.h"
 
+#define UNUSED(Var) Var += 1;
+
 s_input *input_file_create(FILE *f, const char *filename)
 {
     s_input *input = input_new();
@@ -39,7 +41,9 @@ char input_file_topc(s_input *input)
 
 int input_file_next(s_input *input, void *param)
 {
-    (void)param;
+    char *paramc = param;
+    UNUSED(paramc);
+
     FILE *f = input->_input_state;
     return !feof(f);
 }

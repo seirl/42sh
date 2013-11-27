@@ -6,11 +6,12 @@
 #include "hashtbl.h"
 #include "env_private.h"
 
+#define UNUSED(Var) Var += 1
 
 int builtin_set(s_shell *shell, int argc, char *argv[])
 {
-    (void)argc;
-    (void)argv;
+    UNUSED(argc);
+    UNUSED(argv);
     s_hash_elt *it = NULL;
     void *key;
     char *char_key;
