@@ -1,0 +1,9 @@
+{
+    "desc": "env: use prefix in function",
+    "stdin": b"""a () { echo $foo; }
+a
+x=y foo=42 a
+""",
+    "stdout": "\n42\n",
+    "skip": True,
+}
