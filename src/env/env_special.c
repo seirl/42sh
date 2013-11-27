@@ -7,23 +7,23 @@
 static char *env_random(void)
 {
     int r = rand() % 32768;
-    char ret[6];
+    static char ret[6];
     snprintf(ret, 6, "%d", r);
-    return strdup(ret);
+    return ret;
 }
 
 static char *env_uid(void)
 {
-    char buf[32];
+    static char buf[32];
     snprintf(buf, 32, "%d", getuid());
-    return strdup(buf);
+    return buf;
 }
 
 static char *env_pid(void)
 {
-    char buf[32];
+    static char buf[32];
     snprintf(buf, 32, "%d", getpid());
-    return strdup(buf);
+    return buf;
 }
 
 char *env_special(char *name)
