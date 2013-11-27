@@ -12,7 +12,7 @@ static s_string *(*const expand_funcs[])(s_shell *, s_string *) =
     expand_simple_var,
     expand_substs_var,
     expand_substs_shell,
-    NULL,
+    expand_arithm,
     expand_squote,
     expand_dquote,
     NULL,
