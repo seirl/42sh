@@ -34,14 +34,13 @@ static void env_setup(s_shell *shell)
 static void history_open(s_shell *shell)
 {
     env_setup(shell);
-    int error;
     FILE *hist_file;
 
-    if ((error = access(env_get(shell, "HISTFILE"), F_OK)) == -1)
+    if (access(env_get(shell, "HISTFILE"), F_OK) == -1)
         if ((hist_file = fopen(env_get(shell, "HISTFILE"), "w")) != NULL)
             fclose(hist_file);
 
-    if ((error = access(env_get(shell, "HISTFILE"), R_OK)) == -1)
+    if (access(env_get(shell, "HISTFILE"), R_OK) == -1)
         return;
 
     hist_file = fopen(env_get(shell, "HISTFILE"), "r");

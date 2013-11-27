@@ -13,9 +13,8 @@ static void update_line(s_shell *shell, s_term *term)
     fflush(stdout);
 }
 
-static e_next_action do_right(s_shell *shell, s_term *term)
+static e_next_action do_right(s_term *term)
 {
-    (void)shell;
     if (term->input_index < term->input->len)
     {
         // Move cursor to the left
@@ -25,9 +24,8 @@ static e_next_action do_right(s_shell *shell, s_term *term)
     return CONTINUE;
 }
 
-static e_next_action do_left(s_shell *shell, s_term *term)
+static e_next_action do_left(s_term *term)
 {
-    (void)shell;
     if (term->input_index > 0)
     {
         // Move cursor to the right

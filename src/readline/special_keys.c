@@ -48,7 +48,8 @@ static e_next_action do_ctrl_w(s_term *term)
     return CONTINUE;
 }
 
-e_next_action handle_special_key(s_shell *shell, s_term *term, e_special_key key)
+e_next_action handle_special_key(s_shell *shell, s_term *term,
+                                 e_special_key key)
 {
 #define X(Name, Code1, Code2, Handler)              \
     if (key == Name)                                \
