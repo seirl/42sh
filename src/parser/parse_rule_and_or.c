@@ -7,7 +7,8 @@ static s_ast_and_or *parse_rule_and_or_rec(s_parser *parser, s_ast_and_or *ao)
     e_token_type type = lex_look_token_type(parser->lexer);
     switch (type)
     {
-    case T_AND_IF: /** && */
+    /** && */
+    case T_AND_IF:
         ao->and_or = AST_CMD_AND;
         break;
     case T_OR_IF: /** || */
