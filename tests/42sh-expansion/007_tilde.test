@@ -7,4 +7,5 @@
 """,
     "stderr": ...,
     "retval": 127,
+    "skip": True,
 }
