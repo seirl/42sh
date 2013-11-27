@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Double tilde",
+    "stdin": b"""echo ~~\n
+""",
+    "stdout": "~~\n" ,
+}

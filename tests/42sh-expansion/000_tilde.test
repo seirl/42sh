@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Simple tilde",
+    "stdin": b"""echo ~\n
+""",
+    "stdout": os.getenv("HOME") + "\n" ,
+}

@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Simple tilde concat",
+    "stdin": b"""echo ~/tmp/foo.bar\n
+""",
+    "stdout": os.getenv("HOME") + "/tmp/foo.bar\n" ,
+}

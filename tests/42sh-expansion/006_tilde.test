@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "Tilde -",
+    "stdin": b"""echo ~-/foo\n
+""",
+    "stdout": os.getenv("OLDPWD") + "/foo\n" ,
+    "skip": True
+}
