@@ -1,0 +1,4 @@
+{
+    "desc": "input exit",
+    "args": ['-c', 'exit'],
+}

@@ -1,0 +1,5 @@
+{
+    "desc": "input exit",
+    "setup": "echo exit > script",
+    "args": ["script"],
+}
