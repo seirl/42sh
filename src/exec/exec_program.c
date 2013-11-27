@@ -4,6 +4,14 @@
 #include "smalloc.h"
 #include "functions.h"
 
+static void exec_exit(void)
+{
+    char *new_argv[2];
+    new_argv[0] = "exit";
+    new_argv[1] = NULL;
+    execvp(new_argv[0], new_argv);
+}
+
 static void exec_argv_free(char **cmd_argv)
 {
     if (!cmd_argv)
@@ -20,12 +28,7 @@ void exec_argv(char **argv)
     if (!strcmp(argv[0], "exit"))
     {
         exec_argv_free(argv);
-        char *new_argv[] =
-        {
-            "exit\0",
-            NULL
-        };
-        execvp(new_argv[0], new_argv);
+        exec_exit();
     }
     execvp(argv[0], argv);
     if (errno == ENOENT)
@@ -42,8 +45,6 @@ int exec_prog(s_shell *shell,
               char **cmd_argv,
               s_ast_prefix *prefixes)
 {
-    if (!strcmp(cmd_argv[0],"\0") || !strcmp(cmd_argv[0], ""))
-        return 0;
     pid_t pid;
     int st = 0;
 
