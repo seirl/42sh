@@ -9,14 +9,22 @@ s_ast_if *parse_rule_if(s_parser *parser)
         RETURN_PARSE_EXPECTED(parser, "predicate");
 
     if (!parse_expect_token(parser, T_THEN))
+    {
+        ast_list_delete(predicate);
         RETURN_PARSE_EXPECTED(parser, "then");
+    }
 
     s_ast_list *then_cmds = parse_rule_compound_list(parser, 1);
 
     s_ast_else *else_clause = parse_rule_else(parser);
 
     if (!parse_expect_token(parser, T_FI))
+    {
+        ast_list_delete(predicate);
+        ast_list_delete(then_cmds);
+        ast_else_delete(else_clause);
         RETURN_PARSE_EXPECTED(parser, "fi");
+    }
 
     s_ast_if *myif = ast_if_new();
 
