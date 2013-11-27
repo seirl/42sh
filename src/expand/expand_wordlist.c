@@ -70,10 +70,7 @@ static s_ast_compound_word *split_compound_word(s_shell *shell, s_ast_compound_w
     s_ast_compound_word *it;
     s_ast_compound_word *res = NULL;
     for (it = cw; it; it = it->next)
-    {
         res = split_word(shell, it->word, res);
-        return res;
-    }
     return res;
 }
 
@@ -113,6 +110,5 @@ void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
     {
         cw = split_compound_word(shell, wl->word);
         add_wl(elt, cw);
-        return;
     }
 }
