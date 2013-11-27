@@ -7,6 +7,7 @@
 #include "lexer.h"
 #include "expand_wordlist.h"
 #include "env.h"
+#include "ifs.h"
 
 static s_ast_compound_word *cw_add_word(s_ast_compound_word *cw, s_string *s)
 {
@@ -48,7 +49,7 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
     ++i;
     for (; value[i]; ++i)
     {
-        if (value[i] == ' ') //TODO: ifs
+        if (is_ifs(shell, value[i]))
         {
             //printf("Add %s\n", buf->buf);
             cw = cw_add_word(cw, buf);
@@ -97,7 +98,6 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
             prev->next = nl;
         }
     }
-    //sfree(cw);
 }
 
 void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
@@ -111,4 +111,5 @@ void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
         cw = split_compound_word(shell, wl->word);
         add_wl(elt, cw);
     }
+    //sfree(cw);
 }
