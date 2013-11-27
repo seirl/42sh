@@ -126,6 +126,7 @@ add_library(builtins OBJECT
     src/builtins/b_source.c
     src/builtins/b_unalias.c
     src/builtins/b_unset.c
+    src/builtins/b_history.c
 )
 
 add_library(readline OBJECT
