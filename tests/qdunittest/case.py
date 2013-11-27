@@ -174,9 +174,12 @@ def new_test_run_lexer(test, options):
                 with_valgrind=with_valgrind)
         stdoutdata, stderrdata = lexer.communicate(b"", options.timeout)
 
-        if 'output' in test:
-            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
-                             "stdout differ")
+        if test.get('output') == ...:
+            subself.assertNotEqual("", stdoutdata.decode(), "stdout empty")
+        else:
+            subself.assertMultiLineEqual(test.get('output', ""),
+                                         stdoutdata.decode(),
+                                         "stdout differ")
 
         retval = test.get('retval', 0)
         subself.assertEqual(retval, lexer.returncode, "return value differ")

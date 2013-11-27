@@ -1,10 +1,9 @@
 {
     "type": "42sh",
     "desc": 'echo ~"\\n"',
-    "stdin": b"""~
+    "stdin": b"""echo ~
 "
 "
 """,
     "stdout": os.getenv("HOME") + "\n",
-    "skip": True
 }

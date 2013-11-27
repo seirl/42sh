@@ -2,7 +2,6 @@
     "type": "lexer",
     "desc": "Single token",
     "input": "'a",
-    "output": ...,
+    "output": "",
     "retval": 1,
-    "skip": True,
 }
