@@ -32,17 +32,20 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
         return NULL;
 
     char *value = env_get(shell, word->str->buf);
-    //printf("ENV get %s\n", value);
+    //printf("ENV get |%s|\n", value);
 
     //replace current word
     string_reset(word->str);
     int i;
-    for (i = 0; value[i] && is_ifs(shell, value[i]); ++i)
+    for (i = 0; value[i] && !is_ifs(shell, value[i]); ++i)
         string_putc(word->str, value[i]);
     word->kind = WORD;
     //printf("Word is now %s\n", word->str->buf);
+    for (; value[i] && is_ifs(shell, value[i]); ++i)
+        continue;
     if (value[i] == 0) //variable without split
         return NULL;
+    --i;
 
     //fill the garbage words list
     s_string *buf = string_create(0);
@@ -92,6 +95,7 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
         {
             nl->next = l->next;
             l->next = nl;
+            prev = nl;
         }
         else
         {
