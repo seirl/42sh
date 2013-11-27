@@ -16,5 +16,7 @@ void env_create(s_shell *shell);
 void env_free(s_shell *shell);
 /** @brief handle special variables like random */
 char *env_special(char *name);
+/** @brief set default vars in the env */
+void env_default_var(s_shell *shell);
 
 #endif /* !ENV_PRIVATE_H */

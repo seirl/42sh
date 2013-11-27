@@ -23,6 +23,7 @@ void env_create(s_shell *shell)
     assert(!shell->env);
     srand(time(NULL));
     shell->env = hashtbl_init(hash_char, cmp_char, free_char, free_env_var);
+    env_default_var(shell);
 }
 
 void env_set(s_shell *shell, char *value, char *name)
