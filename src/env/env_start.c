@@ -27,8 +27,14 @@ static void add_status(s_shell *shell)
     env_chmod(shell, "?", VAR_RDONLY);
 }
 
+static void add_ifs(s_shell *shell)
+{
+    env_set(shell, " \t\n", "IFS");
+}
+
 void env_default_var(s_shell *shell)
 {
     add_cwd(shell);
     add_status(shell);
+    add_ifs(shell);
 }
