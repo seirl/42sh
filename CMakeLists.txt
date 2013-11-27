@@ -77,6 +77,7 @@ add_library(string OBJECT
 
 add_library(match OBJECT
     src/match/fnmatch.c
+    src/match/glob.c
 )
 
 add_library(lexer OBJECT
@@ -201,7 +202,6 @@ add_library(parser OBJECT
 )
 
 add_library(exec OBJECT
-    src/match/fnmatch.c
     src/exec/exec.c
     src/exec/exec_cmds.c
     src/exec/exec_control.c
@@ -276,6 +276,7 @@ add_library(lib42sh STATIC
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:parser>
     $<TARGET_OBJECTS:log>
+    $<TARGET_OBJECTS:match>
     $<TARGET_OBJECTS:options>
     $<TARGET_OBJECTS:readline>
     $<TARGET_OBJECTS:shell>
