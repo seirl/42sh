@@ -1,0 +1,6 @@
+{
+    "desc": "quotes: dollar sign alone inside double quotes",
+    "args": ["-c", "echo \"$\""],
+    "stdout": "$\n",
+    "skip": "true",
+}
