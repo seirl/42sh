@@ -10,5 +10,4 @@
     fi
 """,
     "stdout": "else\n",
-    "skip": True,
 }

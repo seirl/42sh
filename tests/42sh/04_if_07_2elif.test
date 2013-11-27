@@ -12,5 +12,4 @@
     fi
 """,
     "stdout": "elif2\n",
-    "skip": True,
 }
