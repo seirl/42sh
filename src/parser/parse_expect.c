@@ -1,45 +1,30 @@
 #include "parser_private.h"
 #include "parser_macros.h"
 
-void parse_expect_newlines(s_parser *parser) // TODO use look_type
+void parse_expect_newlines(s_parser *parser)
 {
-    s_token *tok;
-
-    while ((tok = lex_look_token(parser->lexer)))
-    {
-        if (tok->type != T_NEWLINE)
-        {
-            token_free(tok);
-            return;
-        }
-        token_free(tok);
-        token_free(lex_token(parser->lexer)); // TODO: use shift
-    }
+    while (lex_look_token_type(parser->lexer) == T_NEWLINE)
+        parser_shift_token(parser);
 }
 
 int parse_expect_token(s_parser *parser, e_token_type type)
 {
-    s_token *tok = lex_look_token(parser->lexer); // TODO use look_type
-    if (tok->type == type)
-        parser_shift_token(parser);
-    else
+    e_token_type tok = lex_look_token_type(parser->lexer);
+    if (tok == type)
     {
-        token_free(tok);
-        return 0;
+        parser_shift_token(parser);
+        return 1;
     }
-    token_free(tok);
-    return 1;
+    return 0;
 }
 
 int parse_expect_newline_or_semi(s_parser *parser)
 {
-    s_token *tok;
-    tok = lex_token(parser->lexer); // TODO use look_type
-    if (tok->type == T_NEWLINE || tok->type == T_SEMI)
+    e_token_type tok = lex_look_token_type(parser->lexer);
+    if (tok == T_NEWLINE || tok == T_SEMI)
     {
-        token_free(tok);
+        parser_shift_token(parser);
         return 1;
     }
-    token_free(tok);
     return 0;
 }
