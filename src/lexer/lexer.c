@@ -54,6 +54,7 @@ static int escaped_newline(s_lexer *lexer, s_token *tok)
     if (lexer->input->type != INPUT_INTERACTIVE)
         return 0;
     if (lex_topc(lexer) == 0
+       && lexer->context == LEX_ALL
        && tok->value.str->buf[tok->value.str->len - 2] == '\\'
        && tok->value.str->buf[tok->value.str->len - 3] != '\\')
     {
