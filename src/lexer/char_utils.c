@@ -11,8 +11,7 @@ int is_delimiter(s_lexer *lexer, char c)
 {
     return (c == 0
            || (lexer->context == LEX_ALL
-              && (c == '\t' || c == ' ' || c == '\n'))
-           || (is_operator(c)
+              && (c == '\t' || c == ' ' || c == '\n' || (is_operator(c)))
               && (c != '!' || lexer->working_buffer->len == 0)));
 }
 
