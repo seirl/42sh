@@ -1,0 +1,8 @@
+{
+    "desc": "one pipeline, multiple redirections",
+    "stdin": b"""echo >&2 bar && echo foo 2>&1 >out 2>err
+""",
+    "stderr": "bar\n",
+    "custom": lambda: open("out").read() == 'foo' and open("err").read() == '',
+    "skip": True,
+}
