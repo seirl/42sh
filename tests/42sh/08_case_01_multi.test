@@ -1,0 +1,5 @@
+{
+    "desc": "case: while inside case with pipes",
+    "args": ["-c", "a=1; case $a in '0') echo no ;; '1') while test $a -ne 7 ; do echo $a | cat -e ; a=$(($a + 1)) ; done ;; *) echo no;; esac"],
+    "stdout": "1$\n2$\n3$\n4$\n5$\n6$\n",
+}
