@@ -1,23 +1,26 @@
 #ifndef EVAL_H
 # define EVAL_H
 
-int op_plus(int a, int b);
-int op_minus(int a, int b);
-int op_bang(int a, int b);
-int op_not(int a, int b);
+long op_plus(long a, long b);
+long op_minus(long a, long b);
+long op_bang(long a, long b);
+long op_not(long a, long b);
 
-int op_add(int a, int b);
-int op_sub(int a, int b);
-int op_mul(int a, int b);
-int op_div(int a, int b);
-int op_mod(int a, int b);
+long op_add(long a, long b);
+long op_sub(long a, long b);
+long op_mul(long a, long b);
+long op_div(long a, long b);
+long op_mod(long a, long b);
 
-int op_pow(int a, int b);
+long op_pow(long a, long b);
 
-int op_bitand(int a, int b);
-int op_bitor(int a, int b);
-int op_xor(int a, int b);
-int op_and(int a, int b);
-int op_or(int a, int b);
+long op_bitand(long a, long b);
+long op_bitor(long a, long b);
+long op_xor(long a, long b);
+long op_and(long a, long b);
+long op_or(long a, long b);
+
+long op_rshift(long a, long b);
+long op_lshift(long a, long b);
 
 #endif /* !EVAL_H */

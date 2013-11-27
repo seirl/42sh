@@ -13,7 +13,7 @@ typedef struct op
     int precedency;
     e_assoc associativity;
     int unary;
-    int (*eval)(int, int);
+    long (*eval)(long, long);
 } s_op;
 
 const s_op *get_op(char *c);

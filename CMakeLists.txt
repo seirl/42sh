@@ -229,6 +229,7 @@ add_library(evalexpr OBJECT
     src/evalexpr/eval/base.c
     src/evalexpr/eval/bit.c
     src/evalexpr/eval/pow.c
+    src/evalexpr/eval/shift.c
     src/evalexpr/eval/unary.c
 )
 
