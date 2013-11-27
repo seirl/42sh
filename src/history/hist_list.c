@@ -35,8 +35,7 @@ void h_list_append(s_hist_list *l, s_string *data, time_t date)
     new->line = data;
     new->temp_line = NULL;
     new->next = l->hd;
-    if (date)
-        new->date = date;
+    new->date = date;
 
     l->hd = new;
     l->size++;
