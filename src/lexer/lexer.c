@@ -3,7 +3,9 @@
 
 #include "lexer.h"
 #include "lexer_private.h"
+#include "input_private.h"
 #include "location.h"
+#include "string_utils.h"
 
 #undef getc
 s_token *lex_word(s_lexer *lexer)
@@ -47,6 +49,27 @@ static void check_prefill(s_lexer *lexer)
     }
 }
 
+static int escaped_newline(s_lexer *lexer, s_token *tok)
+{
+
+    if (lex_topc(lexer) == 0
+       && tok->value.str->buf[tok->value.str->len - 2] == '\\'
+       && tok->value.str->buf[tok->value.str->len - 3] != '\\')
+    {
+        string_del_from_end(tok->value.str, 2);
+        lexer->input->next(lexer->input, "PS2");
+        lex_getc(lexer);
+        lexer->concat = -1;
+        fill_token(lexer);
+        if (tok->value.str->len == 0)
+        {
+            token_free(tok);
+            return 1;
+        }
+    }
+    return 0;
+}
+
 s_token *lex_token(s_lexer *lexer)
 {
     if (lexer->lookahead)
@@ -72,6 +95,8 @@ s_token *lex_token(s_lexer *lexer)
 
     if (ret->concat == -1)
         ret->concat = 0;
+    if (escaped_newline(lexer, ret))
+        return lex_token(lexer);
     strip_token(ret);
     remove_backslash(lexer, ret);
     return ret;
