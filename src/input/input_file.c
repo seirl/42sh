@@ -2,7 +2,7 @@
 
 #include "input_file.h"
 
-s_input *input_file_create(FILE* f, const char *filename)
+s_input *input_file_create(FILE *f, const char *filename)
 {
     s_input *input = input_new();
 

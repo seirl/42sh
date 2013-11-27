@@ -6,7 +6,7 @@
 # include "input_private.h"
 
 /** @brief Create a file input from a FILE * (gets ownership). */
-s_input *input_file_create(FILE* f, const char *filename);
+s_input *input_file_create(FILE *f, const char *filename);
 /** @brief Delete a file input. */
 void input_file_delete(s_input *input);
 /** @brief Eat a char from a file. */

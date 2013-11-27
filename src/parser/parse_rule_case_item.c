@@ -2,7 +2,7 @@
 #include "parser_macros.h"
 #include "ast.h"
 
-static s_ast_word_list* parse_matches(s_parser *parser)
+static s_ast_word_list *parse_matches(s_parser *parser)
 {
     s_ast_compound_word *word;
     if (!(word = parse_compound_word(parser)))

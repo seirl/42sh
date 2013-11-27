@@ -23,7 +23,7 @@ int builtin_break(s_shell *shell, int argc, char *argv[])
     }
     else
     {
-        n  = strtol(argv[1], &endptr, 10);
+        n = strtol(argv[1], &endptr, 10);
         if ((n == 0) || (endptr && strcmp("", endptr)))
         {
             fprintf(stderr, "break: argument is not positive: 0\n");
