@@ -23,6 +23,7 @@
 # include <assert.h>
 
 # include "ast.h"
+# include "shell_private.h"
 # include "string_utils.h"
 # include "shell.h"
 # include "match.h"
@@ -84,11 +85,11 @@ void exec_funcdec_node(s_shell *shell, s_ast_funcdec *funcdec,
 /** @brief Execute a command AST node */
 void exec_cmd_node(s_shell *shell, s_ast_cmd *node);
 /** @brief Execute an 'and' AST node */
-void exec_and_node(s_shell *shell, s_ast_and_or *node, int force);
+void exec_and_node(s_shell *shell, s_ast_and_or *node);
 /** @brief Execute an 'or' AST node */
-void exec_or_node(s_shell *shell, s_ast_and_or *node, int force);
+void exec_or_node(s_shell *shell, s_ast_and_or *node);
 /** @brief Execute a generic 'or/and' AST node */
-void exec_andor_node(s_shell *shell, s_ast_and_or *node, int force);
+void exec_andor_node(s_shell *shell, s_ast_and_or *node);
 /** @brief Return the number of piped commandes in a pipeline */
 int pipe_cmd_count(s_ast_pipeline *node);
 /** @brief Return a command array from a pipeline */

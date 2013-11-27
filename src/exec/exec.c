@@ -5,7 +5,7 @@ void exec_ast_list(s_shell *shell, s_ast_list *list)
     s_ast_list *tmp = list;
     while (tmp)
     {
-        exec_andor_node(shell, tmp->and_or, -1);
+        exec_andor_node(shell, tmp->and_or);
         tmp = tmp->next;
     }
 }

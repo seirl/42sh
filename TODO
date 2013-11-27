@@ -34,9 +34,18 @@ EVALUATION
         - Simple Commands
         - Pipes
         - If commands
+        - Or, And, While, Until
+        - Case, Functions, For, ;
     Todo:
-        - Debug Or, And, While, Until
-        - finish implementing Case, Functions, For, ";", "&"
+        - Subshell evaluation
+        - job control
+
+BUILTINS
+========
+    Todo:
+        - Debug break
+        - Debug source
+        - export
 
 TESTS
 =====

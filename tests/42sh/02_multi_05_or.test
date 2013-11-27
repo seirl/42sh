@@ -2,5 +2,4 @@
     "desc": "multiple commands: multiple or",
     "args": ["-c", "echo a || echo b || echo c"],
     "stdout": "a\n",
-    "skip": True,
 }

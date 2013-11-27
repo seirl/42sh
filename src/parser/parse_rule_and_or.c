@@ -15,6 +15,7 @@ static s_ast_and_or *parse_rule_and_or_rec(s_parser *parser, s_ast_and_or *ao)
         ao->and_or = AST_CMD_OR;
         break;
     default:
+        ao->and_or = AST_CMD_NONE;
         return ao;
     }
     parser_shift_token(parser);

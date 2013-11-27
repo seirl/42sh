@@ -22,6 +22,7 @@ s_shell *shell_new(void)
     shell->parser = NULL;
     shell->state = SHELL_REPEAT;
     shell->status = 0;
+    shell->breaks = 0;
 
     return shell;
 }

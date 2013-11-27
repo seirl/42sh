@@ -319,6 +319,7 @@ enum ast_pipeline_and_or
 {
     AST_CMD_AND, /** && */
     AST_CMD_OR, /** || */
+    AST_CMD_NONE,
 };
 typedef enum ast_pipeline_and_or e_ast_pipeline_and_or;
 

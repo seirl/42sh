@@ -4,6 +4,11 @@
 
 static void exec_else(s_shell *shell, s_ast_else *else_clause)
 {
+    if (shell->breaks)
+    {
+        --shell->breaks;
+        return;
+    }
     if (else_clause->elif_predicate)
     {
         exec_ast_list(shell, else_clause->elif_predicate);
@@ -31,7 +36,14 @@ void exec_while(s_shell *shell, s_ast_while *while_cmd)
 {
     for (exec_ast_list(shell, while_cmd->predicate); !shell->status;
                                  exec_ast_list(shell, while_cmd->predicate))
+    {
+        if (shell->breaks)
+        {
+            --shell->breaks;
+            return;
+        }
         exec_ast_list(shell, while_cmd->cmds);
+    }
     shell_status_set(shell, 0);
 }
 
@@ -39,7 +51,14 @@ void exec_until(s_shell *shell, s_ast_until *until_cmd)
 {
     for (exec_ast_list(shell, until_cmd->predicate); shell->status;
                                  exec_ast_list(shell, until_cmd->predicate))
+    {
+        if (shell->breaks)
+        {
+            --shell->breaks;
+            return;
+        }
         exec_ast_list(shell, until_cmd->cmds);
+    }
 }
 
 void exec_for(s_shell *shell, s_ast_for *for_cmd)
@@ -47,6 +66,11 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
     s_ast_word_list *values = for_cmd->values;
     while (values && expand_compound(shell, values->word))
     {
+        if (shell->breaks)
+        {
+            --shell->breaks;
+            return;
+        }
         s_string *id = string_duplicate(expand_word(for_cmd->identifier));
         s_string *value = string_duplicate(expand_compound(shell,
                                                           values->word));

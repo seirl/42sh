@@ -39,6 +39,9 @@ struct shell
     /** Error code of the shell. */
     int status;
 
+    /** Number of breaks left to do */
+    unsigned int breaks;
+
     /** Status of the shell. */
     e_shell_state state;
 };
