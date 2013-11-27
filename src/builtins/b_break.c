@@ -40,6 +40,7 @@ int builtin_break(s_shell *shell, int argc, char *argv[])
     {
         n = strtol(argv[1], &endptr, 10);
         if ((n == 0) || (endptr && strcmp("", endptr)))
+            return break_error_zero();
         else if (n < 0)
             return break_error_neg(n);
         else
