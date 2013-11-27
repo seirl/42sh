@@ -1,12 +1,14 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <ctype.h>
 #include <unistd.h>
 #include "env.h"
 #include "string_utils.h"
 #include "ast.h"
 #include "shell.h"
 #include "expand.h"
+#include "match.h"
 
 static char *get_home(s_shell *shell, char *user)
 {
@@ -27,8 +29,22 @@ static char *get_home(s_shell *shell, char *user)
     return pw->pw_dir;
 }
 
+static int check_username_charset(char *str)
+{
+    for (int i = 0; str[i]; ++i)
+    {
+        char c = str[i];
+        if (islower(c) || (i && isdigit(c)) || c == '_')
+            continue;
+        return 0;
+    }
+    return 1;
+}
+
 static int user_tilde(s_shell *shell, s_string *word, s_string *ret)
 {
+    if (check_username_charset(word->buf + 1) == 0)
+        return 0;
     s_string *user = string_create(16);
     int offset = 0;
     for (char *str = word->buf + word->read_pos; *str; ++str)
@@ -83,11 +99,12 @@ static int operator_tilde(s_shell *shell, s_string *word, s_string *ret)
 static s_string *tilde_expansion(s_shell *shell, s_string *word)
 {
     char c;
+    char prev = 0;
     s_string *ret = string_create(0);
     s_string *word_cpy = string_duplicate(word);
     for (c = string_getc(word_cpy); c; c = string_getc(word_cpy))
     {
-        if (c == '~')
+        if (c == '~' && prev != '~')
         {
             if (simple_tilde(shell, word_cpy, ret))
                 continue;
@@ -97,6 +114,7 @@ static s_string *tilde_expansion(s_shell *shell, s_string *word)
                 continue;
         }
         string_putc(ret, c);
+        prev = c;
     }
     string_free(word_cpy);
     return ret;
