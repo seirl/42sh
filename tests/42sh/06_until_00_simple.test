@@ -1,0 +1,5 @@
+{
+    "desc": "until: simple until with evalexpr",
+    "args": ["-c", "a=0 ; until test $a -eq 4; do echo $a; a=$(($a + 1)); done"],
+    "stdout": "0\n1\n2\n3\n",
+}

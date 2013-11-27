@@ -1,0 +1,5 @@
+{
+    "desc": "while: basic",
+    "args": ["-c", "a=5 ; while test $a -ne 0 ; do echo $a ; a=$(($a - 1)) ;done"],
+    "stdout": "5\n4\n3\n2\n1\n",
+}
