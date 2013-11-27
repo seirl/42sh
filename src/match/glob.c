@@ -13,15 +13,6 @@
 /*
 ** On some Linux distributions, strchr() segfaults...
 */
-static const char *my_strchr(const char *haystack, char needle)
-{
-    while (*haystack && *haystack != needle)
-        haystack++;
-    if (*haystack == needle)
-        return haystack;
-    return NULL;
-}
-
 static const char *my_strrchr(const char *haystack, char needle)
 {
     const char *r = NULL;
@@ -73,12 +64,9 @@ static s_globr *glob_literal(s_globr *g, const char *filename)
 static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
                            e_glob_flags f)
 {
-    const char *cwd = getcwd(NULL, 0);
-    if (!dir)
-        dir = cwd;
-
-    DIR *dp = opendir(dir);
-    size_t len_dir = strlen(dir);
+    const char *rdir = dir ? dir : ".";
+    DIR *dp = opendir(rdir);
+    size_t l = dir ? strlen(rdir) + 1 : 0;
     if (dp != NULL)
     {
         struct dirent *ep;
@@ -87,13 +75,15 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
             if (!my_fnmatch(basename, ep->d_name))
                 if (basename[0] == '.' || ep->d_name[0] != '.' || f & DOTGLOB)
                 {
-                    char *path = malloc(sizeof (char) + len_dir +
-                                        strlen(ep->d_name) + 1);
-                    strcpy(path, dir);
-                    strcat(path, "/");
-                    strcat(path, ep->d_name);
-                    globr_add(g, path);
-                    free(path);
+                    char *p = malloc(sizeof (char) + l + strlen(ep->d_name));
+                    if (dir)
+                    {
+                        strcpy(p, dir);
+                        strcat(p, "/");
+                    }
+                    strcat(p, ep->d_name);
+                    globr_add(g, p);
+                    free(p);
                 }
         }
         closedir(dp);
@@ -106,7 +96,7 @@ s_globr *my_glob(const char *pattern, e_glob_flags flags)
     s_globr *g = globr_init();
     if (!has_magic(pattern))
         return glob_literal(g, pattern);
-    const char *split = strrchr(pattern, '/');
+    const char *split = my_strrchr(pattern, '/');
     if (!split)
         return glob_match(g, NULL, pattern, flags);
     char *basename = strdup(split + 1);
