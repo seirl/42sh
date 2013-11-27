@@ -4,12 +4,16 @@
 NAME
 ----
 
-42sh - The ROOTS SHell
+42sh - The ROOTS SHell: a shell that don't segfault with only 2 bytes.
 
 SYNOPSIS
 --------
 
 `42sh` [options] [file]
+
+COPYRIGHT
+---------
+    42sh is licensed under the Beer-Ware License by the hs24 team.
 
 DESCRIPTION
 -----------
@@ -23,20 +27,25 @@ OPTIONS
 
 `-c` *string*
   If the -c option is present, then the commands are read from *string*.
-  If there are more than one argument, each following argument present after
-*string* are assigned to the positional parameter starting at $0.
 
-`-i`
-  If the -i option is present, then `42sh` will be in interactive mode.
+`[-+]O` *shell option*
+  Set or unset one of the shell options accepted by the shopt *builtin*.
 
-`-foo` 42
+`--norc`
+  Ignore the resources files *~/.42shrc* and */etc/42shrc*
 
-`-bar` 42
+`--ast-print`
+  Display the Abstract Syntax Tree of all the commands.
 
-SHELL GRAMMAR
--------------
+`--version`
+  Display the version on standard output and exit.
 
-Not implemented yet.
+`--help`
+  Display a usage message on standard output and exit.
+
+BUILTINS
+--------
+*TODO*
 
 AUTHOR
 ------
@@ -54,4 +63,17 @@ Adrien \`schischi\` Schildknecht
 SEE ALSO
 --------
 
-bash(1)
+__bash__(1) __beer__(7) __sh__(1)
+
+BUG REPORTS
+-----------
+If you find a bug in 42sh, you should report it. But please make sure to run
+the latest version of 42sh available at *http://42sh.greenit-over-the-cloud.fr*
+
+To report a bug, just send a letter or sms to *Dave Null*, with the following
+things:
+
+  - The version number
+  - If you are using FreeBSD or not
+  - A description of the bug and how to reproduce it
+  - A tasteful beer
