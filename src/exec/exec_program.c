@@ -74,6 +74,8 @@ void restore_redir_contexts(s_redir_context **contexts)
 
 void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
+    exec_prefixes(shell, cmd->prefixes);
+
     int len = element_list_len(cmd->elements);
     char **cmd_argv = elements_to_argv(shell, cmd->elements, len);
     s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
@@ -81,8 +83,7 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
     f_handler callback;
     int ret = 0;
 
-    if ((ret = exec_prefixes(shell, cmd->prefixes)) != 0 || !cmd_argv
-        || !cmd_argv[0])
+    if (!cmd_argv || !cmd_argv[0])
     {
         shell_status_set(shell, ret);
         return; // TODO cleanup

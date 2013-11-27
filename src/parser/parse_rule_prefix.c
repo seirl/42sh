@@ -14,6 +14,7 @@ s_ast_prefix *parse_rule_prefix(s_parser *parser)
     s_ast_prefix *prefix = ast_prefix_new();
     prefix->redirection = redirection;
     prefix->assignment = assignment;
+    prefix->next = parse_rule_prefix(parser);
 
     return prefix;
 }

@@ -1,7 +1,7 @@
 #include "exec.h"
 #include "smalloc.h"
 
-int exec_prefixes(s_shell *shell, s_ast_prefix *prefix)
+void exec_prefixes(s_shell *shell, s_ast_prefix *prefix)
 {
     while (prefix)
     {
@@ -17,7 +17,6 @@ int exec_prefixes(s_shell *shell, s_ast_prefix *prefix)
             exec_assignment(shell, prefix->assignment);
         prefix = prefix->next;
     }
-    return 0;
 }
 
 int element_list_len(s_ast_element *elt)
