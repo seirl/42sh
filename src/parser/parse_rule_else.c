@@ -10,7 +10,11 @@ static s_ast_else *parse_elif(s_parser *parser)
     if (!(elif_predicate = parse_rule_compound_list(parser, 1)))
         return NULL;
 
-    parse_expect_token(parser, T_THEN);
+    if (!(parse_expect_token(parser, T_THEN)))
+    {
+        ast_list_delete(elif_predicate);
+        RETURN_PARSE_EXPECTED(parser, "then");
+    }
 
     if (!(elif_cmds = parse_rule_compound_list(parser, 1)))
     {

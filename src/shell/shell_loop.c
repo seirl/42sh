@@ -22,8 +22,8 @@ static e_shell_status shell_read_eval(s_shell *shell)
         if (shopt_get(shell, "ast_print"))
             print_ast(ast, stdout);
         exec_ast_input(shell, ast);
-        ast_input_delete(ast);
     }
+    ast_input_delete(ast);
     return status == PARSE_ERROR ? SHELL_PARSE_ERROR : SHELL_OK;
 }
 
