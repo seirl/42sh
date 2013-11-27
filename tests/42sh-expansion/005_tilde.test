@@ -3,6 +3,5 @@
     "desc": "Tilde +",
     "stdin": b"""echo ~+/foo\n
 """,
-    "stdout": os.getenv("PWD") + "/foo\n" ,
-    "skip": True
+    "stdout": ...,
 }
