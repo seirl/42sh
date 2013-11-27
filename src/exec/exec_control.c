@@ -32,6 +32,7 @@ void exec_while(s_shell *shell, s_ast_while *while_cmd)
     for (exec_ast_list(shell, while_cmd->predicate); !shell->status;
                                  exec_ast_list(shell, while_cmd->predicate))
         exec_ast_list(shell, while_cmd->cmds);
+    shell_status_set(shell, 0);
 }
 
 void exec_until(s_shell *shell, s_ast_until *until_cmd)
