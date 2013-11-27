@@ -180,7 +180,7 @@ typedef struct ast_case s_ast_case;
 */
 struct ast_for
 {
-    s_ast_word *identifier; /** XXX: add s_ast_name? */
+    s_ast_word *identifier;
     s_ast_word_list *values;
     s_ast_list *cmd_list;
 };

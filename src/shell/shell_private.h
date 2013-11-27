@@ -38,6 +38,8 @@ struct shell
 
     /** Error code of the shell. */
     int status;
+
+    /** Status of the shell. */
     e_shell_state state;
 };
 
