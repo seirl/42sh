@@ -9,5 +9,4 @@ done
 b
 c
 """,
-    "skip": True,
 }

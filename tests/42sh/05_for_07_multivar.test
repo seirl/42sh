@@ -12,5 +12,4 @@ a b
 b a
 b b
 """,
-    "skip": True,
 }
