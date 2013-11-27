@@ -22,6 +22,6 @@ s_hist_entry *h_list_nth(s_hist_list *l, size_t n);
 /**
 ** @brief Add an element at the head of an history entry list.
 */
-void h_list_append(s_hist_list *l, s_string *data);
+void h_list_append(s_hist_list *l, s_string *data, time_t date);
 
 #endif /* !HIST_LIST_H */

@@ -31,6 +31,38 @@ static void env_setup(s_shell *shell)
         env_set(shell, "500", "HISTFILESIZE");
 }
 
+static void read_entries(s_shell *shell, FILE *hist_file)
+{
+    char *line = NULL;
+    size_t buf_size = 0;
+    int line_len = 0;
+    time_t date = time(NULL);
+
+    while ((line_len = getline(&line, &buf_size, hist_file)) != -1)
+    {
+        if (*line && line[line_len - 1] == '\n')
+            line[line_len - 1] = '\0';
+
+        if (*line == '#')
+        {
+            sscanf(line, "#%ld", &date);
+            free(line);
+            line = NULL;
+            if ((line_len = getline(&line, &buf_size, hist_file)) == -1)
+                break;
+            if (*line && line[line_len - 1] == '\n')
+                line[line_len - 1] = '\0';
+        }
+
+        h_list_append(shell->history->lines, string_create_from(line), date);
+        free(line);
+        line = NULL;
+    }
+
+    if (line)
+        free(line);
+}
+
 static void history_open(s_shell *shell)
 {
     env_setup(shell);
@@ -46,20 +78,8 @@ static void history_open(s_shell *shell)
     hist_file = fopen(env_get(shell, "HISTFILE"), "r");
     shell->history = smalloc(sizeof (s_history));
     shell->history->lines = h_list_init();
-    char *line = NULL;
-    size_t buf_size = 0;
-    int line_len = 0;
 
-    while ((line_len = getline(&line, &buf_size, hist_file)) != -1)
-    {
-        if (*line && line[line_len - 1] == '\n')
-            line[line_len - 1] = '\0';
-        h_list_append(shell->history->lines, string_create_from(line));
-        free(line);
-        line = NULL;
-    }
-    if (line)
-        free(line);
+    read_entries(shell, hist_file);
 
     shell->history->last_file_entry = shell->history->lines->hd;
     fclose(hist_file);
@@ -70,6 +90,8 @@ static void history_write_rec(FILE *f, s_hist_entry *e)
     if (!e)
         return;
     history_write_rec(f, e->next);
+
+    fprintf(f, "#%ld\n", e->date);
     fprintf(f, "%s\n", e->line->buf);
 }
 
@@ -124,5 +146,5 @@ void history_add(s_shell *shell, s_string *line)
         history_open(shell);
     if (!shell->history)
         return;
-    h_list_append(shell->history->lines, line);
+    h_list_append(shell->history->lines, line, time(NULL));
 }

@@ -1,6 +1,7 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
+# include <time.h>
 # include "shell.h"
 # include "string_utils.h"
 
@@ -11,6 +12,7 @@ struct hist_entry
 {
     s_string *line;
     s_string *temp_line;
+    time_t date;
     struct hist_entry *next;
 };
 typedef struct hist_entry s_hist_entry;

@@ -1,3 +1,4 @@
+#include <time.h>
 #include "stdlib.h"
 #include "string_utils.h"
 #include "hist_list.h"
@@ -28,12 +29,14 @@ void h_list_delete(s_hist_list *l)
     free(l);
 }
 
-void h_list_append(s_hist_list *l, s_string *data)
+void h_list_append(s_hist_list *l, s_string *data, time_t date)
 {
     s_hist_entry *new = malloc(sizeof (s_hist_entry));
     new->line = data;
     new->temp_line = NULL;
     new->next = l->hd;
+    if (date)
+        new->date = date;
 
     l->hd = new;
     l->size++;
