@@ -13,6 +13,8 @@ void string_putc(s_string *s, char c)
 
 void string_cat(s_string *s1, s_string *s2)
 {
+    if (s2 == NULL)
+        return;
     for (unsigned i = 0; i < s2->len; ++i)
         string_putc(s1, s2->buf[i]);
 }
