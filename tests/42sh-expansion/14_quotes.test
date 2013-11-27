@@ -1,12 +1,6 @@
 {
     "desc": "expand: with token inside",
-    "args": ["-O", "token_print"],
     "stdin": b'echo "a > b"',
     "stdout": """a > b
-echo	T_WORD (0)
-"a > b"	T_DQUOTE (0)
-	T_EOF (0)
-a > b	T_WORD (0)
-	T_EOF (0)
 """,
 }
