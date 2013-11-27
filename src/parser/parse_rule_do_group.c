@@ -3,19 +3,16 @@
 
 s_ast_list *parse_rule_do_group(s_parser *parser)
 {
-    s_token *tok;
-
-    tok = lex_token(parser->lexer);
-    if (tok->type != T_DO)
+    if (!parse_expect_token(parser, T_DO))
         RETURN_PARSE_EXPECTED(parser, "do");
-    token_free(tok);
 
     s_ast_list *list = parse_rule_compound_list(parser, 1);
 
-    tok = lex_token(parser->lexer);
-    if (tok->type != T_DONE)
+    if (!parse_expect_token(parser, T_DONE))
+    {
+        ast_list_delete(list);
         RETURN_PARSE_EXPECTED(parser, "done");
-    token_free(tok);
+    }
 
     return list;
 }

@@ -25,7 +25,10 @@ static s_ast_word_list *parse_for_in(s_parser *parser)
     values = parse_word_list(parser);
 
     if (!parse_expect_newline_or_semi(parser))
+    {
+        ast_word_list_delete(values);
         RETURN_PARSE_EXPECTED(parser, "; or newline");
+    }
 
     parse_expect_newlines(parser);
 
@@ -48,13 +51,17 @@ s_ast_for *parse_rule_for(s_parser *parser)
     token_free(tok);
 
     parse_expect_newlines(parser);
-    tok = lex_look_token(parser->lexer);
-    if (tok->type == T_IN)
+
+    e_token_type tok_type = lex_look_token_type(parser->lexer);
+    if (tok_type == T_IN)
         values = parse_for_in(parser);
-    token_free(tok);
 
     if (!(list = parse_rule_do_group(parser)))
+    {
+        ast_word_list_delete(values);
+        ast_word_delete(identifier);
         RETURN_PARSE_EXPECTED(parser, "do group");
+    }
 
     s_ast_for *for_n = ast_for_new();
     for_n->identifier = identifier;
