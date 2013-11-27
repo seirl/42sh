@@ -23,7 +23,7 @@ int string_begins_with(const s_string *s, const char *pattern)
 
 int string_ends_with(const s_string *s, const s_string *pattern)
 {
-    s_string *end = string_extract(s, s->len - pattern->len, 0);
+    s_string *end = string_extract(s, s->len - pattern->len, s->len);
     int ret = strcmp(end->buf, pattern->buf);
     string_free(end);
     return ret == 0;

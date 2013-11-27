@@ -131,7 +131,6 @@ static void revert_set_redir(s_shell *shell,
     revert_set_redir(shell, redir->next, fd);
     set_default_io_number(redir);
     exec_redir_type(shell, redir, fd);
-
 }
 
 int set_redir(s_shell *shell, s_ast_redirection_list *redir)

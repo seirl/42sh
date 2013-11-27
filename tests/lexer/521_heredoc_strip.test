@@ -15,7 +15,8 @@ EOF	T_WORD (0)
 	T_NEWLINE (0)
 foo
 bar
-baz	T_WORD (0)
+baz
+	T_WORD (0)
 	T_EOF (0)
 """
 }

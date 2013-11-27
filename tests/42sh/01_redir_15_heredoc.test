@@ -1,0 +1,9 @@
+{
+    "desc": "one pipeline, multiple redirections",
+    "stdin": b"""cat <<EOF
+hello
+EOF
+""",
+    "stdout": "hello\n",
+    "skip": True,
+}

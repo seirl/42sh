@@ -83,18 +83,15 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
     f_handler callback;
     int ret = 0;
 
-    if (!cmd_argv || !cmd_argv[0])
+    if (cmd_argv && cmd_argv[0])
     {
-        shell_status_set(shell, ret);
-        return; // TODO cleanup
+        if ((func_body = functions_get(shell, cmd_argv[0])))
+            exec_shell_cmd(shell, func_body); // TODO return int status
+        else if ((callback = builtins_find(shell, cmd_argv[0])))
+            ret = callback(shell, len, cmd_argv);
+        else
+            ret = exec_prog(shell, cmd_argv, cmd->prefixes);
     }
-
-    if ((func_body = functions_get(shell, cmd_argv[0])))
-        exec_shell_cmd(shell, func_body); // TODO return int status
-    else if ((callback = builtins_find(shell, cmd_argv[0])))
-        ret = callback(shell, len, cmd_argv);
-    else
-        ret = exec_prog(shell, cmd_argv, cmd->prefixes);
 
     exec_argv_free(cmd_argv);
     restore_redir_contexts(contexts);
