@@ -29,6 +29,7 @@ include_directories(src/ast_printer)
 include_directories(src/builtins)
 include_directories(src/functions)
 include_directories(src/env)
+include_directories(src/evalexpr)
 include_directories(src/exec)
 include_directories(src/expand)
 include_directories(src/match)
@@ -217,6 +218,16 @@ add_library(exec OBJECT
     src/exec/redir_set.c
 )
 
+add_library(evalexpr OBJECT
+    src/evalexpr/opstack.c
+    src/evalexpr/numstack.c
+    src/evalexpr/ops.c
+    src/evalexpr/eval/base.c
+    src/evalexpr/eval/bit.c
+    src/evalexpr/eval/pow.c
+    src/evalexpr/eval/unary.c
+)
+
 add_library(ast OBJECT
 
     src/ast/and_or.c
@@ -270,6 +281,7 @@ add_library(lib42sh STATIC
     $<TARGET_OBJECTS:ast_printer>
     $<TARGET_OBJECTS:builtins>
     $<TARGET_OBJECTS:env>
+    $<TARGET_OBJECTS:evalexpr>
     $<TARGET_OBJECTS:expand>
     $<TARGET_OBJECTS:exec>
     $<TARGET_OBJECTS:hashtbl>
