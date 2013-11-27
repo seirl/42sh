@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "IFS change value",
+    "stdin": b"""IFS='b'; foo='foo bar'; for i in $foo; do echo $i; done\n
+""",
+    "stdout": "foo \nar\n",
+}

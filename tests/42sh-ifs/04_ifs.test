@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "IFS left concat",
+    "stdin": b"""foo='foo bar baz'; for i in lol$foo; do echo $i; done\n
+""",
+    "stdout": "lolfoo\nbar\nbaz\n",
+}
