@@ -22,7 +22,6 @@ s_ast_case *parse_rule_case(s_parser *parser)
     if (!parse_expect_token(parser, T_ESAC))
     {
         ast_case_delete(mycase);
-        ast_compound_word_delete(name);
         RETURN_PARSE_EXPECTED(parser, "'esac'");
     }
 
