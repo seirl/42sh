@@ -6,6 +6,7 @@
 #include "ast.h"
 #include "lexer.h"
 #include "expand_wordlist.h"
+#include "expand.h"
 #include "env.h"
 #include "ifs.h"
 
@@ -37,12 +38,23 @@ static int replace_current_word(s_shell *shell, char *value, s_ast_word *word)
     return i;
 }
 
+static char *expand_word_by_kind(s_shell *shell, s_ast_word *word)
+{
+    if (word->kind == EXPAND_NAME)
+        return string_release(expand_simple_var(shell, word->str));
+    if (word->kind == WORD)
+        return string_release(expand_simple_word(shell, word->str));
+    if (word->kind == EXPAND_ARITHM)
+        return string_release(expand_arithm(shell, word->str));
+    return NULL;
+}
+
 static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
                                        s_ast_compound_word *cw)
 {
-    if (word->kind != EXPAND_NAME)
+    char *value = expand_word_by_kind(shell, word);
+    if (value == NULL)
         return NULL;
-    char *value = env_get(shell, word->str->buf);
 
     int i = replace_current_word(shell, value, word);
     if (value[i] == 0)
