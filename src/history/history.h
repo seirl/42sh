@@ -53,6 +53,11 @@ s_hist_entry *history_get(s_shell *shell, int n);
 void history_close(s_shell *shell);
 
 /**
+** @brief Remove every entry of the local history.
+*/
+void history_reset(s_shell *shell);
+
+/**
 ** @brief Get the history size
 */
 int history_size(s_shell *shell);

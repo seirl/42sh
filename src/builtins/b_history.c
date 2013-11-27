@@ -18,7 +18,7 @@ static void usage(void)
 
 static void history_clear(s_shell *shell)
 {
-    (void)shell;
+    history_reset(shell);
 }
 
 static void history_set_filename(s_shell *shell, char *filename)
@@ -29,7 +29,6 @@ static void history_set_filename(s_shell *shell, char *filename)
 
 static void history_list(s_shell *shell, s_opt *opt)
 {
-    (void)shell;
     size_t count = history_size(shell);
     if (opt->trailing_count)
         count = atoi(opt_trailing_arg(opt, 0));
