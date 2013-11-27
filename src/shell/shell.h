@@ -46,7 +46,7 @@ e_shell_status shell_loop(s_shell *shell);
 int shell_status(s_shell *shell);
 
 /**
-** @brief Set the status (return code) of the shell.
+** @brief Set the return value and $?.
 */
 void shell_status_set(s_shell *shell, int status);
 

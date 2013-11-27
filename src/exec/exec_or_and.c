@@ -45,7 +45,7 @@ void exec_or_node(s_shell *shell, s_ast_and_or *node, int force)
     }
 }
 
-/* force: -1 means that you won’t force error code value */
+/* force: -1 means that you won't force error code value */
 /*         0 means that you do force it to 0             */
 /*         1 means that you do force it to 1             */
 void exec_andor_node(s_shell *shell, s_ast_and_or *node, int force)
