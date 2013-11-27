@@ -40,4 +40,9 @@ void shell_delete(s_shell *shell);
 */
 e_shell_status shell_loop(s_shell *shell);
 
+/**
+** @brief Set the status (return code) of the shell.
+*/
+void shell_status_set(s_shell *shell, int status);
+
 #endif /* !SHELL_H */

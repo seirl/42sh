@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "$? after and",
+    "stdin": b"""true && false
+echo $?
+""",
+    "stdout": "1\n",
+}

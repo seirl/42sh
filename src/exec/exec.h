@@ -51,9 +51,7 @@ void exec_assignment(s_shell *shell, s_ast_assignment *assign);
 /** @brief Execute an argument array */
 void exec_argv(char **argv);
 /** @brief Execute a program from a argv, a context list and a prefix list */
-int exec_prog(s_shell *shell, char **cmd_argv,
-              s_redir_context **contexts,
-              s_ast_prefix *prefixes);
+int exec_prog(s_shell *shell, char **cmd_argv, s_ast_prefix *prefixes);
 /** @brief Execute a prefix list */
 int exec_prefixes(s_shell *shell, s_ast_prefix *prefix);
 /** @brief Execute an element list */

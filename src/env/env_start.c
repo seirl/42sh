@@ -21,7 +21,14 @@ static void add_cwd(s_shell *shell)
     sfree(curr_dir);
 }
 
+static void add_status(s_shell *shell)
+{
+    env_set(shell, "0", "?");
+    env_chmod(shell, "?", VAR_RDONLY);
+}
+
 void env_default_var(s_shell *shell)
 {
     add_cwd(shell);
+    add_status(shell);
 }

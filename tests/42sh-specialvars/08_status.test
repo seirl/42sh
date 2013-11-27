@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "$? on start",
+    "stdin": b"""echo $?
+""",
+    "stdout": "0\n",
+}

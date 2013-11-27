@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": "command not found $? == 127",
+    "stdin": b"""IDONOTEXISTS;
+    echo $?""",
+    "stdout": "127\n",
+    "stderr": ...,
+}

@@ -4,18 +4,14 @@
 #include "smalloc.h"
 #include "functions.h"
 
-void free_current_cmd(char **argv)
+static void exec_argv_free(char **cmd_argv)
 {
-    int i = 0;
-    if (argv)
-    {
-        while (argv[i])
-        {
-            sfree(argv[i]);
-            i += 1;
-        }
-        sfree(argv);
-    }
+    if (!cmd_argv)
+        return;
+
+    for (int i = 0; cmd_argv[i]; ++i)
+        sfree(cmd_argv[i]);
+    sfree(cmd_argv);
 }
 
 void exec_argv(char **argv)
@@ -23,7 +19,7 @@ void exec_argv(char **argv)
     assert(argv && argv[0]);
     if (!strcmp(argv[0], "exit"))
     {
-        free_current_cmd(argv);
+        exec_argv_free(argv);
         char *new_argv[] =
         {
             "exit\0",
@@ -44,7 +40,6 @@ void exec_argv(char **argv)
 
 int exec_prog(s_shell *shell,
               char **cmd_argv,
-              s_redir_context **contexts,
               s_ast_prefix *prefixes)
 {
     if (!strcmp(cmd_argv[0],"\0") || !strcmp(cmd_argv[0], ""))
@@ -62,63 +57,44 @@ int exec_prog(s_shell *shell,
         exec_prefixes(shell, prefixes);
         shell->curr_argv = cmd_argv;
         exec_argv(cmd_argv);
-        fprintf(stderr, "Execution flow corrupted.\n");
-        assert(0);
-        return 1;
+        assert(0 && "Execution flow corrupted.");
     }
     waitpid(pid, &st, 0);
-    restore_redir_contexts(contexts);
-    for (int i = 0; cmd_argv[i]; ++i)
-        sfree(cmd_argv[i]);
-    sfree(cmd_argv);
-    return st;
+    return WEXITSTATUS(st); // TODO check for other kind of exit
 }
 
 void restore_redir_contexts(s_redir_context **contexts)
 {
-    if (!contexts)
-        return;
+    assert(contexts);
     for (int i = 0; contexts[i]; ++i)
         restore_redir_context(contexts[i]);
     sfree(contexts);
 }
 
-static void exec_func(s_shell *shell,
-                      s_ast_prefix *prefix,
-                      s_ast_shell_cmd *func_body,
-                      s_redir_context **contexts)
-{
-    exec_prefixes(shell, prefix);
-    exec_shell_cmd(shell, func_body);
-    restore_redir_contexts(contexts);
-}
-
 void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
     int len = element_list_len(cmd->elements);
-    f_handler callback;
     char **cmd_argv = elements_to_argv(shell, cmd->elements, len);
     s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
     s_ast_shell_cmd *func_body;
+    f_handler callback;
+    int ret = 0;
 
-    if (cmd_argv)
+    if ((ret = exec_prefixes(shell, cmd->prefixes)) != 0 || !cmd_argv
+        || !cmd_argv[0])
     {
-        if (cmd_argv && !cmd_argv[0])
-            shell->status = exec_prefixes(shell, cmd->prefixes);
-        else if ((func_body = functions_get(shell, cmd_argv[0])))
-        {
-            exec_func(shell, cmd->prefixes, func_body, contexts);
-            sfree(cmd_argv);
-        }
-        else if ((callback = builtins_find(shell, cmd_argv[0])))
-        {
-            exec_prefixes(shell, cmd->prefixes);
-            shell->status = callback(shell, len, cmd_argv);
-            sfree(cmd_argv);
-        }
-        else
-           shell->status = exec_prog(shell, cmd_argv, contexts, cmd->prefixes);
+        shell_status_set(shell, ret);
+        return; // TODO cleanup
     }
+
+    if ((func_body = functions_get(shell, cmd_argv[0])))
+        exec_shell_cmd(shell, func_body); // TODO return int status
+    else if ((callback = builtins_find(shell, cmd_argv[0])))
+        ret = callback(shell, len, cmd_argv);
     else
-        shell->status = 0;
+        ret = exec_prog(shell, cmd_argv, cmd->prefixes);
+
+    exec_argv_free(cmd_argv);
+    restore_redir_contexts(contexts);
+    shell_status_set(shell, ret);
 }

@@ -1,0 +1,7 @@
+{
+    "desc": "function: define, call, exit",
+    "stdin": b"""a() { exit 42; }
+a
+""",
+    "retval": 42,
+}
