@@ -1,0 +1,15 @@
+{
+    "desc": "hello, world!",
+    "stdin": b"""
+a=42
+case $a in
+    4?)
+        echo yes
+        ;;
+    ?4)
+        echo no
+        ;;
+esac
+""",
+    "stdout": "yes\n",
+}

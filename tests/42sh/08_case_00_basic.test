@@ -1,0 +1,17 @@
+{
+    "desc": "hello, world!",
+    "stdin": b"""
+case a in
+    b)
+        echo no
+        ;;
+    a)
+        echo yes
+        ;;
+    *)
+        echo foo
+        ;;
+esac
+""",
+    "stdout": "yes\n",
+}

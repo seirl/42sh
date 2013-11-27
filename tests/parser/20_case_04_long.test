@@ -1,16 +1,9 @@
 {
-    "desc": "rule case: long",
+    "desc": "rule case: empty",
     "input": """case a in
     a)
-        echo foo;
-        for i in a b c; do
-            echo $i
-        done
         ;;
     (*)
-        echo bar > foo
-        a=42
-        echo $a
         ;;
     esac
 """,

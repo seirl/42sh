@@ -1,0 +1,9 @@
+{
+    "desc": "hello, world!",
+    "stdin": b"""
+case a in
+    *)
+        ;;
+esac
+""",
+}

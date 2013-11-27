@@ -41,7 +41,7 @@ s_ast_case_item *parse_rule_case_item(s_parser *parser)
 
     parse_expect_newlines(parser);
 
-    item->cmd_list = parse_rule_compound_list(parser, 1);
+    item->cmd_list = parse_rule_compound_list(parser, 0);
 
     return item;
 }
