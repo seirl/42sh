@@ -52,6 +52,6 @@ int string_ends_with(const s_string *s, const s_string *pattern);
 char string_index(const s_string *s, int index);
 
 int string_atoi(s_string *n);
-s_string *string_itoa(int n);
+s_string *string_itoa(long n);
 
 #endif /* !STRING_BUF_H */
