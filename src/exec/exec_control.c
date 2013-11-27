@@ -43,6 +43,11 @@ void exec_while(s_shell *shell, s_ast_while *while_cmd)
             return;
         }
         exec_ast_list(shell, while_cmd->cmds);
+        if (shell->breaks)
+        {
+            --shell->breaks;
+            return;
+        }
     }
     shell_status_set(shell, 0);
 }
@@ -58,6 +63,11 @@ void exec_until(s_shell *shell, s_ast_until *until_cmd)
             return;
         }
         exec_ast_list(shell, until_cmd->cmds);
+        if (shell->breaks)
+        {
+            --shell->breaks;
+            return;
+        }
     }
 }
 
@@ -76,6 +86,11 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
                                                           values->word));
         env_set(shell, string_release(value), string_release(id));
         exec_ast_list(shell, for_cmd->cmd_list);
+        if (shell->breaks)
+        {
+            --shell->breaks;
+            return;
+        }
         values = values->next;
     }
 }

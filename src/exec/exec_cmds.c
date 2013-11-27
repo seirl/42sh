@@ -61,11 +61,6 @@ void exec_funcdec_node(s_shell *shell, s_ast_funcdec *funcdec,
 
 void exec_cmd_node(s_shell *shell, s_ast_cmd *node)
 {
-    if (shell->breaks)
-    {
-        --shell->breaks;
-        return;
-    }
     if (node->simple_cmd)
         exec_simple_cmd(shell, node->simple_cmd);
     else if (node->shell_cmd)
