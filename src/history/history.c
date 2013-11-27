@@ -36,7 +36,7 @@ static void read_entries(s_shell *shell, FILE *hist_file, int temporary)
     char *line = NULL;
     size_t buf_size = 0;
     int line_len = 0;
-    time_t date = time(NULL);
+    time_t d = time(NULL);
 
     while ((line_len = getline(&line, &buf_size, hist_file)) != -1)
     {
@@ -45,7 +45,7 @@ static void read_entries(s_shell *shell, FILE *hist_file, int temporary)
 
         if (*line == '#')
         {
-            sscanf(line, "#%ld", &date);
+            sscanf(line, "#%ld", &d);
             free(line);
             line = NULL;
             if ((line_len = getline(&line, &buf_size, hist_file)) == -1)
@@ -55,7 +55,7 @@ static void read_entries(s_shell *shell, FILE *hist_file, int temporary)
         }
 
         int t = temporary;
-        h_list_append(shell->history->lines, string_create_from(line), date, t);
+        h_list_append(shell->history->lines, string_create_from(line), d, t);
         free(line);
         line = NULL;
     }
