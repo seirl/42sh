@@ -12,10 +12,12 @@ s_ast_funcdec *parse_rule_funcdec(s_parser *parser)
     name = string_duplicate(tok->value.str);
     token_free(tok);
 
-    if (!parse_expect_token(parser, T_LPAREN))
-        RETURN_PARSE_EXPECTED(parser, "(");
-    if (!parse_expect_token(parser, T_RPAREN))
-        RETURN_PARSE_EXPECTED(parser, ")");
+    if (!parse_expect_token(parser, T_LPAREN)
+        || !parse_expect_token(parser, T_RPAREN))
+    {
+        string_free(name);
+        RETURN_PARSE_EXPECTED(parser, "()");
+    }
 
     parse_expect_newlines(parser);
 
