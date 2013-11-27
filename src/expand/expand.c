@@ -76,6 +76,8 @@ s_string *expand_string(s_shell *shell, s_string *str, e_lexer_context lcon)
             string_free(sub);
         token_free(tok);
     } while (t != T_EOF);
+    token_free(tok);
     lex_delete(lexer);
+    input_destroy(input);
     return ret;
 }
