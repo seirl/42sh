@@ -10,7 +10,7 @@ void exec_and_node(s_shell *shell, s_ast_and_or *node)
     }
     if (node->pipeline)
         exec_pipe_node(shell, node->pipeline);
-    if (shell->status == 0 && node->next)
+    if (!shell->status && node->next)
         exec_andor_node(shell, node->next);
 }
 
@@ -24,7 +24,15 @@ void exec_or_node(s_shell *shell, s_ast_and_or *node)
     if (node->pipeline)
         exec_pipe_node(shell, node->pipeline);
     if (node->next)
-        exec_andor_node(shell, node->next);
+    {
+        if (!shell->status)
+        {
+            exec_andor_node(shell, node->next);
+            shell->status = 0;
+        }
+        else
+            exec_andor_node(shell, node->next);
+    }
 }
 
 void exec_andor_node(s_shell *shell, s_ast_and_or *node)
