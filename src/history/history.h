@@ -13,6 +13,8 @@ struct hist_entry
     s_string *line;
     s_string *temp_line;
     time_t date;
+    /** If set, this entry will not be written to the log file on exit */
+    int temporary;
     struct hist_entry *next;
 };
 typedef struct hist_entry s_hist_entry;
@@ -38,6 +40,11 @@ struct history
     s_hist_entry *last_file_entry;
 };
 typedef struct history s_history;
+
+/**
+** @brief Create the internal representation of the history.
+*/
+void history_open(s_shell *shell);
 
 /**
 ** @brief Query the command line history to get nth last line.
@@ -66,5 +73,12 @@ int history_size(s_shell *shell);
 ** @brief Add a line to the history
 */
 void history_add(s_shell *shell, s_string *line);
+
+/**
+** @brief Add the file content to the history.
+**
+** Note: The added entries will not be written to HISTFILE on exit.
+*/
+void history_add_from(s_shell *shell, char *filename);
 
 #endif /* !HISTORY_H */

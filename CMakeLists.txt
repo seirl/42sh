@@ -145,6 +145,7 @@ add_library(readline OBJECT
 add_library(history OBJECT
     src/history/history.c
     src/history/hist_list.c
+    src/history/history_observators.c
 )
 
 add_library(input OBJECT

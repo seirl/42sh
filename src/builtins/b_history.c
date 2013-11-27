@@ -23,8 +23,7 @@ static void history_clear(s_shell *shell)
 
 static void history_set_filename(s_shell *shell, char *filename)
 {
-    (void)shell;
-    (void)filename;
+    history_add_from(shell, filename);
 }
 
 static void history_list(s_shell *shell, s_opt *opt)

@@ -31,7 +31,7 @@ static void env_setup(s_shell *shell)
         env_set(shell, "500", "HISTFILESIZE");
 }
 
-static void read_entries(s_shell *shell, FILE *hist_file)
+static void read_entries(s_shell *shell, FILE *hist_file, int temporary)
 {
     char *line = NULL;
     size_t buf_size = 0;
@@ -54,7 +54,8 @@ static void read_entries(s_shell *shell, FILE *hist_file)
                 line[line_len - 1] = '\0';
         }
 
-        h_list_append(shell->history->lines, string_create_from(line), date);
+        int t = temporary;
+        h_list_append(shell->history->lines, string_create_from(line), date, t);
         free(line);
         line = NULL;
     }
@@ -63,7 +64,35 @@ static void read_entries(s_shell *shell, FILE *hist_file)
         free(line);
 }
 
-static void history_open(s_shell *shell)
+static void history_write_rec(s_shell *shell, FILE *f, s_hist_entry *e)
+{
+    if (!e || e == shell->history->last_file_entry)
+        return;
+    history_write_rec(shell, f, e->next);
+
+    if (!e->temporary)
+    {
+        fprintf(f, "#%ld\n", e->date);
+        fprintf(f, "%s\n", e->line->buf);
+    }
+}
+
+static void history_write(s_shell *shell)
+{
+    if (!shell->history)
+        history_open(shell);
+    if (!shell->history)
+        return;
+
+    FILE *f = fopen(env_get(shell, "HISTFILE"), "a+");
+    if (f)
+    {
+        history_write_rec(shell, f, shell->history->lines->hd);
+        fclose(f);
+    }
+}
+
+void history_open(s_shell *shell)
 {
     env_setup(shell);
     FILE *hist_file;
@@ -79,34 +108,10 @@ static void history_open(s_shell *shell)
     shell->history = smalloc(sizeof (s_history));
     shell->history->lines = h_list_init();
 
-    read_entries(shell, hist_file);
+    read_entries(shell, hist_file, 0);
 
     shell->history->last_file_entry = shell->history->lines->hd;
     fclose(hist_file);
-}
-
-static void history_write_rec(s_shell *shell, FILE *f, s_hist_entry *e)
-{
-    if (!e || e == shell->history->last_file_entry)
-        return;
-    history_write_rec(shell, f, e->next);
-
-    fprintf(f, "#%ld\n", e->date);
-    fprintf(f, "%s\n", e->line->buf);
-}
-
-static void history_write(s_shell *shell)
-{
-    if (!shell->history)
-        history_open(shell);
-    if (!shell->history)
-        return;
-    FILE *f = fopen(env_get(shell, "HISTFILE"), "a+");
-    if (f)
-    {
-        history_write_rec(shell, f, shell->history->lines->hd);
-        fclose(f);
-    }
 }
 
 void history_close(s_shell *shell)
@@ -132,29 +137,23 @@ void history_reset(s_shell *shell)
     shell->history->lines = h_list_init();
 }
 
-s_hist_entry *history_get(s_shell *shell, int n)
-{
-    if (!shell->history)
-        history_open(shell);
-    if (!shell->history)
-        return NULL;
-    return h_list_nth(shell->history->lines, n);
-}
-
-int history_size(s_shell *shell)
-{
-    if (!shell->history)
-        history_open(shell);
-    if (shell->history && shell->history->lines)
-        return shell->history->lines->size;
-    return 0;
-}
-
 void history_add(s_shell *shell, s_string *line)
 {
     if (!shell->history)
         history_open(shell);
     if (!shell->history)
         return;
-    h_list_append(shell->history->lines, line, time(NULL));
+    h_list_append(shell->history->lines, line, time(NULL), 0);
+}
+
+void history_add_from(s_shell *shell, char *filename)
+{
+    if (!shell->history)
+        history_open(shell);
+    if (!shell->history)
+        return;
+
+    FILE *hist_file = fopen(filename, "r");
+    if (hist_file)
+        read_entries(shell, hist_file, 1);
 }
