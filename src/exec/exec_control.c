@@ -126,7 +126,7 @@ static void exec_clauses(s_shell *shell,
             return;
         clauses = clauses->next;
     }
-    shell->status = 0;
+    shell_status_set(shell, 0);
 }
 
 void exec_case(s_shell *shell, s_ast_case *case_cmd)

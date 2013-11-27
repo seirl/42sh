@@ -1,0 +1,5 @@
+{
+    "desc": "until: until with evalexpr and pipes",
+    "args": ["-c", "a=0 ; until test $a -eq 4; do echo $a | cat -e | grep 3; a=$(($a + 1)); done"],
+    "stdout": "3$\n",
+}

@@ -1,5 +1,4 @@
 #include "exec.h"
-
 #include "shell_private.h"
 #include "smalloc.h"
 #include "xsyscall.h"
@@ -60,6 +59,12 @@ static void pipe_parent_job(int index,
     }
 }
 
+static void proc_status_set(s_shell *shell, pid_t pid, int unused)
+{
+    waitpid(pid, &unused, 0);
+    shell_status_set(shell, unused);
+}
+
 int exec_pipe(s_shell *shell, s_pipe *pipe_struct,
               s_ast_cmd **pipe_cmds,
               int len)
@@ -85,7 +90,7 @@ int exec_pipe(s_shell *shell, s_pipe *pipe_struct,
             process_add(pid, pipe_struct);
             pipe_parent_job(i, len, &old_pipe, curr_pipe);
             if (i == len - 1)
-                waitpid(pid, &shell->status, 0);
+                proc_status_set(shell, pid, unused);
         }
     }
     return 0;
@@ -95,12 +100,9 @@ static void wait_pipe(s_shell *shell, pid_t main, s_pipe *pipe)
 {
     int st = 0;
     pid_t proc = 0;
-
-    if (main == 0)
-    {
+    if (pipe->process && !main)
         waitpid((proc = proc_get_next(pipe)), &st, 0);
-        shell->status = st;
-    }
+    shell_status_set(shell, st);
     proc = proc_get_next(pipe);
     while (proc >= 0)
     {
@@ -125,7 +127,7 @@ void exec_pipe_node(s_shell *shell, s_ast_pipeline *node)
         if (res != 0)
         {
             fprintf(stderr, "Fail to exec pipe node");
-            shell->status = -1;
+            shell_status_set(shell, -1);
         }
         wait_pipe(shell, !res, pipe);
         sfree(pipe->process);
