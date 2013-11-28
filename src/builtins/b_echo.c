@@ -16,7 +16,6 @@ typedef struct echo_arg s_echo_arg;
 
 static int check_arg(s_echo_arg *arg, char c)
 {
-
     if (c == 'n')
         arg->n = 1;
     else if (c == 'e')

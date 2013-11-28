@@ -6,25 +6,26 @@
 
 static const s_op ops[] =
 {
-    { "#",  10, ASSOC_R, 1, op_plus },
-    { "_",  10, ASSOC_R, 1, op_minus },
-    { "~",  10, ASSOC_R, 1, op_not },
-    { "!",  10, ASSOC_R, 1, op_bang },
     { "**", 9, ASSOC_R, 0, op_pow },
-    { "/",  8, ASSOC_L, 0, op_div },
-    { "%",  8, ASSOC_L, 0, op_mod },
-    { "*",  8, ASSOC_L, 0, op_mul },
-    { "+",  7, ASSOC_L, 0, op_add },
-    { "-",  7, ASSOC_L, 0, op_sub },
     { "<<", 6, ASSOC_L, 0, op_lshift },
     { ">>", 6, ASSOC_L, 0, op_rshift },
     { "&&", 2, ASSOC_L, 0, op_and },
     { "||", 1, ASSOC_L, 0, op_or },
-    { "&",  5, ASSOC_L, 0, op_bitand },
-    { "^",  4, ASSOC_L, 0, op_xor },
-    { "|",  3, ASSOC_L, 0, op_bitor },
-    { "(",  0, ASSOC_L, 0, NULL },
-    { ")",  0, ASSOC_L, 0, NULL },
+
+    { "#", 10, ASSOC_R, 1, op_plus },
+    { "_", 10, ASSOC_R, 1, op_minus },
+    { "~", 10, ASSOC_R, 1, op_not },
+    { "!", 10, ASSOC_R, 1, op_bang },
+    { "/", 8, ASSOC_L, 0, op_div },
+    { "%", 8, ASSOC_L, 0, op_mod },
+    { "*", 8, ASSOC_L, 0, op_mul },
+    { "+", 7, ASSOC_L, 0, op_add },
+    { "-", 7, ASSOC_L, 0, op_sub },
+    { "&", 5, ASSOC_L, 0, op_bitand },
+    { "^", 4, ASSOC_L, 0, op_xor },
+    { "|", 3, ASSOC_L, 0, op_bitor },
+    { "(", 0, ASSOC_L, 0, NULL },
+    { ")", 0, ASSOC_L, 0, NULL },
 };
 
 const s_op *get_op(char *c)

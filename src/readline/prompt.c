@@ -1,3 +1,7 @@
+#ifndef _POSIX_C_SOURCE
+# define _POSIX_C_SOURCE 200809L
+#endif
+
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
@@ -100,7 +104,7 @@ void prompt_expand(s_shell *shell, s_string **prompt)
         if ((*prompt)->buf[i] == '\\')
         {
 #define X(Name, Len, Pattern_len, Rep)                              \
-            if  (!strncmp((*prompt)->buf + i + 1, Name, Len))          \
+            if  (!strncmp((*prompt)->buf + i + 1, Name, Len))       \
             {                                                       \
                 i += prompt_replace(*prompt, i, Pattern_len, Rep);  \
                 continue;                                           \

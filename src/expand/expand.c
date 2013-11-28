@@ -18,14 +18,6 @@ static s_string *(*const expand_funcs[])(s_shell *, s_string *) =
     NULL,
 };
 
-#if 0
-s_string *expand_string(s_shell *shell, s_string *str, e_ast_word_kind kind)
-{
-    string_rewind(str);
-    return expand_funcs[kind](shell, str);
-}
-#endif
-
 static s_string *expand_word(s_shell *shell, const s_ast_word *word)
 {
     string_rewind(word->str);
