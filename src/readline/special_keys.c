@@ -48,6 +48,21 @@ static e_next_action do_ctrl_w(s_term *term)
     return CONTINUE;
 }
 
+static e_next_action do_ctrl_u(s_term *term)
+{
+    my_tputs(tgetstr("dm", NULL));
+    while (term->input_index)
+    {
+        my_tputs(tgetstr("le", NULL));
+        my_tputs(tgetstr("dc", NULL));
+        term->input_index--;
+        string_del_nth(term->input, term->input_index, 1);
+    }
+    my_tputs(tgetstr("ed", NULL));
+
+    return CONTINUE;
+}
+
 e_next_action handle_special_key(s_shell *shell, s_term *term,
                                  e_special_key key)
 {
