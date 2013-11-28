@@ -41,41 +41,61 @@ static void lexer_until_reset(s_lexer *lexer)
     lexer->sur.count = 0;
 }
 
+//0-> nothing, 1->break, -1->continue
+static int check_close(s_lexer *lexer, char c, char prev)
+{
+    if (lexer->quoted == 0 && (lexer->sur.end == '\'' || prev != '\\')
+       && (c == lexer->sur.end || c == '\0'))
+    {
+        if (c == 0 && lexer->sur.end != '\n')
+        {
+            if (lexer->input->next(lexer->input, "PS2") == 0)
+                exit(1);
+            return -1;
+        }
+        else
+        {
+            lexer->sur.count -= 1;
+            if (lexer->sur.count == 0)
+                return 1;
+        }
+    }
+    return 0;
+}
+
+static int check_open(s_lexer *lexer, char c, char prev)
+{
+    if (prev && lexer->quoted == 0
+            && (c == lexer->sur.begin || c == 0))
+    {
+        if (c == 0 && lexer->sur.end != '\n')
+        {
+            if (lexer->input->next(lexer->input, "PS2") == 0)
+                exit(1);
+            return -1;
+        }
+        else
+            lexer->sur.count += 1;
+    }
+    return 0;
+}
+
 int fill_until(s_lexer *lexer, int include_last)
 {
     char c;
     char prev = 0;
+    int ret;
     while (1)
     {
         c = lex_topc(lexer);
-        if (lexer->quoted == 0 && (lexer->sur.end == '\'' || prev != '\\')
-           && (c == lexer->sur.end || c == '\0'))
-        {
-            if (c == 0 && lexer->sur.end != '\n')
-            {
-                if (lexer->input->next(lexer->input, "PS2") == 0)
-                    exit(1);
-                continue;
-            }
-            else
-            {
-                lexer->sur.count -= 1;
-                if (lexer->sur.count == 0)
-                    break;
-            }
-        }
-        else if (prev && lexer->quoted == 0
-                && (c == lexer->sur.begin || c == 0))
-        {
-            if (c == 0 && lexer->sur.end != '\n')
-            {
-                if (lexer->input->next(lexer->input, "PS2") == 0)
-                    exit(1);
-                continue;
-            }
-            else
-                lexer->sur.count += 1;
-        }
+        ret = check_close(lexer, c, prev);
+        if (ret == 1)
+            break;
+        if (ret == -1)
+            continue;
+        ret = check_open(lexer, c, prev);
+        if (ret == -1)
+            continue;
         string_putc(lexer->working_buffer, lex_getc(lexer));
         update_quote(lexer, c, prev);
         prev = c;
