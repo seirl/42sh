@@ -1,7 +1,8 @@
 #include "exec.h"
 #include "xsyscall.h"
 
-static void exec_redir_write(s_shell *shell, s_ast_redirection_list *redir,
+static void exec_redir_write(s_shell *shell,
+                             s_ast_redirection_list *redir,
                              int fd)
 {
     if (!redir->io || redir->io->io_number == -2)
@@ -15,8 +16,9 @@ static void exec_redir_write(s_shell *shell, s_ast_redirection_list *redir,
     XCLOSE(fd);
 }
 
-static void exec_redir_read(s_shell *shell, s_ast_redirection_list *redir,
-                           int fd)
+static void exec_redir_read(s_shell *shell,
+                            s_ast_redirection_list *redir,
+                            int fd)
 {
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
@@ -42,7 +44,8 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir)
                     redir->heredoc->heredoc->len);
 }
 
-static void exec_redir_dupout(s_shell *shell, s_ast_redirection_list *redir,
+static void exec_redir_dupout(s_shell *shell,
+                              s_ast_redirection_list *redir,
                               int fd)
 {
     if (!redir->io || redir->io->io_number == -2)
@@ -57,8 +60,9 @@ static void exec_redir_dupout(s_shell *shell, s_ast_redirection_list *redir,
     dup2(fd, redir->io->io_number);
 }
 
-static void exec_redir_dupin(s_shell *shell, s_ast_redirection_list *redir,
-                            int fd)
+static void exec_redir_dupin(s_shell *shell,
+                             s_ast_redirection_list *redir,
+                             int fd)
 {
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;

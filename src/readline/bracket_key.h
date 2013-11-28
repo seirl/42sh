@@ -26,6 +26,6 @@ e_next_action handle_bracket_char(s_shell *shell, s_term *term);
 ** @brief Handle a particular special key (of bracket type)
 */
 e_next_action handle_bracket_key(s_shell *shell, e_bracket_key key,
-                                s_term *term);
+                                 s_term *term);
 
 #endif /* !BRACKET_KEY_H */

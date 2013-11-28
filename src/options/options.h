@@ -16,6 +16,6 @@ typedef enum option_return e_option_return;
 
 /** @brief Parse the command line and handle the options */
 e_option_return parse_options(s_shell *shell, int argc, char *argv[],
-                             char **source);
+                              char **source);
 
 #endif /* !OPTIONS_H */

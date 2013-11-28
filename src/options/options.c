@@ -54,7 +54,7 @@ static int check_args(s_shell *shell, s_opt opt)
 }
 
 e_option_return parse_options(s_shell *shell, int argc, char *argv[],
-                             char **source)
+                              char **source)
 {
     s_opt *opt = opt_init(main_param, 7);
     char *arg;

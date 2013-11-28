@@ -16,7 +16,7 @@ s_ast_case *parse_rule_case(s_parser *parser)
     parse_expect_newlines(parser);
 
     s_ast_case *mycase = ast_case_new();
-    mycase->word = name;;
+    mycase->word = name;
     mycase->clauses = parse_rule_case_clause(parser);
 
     if (!parse_expect_token(parser, T_ESAC))

@@ -57,9 +57,9 @@ Display a usage message on standard output and exit.
 .PP
 \fB\fCbreak [n]\fR
     exit from while, fr or until loop.
-    The 'n' parameter is optionnal. The default and smallest value possible
-    is 1. The break built\-in causes the execution to immediately
-    return from a loop.
+    The 'n' parameter is optionnal. The default and smallest value
+    possible is 1. The break built\-in causes the execution to
+    immediately return from a loop.
 .PP
 \fB\fCcd [directory | -]\fR
     change the working directory

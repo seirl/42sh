@@ -25,6 +25,6 @@ e_next_action handle_escape_char(s_shell *shell, s_term *term, char c);
 ** @brief Handle a particular special key (of escape type)
 */
 e_next_action handle_escape_key(s_shell *shell, s_term *term,
-                               e_escape_key key);
+                                e_escape_key key);
 
 #endif /* !ESCAPE_KEY_H */

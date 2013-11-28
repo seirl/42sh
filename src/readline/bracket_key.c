@@ -64,7 +64,7 @@ static e_next_action do_down(s_shell * shell, s_term *term)
 }
 
 e_next_action handle_bracket_key(s_shell *shell, e_bracket_key key,
-                                s_term *term)
+                                 s_term *term)
 {
 #define X(Name, Char1, Char2, Handler)  \
         if (key == Name)                \
