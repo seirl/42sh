@@ -9,28 +9,28 @@
 #include "env.h"
 #include "ifs.h"
 
-static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
+static void add_elt(s_ast_element *elt, s_ast_compound_word *cw)
 {
     s_ast_compound_word *it = cw;
     s_ast_compound_word *free_me = NULL;
-    s_ast_word_list *nl;
-    s_ast_word_list *prev = l;
+    s_ast_element *nelt;
+    s_ast_element *prev = elt;
     while (it)
     {
-        nl = smalloc(sizeof (s_ast_word_list));
-        nl->word = smalloc(sizeof (s_ast_compound_word));
-        nl->word->next = NULL;
-        nl->word->word = it->word;
+        nelt = smalloc(sizeof (s_ast_element));
+        nelt->word = smalloc(sizeof (s_ast_compound_word));
+        nelt->word->next = NULL;
+        nelt->word->word = it->word;
         if (prev == NULL)
         {
-            nl->next = l->next;
-            l->next = nl;
+            nelt->next = elt->next;
+            elt->next = nelt;
         }
         else
         {
-            nl->next = prev->next;
-            prev->next = nl;
-            prev = nl;
+            nelt->next = prev->next;
+            prev->next = nelt;
+            prev = nelt;
         }
         free_me = it->next;
         sfree(it);
@@ -38,14 +38,14 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
     }
 }
 
-void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
+void expand_element(s_shell *shell, s_ast_element *elt)
 {
-    s_ast_word_list *wl;
+    s_ast_element *wl;
     s_ast_compound_word *cw = NULL;
     for (wl = elt; wl; wl = wl->next)
     {
         cw = split_compound_word(shell, wl->word);
-        add_wl(wl, cw);
+        add_elt(wl, cw);
         return;
     }
 }

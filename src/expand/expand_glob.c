@@ -6,7 +6,6 @@
 #include "smalloc.h"
 #include "ast.h"
 #include "lexer.h"
-#include "expand_wordlist.h"
 #include "expand.h"
 #include "env.h"
 #include "ifs.h"

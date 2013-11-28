@@ -1,7 +1,7 @@
 #include "exec.h"
 #include "shell_private.h"
 #include "env.h"
-#include "expand_wordlist.h"
+#include "expand.h"
 
 static void exec_else(s_shell *shell, s_ast_else *else_clause)
 {

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "expand_wordlist.h"
+#include "expand.h"
 #include "ast.h"
 #include "shell.h"
 #include "env.h"
