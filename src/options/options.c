@@ -57,14 +57,16 @@ static int check_args(s_shell *shell, s_opt opt)
 
 static void pos_param_set(s_shell *shell, s_opt *opt)
 {
-    env_set(shell, "42sh", "$0");
-    for (long i = 0; i < opt->trailing_count; ++i)
+    if (!opt_trailing_arg(opt, 0))
+        env_set(shell, "42sh", "$0");
+    else
+        env_set(shell, strdup(opt_trailing_arg(opt, 0)), "$0");
+    for (long i = 1; opt_trailing_arg(opt, i); ++i)
     {
-        s_string *arg_index = string_itoa(i + 1);
+        s_string *arg_index = string_itoa(i);
         string_insertc(arg_index, '$', 0);
-        char *var = string_release(arg_index);
-        char *val = opt_trailing_arg(opt, i);
-        env_set(shell, val, var);
+        env_set(shell, strdup(opt_trailing_arg(opt, i)),
+                string_release(arg_index));
     }
 }
 
@@ -85,7 +87,6 @@ e_option_return parse_options(s_shell *shell, int argc, char *argv[],
     if (opt_get(opt, "c", &arg))
     {
         *source = arg;
-        pos_param_set(shell, opt);
         ret += E_STR;
     }
     else if (opt_trailing_arg(opt, 0))
