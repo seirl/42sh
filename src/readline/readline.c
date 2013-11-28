@@ -17,7 +17,7 @@ static int is_blank(s_string *line)
     if (!line)
         return 1;
     for (size_t i = 0; i < line->len; i++)
-        if (line->buf[i] != ' ' || line->buf[i] != '\t')
+        if (line->buf[i] != ' ' && line->buf[i] != '\t')
             return 0;
     return 1;
 }
