@@ -4,6 +4,6 @@
     "stdin": b"""echo ~"root"
 "
 """,
-    "stdout": "/root\n",
+    "stdout": "~root\n",
     "skip": True
 }
