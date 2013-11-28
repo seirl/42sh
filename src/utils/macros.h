@@ -4,7 +4,7 @@
 # include <stdio.h>
 # include <assert.h>
 
-# define VERSION "0.8"
+# define VERSION "0.9"
 # define PROGNAME "42sh"
 
 # define RET_WITH(Ret, Msg, ...)                    \

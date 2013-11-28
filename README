@@ -74,8 +74,13 @@ Readline
     - Ctrl-u (delete from beginning to cursor)
 
 Lexer/Parser
------------
+------------
     - Display locations on parse error
+
+Builtins
+--------
+    - set
+    - unset
 
 AUTHORS
 =======

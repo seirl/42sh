@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     char *src = NULL;
     int ret = parse_options(shell, argc, argv, &src);
     if (ret & E_RET)
-        return E_RET;
+        return 0;
     if (ret & E_ERROR)
         return E_ERROR;
     if (ret & E_RC)
