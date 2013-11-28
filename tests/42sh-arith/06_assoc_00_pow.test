@@ -1,0 +1,5 @@
+{
+    "desc": "arith: associativity pow",
+    "stdin": b"""echo $(( 2 ** 2 ** 2 ** 2 ))""",
+    "stdout": "65536\n",
+}

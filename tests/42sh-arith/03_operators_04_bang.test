@@ -1,0 +1,5 @@
+{
+    "desc": "arith: binary operators",
+    "stdin": b"""echo $(( !!3 - !7 ))""",
+    "stdout": "1\n",
+}
