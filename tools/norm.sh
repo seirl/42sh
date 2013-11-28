@@ -86,7 +86,7 @@ check_norm() {
     bad_pattern $1 "[a-zA-Z0-9]\*\ " "* at wrong place"
     bad_pattern $1 "\ $" "Trailing whitespaces"
     bad_pattern $1 "(.*)[a-zA-Z_]" "Is that a cast ?"
-    bad_pattern $1 ".\{80\}" "More than 80 columns"
+    bad_pattern $1 ".\{81\}" "More than 80 columns"
     bad_pattern $1 "#\ *define\ *[a-zA-Z_]*[a-z][a-zA-Z_]*[\ \(\\]" "Macro uppercase"
     bad_pattern $1 "#\ *define\ *.*([a-z_].*)" "Macro arg name"
     bad_pattern $1 "#\ *define\ *.*(.*, [a-z_].*)" "Macro arg name"
