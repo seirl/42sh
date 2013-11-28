@@ -12,6 +12,7 @@
 #include "hashtbl.h"
 #include "env.h"
 #include "smalloc.h"
+#include "string_utils.h"
 
 static void add_cwd(s_shell *shell)
 {
@@ -32,8 +33,28 @@ static void add_ifs(s_shell *shell)
     env_set(shell, " \t\n", "IFS");
 }
 
+static void dump_env(s_shell *shell)
+{
+    s_string *name = string_create(0);
+    s_string *value = string_create(0);
+    for (char **var = environ; *var != NULL; ++var)
+    {
+        int i;
+        for (i = 0; (*var)[i] != '='; ++i)
+            string_putc(name, (*var)[i]);
+        for (i += 1; (*var)[i]; ++i)
+            string_putc(value, (*var)[i]);
+        env_set(shell, value->buf, name->buf);
+        string_reset(name);
+        string_reset(value);
+    }
+    string_free(name);
+    string_free(value);
+}
+
 void env_default_var(s_shell *shell)
 {
+    dump_env(shell);
     add_cwd(shell);
     add_status(shell);
     add_ifs(shell);
