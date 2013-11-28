@@ -1,0 +1,6 @@
+{
+    "desc": "arith: div 0",
+    "stdin": b"""echo $(( 3 / 0 ))""",
+    "stdout": ...,
+    "stderr": ...,
+}

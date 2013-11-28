@@ -1,0 +1,5 @@
+{
+    "desc": "arith: basic operators",
+    "stdin": b"""echo $(( 315 / 4 + 5 % 8 ))""",
+    "stdout": "83\n",
+}
