@@ -11,11 +11,8 @@
 #include "expand.h"
 #include "match.h"
 
-#define UNUSED(Var) Var += 1;
-
 static char *get_home(s_shell *shell, char *user)
 {
-    UNUSED(shell);
     char *home = NULL;
     struct passwd *pw;
 
@@ -82,7 +79,6 @@ static int simple_tilde(s_shell *shell, s_string *word, s_string *ret)
 
 static int operator_tilde(s_shell *shell, s_string *word, s_string *ret)
 {
-    UNUSED(shell);
     char c = string_topc(word);
     char c2 = string_topc_n(word, 1);
     if (c2 != 0 && c2 != '/')
