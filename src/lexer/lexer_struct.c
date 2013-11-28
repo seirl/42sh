@@ -25,6 +25,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
     lexer->shell = shell;
     lexer->context = context;
     lexer->prev_delim = 1;
+    location_init(&lexer->location);
 
     return lexer;
 }
@@ -32,6 +33,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
 int lex_start(s_lexer *lexer)
 {
     token_free(lexer->lookahead);
+    lexer->location.source = lexer->input->source;
     lexer->lookahead = NULL;
     if (lexer->working_buffer->len == 0)
         lexer->prefill = 1;
@@ -85,6 +87,7 @@ s_token *lex_release_token(s_lexer *lexer)
     tok = token_create(type, value, lexer->location, lexer->concat);
     tok->aliasable = update_alias_delimiter(lexer);
 
+    location_advance(&lexer->location);
     lexer_reset(lexer);
     if (lexer->shell && shopt_get(lexer->shell, "token_print"))
         token_print(tok);

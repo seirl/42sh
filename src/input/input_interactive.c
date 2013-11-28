@@ -3,6 +3,8 @@
 
 #include "input_string.h"
 #include "readline.h"
+#include "lexer_private.h"
+#include "parser_private.h"
 #include "shell_private.h"
 #include "smalloc.h"
 #include "string_utils.h"
@@ -17,6 +19,8 @@ typedef struct input_state_interactive s_input_state_interactive;
 s_input *input_interactive_create(s_shell *shell)
 {
     s_input *input = input_new();
+
+    shell->state = SHELL_CONTINUE_ON_ERROR;
 
     input->type = INPUT_INTERACTIVE;
     input->getc = input_interactive_getc;
@@ -54,6 +58,7 @@ char input_interactive_topc(s_input *input)
 int input_interactive_next(s_input *input, void *param)
 {
     s_input_state_interactive *state = input->_input_state;
+    location_next_line(&state->shell->parser->lexer->location);
     string_free(state->buf);
     state->buf = readline(state->shell, param);
     if (!strcmp(param, "PS2"))

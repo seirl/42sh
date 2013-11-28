@@ -42,7 +42,7 @@ struct shell
     /** Number of breaks left to do */
     unsigned int breaks;
 
-    /** Status of the shell. */
+    /** Running state of the shell. */
     e_shell_state state;
 };
 

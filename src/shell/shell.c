@@ -20,7 +20,7 @@ s_shell *shell_new(void)
 
     shell->curr_argv = NULL;
     shell->parser = NULL;
-    shell->state = SHELL_REPEAT;
+    shell->state = SHELL_STOP_ON_ERROR;
     shell->status = 0;
     shell->breaks = 0;
 

@@ -26,11 +26,14 @@ typedef struct surround s_surround;
 */
 struct lexer
 {
+    //! abstract input object, where we get chars
     s_input *input;
 
+    //! type of the current token
     e_token_type token_type;
     //! a buffer in which the char are set
     s_string *working_buffer;
+    //! where is the lexer in the input stream?
     s_location location;
     //! informations about the current state (in quotes, braces, ...)
     s_surround sur;

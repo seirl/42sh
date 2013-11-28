@@ -5,15 +5,15 @@ struct parser;
 
 enum shell_status
 {
-    SHELL_OK = 1,
-    SHELL_PARSE_ERROR = 2,
+    SHELL_OK,
+    SHELL_STOP,
 };
 typedef enum shell_status e_shell_status;
 
 enum shell_state
 {
-    SHELL_STOP,
-    SHELL_REPEAT,
+    SHELL_STOP_ON_ERROR,
+    SHELL_CONTINUE_ON_ERROR,
 };
 typedef enum shell_state e_shell_state;
 
