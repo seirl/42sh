@@ -14,6 +14,8 @@
 #include "smalloc.h"
 #include "string_utils.h"
 
+extern char **environ;
+
 static void add_cwd(s_shell *shell)
 {
     char *curr_dir = scalloc(4096, sizeof (char));
