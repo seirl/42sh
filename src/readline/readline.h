@@ -11,6 +11,11 @@
 ** @return NULL if a fatal error occured, the input line otherwise.
 */
 s_string *readline(s_shell *shell, char *prompt);
+
+/**
+** @brief Print the given character on the correct place of the line (according
+** to cursor position).
+*/
 void do_print(s_shell *shell, char c);
 
 #endif /* !READLINE_H */
