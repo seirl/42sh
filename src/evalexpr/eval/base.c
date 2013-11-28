@@ -27,7 +27,7 @@ long op_div(long a, long b)
 
 long op_mod(long a, long b)
 {
-zsh:1: command not found: :x
+    if (!b)
     {
         LOG(ERROR, "Division by 0 (%d/%d)", a, b);
         return 0;
