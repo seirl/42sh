@@ -18,15 +18,18 @@ static const e_konami_key konami_sequence[] =
     KONAMI_A,
 };
 
-static void konami_done(s_term *term)
+static int konami_done(s_term *term)
 {
     if (strcmp(term->input->buf, "ba"))
-        return;
+        return 0;
 
+    term->input_index--;
     string_reset(term->input);
-    string_puts(term->input, " Votai Test.");
+    string_puts(term->input, "Votai Test.");
     readline_update_line(term);
     term->input_index = term->input->len;
+
+    return 1;
 }
 
 int konami_next(s_term *term, e_konami_key key)
@@ -39,9 +42,8 @@ int konami_next(s_term *term, e_konami_key key)
 
     if (konami_state == 10)
     {
-        konami_done(term);
         konami_state = 0;
-        return 1;
+        return konami_done(term);
     }
     return 0;
 }

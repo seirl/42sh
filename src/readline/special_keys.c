@@ -4,6 +4,7 @@
 #include "special_keys.h"
 #include "wrapper.h"
 #include "terminal.h"
+#include "konami.h"
 
 static e_next_action do_backspace(s_term *term)
 {
@@ -21,13 +22,18 @@ static e_next_action do_backspace(s_term *term)
         // edition mode
         my_tputs(tgetstr("ed", NULL));
     }
+    konami_next(term, KONAMI_NOTHING);
     return CONTINUE;
 }
 
 static e_next_action do_ctrl_d(s_term *term)
 {
     if (term->input->len != 0)
+    {
+        konami_next(term, KONAMI_NOTHING);
         return CONTINUE;
+    }
+    konami_next(term, KONAMI_NOTHING);
     return EOI;
 }
 
@@ -45,6 +51,7 @@ static e_next_action do_ctrl_w(s_term *term)
         do_backspace(term);
     while (*i > 0 && !input_is_blank(term, *i - 1))
         do_backspace(term);
+    konami_next(term, KONAMI_NOTHING);
     return CONTINUE;
 }
 
@@ -59,6 +66,7 @@ static e_next_action do_ctrl_u(s_term *term)
         string_del_nth(term->input, term->input_index, 1);
     }
     my_tputs(tgetstr("ed", NULL));
+    konami_next(term, KONAMI_NOTHING);
 
     return CONTINUE;
 }

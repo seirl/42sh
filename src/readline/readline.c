@@ -79,6 +79,7 @@ void readline_do_print(s_shell *shell, char c)
 s_string *readline(s_shell *shell, char *prompt)
 {
     s_term *term = term_get(shell);
+    konami_next(term, KONAMI_NOTHING);
     if (term == NULL)
         return NULL;
     char c;

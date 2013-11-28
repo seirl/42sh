@@ -6,6 +6,7 @@
 #include "terminal.h"
 #include "readline.h"
 #include "wrapper.h"
+#include "konami.h"
 
 static e_next_action do_b(s_shell *shell, s_term *term)
 {
@@ -14,6 +15,7 @@ static e_next_action do_b(s_shell *shell, s_term *term)
         handle_bracket_key(shell, BRACKET_LEFT, term);
     while (*i > 0 && !input_is_blank(term, *i - 1))
         handle_bracket_key(shell, BRACKET_LEFT, term);
+    konami_next(term, KONAMI_NOTHING);
     return CONTINUE;
 }
 
@@ -25,6 +27,7 @@ static e_next_action do_f(s_shell *shell, s_term *term)
         handle_bracket_key(shell, BRACKET_RIGHT, term);
     while (*i < len && !input_is_blank(term, *i))
         handle_bracket_key(shell, BRACKET_RIGHT, term);
+    konami_next(term, KONAMI_NOTHING);
     return CONTINUE;
 }
 
@@ -54,6 +57,7 @@ static e_next_action do_dot(s_shell *shell, s_term *term)
     my_tputs(tgetstr("ei", NULL));
 
     string_free(last_line);
+    konami_next(term, KONAMI_NOTHING);
     return CONTINUE;
 }
 
