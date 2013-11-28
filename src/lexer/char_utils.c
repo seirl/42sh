@@ -9,12 +9,13 @@ int is_operator(char c)
 
 int is_delimiter(s_lexer *lexer, char c)
 {
-    if (lexer->assignment)
-        return c == 0 || c == ';' || c == '\n' || c == ' ' || c == '\t';
-    return (c == 0
-           || (lexer->context == LEX_ALL
-              && (c == '\t' || c == ' ' || c == '\n' || (is_operator(c)))
-              && (c != '!' || lexer->working_buffer->len == 0)));
+    int ret = (c == 0
+               || (lexer->context == LEX_ALL
+                  && (c == '\t' || c == ' ' || c == '\n' || (is_operator(c)))
+                  && (c != '!' || lexer->working_buffer->len == 0)));
+    if (lexer->assignment && (c == '{' || c == '}'))
+        return 0;
+    return ret;
 }
 
 int is_quote(char c)
