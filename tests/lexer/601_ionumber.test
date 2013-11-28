@@ -5,9 +5,9 @@
     "output": """echo	T_WORD (0)
 lol	T_WORD (0)
 &	T_AND (0)
-2	T_IO_NUMBER (0)
->	T_GREAT (0)
-foo	T_WORD (0)
+2	T_IO_NUMBER (1)
+>	T_GREAT (1)
+foo	T_WORD (1)
 	T_EOF (0)
 """
 }

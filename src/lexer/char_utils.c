@@ -40,7 +40,6 @@ int is_valid_operator(s_lexer *lexer, s_string *s)
     if (!strcmp(s->buf, Str))                               \
     {                                                       \
         lexer->token_type = Tok;                            \
-        lexer->concat = Tok != T_BANG ? -1 : 0;             \
         return 1;                                           \
     }
 #include "operator.def"

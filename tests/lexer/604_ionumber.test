@@ -6,7 +6,7 @@
 lol	T_WORD (0)
 42	T_WORD (0)
 >&	T_GREATAND (0)
-2	T_WORD (0)
+2	T_WORD (1)
 	T_EOF (0)
 """
 }

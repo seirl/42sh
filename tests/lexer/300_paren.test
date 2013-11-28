@@ -4,8 +4,8 @@
     "input": """echo (ls) $(FOO) """,
     "output": """echo	T_WORD (0)
 (	T_LPAREN (0)
-ls	T_WORD (0)
-)	T_RPAREN (0)
+ls	T_WORD (1)
+)	T_RPAREN (1)
 FOO	T_CMD_SUBST (0)
 	T_EOF (0)
 """

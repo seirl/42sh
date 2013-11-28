@@ -3,8 +3,8 @@
     "desc": "Subshell, math operator and quote",
     "input": """($(($((1 + 1)) + 1 + `echo \')\'`)))""",
     "output": """(	T_LPAREN (0)
-$((1 + 1)) + 1 + `echo ')'`	T_ARITHM (0)
-)	T_RPAREN (0)
+$((1 + 1)) + 1 + `echo ')'`	T_ARITHM (1)
+)	T_RPAREN (1)
 	T_EOF (0)
 """
 }
