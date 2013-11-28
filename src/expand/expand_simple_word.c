@@ -29,40 +29,52 @@ static char *get_home(s_shell *shell, char *user)
     return pw->pw_dir;
 }
 
-static int check_username_charset(char *str)
+static int extract_username_path(char *str, s_string **user, s_string **path)
 {
+    *user = string_create(0);
+    *path = string_create(0);
+    int base = 0;
     for (int i = 0; str[i]; ++i)
     {
-        char c = str[i];
-        if (islower(c) || (i && isdigit(c)) || c == '_')
-            continue;
-        return 0;
+        if (base == 0)
+        {
+            if (islower(str[i]) || (i && isdigit(str[i])) || str[i] == '_')
+                string_putc(*user, str[i]);
+            else if (str[i] == '/')
+            {
+                base = 1;
+                string_putc(*path, str[i]);
+            }
+            else
+            {
+                string_free(*user);
+                string_free(*path);
+                return 0;
+            }
+        }
+        else
+            string_putc(*path, str[i]);
     }
     return 1;
 }
 
 static int user_tilde(s_shell *shell, s_string *word, s_string *ret)
 {
-    if (check_username_charset(word->buf + 1) == 0)
+    s_string *user = NULL;
+    s_string *path = NULL;
+    if (extract_username_path(word->buf + 1, &user, &path) == 0)
         return 0;
-    s_string *user = string_create(16);
-    int offset = 0;
-    for (char *str = word->buf + word->read_pos; *str; ++str)
-    {
-        if (*str == '/')
-            break;
-        string_putc(user, *str);
-        ++offset;
-    }
     char *home = get_home(shell, user->buf);
     if (home == NULL)
     {
         string_free(user);
+        string_free(path);
         return 0;
     }
     string_puts(ret, home);
+    string_puts(ret, path->buf);
     string_free(user);
-    word->read_pos += offset;
+    string_free(path);
     return 1;
 }
 
@@ -110,7 +122,7 @@ static s_string *tilde_expansion(s_shell *shell, s_string *word)
             if (operator_tilde(shell, word_cpy, ret))
                 continue;
             if (user_tilde(shell, word_cpy, ret))
-                continue;
+                return ret;
         }
         string_putc(ret, c);
         prev = c;
