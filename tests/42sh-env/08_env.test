@@ -1,0 +1,7 @@
+{
+    "desc": "var=#foo",
+    "stdin": b"""foo=#foo; echo $foo
+""",
+    "stdout": "#foo\n",
+    "skip": True
+}

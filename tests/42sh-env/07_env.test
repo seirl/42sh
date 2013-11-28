@@ -1,0 +1,7 @@
+{
+    "desc": "Assign null value",
+    "stdin": b"""foo=; echo $foo
+""",
+    "stdout": "\n",
+    "skip": True
+}
