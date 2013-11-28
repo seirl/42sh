@@ -46,7 +46,7 @@ static void history_list(s_shell *shell, s_opt *opt)
 
         char *date = malloc(sizeof (char) * 1024);
         strftime(date, 1024, time_format, localtime(&entry->date));
-        printf("%5zu  %s%s\n", count -i, date, entry->line->buf);
+        printf("%5zu  %s%s\n", count - i, date, entry->line->buf);
         free(date);
     }
 }
