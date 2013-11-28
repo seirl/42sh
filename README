@@ -71,6 +71,7 @@ Readline
     - History management
     - Alt-. basic behaviour
     - Ctrl-w (delete a word)
+    - Ctrl-u (delete from beginning to cursor)
 
 Lexer/Parser
 -----------
