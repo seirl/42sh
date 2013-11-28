@@ -9,7 +9,9 @@
 
 static const s_param shopt_param[] =
 {
-    { 'a', NULL, 0, 0, NEW_ARG },
+    {
+        'a', NULL, 0, 0, NEW_ARG
+    },
 };
 
 static void usage(void)

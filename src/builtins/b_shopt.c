@@ -8,9 +8,15 @@
 
 static const s_param shopt_param[] =
 {
-    { 's', NULL, 0, 0, NEW_ARG },
-    { 'u', NULL, 0, 0, NEW_ARG },
-    { 'q', NULL, 0, 0, NEW_ARG },
+    {
+        's', NULL, 0, 0, NEW_ARG
+    },
+    {
+        'u', NULL, 0, 0, NEW_ARG
+    },
+    {
+        'q', NULL, 0, 0, NEW_ARG
+    },
 };
 
 static void usage(void)
