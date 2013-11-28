@@ -20,7 +20,7 @@ static s_ast_compound_word *cw_add_word(s_ast_compound_word *cw, s_string *s)
     if (cw == NULL)
         return ncw;
     s_ast_compound_word *it;
-    for (it = cw; cw->next; cw = cw->next)
+    for (it = cw; it->next; it = it->next)
         ;
     it->next = ncw;
     return cw;
@@ -43,7 +43,10 @@ static char *expand_word_by_kind(s_shell *shell, s_ast_word *word)
     if (word->kind == EXPAND_NAME)
         return string_release(expand_simple_var(shell, word->str));
     if (word->kind == WORD)
-        return string_release(expand_simple_word(shell, word->str));
+    {
+        s_string *w = expand_simple_word(shell, word->str);
+        return string_release(expand_glob(shell, w));
+    }
     if (word->kind == EXPAND_ARITHM)
         return string_release(expand_arithm(shell, word->str));
     if (word->kind == EXPAND_PARAM)
@@ -127,6 +130,6 @@ void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
     for (wl = elt; wl; wl = wl->next)
     {
         cw = split_compound_word(shell, wl->word);
-        add_wl(elt, cw);
+        add_wl(wl, cw);
     }
 }

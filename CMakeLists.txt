@@ -269,6 +269,7 @@ add_library(expand OBJECT
     src/expand/expand_substs_shell.c
     src/expand/expand_substs_var.c
     src/expand/expand_wordlist.c
+    src/expand/expand_glob.c
     src/expand/ifs.c
     src/expand/expand_var.c
     src/expand/expand_squote.c
