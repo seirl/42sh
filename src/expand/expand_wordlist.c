@@ -21,7 +21,7 @@ static s_ast_compound_word *cw_add_word(s_ast_compound_word *cw, s_string *s)
         return ncw;
     s_ast_compound_word *it;
     for (it = cw; it->next; it = it->next)
-        ;
+        continue;
     it->next = ncw;
     return cw;
 }
@@ -99,7 +99,7 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
     s_ast_compound_word *it = cw;
     s_ast_compound_word *free_me = NULL;
     s_ast_word_list *nl;
-    s_ast_word_list *prev = NULL;
+    s_ast_word_list *prev = l;
     while (it)
     {
         nl = smalloc(sizeof (s_ast_word_list));
@@ -110,12 +110,12 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
         {
             nl->next = l->next;
             l->next = nl;
-            prev = nl;
         }
         else
         {
             nl->next = prev->next;
             prev->next = nl;
+            prev = nl;
         }
         free_me = it->next;
         sfree(it);
@@ -131,5 +131,6 @@ void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
     {
         cw = split_compound_word(shell, wl->word);
         add_wl(wl, cw);
+        return;
     }
 }
