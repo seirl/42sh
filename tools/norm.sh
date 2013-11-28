@@ -70,6 +70,7 @@ check_25() {
 }
 
 check_norm() {
+    bad_pattern $1 ";;"
     bad_pattern $1 "){"
     bad_pattern $1 ") {"
     bad_pattern $1 " for("
