@@ -25,7 +25,7 @@ static char *get_home(s_shell *shell, char *user)
 
     pw = user == NULL ? getpwuid(getuid()) : getpwnam(user);
     if (pw == NULL)
-        return "";
+        return NULL;
     return pw->pw_dir;
 }
 

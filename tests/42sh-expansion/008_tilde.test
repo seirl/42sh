@@ -1,0 +1,8 @@
+{
+    "type": "42sh",
+    "desc": 'Tilde invalid username',
+    "stdin": b"""echo ~foO42"
+"
+""",
+    "stdout": "~foO42\n",
+}
