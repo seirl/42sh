@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": 'Tilde within dquotes',
+    "stdin": b"""echo "~"
+""",
+    "stdout": "~\n",
+}

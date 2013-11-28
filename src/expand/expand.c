@@ -36,14 +36,27 @@ s_string *expand(s_shell *shell, const s_ast_compound_word *input)
     return r;
 }
 
-static s_string *expand_with_type(s_shell *shell, s_token *tok)
+static s_string *expand_with_type(s_shell *shell, s_token *tok,
+                                  e_lexer_context lcon)
 {
     //TODO schischi: do while + check !dquote, !squote, remove backslash
-#define X(Ltok, Atok)                                     \
-    if (tok->type == Ltok)                                \
-        return expand_funcs[Atok](shell, tok->value.str);
+    if (lcon == LEX_DQUOTE)
+    {
+#define X(Ltok, Atok)                                         \
+        if (tok->type == Ltok)                                \
+            return expand_funcs[Atok](shell, tok->value.str);
+#include "dquote_token.def"
+#undef X
+        return string_duplicate(tok->value.str);
+    }
+    else
+    {
+#define X(Ltok, Atok)                                         \
+        if (tok->type == Ltok)                                \
+            return expand_funcs[Atok](shell, tok->value.str);
 #include "token_convert.def"
 #undef X
+    }
     return NULL;
 }
 
@@ -60,7 +73,7 @@ s_string *expand_string(s_shell *shell, s_string *str, e_lexer_context lcon)
     do {
         tok = lex_token(lexer);
         t = tok->type;
-        sub = expand_with_type(shell, tok);
+        sub = expand_with_type(shell, tok, lcon);
         if (t == T_EOF)
             break;
         string_cat(ret, sub);

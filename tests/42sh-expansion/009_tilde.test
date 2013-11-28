@@ -1,8 +1,7 @@
 {
     "type": "42sh",
     "desc": 'Tilde non-existant user',
-    "stdin": b"""echo ~foobartoto"
-"
+    "stdin": b"""echo ~foobartoto
 """,
     "stdout": "~foobartoto\n",
 }
