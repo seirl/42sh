@@ -38,7 +38,7 @@ long parse(s_opstack *so, s_numstack *sn, char *s)
     for (char *cs = s; *cs; cs = skip_blank(cs))
         if ((op = get_op(cs)))
         {
-            if (last_op && (cs == s || strcmp(last_op->op, ")")))
+            if ((cs == s) || (last_op && strcmp(last_op->op, ")")))
             {
                 if (!strcmp(op->op, "-"))
                     op = get_op("_");
