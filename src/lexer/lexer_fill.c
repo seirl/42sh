@@ -148,6 +148,7 @@ static int handle_delim_and_quote(s_lexer *lexer, char c, char prev)
     return 0;
 }
 
+
 int fill_token(s_lexer *lexer)
 {
     char c;
@@ -160,7 +161,8 @@ int fill_token(s_lexer *lexer)
 
     do {
         c = lex_topc(lexer);
-        if (lexer->context == LEX_ALL && handle_comment(lexer, c, prev))
+        if (lexer->context == LEX_ALL && lexer->assignment == 0
+            && handle_comment(lexer, c, prev))
             break;
         if (handle_dollar(lexer, c, prev))
             break;

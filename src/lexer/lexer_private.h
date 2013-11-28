@@ -31,6 +31,7 @@ struct lexer
 
     //! type of the current token
     e_token_type token_type;
+    int assignment;
     //! a buffer in which the char are set
     s_string *working_buffer;
     //! where is the lexer in the input stream?

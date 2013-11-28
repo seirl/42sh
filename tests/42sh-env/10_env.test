@@ -1,0 +1,7 @@
+{
+    "desc": "Escape var name",
+    "stdin": b"""foo=\$PID; echo $foo
+""",
+    "stdout": "$PID\n",
+    "skip": True
+}

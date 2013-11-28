@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "lexer.h"
 #include "lexer_private.h"
@@ -72,6 +73,11 @@ static int escaped_newline(s_lexer *lexer, s_token *tok)
     return 0;
 }
 
+static void update_type(s_lexer *lexer, s_token *tok)
+{
+    lexer->assignment = strcmp(tok->value.str->buf, "=") == 0;
+}
+
 s_token *lex_token(s_lexer *lexer)
 {
     if (lexer->lookahead)
@@ -91,8 +97,8 @@ s_token *lex_token(s_lexer *lexer)
         if (lexer->context == LEX_ALL && handle_io_number(lexer))
             break;
     } while (0);
-
     s_token *ret = lex_release_token(lexer);
+    update_type(lexer, ret);
     fill_token(lexer);
 
     if (ret->concat == -1)

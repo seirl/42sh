@@ -8,7 +8,11 @@
 void strip_token(s_token *token)
 {
     if (token->type == T_NAME)
+    {
         string_del_nth(token->value.str, 0, 1);
+        if (token->value.str->buf[0] == '\\')
+            token->type = T_WORD;
+    }
     else if (token->type == T_PARAM_EXPANSION || token->type == T_CMD_SUBST)
     {
         string_del_from_end(token->value.str, 1);
