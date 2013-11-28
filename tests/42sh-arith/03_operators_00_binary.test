@@ -1,6 +1,6 @@
 {
     "desc": "arith: binary operators",
-    "stdin": b"""$(( ((4 << 2) - 1) & (5 | 42) ))""",
+    "stdin": b"""echo $(( ((4 << 2) - 1) & (5 | 42) ))""",
     "stdout": "15\n",
     "skip": True,
 }
