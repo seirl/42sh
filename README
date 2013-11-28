@@ -61,6 +61,17 @@ Or
     $ make check
 To check for memory leaks
 
+Features
+========
+We implemented some extra features, here is a (possibly non-exhaustive) list:
+    Readline
+    --------
+        - Alt-a and Alt-b (move by word)
+        - History management
+        - Alt-. basic behaviour
+        - Ctrl-u (delete from start to cursor)
+        - Ctrl-w (delete a word)
+
 AUTHORS
 =======
     - Rémi « halfr » Audebert
