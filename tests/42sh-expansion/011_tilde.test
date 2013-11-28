@@ -1,0 +1,9 @@
+{
+    "type": "42sh",
+    "desc": 'Tilde with quoted username',
+    "stdin": b"""echo ~"root"
+"
+""",
+    "stdout": "/root\n",
+    "skip": True
+}

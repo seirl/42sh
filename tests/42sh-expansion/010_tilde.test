@@ -1,0 +1,9 @@
+{
+    "type": "42sh",
+    "desc": 'Quoted tilde',
+    "stdin": b"""echo \~root"
+"
+""",
+    "stdout": "~root\n",
+    "skip": True
+}

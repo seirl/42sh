@@ -4,6 +4,5 @@
     "stdin": b"""echo ~"
 "
 """,
-    "stdout": "~\n\n",
-    "skip": True,
+    "stdout": os.getenv("HOME") + "\n",
 }

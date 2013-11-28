@@ -103,7 +103,7 @@ static s_string *tilde_expansion(s_shell *shell, s_string *word)
     s_string *word_cpy = string_duplicate(word);
     for (c = string_getc(word_cpy); c; c = string_getc(word_cpy))
     {
-        if (c == '~' && prev != '~')
+        if (c == '~' && prev != '~' && prev != '\\')
         {
             if (simple_tilde(shell, word_cpy, ret))
                 continue;
