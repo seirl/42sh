@@ -1,0 +1,6 @@
+{
+    "desc": "bad: for",
+    "input": "for $a in a b c; do echo $a; done",
+    "stderr": ...,
+    "retval": 1,
+}

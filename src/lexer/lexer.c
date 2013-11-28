@@ -29,16 +29,7 @@ s_token *lex_word(s_lexer *lexer)
 
 s_token *lex_name(s_lexer *lexer)
 {
-    s_token *tok = lex_look_token(lexer);
-
-    if (tok->type == T_ASSIGNMENT_WORD)
-    {
-        token_free(tok);
-        tok = lex_token(lexer);
-        return tok;
-    }
-    token_free(tok);
-    return NULL;
+    return lex_look_token_type(lexer) == T_WORD ? lex_token(lexer) : NULL;
 }
 
 static void check_prefill(s_lexer *lexer)

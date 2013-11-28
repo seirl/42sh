@@ -41,8 +41,7 @@ s_ast_for *parse_rule_for(s_parser *parser)
     s_ast_word_list *values = NULL;
     s_ast_list *list;
 
-    /** FIXME: should be lex_name */
-    if (!(tok = lex_word(parser->lexer)))
+    if (!(tok = lex_name(parser->lexer)))
         RETURN_PARSE_EXPECTED(parser, "for `name`");
 
     s_ast_word *identifier = ast_word_new();
