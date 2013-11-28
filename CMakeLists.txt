@@ -140,6 +140,7 @@ add_library(readline OBJECT
     src/readline/escape_keys.c
     src/readline/terminal.c
     src/readline/prompt.c
+    src/readline/konami.c
 )
 
 add_library(history OBJECT

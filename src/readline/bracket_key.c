@@ -4,14 +4,8 @@
 #include "wrapper.h"
 #include "history.h"
 #include "shell_private.h"
-
-static void update_line(s_shell *shell, s_term *term)
-{
-    handle_special_key(shell, term, CTRL_A);
-    my_tputs(tgetstr("ce", NULL));
-    printf("%s", term->input->buf);
-    fflush(stdout);
-}
+#include "readline.h"
+#include "konami.h"
 
 static e_next_action do_right(s_term *term)
 {
@@ -21,6 +15,7 @@ static e_next_action do_right(s_term *term)
         my_tputs(tgetstr("nd", NULL));
         term->input_index++;
     }
+    konami_next(term, KONAMI_RIGHT);
     return CONTINUE;
 }
 
@@ -32,6 +27,7 @@ static e_next_action do_left(s_term *term)
         my_tputs(tgetstr("le", NULL));
         term->input_index--;
     }
+    konami_next(term, KONAMI_LEFT);
     return CONTINUE;
 }
 
@@ -42,8 +38,9 @@ static e_next_action do_up(s_shell *shell, s_term *term)
 
     term->hist_pos++;
     term->input = history_get(shell, term->hist_pos)->line;
-    update_line(shell, term);
+    readline_update_line(term);
     term->input_index = term->input->len;
+    konami_next(term, KONAMI_UP);
     return CONTINUE;
 }
 
@@ -58,8 +55,9 @@ static e_next_action do_down(s_shell * shell, s_term *term)
     else
         term->input = history_get(shell, term->hist_pos)->line;
 
-    update_line(shell, term);
+    readline_update_line(term);
     term->input_index = term->input->len;
+    konami_next(term, KONAMI_DOWN);
     return CONTINUE;
 }
 

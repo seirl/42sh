@@ -11,6 +11,8 @@
 #include "terminal.h"
 #include "wrapper.h"
 #include "prompt.h"
+#include "bracket_key.h"
+#include "konami.h"
 
 static int is_blank(s_string *line)
 {
@@ -36,12 +38,35 @@ static s_string *readline_close(s_shell *shell, s_term *term,
     return input;
 }
 
-void do_print(s_shell *shell, char c)
+void readline_update_line(s_term *term)
+{
+    while (term->input_index > 0)
+    {
+        my_tputs(tgetstr("le", NULL));
+        term->input_index--;
+    }
+    my_tputs(tgetstr("ce", NULL));
+    printf("%s", term->input->buf);
+    fflush(stdout);
+}
+
+void readline_do_print(s_shell *shell, char c)
 {
     s_term *term = term_get(shell);
     // Insert the character in the current line buffer
     string_insertc(term->input, c, term->input_index);
     term->input_index++;
+
+    // Inform the konami module
+    if (c == 'a')
+    {
+        if (konami_next(term, KONAMI_A))
+            return;
+    }
+    else if (c == 'b')
+        konami_next(term, KONAMI_B);
+    else
+        konami_next(term, KONAMI_NOTHING);
 
     // Pass the terminal into insert mode, insert the character then
     // return to edit mode.
@@ -72,7 +97,7 @@ s_string *readline(s_shell *shell, char *prompt)
         if (ret == RETURN || ret == ERROR || ret == EOI)
             break;
         if (ret == PRINT && isprint(c))
-            do_print(shell, c);
+            readline_do_print(shell, c);
     }
 
     string_free(s_prompt);
