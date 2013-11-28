@@ -17,6 +17,7 @@ static e_shell_status shell_read_eval(s_shell *shell)
     if (status == PARSE_ERROR)
     {
         shell_status_set(shell, 2);
+        ast_input_delete(ast);
         return shell->state == SHELL_STOP_ON_ERROR ? SHELL_STOP : SHELL_OK;
     }
     else if (ast)

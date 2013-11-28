@@ -1,0 +1,6 @@
+{
+    "desc": "bad: unbalanced",
+    "input": "'a",
+    "stderr": ...,
+    "retval": 1,
+}

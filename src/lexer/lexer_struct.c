@@ -26,6 +26,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
     lexer->context = context;
     lexer->prev_delim = 1;
     lexer->assignment = 0;
+    lexer->error = E_LEX_NO_ERROR;
     location_init(&lexer->location);
 
     return lexer;
@@ -34,6 +35,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
 int lex_start(s_lexer *lexer)
 {
     token_free(lexer->lookahead);
+    lexer->error = E_LEX_NO_ERROR;
     lexer->location.source = lexer->input->source;
     lexer->lookahead = NULL;
     if (lexer->working_buffer->len == 0)

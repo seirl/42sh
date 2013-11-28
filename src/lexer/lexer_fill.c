@@ -50,7 +50,10 @@ static int check_close(s_lexer *lexer, char c, char prev)
         if (c == 0 && lexer->sur.end != '\n')
         {
             if (lexer->input->next(lexer->input, "PS2") == 0)
-                exit(1);
+            {
+                lex_error_set(lexer, E_LEX_UNBALANCED);
+                return 1;
+            }
             return -1;
         }
         else
@@ -71,7 +74,10 @@ static int check_open(s_lexer *lexer, char c, char prev)
         if (c == 0 && lexer->sur.end != '\n')
         {
             if (lexer->input->next(lexer->input, "PS2") == 0)
-                exit(1);
+            {
+                lex_error_set(lexer, E_LEX_UNBALANCED);
+                return 1;
+            }
             return -1;
         }
         else

@@ -26,6 +26,8 @@ int main(int argc, char **argv)
     {
         do {
             tok = lex_token(lexer);
+            if (lex_error(lexer) != E_LEX_NO_ERROR)
+                return 1;
             token_print(tok);
             t = tok->type;
             token_free(tok);
@@ -59,6 +61,8 @@ int main(int argc, char **argv)
                 fputs("BAD TOKEN OPERATION\n", stderr);
                 return 1;
             }
+            if (lex_error(lexer) != E_LEX_NO_ERROR)
+                return 1;
             token_print(tok);
             t = tok->type;
             token_free(tok);

@@ -15,6 +15,14 @@ enum lexer_context
 };
 typedef enum lexer_context e_lexer_context;
 
+enum lexer_error
+{
+    E_LEX_NO_ERROR,
+    E_LEX_UNBALANCED,
+};
+typedef enum lexer_error e_lexer_error;
+
+
 /**
 ** @brief Create a new lexer.
 **
@@ -57,5 +65,8 @@ s_token *lex_heredoc(s_lexer *lexer, const s_string *word);
 ** @return A heredoc token or NULL if it is not a heredoc.
 */
 s_token *lex_heredoc_strip(s_lexer *lexer, const s_string *word);
+
+/** @brief Get error status of the lexer */
+e_lexer_error lex_error(s_lexer *lexer);
 
 #endif /* !LEXER_H */

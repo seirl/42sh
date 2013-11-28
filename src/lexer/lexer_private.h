@@ -51,6 +51,9 @@ struct lexer
     int prev_delim;
     //! Shell
     s_shell *shell;
+
+    //! Error status
+    e_lexer_error error;
 };
 
 /**
@@ -78,6 +81,9 @@ char lex_topc(s_lexer *lexer);
 int lex_delimit_token(s_lexer *lexer);
 /** @brief remove blank char (' ', '\t') from the input stream */
 int lex_eat_spaces(s_lexer *lexer);
+
+/** @brief set error status on the lexer */
+int lex_error_set(s_lexer *lexer, e_lexer_error error);
 
 // char utils -----------------------------------------------------------------
 /** @brief check if the current char is a delimiter according to the SCL */

@@ -1,0 +1,6 @@
+{
+    "desc": "bad: unbalanced",
+    "input": "echo 'a",
+    "stderr": ...,
+    "retval": 1,
+}
