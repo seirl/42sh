@@ -2,6 +2,9 @@
 # define OPTIONS_H
 
 # include "shell.h"
+# include "env.h"
+# include "string.h"
+# include "string_utils.h"
 
 enum option_return
 {

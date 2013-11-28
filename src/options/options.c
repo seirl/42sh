@@ -1,6 +1,9 @@
 #include "options.h"
+#include "env.h"
 #include "getopt.h"
 #include "shopt.h"
+#include "string.h"
+#include "string_utils.h"
 #include "macros.h"
 
 static const s_param main_param[] =
@@ -31,7 +34,6 @@ static void usage(FILE *output)
         "        --ast-print    Display the Abstract Sytax Tree (AST)\n"
         "        --version      Diplay the current version number\n"
         "        --help         Display this help\n");
-
 }
 
 static int check_args(s_shell *shell, s_opt opt)
@@ -53,6 +55,19 @@ static int check_args(s_shell *shell, s_opt opt)
     return opt_get(&opt, "norc", NULL) ? E_RC : 0;
 }
 
+static void pos_param_set(s_shell *shell, s_opt *opt)
+{
+    env_set(shell, "42sh", "$0");
+    for (long i = 0; i < opt->trailing_count; ++i)
+    {
+        s_string *arg_index = string_itoa(i + 1);
+        string_insertc(arg_index, '$', 0);
+        char *var = string_release(arg_index);
+        char *val = opt_trailing_arg(opt, i);
+        env_set(shell, val, var);
+    }
+}
+
 e_option_return parse_options(s_shell *shell, int argc, char *argv[],
                               char **source)
 {
@@ -70,11 +85,13 @@ e_option_return parse_options(s_shell *shell, int argc, char *argv[],
     if (opt_get(opt, "c", &arg))
     {
         *source = arg;
+        pos_param_set(shell, opt);
         ret += E_STR;
     }
     else if (opt_trailing_arg(opt, 0))
     {
         *source = opt_trailing_arg(opt, 0);
+        pos_param_set(shell, opt);
         ret += E_FILE;
     }
     opt_free(opt);
