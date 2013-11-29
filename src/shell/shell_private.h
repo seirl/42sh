@@ -22,6 +22,9 @@ struct shell
     /** Managed by the env module. */
     s_hashtbl *env;
 
+    /** Number of shell arguments */
+    long arg_count;
+
     /** Managed by the options module */
     s_shopt shopt[SHOPT_COUNT];
 

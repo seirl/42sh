@@ -1,8 +1,10 @@
 #include "exec.h"
-
+#include "env.h"
 #include "shell_private.h"
 #include "smalloc.h"
 #include "functions.h"
+
+
 
 static void exec_exit(void)
 {
@@ -72,6 +74,26 @@ void restore_redir_contexts(s_redir_context **contexts)
     sfree(contexts);
 }
 
+static void exec_func(s_shell *shell,s_ast_shell_cmd *func_body)
+{
+    char **argv = smalloc(shell->arg_count * sizeof (char *));
+    for (int i = 1; i < shell->arg_count; ++i)
+    {
+        s_string *arg_index = string_itoa(i);
+        char *str_index = string_release(arg_index);
+        argv[i - 1] = env_get(shell, str_index);
+        env_unset(shell, str_index);
+    }
+    exec_shell_cmd(shell, func_body);
+    for (int i = 1; i < shell->arg_count; ++i)
+    {
+        s_string *arg_index = string_itoa(i);
+        char *str_index = string_release(arg_index);
+        env_set(shell, argv[i - 1], str_index);
+    }
+    sfree(argv);
+}
+
 void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
     exec_prefixes(shell, cmd->prefixes);
@@ -86,7 +108,7 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
     if (cmd_argv && cmd_argv[0])
     {
         if ((func_body = functions_get(shell, cmd_argv[0])))
-            exec_shell_cmd(shell, func_body); // TODO return int status
+            exec_func(shell, func_body);
         else if ((callback = builtins_find(shell, cmd_argv[0])))
             ret = callback(shell, len, cmd_argv);
         else

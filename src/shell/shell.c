@@ -23,6 +23,7 @@ s_shell *shell_new(void)
     shell->state = SHELL_STOP_ON_ERROR;
     shell->status = 0;
     shell->breaks = 0;
+    shell->arg_count = 0;
 
     return shell;
 }

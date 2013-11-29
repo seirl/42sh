@@ -1,4 +1,6 @@
 #include "options.h"
+#include "shell_private.h"
+#include "shell.h"
 #include "env.h"
 #include "getopt.h"
 #include "shopt.h"
@@ -57,16 +59,18 @@ static int check_args(s_shell *shell, s_opt opt)
 
 static void pos_param_set(s_shell *shell, s_opt *opt)
 {
-    if (!opt_trailing_arg(opt, 0))
+    if (!opt_trailing_arg(opt, 0) || !strcmp("", opt_trailing_arg(opt, 0)))
         env_set(shell, "42sh", "0");
     else
         env_set(shell, strdup(opt_trailing_arg(opt, 0)), "0");
-    for (long i = 1; opt_trailing_arg(opt, i); ++i)
+    long i = 0;
+    for (; opt_trailing_arg(opt, i); ++i)
     {
         s_string *arg_index = string_itoa(i);
         env_set(shell, strdup(opt_trailing_arg(opt, i)),
                 string_release(arg_index));
     }
+    shell->arg_count = i;
 }
 
 e_option_return parse_options(s_shell *shell, int argc, char *argv[],
