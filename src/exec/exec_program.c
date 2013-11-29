@@ -76,8 +76,8 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
     exec_prefixes(shell, cmd->prefixes);
 
-    int len = element_list_len(cmd->elements);
-    char **cmd_argv = elements_to_argv(shell, cmd->elements, len);
+    int len = 0;
+    char **cmd_argv = elements_to_argv(shell, cmd->elements, &len);
     s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
     s_ast_shell_cmd *func_body;
     f_handler callback;

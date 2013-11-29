@@ -112,7 +112,7 @@ void exec_ast_input(s_shell *shell, s_ast_input *ast);
 /** @brief Return the length of an element list */
 int element_list_len(s_ast_element *elt);
 /** @brief Convert an element list to an argument array */
-char **elements_to_argv(s_shell *shell, s_ast_element *element, int len);
+char **elements_to_argv(s_shell *shell, s_ast_element *element, int *len);
 
 // Redirections ---------------------------------------------------------------
 

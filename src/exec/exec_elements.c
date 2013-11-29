@@ -46,13 +46,14 @@ static int element_redir_list_len(s_ast_element *elt)
     return count;
 }
 
-char **elements_to_argv(s_shell *shell, s_ast_element *element, int len)
+char **elements_to_argv(s_shell *shell, s_ast_element *element, int *len)
 {
-    expand_element(shell, element);
-    char **cmd_argv = smalloc(sizeof (char *) * (len + 1));
+    //expand_element(shell, element);
+    *len = element_list_len(element);
+    char **cmd_argv = smalloc(sizeof (char *) * (*len + 1));
     s_string *str = NULL;
 
-    for (int i = 0; i < len; ++i)
+    for (int i = 0; i < *len; ++i)
     {
         if (!element->word)
         {
@@ -69,13 +70,13 @@ char **elements_to_argv(s_shell *shell, s_ast_element *element, int len)
         }
         element = element->next;
     }
-    cmd_argv[len] = NULL;
+    cmd_argv[*len] = NULL;
     return cmd_argv;
 }
 
 s_redir_context **exec_elements_redir(s_shell *shell, s_ast_element *elt)
 {
-    expand_element(shell, elt);
+    //expand_element(shell, elt);
     int len = element_redir_list_len(elt);
     s_redir_context **contexts =
         smalloc(sizeof (s_redir_context *) * (len + 1));
