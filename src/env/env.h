@@ -2,6 +2,7 @@
 # define ENV_H
 
 # include "shell.h"
+# include "hashtbl.h"
 
 # define VAR_RDONLY 1
 
@@ -15,5 +16,7 @@ void env_unset(s_shell *shell, char *name);
 void env_chmod(s_shell *shell, char *name, int mode);
 /** @brief Set a the value without checking the mode */
 void env_force_set(s_shell *shell, char *value, char *name);
+/** @brief Return a deep copy of the env */
+s_hashtbl *env_duplicate(s_shell *shell);
 
 #endif /* !ENV_H */

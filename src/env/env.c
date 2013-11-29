@@ -46,6 +46,7 @@ char *env_get(s_shell *shell, char *name)
     if (ret)
         return ret;
     s_env_var *var = hashtbl_get(shell->env, name);
+    //fprintf(stderr, "Get %s=%s\n", name, var ? var->value : "NULL");
     return var ? var->value : NULL;
 }
 

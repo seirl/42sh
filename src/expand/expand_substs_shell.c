@@ -12,7 +12,12 @@
 #include "shell_eval.h"
 #include "expand.h"
 #include "eval.h"
+#include "shell_private.h"
+#include "env.h"
 
+#include "env_private.h"
+
+#include <string.h>
 static void exec_subshell(s_shell *shell, int pipe_fd[2], char *str)
 {
     //TODO copy current shell's state ?
@@ -21,6 +26,9 @@ static void exec_subshell(s_shell *shell, int pipe_fd[2], char *str)
     close(1);
     fcntl(pipe_fd[1], F_DUPFD, 1);
     s_shell *sh = shell_new();
+    hashtbl_free(sh->env);
+    sh->env = env_duplicate(shell);
+
     shell_eval_str(sh, str);
     shell_delete(sh);
     close(pipe_fd[1]);
