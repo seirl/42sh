@@ -182,6 +182,7 @@ add_library(parser OBJECT
     src/parser/parser_utils.c
 
     src/parser/parse_rule_and_or.c
+    src/parser/parse_rule_braces.c
     src/parser/parse_rule_case.c
     src/parser/parse_rule_case_clause.c
     src/parser/parse_rule_case_item.c

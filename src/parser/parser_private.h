@@ -53,6 +53,10 @@ s_ast_case_item *parse_rule_case_clause(s_parser *parser);
 /** @brief Parse rule case_item. */
 s_ast_case_item *parse_rule_case_item(s_parser *parser);
 
+// Bonus ----------------------------------------------------------------------
+/** @brief Parse rule braces. */
+s_ast_compound_word *parse_rule_braces(s_parser *parser);
+
 // Expect ---------------------------------------------------------------------
 /** @brief Grab as many newlines as you can! */
 void parse_expect_newlines(s_parser *parser);
@@ -70,6 +74,8 @@ s_ast_assignment *parse_assignment(s_parser *parser);
 int maybe_parse_heredoc(s_parser *parser, s_ast_cmd *cmd);
 /** @brief Handle heredoc body. */
 void parse_heredoc_here(s_parser *parser, s_ast_cmd *cmd);
+/** @brief Create a s_ast_word from any token. */
+s_ast_word *word_of_token(s_token *tok);
 
 void parser_shift_token(s_parser *parser);
 void parser_shift_word(s_parser *parser);

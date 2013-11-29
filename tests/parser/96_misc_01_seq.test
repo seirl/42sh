@@ -1,0 +1,5 @@
+{
+    "desc": "misc: parse {1..3}",
+    "input": "echo {1..3}",
+    "output": "",
+}

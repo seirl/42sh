@@ -42,3 +42,20 @@ int next_word_is_res_word(s_parser *parser)
 
     return 0;
 }
+
+s_ast_word *word_of_token(s_token *tok)
+{
+    s_ast_word *word = ast_word_new();
+
+    if (tok->type == T_WORD)
+        word->kind = WORD;
+#define X(Toktype, Asttype)        \
+    else if (tok->type == Toktype) \
+        word->kind = Asttype;
+#include "wordtoken2ast.def"
+#undef X
+
+    word->str = string_duplicate(tok->value.str);
+
+    return word;
+}

@@ -1,43 +1,45 @@
 #include "parser_private.h"
 
-static s_ast_word *word_of_token(s_token *tok)
+static s_ast_compound_word *concat_braces(s_parser *parser,
+                                          s_ast_compound_word *cw)
 {
-    s_ast_word *word = ast_word_new();
+    if (!(cw->next = parse_rule_braces(parser)))
+        return cw;
+    s_ast_compound_word *head = cw;
 
-    if (tok->type == T_WORD)
-        word->kind = WORD;
-#define X(Toktype, Asttype)        \
-    else if (tok->type == Toktype) \
-        word->kind = Asttype;
-#include "wordtoken2ast.def"
-#undef X
+    while (cw->next)
+        cw = cw->next;
+    cw->next = parse_compound_word(parser);
 
-    word->str = string_duplicate(tok->value.str);
-
-    return word;
+    return head;
 }
 
 s_ast_compound_word *parse_compound_word(s_parser *parser)
 {
     s_token *tok;
     s_ast_word *word;
+    s_ast_compound_word *cw;
 
-    if (!(tok = lex_word(parser->lexer)))
-        return NULL;
-    word = word_of_token(tok);
-    token_free(tok);
-
-    s_ast_compound_word *cw = ast_compound_word_new();
-
-    tok = lex_look_word(parser->lexer);
-    if (tok)
+    if (!(cw = parse_rule_braces(parser)))
     {
-        if (tok->concat)
-            cw->next = parse_compound_word(parser);
+        if (!(tok = lex_word(parser->lexer)))
+            return NULL;
+        word = word_of_token(tok);
         token_free(tok);
+
+        cw = ast_compound_word_new();
+        cw->word = word;
     }
 
-    cw->word = word;
-
+    tok = lex_look_word(parser->lexer);
+    if (tok && tok->concat)
+    {
+        cw->next = parse_compound_word(parser);
+        token_free(tok);
+        return cw;
+    }
+    tok = lex_look_token(parser->lexer);
+    if (tok->concat)
+        concat_braces(parser, cw);
     return cw;
 }

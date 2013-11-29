@@ -1,0 +1,6 @@
+{
+    "desc": "input braces",
+    "stdin": b"""echo a{42}b
+    """,
+    "stdout": "a{42}b\n",
+}
