@@ -10,7 +10,10 @@ void restore_redir_context(s_redir_context *context)
     if (context->old_fd != -1)
     {
         dup2(10, context->old_fd);
-        fcntl(10, F_GETFD); // if not heredoc
+        if ((context->redir_type != REDIR_READ_WRITE)
+            && (context->redir_type != REDIR_HEREDOC)
+            && (context->redir_type != REDIR_HEREDOC_STRIP))
+            fcntl(10, F_GETFD);
     }
     sfree(context);
 }

@@ -33,6 +33,7 @@ struct redir_context
 {
     int old_fd;
     int tmp_fd;
+    e_ast_redirection_type redir_type;
 };
 typedef struct redir_context s_redir_context;
 

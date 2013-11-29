@@ -49,6 +49,7 @@ s_redir_context *save_redir_context(s_ast_redirection_list *redir)
     {
         context[i].old_fd = redir->io->io_number;
         context[i].tmp_fd = 10;
+        context[i].redir_type = redir->type;
         redir = redir->next;
     }
     context[size].old_fd = -1;

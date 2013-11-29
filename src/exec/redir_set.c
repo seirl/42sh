@@ -3,7 +3,8 @@
 
 static void exec_redir_write(s_shell *shell,
                              s_ast_redirection_list *redir,
-                             int fd)
+                             int fd,
+                             int clobber)
 {
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 1;
@@ -12,9 +13,18 @@ static void exec_redir_write(s_shell *shell,
                    O_CREAT | O_WRONLY | O_TRUNC,
                    0644)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
-    fcntl(redir->io->io_number, F_GETFD);
+    if (!clobber)
+    {
+        fcntl(redir->io->io_number, F_GETFD);
+        fcntl(redir->io->io_number, F_DUPFD, 10);
+        fcntl(redir->io->io_number, F_GETFD);
+        fcntl(10, F_SETFD, FD_CLOEXEC);
+        dup2(fd, redir->io->io_number);
+        XCLOSE(fd);
+        return;
+    }
     fcntl(redir->io->io_number, F_DUPFD, 10);
-    fcntl(redir->io->io_number, F_GETFD);
+    XCLOSE(redir->io->io_number);
     fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
@@ -119,6 +129,9 @@ static void exec_redir_writeup(s_shell *shell, s_ast_redirection_list *redir,
                    O_CREAT | O_RDWR | O_TRUNC,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    fcntl(redir->io->io_number, F_DUPFD, 10);
+    XCLOSE(redir->io->io_number);
+    fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
 }
@@ -127,7 +140,7 @@ static void exec_redir_type(s_shell *shell, s_ast_redirection_list *redir,
                             int fd)
 {
     if (redir->type == REDIR_WRITE)                 /** >   */
-        exec_redir_write(shell, redir, fd);
+        exec_redir_write(shell, redir, fd, clobber);
     else if (redir->type == REDIR_WRITE_UPDATE)     /** >>  */
         exec_redir_writeup(shell, redir, fd);
     else if (redir->type == REDIR_READ)             /** <   */
