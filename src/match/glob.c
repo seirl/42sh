@@ -62,7 +62,7 @@ static s_globr *glob_literal(s_globr *g, const char *filename)
 }
 
 static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
-                           e_glob_flags f)
+                           e_match_flags f)
 {
     const char *rdir = dir ? dir : ".";
     DIR *dp = opendir(rdir);
@@ -75,7 +75,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
             if (!my_fnmatch(basename, ep->d_name))
                 if (basename[0] == '.' || ep->d_name[0] != '.' || f & DOTGLOB)
                 {
-                    char *p = malloc(sizeof (char) + l + strlen(ep->d_name));
+                    char *p = calloc(l + strlen(ep->d_name), sizeof (char));
                     if (dir)
                     {
                         strcpy(p, dir);
@@ -91,7 +91,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
     return g;
 }
 
-s_globr *my_glob(const char *pattern, e_glob_flags flags)
+s_globr *my_glob(const char *pattern, e_match_flags flags)
 {
     s_globr *g = globr_init();
     if (!has_magic(pattern))
