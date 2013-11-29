@@ -17,11 +17,13 @@ typedef struct globr
 
 typedef enum match_flags
 {
-    EXTMATCH,
-    NOCASEMATCH,
-    DOTGLOB,
-    NULLGLOB,
+    MATCH_EXT    = 1 << 0,
+    MATCH_NOCASE = 1 << 1,
+    MATCH_DOT    = 1 << 2,
+    MATCH_NULL   = 1 << 3,
 } e_match_flags;
+
+int optmatch(const char *pattern, const char *str, e_match_flags flags);
 
 /**
 ** The glob() function searches for all the pathnames matching pattern

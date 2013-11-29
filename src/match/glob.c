@@ -61,7 +61,7 @@ static s_globr *glob_literal(s_globr *g, const char *filename)
     return g;
 }
 
-static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
+static s_globr *glob_match(s_globr *g, const char *dir, const char *base,
                            e_match_flags f)
 {
     const char *rdir = dir ? dir : ".";
@@ -72,8 +72,8 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
         struct dirent *ep;
         while ((ep = readdir(dp)))
         {
-            if (!my_fnmatch(basename, ep->d_name))
-                if (basename[0] == '.' || ep->d_name[0] != '.' || f & DOTGLOB)
+            if (!optmatch(base, ep->d_name, f))
+                if (base[0] == '.' || ep->d_name[0] != '.' || f & MATCH_DOT)
                 {
                     char *p = calloc(l + strlen(ep->d_name), sizeof (char));
                     if (dir)
@@ -91,14 +91,9 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *basename,
     return g;
 }
 
-s_globr *my_glob(const char *pattern, e_match_flags flags)
+static s_globr *glob_loop(const char *pattern, e_match_flags flags,
+                         s_globr *g, const char *split)
 {
-    s_globr *g = globr_init();
-    if (!has_magic(pattern))
-        return glob_literal(g, pattern);
-    const char *split = my_strrchr(pattern, '/');
-    if (!split)
-        return glob_match(g, NULL, pattern, flags);
     char *basename = strdup(split + 1);
     char *dirname = strndup(pattern, split - pattern);
     s_globr *dirs;
@@ -120,8 +115,30 @@ s_globr *my_glob(const char *pattern, e_match_flags flags)
     return g;
 }
 
+static s_globr *glob_rec(const char *pattern, e_match_flags flags)
+{
+    s_globr *g = globr_init();
+    if (!has_magic(pattern))
+        return glob_literal(g, pattern);
+    const char *split = my_strrchr(pattern, '/');
+    if (!split)
+        return glob_match(g, NULL, pattern, flags);
+    glob_loop(pattern, flags, g, split);
+    return g;
+}
+
+s_globr *my_glob(const char *pattern, e_match_flags flags)
+{
+    s_globr *g = glob_rec(pattern, flags);
+    if (!g->count && !(flags & MATCH_NULL))
+        globr_add(g, pattern);
+    return g;
+}
+
 void my_globfree(s_globr *g)
 {
+    for (unsigned i = 0; i < g->count; i++)
+        free(g->paths[i]);
     free(g->paths);
     free(g);
 }

@@ -22,8 +22,6 @@ s_string *expand_glob(s_shell *shell, s_string *word)
 {
     (void)shell;
     s_globr *g = my_glob(word->buf, 0);
-    if (g->count == 0)
-        return word;
     s_string *ret = string_create(0);
     qsort(g->paths, g->count, sizeof (char *), cmpstringp);
     for (unsigned i = 0; i < g->count; ++i)

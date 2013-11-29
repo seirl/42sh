@@ -81,6 +81,7 @@ add_library(string OBJECT
 add_library(match OBJECT
     src/match/fnmatch.c
     src/match/glob.c
+    src/match/extmatch.c
 )
 
 add_library(lexer OBJECT
