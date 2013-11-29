@@ -57,4 +57,5 @@ void env_default_var(s_shell *shell)
     env_set(shell, "42sh\\$ ", "PS1");
     env_set(shell, "> ", "PS2");
     env_set(shell, " \t\n", "IFS");
+    env_set(shell, "$", "");
 }
