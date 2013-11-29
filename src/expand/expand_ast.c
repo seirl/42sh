@@ -1,8 +1,9 @@
 #include "expand.h"
 
-#include "string_utils.h"
 #include "ast.h"
 #include "ifs.h"
+#include "smalloc.h"
+#include "string_utils.h"
 
 static s_ast_compound_word *cw_add_word(s_ast_compound_word *cw, s_string *s)
 {
