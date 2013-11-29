@@ -10,6 +10,7 @@ $0
     --with-coverage       Add coverage flags
     --with-gc             Enable garbage collector
     --with-clang          Compile with clang
+    --with-catchsegv      Catch SEGV
     --with-optimizations  Compile with optimizations flags (-O3)
     --help                Display this message
 EOF
@@ -19,16 +20,20 @@ for arg in "$@"
 do
     case "$arg" in
         --with-debug)
-            CFLAGS=${CFLAGS}" -g3 -gdwarf-2 -DCATCH_SEGFAULT"
+            CFLAGS="$CFLAGS -g3 -gdwarf-2"
+            BUILD_TYPE=Debug
+            ;;
+        --with-catchsegv)
+            CFLAGS="$CFLAGS -DCATCH_SEGFAULT"
             BUILD_TYPE=Debug
             ;;
         --with-coverage)
-            CFLAGS=${CFLAGS}" -O0 -g3 -pg -fprofile-arcs -ftest-coverage"
+            CFLAGS="$CFLAGS -O0 -g3 -pg -fprofile-arcs -ftest-coverage"
             BUILD_TYPE=Debug
             COVERAGE="set(COVERAGE yes)"
             ;;
         --with-optimizations)
-            CFLAGS=${CFLAGS}" -O3 -march=native"
+            CFLAGS="$CFLAGS -O3 -march=native"
             ;;
         --with-gc)
             GARBAGE_COLLECTOR="add_definitions(-DCONCHITA)"
