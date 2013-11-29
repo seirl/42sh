@@ -5,7 +5,7 @@
 #include "parser.h"
 #include "shell.h"
 
-e_shell_status shell_eval_string(s_shell *shell, const char *str)
+e_shell_status shell_eval_str(s_shell *shell, const char *str)
 {
     s_input *input = input_string_create(string_create_from(str), "str");
     s_lexer *lexer = lex_create(shell, input, LEX_ALL);
