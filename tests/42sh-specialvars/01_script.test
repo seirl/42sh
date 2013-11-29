@@ -3,6 +3,5 @@
     "desc": "$0 from script",
     "setup": "echo 'echo $0' > script",
     "args": ["script"],
-    "stdout": "script",
-    "skip": True,
+    "stdout": "script\n",
 }
