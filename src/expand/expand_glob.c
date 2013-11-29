@@ -28,6 +28,7 @@ s_string *expand_glob(s_shell *shell, s_string *word)
     qsort(g->paths, g->count, sizeof (char *), cmpstringp);
     for (unsigned i = 0; i < g->count; ++i)
     {
+        //printf("Got |%s|\n", g->paths[i]);
         string_puts(ret, g->paths[i]);
         if (i + 1 != g->count)
             string_putc(ret, ' ');

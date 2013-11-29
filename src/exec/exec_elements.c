@@ -1,4 +1,5 @@
 #include "exec.h"
+#include "expand.h"
 #include "smalloc.h"
 
 void exec_prefixes(s_shell *shell, s_ast_prefix *prefix)
@@ -47,6 +48,7 @@ static int element_redir_list_len(s_ast_element *elt)
 
 char **elements_to_argv(s_shell *shell, s_ast_element *element, int len)
 {
+    expand_element(shell, element);
     char **cmd_argv = smalloc(sizeof (char *) * (len + 1));
     s_string *str = NULL;
 
@@ -73,6 +75,7 @@ char **elements_to_argv(s_shell *shell, s_ast_element *element, int len)
 
 s_redir_context **exec_elements_redir(s_shell *shell, s_ast_element *elt)
 {
+    expand_element(shell, elt);
     int len = element_redir_list_len(elt);
     s_redir_context **contexts =
         smalloc(sizeof (s_redir_context *) * (len + 1));
