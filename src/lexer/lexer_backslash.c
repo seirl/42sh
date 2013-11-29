@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "string_utils.h"
 #include "shell.h"
 #include "expand.h"
@@ -14,13 +15,10 @@ void remove_backslash(s_lexer *lexer, s_token *tok)
     {
         if (str->buf[i] == '\\')
         {
-            char c = str->buf[i + 1];
-            if (c != '\"')
-            {
-                for (int j = 0; str->buf[i + j]; ++j)
-                    str->buf[i + j] = str->buf[i + j + 1];
-                str->len -= 1;
-            }
+            //char c = str->buf[i + 1];
+            for (int j = 0; str->buf[i + j]; ++j)
+                str->buf[i + j] = str->buf[i + j + 1];
+            str->len -= 1;
         }
     }
 }

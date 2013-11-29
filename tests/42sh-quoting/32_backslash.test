@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Backslash dquote",
+    "stdin": b"""echo \\"
+""",
+    "stdout": """"\n""",
+}
