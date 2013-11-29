@@ -37,29 +37,28 @@ static int replace_current_word(s_shell *shell, char *value, s_ast_word *word)
     return i;
 }
 
-static char *expand_word_by_kind(s_shell *shell, s_ast_word *word)
+static char *expand_word_by_kind(s_shell *shell, s_ast_word *word, int type)
 {
-    if (word->kind == EXPAND_NAME)
+    if (type == 1 && word->kind == EXPAND_NAME)
         return string_release(expand_simple_var(shell, word->str));
     if (word->kind == WORD)
     {
         s_string *w = expand_simple_word(shell, word->str);
         return string_release(expand_glob(shell, w));
     }
-    if (word->kind == EXPAND_ARITHM)
+    if (type == 1 && word->kind == EXPAND_ARITHM)
         return string_release(expand_arithm(shell, word->str));
-    if (word->kind == EXPAND_PARAM)
+    if (type == 1 && word->kind == EXPAND_PARAM)
         return string_release(expand_substs_var(shell, word->str));
     return NULL;
 }
 
 static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
-                                       s_ast_compound_word *cw)
+                                       s_ast_compound_word *cw, int type)
 {
-    char *value = expand_word_by_kind(shell, word);
+    char *value = expand_word_by_kind(shell, word, type);
     if (value == NULL)
         return NULL;
-
     int i = replace_current_word(shell, value, word);
     if (value[i] == 0)
         return NULL;
@@ -83,12 +82,12 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
 }
 
 s_ast_compound_word *split_compound_word(s_shell *shell,
-                                         s_ast_compound_word *cw)
+                                         s_ast_compound_word *cw, int type)
 {
     //TODO: schischi merge last
     s_ast_compound_word *it;
     s_ast_compound_word *res = NULL;
     for (it = cw; it; it = it->next)
-        res = split_word(shell, it->word, res);
+        res = split_word(shell, it->word, res, type);
     return res;
 }

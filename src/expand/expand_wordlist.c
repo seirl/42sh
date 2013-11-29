@@ -44,7 +44,7 @@ void expand_wordlist(s_shell *shell, s_ast_word_list *elt)
     s_ast_compound_word *cw = NULL;
     for (wl = elt; wl; wl = wl->next)
     {
-        cw = split_compound_word(shell, wl->word);
+        cw = split_compound_word(shell, wl->word, 1);
         add_wl(wl, cw);
         return;
     }

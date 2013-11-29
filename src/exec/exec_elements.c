@@ -48,7 +48,7 @@ static int element_redir_list_len(s_ast_element *elt)
 
 char **elements_to_argv(s_shell *shell, s_ast_element *element, int *len)
 {
-    //expand_element(shell, element);
+    expand_element(shell, element);
     *len = element_list_len(element);
     char **cmd_argv = smalloc(sizeof (char *) * (*len + 1));
     s_string *str = NULL;

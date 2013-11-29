@@ -24,6 +24,8 @@ static e_shell_status shell_read_eval(s_shell *shell)
         if (shopt_get(shell, "ast_print"))
             print_ast(ast, stdout);
         exec_ast_input(shell, ast);
+        if (shopt_get(shell, "ast_print"))
+            print_ast(ast, stdout);
     }
     ast_input_delete(ast);
     return SHELL_OK;

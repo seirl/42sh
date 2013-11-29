@@ -21,7 +21,7 @@ s_string *expand_string(s_shell *shell, s_string *str, e_lexer_context lcon);
 
 void remove_special_backslash(s_string *str);
 s_ast_compound_word *split_compound_word(s_shell *shell,
-                                         s_ast_compound_word *cw);
+                                         s_ast_compound_word *cw, int type);
 void expand_element(s_shell *shell, s_ast_element *elt);
 void expand_wordlist(s_shell *shell, s_ast_word_list *elt);
 

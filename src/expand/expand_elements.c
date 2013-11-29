@@ -17,7 +17,7 @@ static void add_elt(s_ast_element *elt, s_ast_compound_word *cw)
     s_ast_element *prev = elt;
     while (it)
     {
-        nelt = smalloc(sizeof (s_ast_element));
+        nelt = scalloc(1, sizeof (s_ast_element));
         nelt->word = smalloc(sizeof (s_ast_compound_word));
         nelt->word->next = NULL;
         nelt->word->word = it->word;
@@ -44,8 +44,8 @@ void expand_element(s_shell *shell, s_ast_element *elt)
     s_ast_compound_word *cw = NULL;
     for (wl = elt; wl; wl = wl->next)
     {
-        cw = split_compound_word(shell, wl->word);
+        cw = split_compound_word(shell, wl->word, 0);
         add_elt(wl, cw);
-        return;
+        //return;
     }
 }
