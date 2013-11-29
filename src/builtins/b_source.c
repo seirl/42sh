@@ -21,6 +21,9 @@ int builtin_source(s_shell *shell, int argc, char **argv)
         LOG(WARN, "42sh: source: %s: file not found\n", argv[1]);
         return 1;
     }
+    s_parser *parser = shell->parser;
+    shell->parser = NULL;
     shell_eval_file(shell, f, argv[1]);
+    shell->parser = parser;
     return 0;
 }
