@@ -12,6 +12,10 @@ static void exec_redir_write(s_shell *shell,
                    O_CREAT | O_WRONLY | O_TRUNC,
                    0644)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    fcntl(redir->io->io_number, F_GETFD);
+    fcntl(redir->io->io_number, F_DUPFD, 10);
+    fcntl(redir->io->io_number, F_GETFD);
+    fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
 }
@@ -25,13 +29,18 @@ static void exec_redir_read(s_shell *shell,
     s_string *filename = expand_compound(shell, redir->word);
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    fcntl(redir->io->io_number, F_GETFD);
+    fcntl(redir->io->io_number, F_DUPFD, 10);
+    fcntl(redir->io->io_number, F_GETFD);
+    fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
 }
 
 static void exec_redir_heredoc(s_ast_redirection_list *redir)
 {
-    int unused = 0;
+    int fildes[2];
+    int i = 0;
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     if (!redir->heredoc || !redir->heredoc->heredoc)
@@ -39,9 +48,16 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir)
         fprintf(stderr, "here-document command failed\n");
         return;
     }
-    unused += write(redir->io->io_number,
-                    redir->heredoc->heredoc->buf,
-                    redir->heredoc->heredoc->len);
+    fildes[0] = 3;
+    fildes[1] = 4;
+    i += pipe(fildes);
+    i += write(4, redir->heredoc->heredoc->buf, redir->heredoc->heredoc->len);
+    XCLOSE(4);
+    fcntl(0, F_DUPFD, 10);
+    XCLOSE(0);
+    fcntl(10, F_SETFD, FD_CLOEXEC);
+    dup2(3, 0);
+    XCLOSE(3);
 }
 
 static void exec_redir_dupout(s_shell *shell,
@@ -56,8 +72,12 @@ static void exec_redir_dupout(s_shell *shell,
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
-    /* We should use: fcntl(fd, F_DUPFD, redir->io->io_number) */
+    fcntl(redir->io->io_number, F_GETFD);
+    fcntl(redir->io->io_number, F_DUPFD, 10);
+    fcntl(redir->io->io_number, F_GETFD);
+    fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
+    fcntl(fd, F_GETFD);
 }
 
 static void exec_redir_dupin(s_shell *shell,

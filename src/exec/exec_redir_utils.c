@@ -48,7 +48,7 @@ s_redir_context *save_redir_context(s_ast_redirection_list *redir)
     for (int i = 0; i < size; ++i)
     {
         context[i].old_fd = redir->io->io_number;
-        context[i].tmp_fd = dup(redir->io->io_number);
+        context[i].tmp_fd = 10;
         redir = redir->next;
     }
     context[size].old_fd = -1;

@@ -1,5 +1,5 @@
 #include "exec.h"
-
+#include "ast.h"
 #include "shell_private.h"
 #include "smalloc.h"
 
@@ -9,8 +9,8 @@ void restore_redir_context(s_redir_context *context)
         return;
     if (context->old_fd != -1)
     {
-        dup2(context->tmp_fd, context->old_fd);
-        XCLOSE(context->tmp_fd);
+        dup2(10, context->old_fd);
+        fcntl(10, F_GETFD); // if not heredoc
     }
     sfree(context);
 }

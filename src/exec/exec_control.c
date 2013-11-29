@@ -35,8 +35,9 @@ void exec_if(s_shell *shell, s_ast_if *if_cmd)
 
 void exec_while(s_shell *shell, s_ast_while *while_cmd)
 {
+    shell->loops += 1;
     for (exec_ast_list(shell, while_cmd->predicate); !shell->status;
-                                 exec_ast_list(shell, while_cmd->predicate))
+         exec_ast_list(shell, while_cmd->predicate))
     {
         if (shell->breaks)
         {
@@ -50,11 +51,13 @@ void exec_while(s_shell *shell, s_ast_while *while_cmd)
             return;
         }
     }
+    shell->loops -= 1;
     shell_status_set(shell, 0);
 }
 
 void exec_until(s_shell *shell, s_ast_until *until_cmd)
 {
+    shell->loops += 1;
     for (exec_ast_list(shell, until_cmd->predicate); shell->status;
                                  exec_ast_list(shell, until_cmd->predicate))
     {
@@ -70,12 +73,14 @@ void exec_until(s_shell *shell, s_ast_until *until_cmd)
             return;
         }
     }
+    shell->loops -= 1;
 }
 
 void exec_for(s_shell *shell, s_ast_for *for_cmd)
 {
     expand_wordlist(shell, for_cmd->values);
     s_ast_word_list *values = for_cmd->values;
+    shell->loops += 1;
     while (values && expand_compound(shell, values->word))
     {
         if (shell->breaks && shell->breaks--)
@@ -84,11 +89,14 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
         s_string *value = string_duplicate(expand_compound(shell,
                                                           values->word));
         env_set(shell, string_release(value), string_release(id));
-        exec_ast_list(shell, for_cmd->cmd_list);
         if (shell->breaks && shell->breaks--)
             return;
+        else
+            exec_ast_list(shell, for_cmd->cmd_list);
+
         values = values->next;
     }
+    shell->loops -= 1;
 }
 
 static int exec_case_match(s_shell *shell,

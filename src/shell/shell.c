@@ -24,6 +24,7 @@ s_shell *shell_new(void)
     shell->status = 0;
     shell->breaks = 0;
     shell->arg_count = 0;
+    shell->loops = 0;
 
     return shell;
 }

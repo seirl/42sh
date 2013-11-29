@@ -48,6 +48,9 @@ struct shell
     /** Number of continues left to do */
     unsigned int continues;
 
+    /** Current number of intricated loops */
+    unsigned int loops;
+
     /** Running state of the shell. */
     e_shell_state state;
 };
