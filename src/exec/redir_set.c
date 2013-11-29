@@ -140,7 +140,7 @@ static void exec_redir_type(s_shell *shell, s_ast_redirection_list *redir,
                             int fd)
 {
     if (redir->type == REDIR_WRITE)                 /** >   */
-        exec_redir_write(shell, redir, fd, clobber);
+        exec_redir_write(shell, redir, fd, 0);
     else if (redir->type == REDIR_WRITE_UPDATE)     /** >>  */
         exec_redir_writeup(shell, redir, fd);
     else if (redir->type == REDIR_READ)             /** <   */
@@ -154,7 +154,7 @@ static void exec_redir_type(s_shell *shell, s_ast_redirection_list *redir,
     else if (redir->type == REDIR_DUPLICATE_OUTPUT) /** >&  */
         exec_redir_dupout(shell, redir, fd);
     else if (redir->type == REDIR_CLOBBER)          /** >|  */
-        exec_redir_write(shell, redir, fd);
+        exec_redir_write(shell, redir, fd, 1);
     else if (redir->type == REDIR_READ_WRITE)       /** <>  */
         exec_redir_readwrite(shell, redir, fd);
 }
