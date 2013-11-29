@@ -40,9 +40,9 @@ void env_set(s_shell *shell, char *value, char *name)
     hashtbl_set(shell->env, new_var, strdup(name));
 }
 
-char *env_get(const s_shell *shell, char *name)
+char *env_get(s_shell *shell, char *name)
 {
-    char *ret = env_special(name);
+    char *ret = env_special(shell, name);
     if (ret)
         return ret;
     s_env_var *var = hashtbl_get(shell->env, name);
