@@ -53,6 +53,9 @@ struct shell
 
     /** Running state of the shell. */
     e_shell_state state;
+
+    /** Is temporary fd (10) in use */
+    unsigned int tmp_fd;
 };
 
 #endif /* !SHELL_PRIVATE_H */

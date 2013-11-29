@@ -6,6 +6,7 @@
 #include "functions_private.h"
 #include "shopt.h"
 #include "smalloc.h"
+#include "xsyscall.h"
 #include "history.h"
 
 s_shell *shell_new(void)
@@ -25,6 +26,7 @@ s_shell *shell_new(void)
     shell->breaks = 0;
     shell->arg_count = 0;
     shell->loops = 0;
+    shell->tmp_fd = 0;
 
     return shell;
 }
@@ -37,6 +39,8 @@ void shell_setup(s_shell *shell, s_parser *parser)
 
 void shell_delete(s_shell *shell)
 {
+    if (shell->tmp_fd)
+        XCLOSE(10);
     history_close(shell);
     env_free(shell);
     functions_free(shell);

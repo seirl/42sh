@@ -154,6 +154,8 @@ static void revert_set_redir(s_shell *shell,
         return;
     revert_set_redir(shell, redir->next, fd);
     set_default_io_number(redir);
+    if (!shell->tmp_fd)
+        shell->tmp_fd = 1;
     exec_redir_type(shell, redir, fd);
 }
 
