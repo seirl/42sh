@@ -19,21 +19,24 @@
 
 #include <string.h>
 
+static int is_blank(char c)
+{
+    return c == ' ' || c == '\t' || c == '\n';
+}
+
 static s_string *process_stdout(s_string *ret)
 {
     int i;
-    for (i = 0; ret->buf[i] == ' ' || ret->buf[i] == '\n';
-            ++i)
+    for (i = 0; is_blank(ret->buf[i]); ++i)
         continue;
     string_del_nth(ret, 0, i);
     for (i = 0; ret->buf[i]; ++i)
     {
-        if (ret->buf[i] == '\n' || ret->buf[i] == ' ')
+        if (is_blank(ret->buf[i]))
         {
             ret->buf[i] = ' ';
             int j;
-            for (j = 1; ret->buf[i + j] == ' ' || ret->buf[i + j] == '\n';
-                    ++j)
+            for (j = 1; is_blank(ret->buf[i + j]); ++j)
                 continue;
             string_del_nth(ret, i + 1, j - (ret->buf[i + j] == 0 ? 0 : 1));
         }
