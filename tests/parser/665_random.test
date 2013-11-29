@@ -1,0 +1,19 @@
+(
+    {
+        "desc": "Random",
+        "input": " ".join(random.choice([
+        "$0",
+        "=",
+        "a=",
+        "in",
+        "for",
+        "while",
+        "(",
+        ")",
+        ]) for _ in range(i)),
+        "output": '*',
+        "stderr": '*',
+        "retval": lambda ret: ret != -11
+    }
+    for i in range(100)
+)

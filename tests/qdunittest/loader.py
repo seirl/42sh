@@ -1,6 +1,7 @@
 import os
 import os.path
 import unittest
+import random
 
 from .case import (QDTestCase,
         new_test_run_42sh,
@@ -62,6 +63,7 @@ class QDTestLoader(unittest.TestLoader):
         """Return a TestCase generated from the file test_file, expected to
         contain a json structure reprensenting the test."""
         with open(os.path.join(directory, test_filename)) as f:
+            random.seed(0)
             tests = eval(f.read())
             if isinstance(tests, dict):
                 tests = [tests]

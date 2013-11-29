@@ -230,18 +230,28 @@ def new_test_run_parser(test, options):
             with_valgrind=with_valgrind)
         stdoutdata, stderrdata = parser.communicate(b"", options.timeout)
 
-        if 'output' in test:
-            subself.assertMultiLineEqual(test['output'], stdoutdata.decode(),
-                             "stdout differ")
+        if test.get('output') == ...:
+            subself.assertNotEqual("", stdoutdata.decode(), "stdout empty")
+        elif test.get('output') == '*':
+            pass
+        else:
+            subself.assertMultiLineEqual(test.get('output', ""),
+                                         stdoutdata.decode(),
+                                         "stdout differ")
 
         if test.get('stderr') == ...:
             subself.assertNotEqual("", stderrdata.decode(), "stderr empty")
+        elif test.get('stderr') == '*':
+            pass
         else:
             subself.assertMultiLineEqual(test.get('stderr', ""),
                     stderrdata.decode(), "stderr differ")
 
         retval = test.get('retval', 0)
-        subself.assertEqual(retval, parser.returncode, "return value differ")
+        if isinstance(retval, int):
+            subself.assertEqual(retval, parser.returncode, "return value differ")
+        else:
+            subself.assertTrue(retval(parser.returncode))
 
     return QDTestCaseParser, test_parser
 

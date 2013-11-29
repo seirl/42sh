@@ -1,0 +1,28 @@
+[
+    {
+        "desc": "for: basic",
+        "stdin": b"""
+    for i in in in in stop; do
+        echo $i
+    done
+        """,
+        "stdout": """in
+in
+in
+stop
+""",
+    },
+    {
+        "desc": "for: basic",
+        "stdin": b"""
+    for i in in in in stop; do
+        echo $i
+    done
+        """,
+        "stdout": """in
+in
+in
+stop
+""",
+    },
+]
