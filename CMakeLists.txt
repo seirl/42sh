@@ -50,6 +50,7 @@ add_library(smalloc OBJECT
 add_library(hashtbl OBJECT
     src/utils/hashtbl.c
     src/utils/hash_op.c
+    src/utils/hashtbl_dup.c
     src/utils/hash_char.c
     src/utils/hash_string.c
 )

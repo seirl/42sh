@@ -38,10 +38,15 @@ void *hashtbl_iter(s_hashtbl *h, void **key, s_hash_elt **it);
 unsigned long hash_char(void *s);
 int cmp_char(void *s1, void *s2);
 void free_char(void *s);
+void *dup_char(void *s);
 
 // hash_string.c
 unsigned long hash_string(void *s);
 int cmp_string(void *s1, void *s2);
 void free_string(void *s);
+
+// hashtb_dup.c
+s_hashtbl *hashtbl_duplicate(s_hashtbl *h, void *(*value_dup)(void *),
+                             void *(*key_dup)(void *));
 
 #endif /* !HASHTBL_H */
