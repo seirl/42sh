@@ -1,0 +1,36 @@
+{
+    "desc": "full view of the ast",
+    "args": ["--ast-print"],
+    "stdin": b"""
+echo foo
+a=42
+echo $a
+echo 'a'"b"
+echo {1..2}
+echo $(( 1 ))
+echo ${a}
+echo $(echo yes)
+if true; then
+    echo yes
+elif false; then
+    echo no
+else
+    echo no
+fi
+case a in
+    a)
+        echo yes
+        ;;
+esac
+for i in a b c; do
+    echo $i
+done
+while false; do
+    echo no
+done
+until true; do
+    echo no
+done
+""",
+    "stdout": ...,
+}
