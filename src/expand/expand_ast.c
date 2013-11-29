@@ -78,6 +78,7 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
     }
     cw = cw_add_word(cw, buf);
     string_free(buf);
+    sfree(value);
     return cw;
 }
 
