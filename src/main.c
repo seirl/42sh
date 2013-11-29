@@ -15,9 +15,8 @@ int main(int argc, char *argv[])
 {
     s_shell *shell = shell_new();
     signal_init();
-    //FIXME: default var ?
-    env_set(shell, "42sh\\$ ", "PS1");
-    env_set(shell, "> ", "PS2");
+    env_set(shell, argv[0], "0");
+
     char *src = NULL;
     int ret = parse_options(shell, argc, argv, &src);
     if (ret & E_RET)

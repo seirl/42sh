@@ -30,11 +30,6 @@ static void add_status(s_shell *shell)
     env_chmod(shell, "?", VAR_RDONLY);
 }
 
-static void add_ifs(s_shell *shell)
-{
-    env_set(shell, " \t\n", "IFS");
-}
-
 static void dump_env(s_shell *shell)
 {
     s_string *name = string_create(0);
@@ -59,5 +54,7 @@ void env_default_var(s_shell *shell)
     dump_env(shell);
     add_cwd(shell);
     add_status(shell);
-    add_ifs(shell);
+    env_set(shell, "42sh\\$ ", "PS1");
+    env_set(shell, "> ", "PS2");
+    env_set(shell, " \t\n", "IFS");
 }
