@@ -6,7 +6,7 @@
 
 void builtins_create(s_shell *shell)
 {
-    shell->builtins_count = 0 +
+    shell->builtins_count = 1 +
 #define X(Name) + 1
 #include "builtins.def"
 #undef X
@@ -19,6 +19,8 @@ void builtins_create(s_shell *shell)
     ++i;
 #include "builtins.def"
 #undef X
+    shell->builtins[i].name = ".";
+    shell->builtins[i].callback = builtin_source;
 }
 
 f_handler builtins_find(s_shell *shell, const char *name)

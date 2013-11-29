@@ -1,0 +1,10 @@
+{
+    "type": "42sh",
+    "desc": "source: basic",
+    "setup": "echo 'echo foo\na=42' > script",
+    "stdin": b"""
+source ./script
+echo $a
+""",
+    "stdout": "foo\n42\n",
+}

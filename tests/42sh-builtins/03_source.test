@@ -1,0 +1,9 @@
+{
+    "type": "42sh",
+    "desc": "source: basic .",
+    "setup": "echo 'echo hello >out' > script",
+    "stdin": b"""
+. ./script
+""",
+    "custom": lambda: open("out").read() == "hello\n",
+}

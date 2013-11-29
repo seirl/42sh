@@ -1,0 +1,11 @@
+{
+    "type": "42sh",
+    "desc": "source: basic .",
+    "setup": "echo 'a () { echo $foo; }' > script",
+    "stdin": b"""
+. ./script
+foo=lol
+a
+""",
+    "stdout": "lol\n",
+}
