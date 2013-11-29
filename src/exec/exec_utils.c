@@ -24,8 +24,11 @@ void exec_assignment(s_shell *shell, s_ast_assignment *assign)
         env_set(shell, "", string_release(name));
     else
     {
-        s_string *value = string_duplicate(expand_compound(shell,
-                                                           assign->value));
+        s_string *value;
+        if (assign->value)
+            value = string_duplicate(expand_compound(shell, assign->value));
+        else
+            value = string_create_from("");
         env_set(shell, string_release(value), string_release(name));
     }
 }
