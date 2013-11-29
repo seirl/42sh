@@ -8,7 +8,8 @@
 #include "input_string.h"
 #include "evalexpr.h"
 
-#define VARNAME "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+#define STARTVAR "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+#define INVAR "0123456789_"
 
 static int among(char c, const char *s)
 {
@@ -23,10 +24,10 @@ static s_string *extract_vars(s_shell *shell, s_string *s)
     s_string *n = string_create(s->len);
     for (unsigned i = 0; i < s->len; i++)
     {
-        if (among(s->buf[i], VARNAME))
+        if (among(s->buf[i], STARTVAR))
         {
             s_string *id = string_create(0);
-            while (among(s->buf[i], VARNAME))
+            while (among(s->buf[i], STARTVAR INVAR))
             {
                 string_putc(id, s->buf[i]);
                 i++;
