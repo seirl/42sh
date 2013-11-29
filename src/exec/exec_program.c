@@ -1,10 +1,12 @@
+#ifndef _POSIX_C_SOURCE
+# define _POSIX_C_SOURCE 200809L
+#endif
+
 #include "exec.h"
 #include "env.h"
 #include "shell_private.h"
 #include "smalloc.h"
 #include "functions.h"
-
-
 
 static void exec_exit(void)
 {
