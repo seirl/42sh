@@ -15,7 +15,7 @@ static s_string *(*const expand_funcs[])(s_shell *, s_string *) =
     expand_arithm,
     expand_squote,
     expand_dquote,
-    NULL,
+    expand_substs_shell
 };
 
 static s_string *expand_word(s_shell *shell, const s_ast_word *word)
