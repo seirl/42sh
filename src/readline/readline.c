@@ -48,6 +48,7 @@ void readline_update_line(s_term *term)
     my_tputs(tgetstr("ce", NULL));
     printf("%s", term->input->buf);
     fflush(stdout);
+    term->input_index = term->input->len;
 }
 
 void readline_do_print(s_shell *shell, char c)

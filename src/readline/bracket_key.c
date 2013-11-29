@@ -39,7 +39,6 @@ static e_next_action do_up(s_shell *shell, s_term *term)
     term->hist_pos++;
     term->input = history_get(shell, term->hist_pos)->line;
     readline_update_line(term);
-    term->input_index = term->input->len;
     konami_next(term, KONAMI_UP);
     return CONTINUE;
 }
@@ -56,7 +55,6 @@ static e_next_action do_down(s_shell * shell, s_term *term)
         term->input = history_get(shell, term->hist_pos)->line;
 
     readline_update_line(term);
-    term->input_index = term->input->len;
     konami_next(term, KONAMI_DOWN);
     return CONTINUE;
 }

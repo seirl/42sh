@@ -38,6 +38,7 @@ s_input *input_interactive_create(s_shell *shell)
 
 void input_interactive_delete(s_input *input)
 {
+    printf("exit\n");
     s_input_state_interactive *state = input->_input_state;
     string_free(state->buf);
     sfree(state);

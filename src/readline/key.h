@@ -18,6 +18,11 @@ enum next_action
 typedef enum next_action e_next_action;
 
 /**
+** @brief Handle the given key
+*/
+e_next_action handle_key(s_shell *shell, s_term *term, char *c);
+
+/**
 ** @brief Handle the next key
 */
 e_next_action getkey(s_shell *shell, s_term *term, char *c);

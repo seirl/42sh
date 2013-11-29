@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#include "smalloc.h"
 #include "autocompletion.h"
 #include "terminal.h"
 #include "env.h"
 #include "match.h"
+#include "readline.h"
+#include "wrapper.h"
+#include "escape_keys.h"
 
 static s_autocomplete_binaries g_bin =
 {
@@ -13,12 +17,27 @@ static s_autocomplete_binaries g_bin =
     0
 };
 
-static size_t start_word(s_term *term)
+static int is_blank(char c)
 {
-    size_t i = term->input_index;
-    while (i && term->input->buf[i] != ' ' && term->input->buf[i] != '\t')
+    return c == ' ' || c == '\t';
+}
+
+static int start_word(s_term *term)
+{
+    if (!term->input_index)
+        return 0;
+    int i = term->input_index - 1;
+    while (i >= 0 && !is_blank(term->input->buf[i]))
         i--;
     return i + 1;
+}
+
+static size_t end_word(s_term *term)
+{
+    size_t i = term->input_index;
+    while (term->input->buf[i] && !is_blank(term->input->buf[i]))
+        i++;
+    return i;
 }
 
 static void try_enlarge_bins(void)
@@ -73,12 +92,48 @@ static int bins_compare(const void *one, const void *two)
     return strcmp(*c_one[0], *c_two[0]);
 }
 
-int autocomplete(s_shell *shell, s_term *term)
+// TODO: make static
+void replace_word(s_term *term, s_string *word)
 {
     size_t start = start_word(term);
-    (void)start;
-    (void)shell;
+    size_t end = end_word(term);
+    s_string *new_input = string_create(term->input->len);
+
+    for (size_t i = 0; i < start; i++)
+        string_putc(new_input, term->input->buf[i]);
+    for (size_t i = 0; i < word->len; i++)
+        string_putc(new_input, word->buf[i]);
+    for (size_t i = end; i < term->input->len; i++)
+        string_putc(new_input, term->input->buf[i]);
+
+    sfree(term->input->buf);
+    term->input->buf = new_input->buf;
+    term->input->len = new_input->len;
+    term->input->max_len = new_input->max_len;
+    term->input->read_pos = new_input->read_pos;
+    sfree(new_input);
+
+    readline_update_line(term);
+    while (term->input_index > start + word->len)
+    {
+        my_tputs(tgetstr("le", NULL));
+        term->input_index--;
+    }
+}
+
+int autocomplete(s_shell *shell, s_term *term)
+{
+    size_t i = term->input_index;
+    if (!is_blank(term->input->buf[i]))
+        handle_escape_key(shell, term, ESCAPE_F);
+    i = term->input_index;
+    if (i && is_blank(term->input->buf[i - 1]))
+        return 0;
+
     // TODO: remove (debug);
+    //s_string *s = string_create_from("Test.");
+    //replace_word(term, s);
+    //string_free(s);
     // rehash(shell);
     return 0;
 }

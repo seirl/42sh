@@ -6,11 +6,8 @@
 #include "special_keys.h"
 #include "escape_keys.h"
 
-e_next_action getkey(s_shell *shell, s_term *term, char *c)
+e_next_action handle_key(s_shell *shell, s_term *term, char *c)
 {
-    if (read(STDIN_FILENO, c, sizeof (char)) == -1)
-        return ERROR;
-
     if (isprint(*c))
         return PRINT;
 
@@ -27,4 +24,12 @@ e_next_action getkey(s_shell *shell, s_term *term, char *c)
         return CONTINUE;
     }
     return handle_special_char(shell, term, *c);
+}
+
+e_next_action getkey(s_shell *shell, s_term *term, char *c)
+{
+    if (read(STDIN_FILENO, c, sizeof (char)) == -1)
+        return ERROR;
+
+    return handle_key(shell, term, c);
 }

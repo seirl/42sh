@@ -27,7 +27,6 @@ static int konami_done(s_term *term)
     string_reset(term->input);
     string_puts(term->input, "Votai Test.");
     readline_update_line(term);
-    term->input_index = term->input->len;
 
     return 1;
 }
