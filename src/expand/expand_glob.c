@@ -1,14 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "shell.h"
-#include "string_utils.h"
-#include "smalloc.h"
-#include "ast.h"
-#include "lexer.h"
+
 #include "expand.h"
-#include "env.h"
-#include "ifs.h"
 #include "match.h"
 #include "shopt.h"
 

@@ -1,26 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "shell.h"
-#include "string_utils.h"
-#include "smalloc.h"
-#include "ast.h"
-#include "lexer.h"
 #include "expand.h"
-#include "env.h"
-#include "ifs.h"
+#include "ast.h"
 
 static void add_elt(s_ast_element *elt, s_ast_compound_word *cw)
 {
     s_ast_compound_word *it = cw;
-    s_ast_compound_word *free_me = NULL;
     s_ast_element *nelt;
     s_ast_element *prev = elt;
     while (it)
     {
-        nelt = scalloc(1, sizeof (s_ast_element));
-        nelt->word = smalloc(sizeof (s_ast_compound_word));
-        nelt->word->next = NULL;
+        nelt = ast_element_new();
+        nelt->word = ast_compound_word_new();
         nelt->word->word = it->word;
+        it->word = NULL;
         if (prev == NULL)
         {
             nelt->next = elt->next;
@@ -32,10 +23,9 @@ static void add_elt(s_ast_element *elt, s_ast_compound_word *cw)
             prev->next = nelt;
             prev = nelt;
         }
-        free_me = it->next;
-        sfree(it);
-        it = free_me;
+        it = it->next;
     }
+    ast_compound_word_delete(cw);
 }
 
 void expand_element(s_shell *shell, s_ast_element *elt)
@@ -46,6 +36,5 @@ void expand_element(s_shell *shell, s_ast_element *elt)
     {
         cw = split_compound_word(shell, wl->word, 0);
         add_elt(wl, cw);
-        //return;
     }
 }

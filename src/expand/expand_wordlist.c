@@ -1,26 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "shell.h"
-#include "string_utils.h"
-#include "smalloc.h"
-#include "ast.h"
-#include "lexer.h"
 #include "expand.h"
-#include "env.h"
-#include "ifs.h"
+#include "ast.h"
 
 static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
 {
     s_ast_compound_word *it = cw;
-    s_ast_compound_word *free_me = NULL;
     s_ast_word_list *nl;
     s_ast_word_list *prev = l;
     while (it)
     {
-        nl = smalloc(sizeof (s_ast_word_list));
-        nl->word = smalloc(sizeof (s_ast_compound_word));
-        nl->word->next = NULL;
+        nl = ast_word_list_new();
+        nl->word = ast_compound_word_new();
         nl->word->word = it->word;
+        it->word = NULL;
         if (prev == NULL)
         {
             nl->next = l->next;
@@ -32,10 +23,9 @@ static void add_wl(s_ast_word_list *l, s_ast_compound_word *cw)
             prev->next = nl;
             prev = nl;
         }
-        free_me = it->next;
-        sfree(it);
-        it = free_me;
+        it = it->next;
     }
+    ast_compound_word_delete(cw);
 }
 
 void expand_wordlist(s_shell *shell, s_ast_word_list *elt)

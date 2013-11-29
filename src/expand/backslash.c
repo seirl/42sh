@@ -1,11 +1,4 @@
-#include "string_utils.h"
-#include "ast.h"
-#include "shell.h"
 #include "expand.h"
-#include "env.h"
-#include "lexer.h"
-#include "token.h"
-#include "input_string.h"
 
 void remove_special_backslash(s_string *str)
 {

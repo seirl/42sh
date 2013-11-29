@@ -1,11 +1,6 @@
-#include "string_utils.h"
-#include "ast.h"
-#include "shell.h"
 #include "expand.h"
+#include "string_utils.h"
 #include "env.h"
-#include "lexer.h"
-#include "token.h"
-#include "input_string.h"
 #include "evalexpr.h"
 
 #define STARTVAR "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"

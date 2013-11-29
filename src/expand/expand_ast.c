@@ -1,21 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "shell.h"
-#include "string_utils.h"
-#include "smalloc.h"
-#include "ast.h"
-#include "lexer.h"
 #include "expand.h"
-#include "env.h"
+
+#include "string_utils.h"
+#include "ast.h"
 #include "ifs.h"
 
 static s_ast_compound_word *cw_add_word(s_ast_compound_word *cw, s_string *s)
 {
-    s_ast_compound_word *ncw = smalloc(sizeof (s_ast_compound_word));
-    ncw->word = smalloc(sizeof (s_ast_word));
+    s_ast_compound_word *ncw = ast_compound_word_new();
+    ncw->word = ast_word_new();
     ncw->word->kind = WORD;
     ncw->word->str = string_duplicate(s);
-    ncw->next = NULL;
     if (cw == NULL)
         return ncw;
     s_ast_compound_word *it;

@@ -1,10 +1,5 @@
-#include "input_string.h"
-#include "input.h"
-#include "lexer.h"
-#include "string_utils.h"
-#include "ast.h"
-#include "shell.h"
 #include "expand.h"
+#include "input_string.h"
 
 static s_string *(*const expand_funcs[])(s_shell *, s_string *) =
 {

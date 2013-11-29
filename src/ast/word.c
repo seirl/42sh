@@ -13,6 +13,8 @@ s_ast_word *ast_word_new(void)
 
 void ast_word_delete(s_ast_word *word)
 {
+    if (!word)
+        return;
     if (word->str)
         string_free(word->str);
     sfree(word);
