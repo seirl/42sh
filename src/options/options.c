@@ -67,8 +67,8 @@ static void pos_param_set(s_shell *shell, s_opt *opt)
     for (; opt_trailing_arg(opt, i); ++i)
     {
         s_string *arg_index = string_itoa(i);
-        env_set(shell, strdup(opt_trailing_arg(opt, i)),
-                string_release(arg_index));
+        env_set(shell, opt_trailing_arg(opt, i), arg_index->buf);
+        string_free(arg_index);
     }
     shell->arg_count = i;
 }
@@ -95,9 +95,9 @@ e_option_return parse_options(s_shell *shell, int argc, char *argv[],
     else if (opt_trailing_arg(opt, 0))
     {
         *source = opt_trailing_arg(opt, 0);
-        pos_param_set(shell, opt);
         ret += E_FILE;
     }
+    pos_param_set(shell, opt);
     opt_free(opt);
     return ret;
 }
