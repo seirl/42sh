@@ -5,6 +5,12 @@ void exec_ast_list(s_shell *shell, s_ast_list *list)
     s_ast_list *tmp = list;
     while (tmp)
     {
+        if (shell->continues)
+        {
+            --shell->continues;
+            tmp = tmp->next;
+            continue;
+        }
         exec_andor_node(shell, tmp->and_or);
         tmp = tmp->next;
     }

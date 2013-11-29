@@ -15,6 +15,7 @@ int builtin_source(s_shell *shell, int argc, char *argv[]);
 int builtin_cd(s_shell *shell, int argc, char *argv[]);
 int builtin_history(s_shell *shell, int argc, char *argv[]);
 int builtin_break(s_shell *shell, int argc, char *argv[]);
+int builtin_continue(s_shell *shell, int argc, char *argv[]);
 
 
 typedef int (*f_handler)(s_shell *shell, int argc, char *argv[]);

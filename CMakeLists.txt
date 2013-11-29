@@ -124,6 +124,7 @@ add_library(builtins OBJECT
     src/builtins/b_alias.c
     src/builtins/b_break.c
     src/builtins/b_cd.c
+    src/builtins/b_continue.c
     src/builtins/b_echo.c
     src/builtins/b_exec.c
     src/builtins/b_exit.c
