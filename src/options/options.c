@@ -62,7 +62,7 @@ static void pos_param_set(s_shell *shell, s_opt *opt)
     if (!opt_trailing_arg(opt, 0) || !strcmp("", opt_trailing_arg(opt, 0)))
         env_set(shell, "42sh", "0");
     else
-        env_set(shell, strdup(opt_trailing_arg(opt, 0)), "0");
+        env_set(shell, opt_trailing_arg(opt, 0), "0");
     long i = 0;
     for (; opt_trailing_arg(opt, i); ++i)
     {
