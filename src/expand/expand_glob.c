@@ -10,6 +10,19 @@
 #include "env.h"
 #include "ifs.h"
 #include "match.h"
+#include "shopt.h"
+
+static const struct
+{
+    e_match_flags f;
+    char *opt;
+} opt_flags[] =
+{
+    { MATCH_EXT, "extglob" },
+    { MATCH_NOCASE, "nocaseglob" },
+    { MATCH_DOT, "dotglob" },
+    { MATCH_NULL, "nullglob" },
+};
 
 static int cmpstringp(const void *s1, const void *s2)
 {
@@ -20,8 +33,11 @@ static int cmpstringp(const void *s1, const void *s2)
 
 s_string *expand_glob(s_shell *shell, s_string *word)
 {
-    (void)shell;
-    s_globr *g = my_glob(word->buf, 0);
+    e_match_flags glob_flags = 0;
+    for (unsigned i = 0; i < sizeof (opt_flags) / sizeof (*opt_flags); i++)
+        if (shopt_get(shell, opt_flags[i].opt))
+            glob_flags |= opt_flags[i].f;
+    s_globr *g = my_glob(word->buf, glob_flags);
     s_string *ret = string_create(0);
     qsort(g->paths, g->count, sizeof (char *), cmpstringp);
     for (unsigned i = 0; i < g->count; ++i)
