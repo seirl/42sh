@@ -5,6 +5,7 @@
 #include "wrapper.h"
 #include "terminal.h"
 #include "konami.h"
+#include "autocompletion.h"
 
 static e_next_action do_backspace(s_term *term)
 {
@@ -68,6 +69,12 @@ static e_next_action do_ctrl_u(s_term *term)
     my_tputs(tgetstr("ed", NULL));
     konami_next(term, KONAMI_NOTHING);
 
+    return CONTINUE;
+}
+
+static e_next_action do_tab(s_shell *shell, s_term *term)
+{
+    autocomplete(shell, term);
     return CONTINUE;
 }
 

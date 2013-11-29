@@ -12,6 +12,7 @@
 -Isrc/evalexpr
 -Isrc/match
 -Isrc/history
+-Isrc/autocompletion
 -Isrc/input
 -Isrc/lexer
 -Isrc/options

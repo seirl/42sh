@@ -41,6 +41,7 @@ include_directories(src/parser)
 include_directories(src/readline)
 include_directories(src/shell)
 include_directories(src/utils)
+include_directories(src/autocompletion)
 
 add_library(smalloc OBJECT
     src/utils/smalloc.c
@@ -148,6 +149,10 @@ add_library(history OBJECT
     src/history/history.c
     src/history/hist_list.c
     src/history/history_observators.c
+)
+
+add_library(autocompletion OBJECT
+    src/autocompletion/autocompletion.c
 )
 
 add_library(input OBJECT
@@ -301,6 +306,7 @@ add_library(lib42sh STATIC
     $<TARGET_OBJECTS:exec>
     $<TARGET_OBJECTS:hashtbl>
     $<TARGET_OBJECTS:history>
+    $<TARGET_OBJECTS:autocompletion>
     $<TARGET_OBJECTS:input>
     $<TARGET_OBJECTS:lexer>
     $<TARGET_OBJECTS:parser>
