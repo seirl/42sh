@@ -81,7 +81,7 @@ static void exec_func(s_shell *shell,s_ast_shell_cmd *func_body)
     {
         s_string *arg_index = string_itoa(i);
         char *str_index = string_release(arg_index);
-        argv[i - 1] = env_get(shell, str_index);
+        argv[i - 1] = strdup(env_get(shell, str_index));
         env_unset(shell, str_index);
     }
     exec_shell_cmd(shell, func_body);
