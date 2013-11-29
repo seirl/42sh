@@ -2,6 +2,9 @@ import os
 import os.path
 import unittest
 import random
+import sys
+
+from .genarith import gen_arithm_test
 
 from .case import (QDTestCase,
         new_test_run_42sh,
