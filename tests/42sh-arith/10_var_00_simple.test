@@ -5,5 +5,4 @@ echo $((a))
 echo $(($a))
 """,
     "stdout": "42\n42\n",
-    "skip": True,
 }

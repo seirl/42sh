@@ -5,5 +5,4 @@ echo $((a + 1))
 echo $((0 + $a))
 """,
     "stdout": "43\n42\n",
-    "skip": True,
 }

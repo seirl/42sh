@@ -5,5 +5,4 @@ b=10
 echo $(( $((a - 2)) + b ))
 """,
     "stdout": "50\n",
-    "skip": True,
 }
