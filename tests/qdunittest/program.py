@@ -36,6 +36,9 @@ class TestProgram(unittest.TestProgram):
             help='Verbose output', action='store_true')
         parser.add_option('-q', '--quiet', dest='verbose', default=True,
             help='Verbose output', action='store_false')
+        parser.add_option('-f', '--failfast', dest='failfast', default=False,
+                          help='Stop on first fail or error',
+                          action='store_true')
 
         parser.add_option("-c", "--categories", action="store_true",
             help="Display the categories and the percentage of successful tests.")
