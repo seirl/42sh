@@ -39,7 +39,9 @@ static char *expand_word_by_kind(s_shell *shell, s_ast_word *word, int type)
     if (word->kind == WORD)
     {
         s_string *w = expand_simple_word(shell, word->str);
-        return string_release(expand_glob(shell, w));
+        char *ret = string_release(expand_glob(shell, w));
+        string_free(w);
+        return ret;
     }
     if (type == 1 && word->kind == EXPAND_ARITHM)
         return string_release(expand_arithm(shell, word->str));
