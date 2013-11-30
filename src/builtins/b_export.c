@@ -85,7 +85,7 @@ static void export_id(s_shell *shell, s_string *str, int index)
     string_free(str);
 }
 
-int export_params(s_shell *shell, int argc, char *argv[])
+static void export_params(s_shell *shell, int argc, char *argv[])
 {
     int i = 1;
     s_string *str = NULL;
