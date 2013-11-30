@@ -25,4 +25,6 @@ s_ast_compound_word *split_compound_word(s_shell *shell,
 void expand_element(s_shell *shell, s_ast_element *elt);
 void expand_wordlist(s_shell *shell, s_ast_word_list *elt);
 
+char **expand_argv(char **argv, int *max_len);
+
 #endif /* !EXPAND_H */

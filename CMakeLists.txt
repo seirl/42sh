@@ -275,6 +275,7 @@ add_library(ast OBJECT
 
 add_library(expand OBJECT
     src/expand/expand.c
+    src/expand/expand_argv.c
     src/expand/expand_arithm.c
     src/expand/expand_simple_var.c
     src/expand/expand_simple_word.c

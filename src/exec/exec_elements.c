@@ -56,9 +56,7 @@ char **elements_to_argv(s_shell *shell, s_ast_element *element, int *len)
     for (int i = 0; i < *len; ++i)
     {
         if (!element->word)
-        {
             element = element->next;
-        }
         else
         {
             if ((str = expand_compound(shell, element->word)) == NULL)
@@ -70,6 +68,7 @@ char **elements_to_argv(s_shell *shell, s_ast_element *element, int *len)
         }
         element = element->next;
     }
+    cmd_argv = expand_argv(cmd_argv, len);
     cmd_argv[*len] = NULL;
     return cmd_argv;
 }
