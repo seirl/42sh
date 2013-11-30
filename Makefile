@@ -21,6 +21,9 @@ check: all
 	cd build/tests && ./run_tests.py
 
 fastcheck: all
+	cd build/tests && ./run_tests.py -m
+
+fastfail: all
 	cd build/tests && ./run_tests.py -m --failfast
 
 coverage: all
