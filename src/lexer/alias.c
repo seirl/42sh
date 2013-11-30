@@ -12,9 +12,12 @@ void alias_set(s_shell *shell, s_string *alias, s_string *value)
     hashtbl_set(shell->aliases, value, alias);
 }
 
-void alias_unset(s_shell *shell, s_string *alias)
+int alias_unset(s_shell *shell, s_string *alias)
 {
+    if (hashtbl_get(shell->aliases, alias) == NULL)
+        return 1;
     hashtbl_unset(shell->aliases, alias);
+    return 0;
 }
 
 s_string *alias_get(s_shell *shell, s_string *alias)

@@ -16,7 +16,12 @@ static const s_param shopt_param[] =
 
 static void usage(void)
 {
-    fprintf(stdout, "unalias: usage: unalias [-a] name [name ...]\n");
+    fprintf(stderr, "unalias: usage: unalias [-a] name [name ...]\n");
+}
+
+static void not_found(char *alias)
+{
+    fprintf(stderr, "unalias: %s: not found\n", alias);
 }
 
 static void remove_alias(s_shell *shell, s_opt *opt)
@@ -24,7 +29,8 @@ static void remove_alias(s_shell *shell, s_opt *opt)
     for (unsigned int i = 0; i < opt->trailing_count; ++i)
     {
         s_string *key = string_create_from(opt_trailing_arg(opt, i));
-        alias_unset(shell, key);
+        if (alias_unset(shell, key))
+            not_found(key->buf);
         string_free(key);
     }
 }
