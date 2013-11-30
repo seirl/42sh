@@ -24,15 +24,20 @@ static void not_found(char *alias)
     fprintf(stderr, "unalias: %s: not found\n", alias);
 }
 
-static void remove_alias(s_shell *shell, s_opt *opt)
+static int remove_alias(s_shell *shell, s_opt *opt)
 {
+    int ret = 0;
     for (unsigned int i = 0; i < opt->trailing_count; ++i)
     {
         s_string *key = string_create_from(opt_trailing_arg(opt, i));
         if (alias_unset(shell, key))
+        {
             not_found(key->buf);
+            ret = 1;
+        }
         string_free(key);
     }
+    return ret;
 }
 
 int builtin_unalias(s_shell *shell, int argc, char *argv[])
@@ -49,7 +54,7 @@ int builtin_unalias(s_shell *shell, int argc, char *argv[])
     else if (opt->trailing_count == 0)
         usage();
     else
-        remove_alias(shell, opt);
+        ret = remove_alias(shell, opt);
     opt_free(opt);
     return ret;
 }
