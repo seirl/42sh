@@ -13,14 +13,25 @@ struct string
 
 typedef struct string s_string;
 
+//! @brief create and return an allocated string
 s_string *string_create(size_t size);
+
+//! @brief create a string from a char pointer
 s_string *string_create_from(const char *str);
+
+//! @brief resize dynamically a string
 void string_resize(s_string *s);
+
+//! @brief duplicate a string
 s_string *string_duplicate(const s_string *src);
 
-//! @brief Set string size to 0.
+//! @brief set string size to 0.
 void string_reset(s_string *s);
+
+//! @brief release a string
 char *string_release(s_string *s);
+
+//! @brief free a string
 void string_free(s_string *s);
 
 void string_putc(s_string *s, char c);
@@ -46,6 +57,7 @@ s_string *string_replace(const s_string *s, const char *pat, const char *rep);
 int string_equal(const s_string *s, const char *pattern);
 int string_begins_with(const s_string *s, const char *pattern);
 int string_ends_with(const s_string *s, const s_string *pattern);
+
 /**
 ** @brief Return character at index `index` or `'\0'` if index is invalid.
 */
