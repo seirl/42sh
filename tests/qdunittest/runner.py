@@ -81,6 +81,9 @@ class QDTestRunner:
             if not self.final:
                 result.print_summary(options=self.options, number=self.number)
 
+            if result.shouldStop:
+                break
+
             result = self._make_result()
 
         if not self.final:

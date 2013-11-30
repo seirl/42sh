@@ -17,6 +17,7 @@ class QDTestResult(unittest.TestResult):
                 and not options.final
                 and not options.categories)
         self.stream = stream
+        self.failfast = options.failfast
         self.options = options
 
     def getShortDescription(self, test):
@@ -82,6 +83,9 @@ class QDTestResult(unittest.TestResult):
             else:
                 self.stream.writeln("ERROR")
 
+        if self.failfast:
+            self.shouldStop = True
+
     def addFailure(self, test, err):
         exctype, value, tb = err
         self.errors.append((test, str(value)))
@@ -96,6 +100,9 @@ class QDTestResult(unittest.TestResult):
             args = ["cgdb", "--args"]
             args.extend(test.args)
             subprocess.call(args)
+
+        if self.failfast:
+            self.shouldStop = True
 
     def printErrors(self):
         if self.verbose:

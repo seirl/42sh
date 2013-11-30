@@ -21,7 +21,7 @@ check: all
 	cd build/tests && ./run_tests.py
 
 fastcheck: all
-	cd build/tests && ./run_tests.py -m
+	cd build/tests && ./run_tests.py -m --failfast
 
 coverage: all
 	$(MAKE) -C build coverage
