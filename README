@@ -73,6 +73,7 @@ Readline
     - Ctrl-w (delete a word)
     - Ctrl-u (delete from beginning to cursor)
     - HOME and END keys
+    - DEL key
     - Konami code
     - Programs autocompletion with correction.
 
