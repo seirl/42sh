@@ -3,4 +3,5 @@
     "desc": "var=#foo",
     "stdin": """foo=%-=$\94@#{}[]/_; echo $foo
 """,
+    "skip": True,
 }
