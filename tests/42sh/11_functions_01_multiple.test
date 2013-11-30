@@ -1,10 +1,9 @@
 {
+    "type": "diff",
     "desc": "function: define and call recursive",
     "stdin": """
 a() { echo hello; }
 b() { echo world; a; }
 b
 """,
-    "stdout": "hello\nworld\n",
-    "skip": True,
 }

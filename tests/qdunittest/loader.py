@@ -1,19 +1,20 @@
 import os
 import os.path
-import unittest
 import random
 import sys
+import unittest
 
 from .genarith import gen_arithm_test
 
 from .case import (QDTestCase,
         new_test_run_42sh,
+        new_test_run_diff,
+        new_test_run_env,
         new_test_run_fnmatch,
-        new_test_run_utils,
         new_test_run_interface,
         new_test_run_lexer,
         new_test_run_parser,
-        new_test_run_env,
+        new_test_run_utils,
     )
 from .suite import QDTestSuite
 
@@ -21,13 +22,14 @@ class QDTestLoader(unittest.TestLoader):
     """Find and load tests."""
 
     test_methods = {
+            '42sh': new_test_run_42sh,
+            'diff': new_test_run_diff,
+            'env': new_test_run_env,
+            'fnmatch': new_test_run_fnmatch,
+            'interface': new_test_run_interface,
             'lexer': new_test_run_lexer,
             'parser': new_test_run_parser,
             'utils': new_test_run_utils,
-            'env': new_test_run_env,
-            'interface': new_test_run_interface,
-            'fnmatch': new_test_run_fnmatch,
-            '42sh': new_test_run_42sh,
             }
 
     def __init__(self, options, *args, **kwargs):

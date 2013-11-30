@@ -341,12 +341,56 @@ def new_test_run_interface(test, options):
         stdoutdata, stderrdata = interface.communicate(b"", options.timeout)
 
         if 'stdout' in test:
-            subself.assertRegexpMatches(stdoutdata.decode (), test['stdout'])
+            subself.assertRegexpMatches(stdoutdata.decode(), test['stdout'])
 
         if 'stderr' in test:
-            subself.assertRegexpMatches(stderrdata.decode (), test['stderr'])
+            subself.assertRegexpMatches(stderrdata.decode(), test['stderr'])
 
         retval = test.get('retval', 0)
         subself.assertEqual(retval, interface.returncode, "return value differ")
 
     return QDTestCaseInterface, test_interface
+
+class QDTestDiff(QDTestCaseShell):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.use_tmpdir = True
+
+    def assertBehaveSimilar(self, ref, us, msg):
+        if ref:
+            self.assertNotEqual("", us, "[" + msg + " empty]")
+        else:
+            self.assertEqual("", us, "[" + msg + " not empty]")
+
+    def shortDescription(self):
+        return "{}[args: {}][input: {}]".format(
+                self.test["desc"] + "\n" if "desc" in self.test else "",
+                self.test.get('args', "None"),
+                self.test.get('stdin', "None"),
+            )
+
+def new_test_run_diff(test, options):
+    def test_diff(subself):
+        timeout = test.get('timeout', options.timeout)
+        args = test.get('args', [])
+        stdin = test.get('stdin', "").encode()
+        with_valgrind = test.get('with_valgrind', not options.without_valgrind)
+        command = ["./42sh",] + args
+
+        qdsh = subself.start_program(args=["./42sh"] + args,
+                with_valgrind=with_valgrind)
+        posix = subself.start_program(args=["bash", "--posix"] + args,
+                with_valgrind=False)
+        qdsh_out, qdsh_err = qdsh.communicate(stdin, options.timeout)
+        posix_out, posix_err = posix.communicate(stdin, options.timeout)
+
+        subself.assertBehaveSimilar(posix_out.decode(), qdsh_out.decode(),
+                            "stdout")
+        subself.assertBehaveSimilar(posix_err.decode(), qdsh_err.decode(),
+                            "stderr")
+
+        subself.assertEqual(posix.returncode, qdsh.returncode,
+                            "return value differ")
+
+    return QDTestDiff, test_diff
