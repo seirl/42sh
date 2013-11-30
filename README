@@ -83,6 +83,10 @@ Builtins
     - set
     - unset
 
+Env
+---
+    - read-only variables
+
 AUTHORS
 =======
     - Rémi « halfr » Audebert

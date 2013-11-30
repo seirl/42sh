@@ -83,6 +83,7 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
     shell->loops += 1;
     while (values && expand_compound(shell, values->word))
     {
+        expand_wordlist(shell, values);
         if (shell->breaks && shell->breaks--)
             return;
         s_string *id = string_duplicate(expand_word(for_cmd->identifier));
