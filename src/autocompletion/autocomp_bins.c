@@ -69,8 +69,8 @@ s_string *autocomp_bins(s_term *term)
         }
     }
 
-    int i_ret = a < 0 ? b : a;
-    if (!strcmp(g_bin.bins[i_ret][0], pat->buf))
+    size_t i_ret = a < 0 ? b : a;
+    if (i_ret < g_bin.size - 1 && !strcmp(g_bin.bins[i_ret][0], pat->buf))
         i_ret++;
     string_free(pat);
     return string_create_from(g_bin.bins[i_ret][0]);
