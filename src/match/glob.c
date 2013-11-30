@@ -71,7 +71,6 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *base,
     {
         struct dirent *ep;
         while ((ep = readdir(dp)))
-        {
             if (!optmatch(base, ep->d_name, f))
                 if (base[0] == '.' || ep->d_name[0] != '.' || f & MATCH_DOT)
                 {
@@ -79,26 +78,29 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *base,
                     if (dir)
                     {
                         strcpy(p, dir);
-                        strcat(p, "/");
+                        if (dir[strlen(dir) - 1] != '/')
+                            strcat(p, "/");
                     }
                     strcat(p, ep->d_name);
                     globr_add(g, p);
                     free(p);
                 }
-        }
         closedir(dp);
     }
     return g;
 }
 
+static s_globr *glob_rec(const char *pattern, e_match_flags flags);
+
 static s_globr *glob_loop(const char *pattern, e_match_flags flags,
                           s_globr *g, const char *split)
 {
+    unsigned add = (split == pattern) ? 1 : 0;
+    char *dirname = strndup(pattern, split - pattern + add);
     char *basename = strdup(split + 1);
-    char *dirname = strndup(pattern, split - pattern);
     s_globr *dirs;
-    if (strcmp(dirname, basename) && has_magic(dirname))
-        dirs = my_glob(dirname, flags);
+    if (has_magic(dirname))
+        dirs = glob_rec(dirname, flags);
     else
     {
         dirs = globr_init();
