@@ -1,0 +1,14 @@
+{
+    "desc": "break: too many args",
+    "stdin": b"""
+while true; do
+    while true; do
+        while true; do
+            break 1 2 3
+        done
+    done
+done
+""",
+    "stderr": ...,
+    "retval": 1,
+}

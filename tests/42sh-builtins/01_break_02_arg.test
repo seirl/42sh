@@ -1,0 +1,12 @@
+{
+    "desc": "break: with arg",
+    "stdin": b"""
+while true; do
+    while true; do
+        while true; do
+            break 4
+        done
+    done
+done
+""",
+}

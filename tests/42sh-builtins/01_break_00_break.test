@@ -1,0 +1,12 @@
+{
+    "desc": "break: basic",
+    "stdin": b"""
+a=0
+while true; do
+    if [ $a = 3 ]; then
+        break
+    fi
+    a=$(( $a + 1 ))
+done
+""",
+}

@@ -1,0 +1,14 @@
+{
+    "desc": "break: arg zero",
+    "stdin": b"""
+while true; do
+    while true; do
+        while true; do
+            break 0
+        done
+    done
+done
+""",
+    "stderr": ...,
+    "retval": 1,
+}
