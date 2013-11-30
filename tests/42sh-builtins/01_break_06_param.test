@@ -1,0 +1,16 @@
+{
+    "desc": "break: arg < 0",
+    "stdin": b"""
+a=2
+while true; do
+    echo a
+    while true; do
+        echo c
+        break $a
+        echo d
+    done
+    echo b
+done
+""",
+    "stdout": "a\nc\n",
+}

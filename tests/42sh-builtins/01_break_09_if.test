@@ -1,0 +1,10 @@
+{
+    "desc": "break: break in if",
+    "stdin": b"""
+while true; do
+    if break; then
+        echo a
+    fi
+done
+""",
+}

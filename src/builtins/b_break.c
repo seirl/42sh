@@ -11,21 +11,21 @@
 
 static int break_error_nb(s_shell *shell)
 {
-    shell->breaks = 99999;
+    shell->breaks = shell->loops;
     fprintf(stderr, "break: too many arguments\n");
     return 1;
 }
 
 static int break_error_zero(s_shell *shell)
 {
-    shell->breaks = 99999;
+    shell->breaks = shell->loops;
     fprintf(stderr, "break: argument is not positive: 0\n");
     return 1;
 }
 
 static int break_error_neg(s_shell *shell, long nb)
 {
-    shell->breaks = 99999;
+    shell->breaks = shell->loops;
     fprintf(stderr, "break: argument is not positive: %ld\n", nb);
     return 1;
 }
@@ -45,6 +45,8 @@ int builtin_break(s_shell *shell, int argc, char *argv[])
             return break_error_zero(shell);
         else if (n < 0)
             return break_error_neg(shell, n);
+        else if (n > shell->loops)
+            shell->breaks = shell->loops;
         else
             shell->breaks = n;
     }

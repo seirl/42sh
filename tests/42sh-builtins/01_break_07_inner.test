@@ -1,0 +1,9 @@
+{
+    "desc": "break: break inner",
+    "stdin": b"""
+while true; do
+    echo a; break; echo b
+done
+""",
+    "stdout": "a\n",
+}

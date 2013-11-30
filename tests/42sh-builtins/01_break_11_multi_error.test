@@ -1,0 +1,21 @@
+{
+    "desc": "break: multi with error",
+    "stdin": b"""
+while true; do
+    break 42
+done
+a=0
+while true; do
+    echo $a
+    if [ $a = 3 ]; then
+        break
+    fi
+    a=$(( $a + 1 ))
+done
+""",
+    "stdout": """0
+1
+2
+3
+""",
+}

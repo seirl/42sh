@@ -1,0 +1,19 @@
+{
+    "desc": "break: multi breaks",
+    "stdin": b"""
+while true; do
+    echo a
+    while true; do
+        echo b
+        break
+        echo c
+    done
+    echo d
+    break
+done
+""",
+    "stdout": """a
+b
+d
+""",
+}

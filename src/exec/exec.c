@@ -12,7 +12,7 @@ void exec_ast_list(s_shell *shell, s_ast_list *list)
         }
         else
         {
-            if (shell->continues > 1)
+            if (shell->continues > 1 || shell->breaks)
                 return;
             exec_andor_node(shell, tmp->and_or);
             tmp = tmp->next;
