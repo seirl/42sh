@@ -157,7 +157,8 @@ add_library(history OBJECT
 
 add_library(autocompletion OBJECT
     src/autocompletion/autocompletion.c
-    src/autocompletion/autocompletion_tools.c
+    src/autocompletion/autocomp_bins.c
+    src/autocompletion/autocomp_tools.c
 )
 
 add_library(input OBJECT
