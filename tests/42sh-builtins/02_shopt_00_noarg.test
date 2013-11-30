@@ -1,0 +1,6 @@
+{
+    "desc": "shopt",
+    "stdin": """shopt
+""",
+    "stdout": ...,
+}
