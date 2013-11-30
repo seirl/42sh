@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Unset alias",
     "stdin": b"""alias foo=bar; unalias foo; alias\n
 """,

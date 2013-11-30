@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "bad: elif without then",
     "stdin": b"""
 if true; then

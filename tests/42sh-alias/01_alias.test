@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Set alias",
     "stdin": b"""alias foo=bar; alias\n
 """,

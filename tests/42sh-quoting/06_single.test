@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Simple quoted comment",
     "stdin": b"""echo '#foobar'\n
 """,

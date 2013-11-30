@@ -1,0 +1,5 @@
+{
+    "desc": "variables indirections \\$$var",
+    "input": "echo \\$$var",
+    "output": "",
+}

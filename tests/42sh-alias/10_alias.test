@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Alias, multiple word",
     "stdin": b"""alias foo="echo lol"\nfoo
 """,

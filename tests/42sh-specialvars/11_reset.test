@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Executing command that evaluates to empty resets status",
     "stdin": b"""
 false

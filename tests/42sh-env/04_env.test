@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "PID",
     "stdin": b"""echo $PID\n
 """,

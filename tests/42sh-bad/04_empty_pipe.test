@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "bad: empty pipe",
     "stdin": b"""echo a |""",
     "stdout": "",

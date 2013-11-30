@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Simple quote backslash",
     "stdin": b"""echo '\a'\n
 """,

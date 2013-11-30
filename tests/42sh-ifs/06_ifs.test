@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "IFS left concat + subst var",
     "stdin": b"""foo='foo bar baz'; for a in lol${bar:-$foo}; do echo $a;
     done

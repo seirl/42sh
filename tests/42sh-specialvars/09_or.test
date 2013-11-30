@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "$? after or",
     "stdin": b"""false || true
 echo $?

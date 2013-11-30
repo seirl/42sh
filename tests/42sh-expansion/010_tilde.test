@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": 'Quoted tilde',
     "stdin": b"""echo \~root"
 "

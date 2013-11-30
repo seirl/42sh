@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Double quote with comment",
     "stdin": b"""bar=foo; echo #foo$bar\n
 """,

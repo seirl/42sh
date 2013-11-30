@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Random var",
     "stdin": b"""echo $RANDOM\n
 """,

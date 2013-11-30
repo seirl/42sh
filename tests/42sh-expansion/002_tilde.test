@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Simple tilde, unset HOME",
     "stdin": b"""unset HOME; echo ~\n
 """,

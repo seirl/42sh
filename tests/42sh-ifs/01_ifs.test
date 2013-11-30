@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "IFS for, variable multiple",
     "stdin": b"""foo='foo bar'; for i in $foo; do echo $i; done\n
 """,

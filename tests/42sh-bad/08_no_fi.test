@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "bad: no fi",
     "stdin": b"""if true; then
         echo i

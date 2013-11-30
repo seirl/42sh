@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Simple quoted command",
     "stdin": b"""'echo' 'a'\n
 """,

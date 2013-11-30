@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Backslash",
     "stdin": b"""\\e\\c\\h\\o \\f\\o\\o\n
 """,

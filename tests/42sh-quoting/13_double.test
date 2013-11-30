@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Double quote var",
     "stdin": b"""foo=bar; echo "foo$foo foo"\n
 """,

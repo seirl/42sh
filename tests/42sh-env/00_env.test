@@ -1,5 +1,4 @@
 {
-    "type": "42sh",
     "desc": "Set simple var",
     "stdin": b"""foo=bar; echo $foo\n
 """,
