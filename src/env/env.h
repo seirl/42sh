@@ -12,11 +12,11 @@ void env_set(s_shell *shell, char *value, char *name);
 char *env_get(s_shell *shell, char *name);
 /** @brief Unset an environnment variable. */
 void env_unset(s_shell *shell, char *name);
-/** @brief Change a variable attributes */
+/** @brief Change a variable attributes. */
 void env_chmod(s_shell *shell, char *name, int mode);
-/** @brief Set a the value without checking the mode */
+/** @brief Set a the value without checking the mode. */
 void env_force_set(s_shell *shell, char *value, char *name);
-/** @brief Return a deep copy of the env */
+/** @brief Return a deep copy of the env. */
 s_hashtbl *env_duplicate(s_shell *shell);
 
 #endif /* !ENV_H */

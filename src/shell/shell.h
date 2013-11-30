@@ -36,6 +36,16 @@ void shell_setup(s_shell *shell,
 void shell_delete(s_shell *shell);
 
 /**
+** @brief Create a duplicate of the shell.
+*/
+s_shell *shell_duplicate(s_shell *shell);
+
+/**
+** @brief Delete a duplicate of the shell.
+*/
+void shell_delete_duplicate(s_shell *shell);
+
+/**
 ** @brief Start the read-eval loop.
 */
 e_shell_status shell_loop(s_shell *shell);

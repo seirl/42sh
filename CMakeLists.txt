@@ -299,6 +299,7 @@ add_library(shell OBJECT
     src/shell/shell_eval_string.c
     src/shell/shell_loop.c
     src/shell/shell_status.c
+    src/shell/shell_duplicate.c
     src/shell/res_ctrl.c
     src/functions/functions.c
 )

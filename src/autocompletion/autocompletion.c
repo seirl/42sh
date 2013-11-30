@@ -80,8 +80,8 @@ static s_string *first_match(s_term *term)
 
 static int bins_compare(const void *one, const void *two)
 {
-    const char * const * const *c_one = one;
-    const char * const * const *c_two = two;
+    const char *const *const *c_one = one;
+    const char *const *const *c_two = two;
     return strcmp(*c_one[0], *c_two[0]);
 }
 

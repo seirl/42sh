@@ -5,6 +5,7 @@
 #include "env_private.h"
 #include "functions_private.h"
 #include "shopt.h"
+#include "env.h"
 #include "smalloc.h"
 #include "xsyscall.h"
 #include "history.h"

@@ -1,0 +1,13 @@
+{
+    "desc": "Alias in fonctions with param",
+    "stdin": b"""alias foo='echo $1'
+a () {
+    foo
+}
+a
+a 1
+a 1 2
+""",
+    "stdout": "\n1\n1\n",
+    "skip": True,
+}

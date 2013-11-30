@@ -92,7 +92,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *base,
 }
 
 static s_globr *glob_loop(const char *pattern, e_match_flags flags,
-                         s_globr *g, const char *split)
+                          s_globr *g, const char *split)
 {
     char *basename = strdup(split + 1);
     char *dirname = strndup(pattern, split - pattern);

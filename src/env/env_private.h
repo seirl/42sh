@@ -2,6 +2,7 @@
 # define ENV_PRIVATE_H
 
 # include "shell.h"
+# include "env.h"
 
 struct env_var
 {

@@ -1,0 +1,8 @@
+{
+    "desc": "Alias in subshell",
+    "stdin": b"""alias foo='cat -e'
+a=$(echo lol | foo)
+echo $a
+""",
+    "stdout": "lol$\n",
+}
