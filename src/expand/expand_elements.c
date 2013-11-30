@@ -30,11 +30,11 @@ static void add_elt(s_ast_element *elt, s_ast_compound_word *cw)
 
 void expand_element(s_shell *shell, s_ast_element *elt)
 {
-    s_ast_element *wl;
+    s_ast_element *nelt;
     s_ast_compound_word *cw = NULL;
-    for (wl = elt; wl; wl = wl->next)
+    for (nelt = elt; nelt; nelt = nelt->next)
     {
-        cw = split_compound_word(shell, wl->word, 0);
-        add_elt(wl, cw);
+        cw = split_compound_word(shell, nelt->word, 0);
+        add_elt(nelt, cw);
     }
 }
