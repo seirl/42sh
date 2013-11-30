@@ -54,6 +54,8 @@ int shopt_set(s_shell *shell, const char *shopt, int value)
 
 int shopt_get(s_shell *shell, const char *shopt)
 {
+    if (shopt == NULL)
+        return -1;
     for (size_t i = 0; i < SHOPT_COUNT; ++i)
         if (!strcmp(shopt, shell->shopt[i].name))
             return shell->shopt[i].value;
