@@ -1,6 +1,6 @@
 {
     "desc": "Alias itself",
-    "stdin": b"""alias foo=foo\nfoo\n
+    "stdin": """alias foo=foo\nfoo\n
 """,
     "stdout": """""",
     "stderr": """foo: command not found.\n""",

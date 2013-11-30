@@ -1,6 +1,6 @@
 {
     "desc": "Tilde -",
-    "stdin": b"""echo ~-/foo\n
+    "stdin": """echo ~-/foo\n
 """,
     "stdout": ...,
 }

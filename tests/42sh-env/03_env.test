@@ -1,6 +1,6 @@
 {
     "desc": "UID",
-    "stdin": b"""echo $UID\n
+    "stdin": """echo $UID\n
 """,
     "stdout": ...,
 }

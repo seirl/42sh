@@ -1,6 +1,6 @@
 {
     "desc": "subshell output processing",
-    "stdin": b"""echo $(echo -n "   a    b        c    ")
+    "stdin": """echo $(echo -n "   a    b        c    ")
 """,
     "stdout": "a b c\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "input: continuations",
-    "stdin": b"""
+    "stdin": """
 echo hello ;\
 echo world ;\
 """,

@@ -1,5 +1,5 @@
 {
     "desc": "return value of failed command",
-    "stdin": b"false",
+    "stdin": "false",
     "retval": 1,
 }

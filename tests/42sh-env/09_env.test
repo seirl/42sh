@@ -1,6 +1,6 @@
 {
     "desc": "var=#foo",
-    "stdin": b"""foo=%-=$\94@#{}[]/_; echo $foo
+    "stdin": """foo=%-=$\94@#{}[]/_; echo $foo
 """,
     "stdout": "%-=$\94@#{}[]/_\n",
     "skip": True

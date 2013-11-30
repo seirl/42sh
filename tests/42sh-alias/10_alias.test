@@ -1,6 +1,6 @@
 {
     "desc": "Alias, multiple word",
-    "stdin": b"""alias foo="echo lol"\nfoo
+    "stdin": """alias foo="echo lol"\nfoo
 """,
     "stdout": """lol\n""",
     "retval": 0,

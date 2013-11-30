@@ -1,6 +1,6 @@
 {
     "desc": "bad: empty && ",
-    "stdin": b"""true &&""",
+    "stdin": """true &&""",
     "stdout": "",
     "stderr": ...,
     "retval": 2,

@@ -1,6 +1,6 @@
 {
     "desc": "function: define and call",
-    "stdin": b"""a() { echo hello; }
+    "stdin": """a() { echo hello; }
 a
 """,
     "stdout": "hello\n",

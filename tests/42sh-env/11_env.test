@@ -1,6 +1,6 @@
 {
     "desc": "Escape var name",
-    "stdin": b"""foo=f&&echo echo
+    "stdin": """foo=f&&echo echo
 """,
     "stdout": "echo\n",
 }

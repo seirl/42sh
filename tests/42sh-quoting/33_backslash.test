@@ -1,6 +1,6 @@
 {
     "desc": "Backslash dollar",
-    "stdin": b"""echo \\$
+    "stdin": """echo \\$
 """,
     "stdout": """$\n""",
 }

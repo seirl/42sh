@@ -1,6 +1,6 @@
 {
     "desc": "Simple quoted command",
-    "stdin": b"""'echo' 'a'\n
+    "stdin": """'echo' 'a'\n
 """,
     "stdout": "a\n",
 }

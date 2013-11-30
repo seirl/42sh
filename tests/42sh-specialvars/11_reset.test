@@ -1,6 +1,6 @@
 {
     "desc": "Executing command that evaluates to empty resets status",
-    "stdin": b"""
+    "stdin": """
 false
 $nonexistant
 """,

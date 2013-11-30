@@ -1,6 +1,6 @@
 {
     "desc": "break: basic",
-    "stdin": b"""
+    "stdin": """
 a=0
 while true; do
     if [ $a = 3 ]; then

@@ -1,6 +1,6 @@
 {
     "desc": "Backslash double",
-    "stdin": b"""echo \\f\\\\oo\n
+    "stdin": """echo \\f\\\\oo\n
 """,
     "stdout": "f\\oo\n",
 }

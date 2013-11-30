@@ -1,6 +1,6 @@
 {
     "desc": "break: arg < 0",
-    "stdin": b"""
+    "stdin": """
 a=2
 while true; do
     echo a

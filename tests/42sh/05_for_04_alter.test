@@ -1,6 +1,6 @@
 {
     "desc": "for: alter",
-    "stdin": b"""
+    "stdin": """
 for i do
     echo i
 done

@@ -1,7 +1,7 @@
 {
     "desc": "full view of the ast",
     "args": ["--ast-print"],
-    "stdin": b"""
+    "stdin": """
 echo foo
 a=42
 echo $a

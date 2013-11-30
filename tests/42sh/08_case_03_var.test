@@ -1,6 +1,6 @@
 {
     "desc": "hello, world!",
-    "stdin": b"""
+    "stdin": """
 a=42
 case $a in
     42)

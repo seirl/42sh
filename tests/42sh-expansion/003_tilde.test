@@ -1,6 +1,6 @@
 {
     "desc": "Double tilde",
-    "stdin": b"""echo ~~\n
+    "stdin": """echo ~~\n
 """,
     "stdout": "~~\n" ,
 }

@@ -1,6 +1,6 @@
 {
     "desc": 'Tilde username and path',
-    "stdin": b"""echo ~root/data
+    "stdin": """echo ~root/data
 """,
     "stdout": "/root/data\n",
 }

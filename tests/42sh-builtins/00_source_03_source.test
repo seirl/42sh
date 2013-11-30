@@ -1,7 +1,7 @@
 {
     "desc": "source: basic .",
     "setup": "echo 'echo hello >out' > script",
-    "stdin": b"""
+    "stdin": """
 . ./script
 """,
     "custom": lambda: open("out").read() == "hello\n",

@@ -1,6 +1,6 @@
 {
     "desc": "env: HOME",
-    "stdin": b"""echo $HOME
+    "stdin": """echo $HOME
 """,
     "stdout": ...,
 }

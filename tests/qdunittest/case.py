@@ -126,7 +126,7 @@ def new_test_run_42sh(test, options):
         shell = subself.start_program(args=["./42sh"] + shell_args,
                 with_valgrind=with_valgrind)
 
-        stdin_buf = test.get('stdin', None)
+        stdin_buf = test.get('stdin', '').encode()
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
 
         if test.get('stderr') == ...:

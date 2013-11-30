@@ -1,6 +1,6 @@
 {
     "desc": "IFS for, variable multiple",
-    "stdin": b"""foo='foo bar'; for i in $foo; do echo $i; done\n
+    "stdin": """foo='foo bar'; for i in $foo; do echo $i; done\n
 """,
     "stdout": "foo\nbar\n",
 }

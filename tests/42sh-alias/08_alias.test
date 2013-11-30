@@ -1,6 +1,6 @@
 {
     "desc": "Alias the alias builtin",
-    "stdin": b"""alias alias=echo\nalias alias\n
+    "stdin": """alias alias=echo\nalias alias\n
 """,
     "stdout": """alias\n""",
 }

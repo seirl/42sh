@@ -1,6 +1,6 @@
 {
     "desc": "Set simple var",
-    "stdin": b"""foo=bar; echo $foo\n
+    "stdin": """foo=bar; echo $foo\n
 """,
     "stdout": "bar\n",
 }

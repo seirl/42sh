@@ -1,6 +1,6 @@
 {
     "desc": "bad: elif without then",
-    "stdin": b"""
+    "stdin": """
 if true; then
     echo if
 elif true

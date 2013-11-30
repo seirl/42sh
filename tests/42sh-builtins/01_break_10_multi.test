@@ -1,6 +1,6 @@
 {
     "desc": "break: basic",
-    "stdin": b"""
+    "stdin": """
 while true; do
     break;
 done

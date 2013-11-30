@@ -1,6 +1,6 @@
 {
     "desc": "env: use prefix in function",
-    "stdin": b"""a () { echo $foo; }
+    "stdin": """a () { echo $foo; }
 a
 foo=42 a
 """,

@@ -1,5 +1,5 @@
 {
     "desc": "arith: parenthesis: simple",
-    "stdin": b"""echo $(( (42 + (42 * 0)) ))""",
+    "stdin": """echo $(( (42 + (42 * 0)) ))""",
     "stdout": "42\n",
 }

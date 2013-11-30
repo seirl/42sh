@@ -1,6 +1,6 @@
 {
     "desc": "hello, world!",
-    "stdin": b"""echo hello
+    "stdin": """echo hello
 echo world
 """,
     "stdout": """hello

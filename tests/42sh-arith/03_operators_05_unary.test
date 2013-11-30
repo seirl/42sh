@@ -1,5 +1,5 @@
 {
     "desc": "arith: unary operators",
-    "stdin": b"""echo $(( +2 + -2 + (- (55 * 2)) ))""",
+    "stdin": """echo $(( +2 + -2 + (- (55 * 2)) ))""",
     "stdout": "-110\n",
 }

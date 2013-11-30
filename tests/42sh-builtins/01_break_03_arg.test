@@ -1,6 +1,6 @@
 {
     "desc": "break: too many args",
-    "stdin": b"""
+    "stdin": """
 while true; do
     while true; do
         while true; do

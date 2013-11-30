@@ -1,6 +1,6 @@
 {
     "desc": "function: define and call recursive",
-    "stdin": b"""
+    "stdin": """
 a() { echo hello; }
 b() { echo world; a; }
 b

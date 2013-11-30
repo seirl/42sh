@@ -1,6 +1,6 @@
 {
     "desc": "Random var",
-    "stdin": b"""echo $RANDOM\n
+    "stdin": """echo $RANDOM\n
 """,
     "stdout": ...,
 }

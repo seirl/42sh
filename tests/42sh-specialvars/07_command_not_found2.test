@@ -1,6 +1,6 @@
 {
     "desc": "command not found $? == 127",
-    "stdin": b"""IDONOTEXISTS;
+    "stdin": """IDONOTEXISTS;
     echo foo
     echo $?""",
     "stdout": "foo\n0\n",

@@ -1,6 +1,6 @@
 {
     "desc": 'echo ~"\\n"',
-    "stdin": b"""echo ~
+    "stdin": """echo ~
 """,
     "stdout": os.getenv("HOME") + "\n",
 }

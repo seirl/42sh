@@ -1,6 +1,6 @@
 {
     "desc": "expand: with token inside",
-    "stdin": b'echo "a > b"',
+    "stdin": 'echo "a > b"',
     "stdout": """a > b
 """,
 }

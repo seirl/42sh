@@ -1,6 +1,6 @@
 {
     "desc": "Simple quote concat",
-    "stdin": b"""echo 'a'\\''b'\n
+    "stdin": """echo 'a'\\''b'\n
 """,
     "stdout": """a'b\n""",
 }

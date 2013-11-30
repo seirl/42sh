@@ -1,6 +1,6 @@
 {
     "desc": "PID",
-    "stdin": b"""echo $PID\n
+    "stdin": """echo $PID\n
 """,
     "stdout": ...,
 }

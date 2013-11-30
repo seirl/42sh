@@ -1,6 +1,6 @@
 {
     "desc": "expand: subshell",
-    "stdin": b"""echo $(echo foo)
+    "stdin": """echo $(echo foo)
 """,
     "stdout": "foo\n",
 }

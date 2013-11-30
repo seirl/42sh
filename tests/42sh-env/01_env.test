@@ -1,6 +1,6 @@
 {
     "desc": "Non-existent var",
-    "stdin": b"""echo $foo\n
+    "stdin": """echo $foo\n
 """,
     "stdout": "\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "env: multiple vars",
-    "stdin": b"""a=42 b=43 echo $a $b
+    "stdin": """a=42 b=43 echo $a $b
 """,
     "stdout": "42 43\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "env: vars",
-    "stdin": b"""a=42
+    "stdin": """a=42
 echo $a
 """,
     "stdout": "42\n",

@@ -1,6 +1,6 @@
 {
     "desc": "multiple commands, multiple redirections",
-    "stdin": b"""echo foo >&2
+    "stdin": """echo foo >&2
 echo bar
 """,
     "stdout": "bar\n",

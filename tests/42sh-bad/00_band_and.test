@@ -1,6 +1,6 @@
 {
     "desc": "bad: and and",
-    "stdin": b"echo & &",
+    "stdin": "echo & &",
     "stdout": "",
     "stderr": ...,
     "retval": 2,

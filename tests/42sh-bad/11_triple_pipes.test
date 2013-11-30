@@ -1,6 +1,6 @@
 {
     "desc": "bad: triple |",
-    "stdin": b"""echo foo ||| echo bar
+    "stdin": """echo foo ||| echo bar
 """,
     "stdout": "",
     "stderr": ...,

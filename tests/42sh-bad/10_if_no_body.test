@@ -1,6 +1,6 @@
 {
     "desc": "bad: if no body",
-    "stdin": b"""if true
+    "stdin": """if true
         echo i
 fi
 """,

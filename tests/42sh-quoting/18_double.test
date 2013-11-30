@@ -1,6 +1,6 @@
 {
     "desc": "Double quote with quoted comment",
-    "stdin": b"""bar=foo; echo "#foo$bar"\n
+    "stdin": """bar=foo; echo "#foo$bar"\n
 """,
     "stdout": "#foofoo\n",
 }

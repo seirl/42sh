@@ -1,6 +1,6 @@
 {
     "desc": "for: for in for",
-    "stdin": b"""
+    "stdin": """
 for i in a b c; do
     for j in a b c; do
         echo 1

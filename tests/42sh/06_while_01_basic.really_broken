@@ -1,6 +1,6 @@
 {
     "desc": "while: basic",
-    "stdin": b"""
+    "stdin": """
 while true; do
     break;
 done

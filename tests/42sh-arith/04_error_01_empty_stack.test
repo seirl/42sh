@@ -1,6 +1,6 @@
 {
     "desc": "arith: empty stack",
-    "stdin": b"""echo $(( 2 * 2 2 22 2 ))""",
+    "stdin": """echo $(( 2 * 2 2 22 2 ))""",
     "stdout": ...,
     "stderr": ...,
 }

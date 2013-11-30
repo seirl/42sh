@@ -1,6 +1,6 @@
 {
     "desc": "Double quote var 2",
-    "stdin": b"""foo=bar; echo "$foobar"\n
+    "stdin": """foo=bar; echo "$foobar"\n
 """,
     "stdout": "\n",
 }

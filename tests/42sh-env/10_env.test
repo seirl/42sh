@@ -1,6 +1,6 @@
 {
     "desc": "Escape var name",
-    "stdin": b"""foo=\$PID; echo $foo
+    "stdin": """foo=\$PID; echo $foo
 """,
     "stdout": "$PID\n",
 }

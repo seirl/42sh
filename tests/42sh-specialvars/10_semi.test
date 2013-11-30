@@ -1,6 +1,6 @@
 {
     "desc": "$? after ;",
-    "stdin": b"""false; true; false; true
+    "stdin": """false; true; false; true
 echo $?
 """,
     "stdout": "0\n",

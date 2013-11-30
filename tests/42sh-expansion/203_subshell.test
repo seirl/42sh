@@ -1,6 +1,6 @@
 {
     "desc": "subshell output processing",
-    "stdin": b"""echo $(for i in a b c; do echo $i; done)
+    "stdin": """echo $(for i in a b c; do echo $i; done)
 """,
     "stdout": "a b c\n",
 }

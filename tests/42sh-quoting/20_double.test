@@ -1,6 +1,6 @@
 {
     "desc": "Double quote with backslash",
-    "stdin": b"""echo "\\$"\n
+    "stdin": """echo "\\$"\n
 """,
     "stdout": "$\n",
 }

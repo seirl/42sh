@@ -1,6 +1,6 @@
 {
     "desc": "Assign null value",
-    "stdin": b"""foo=; echo $foo
+    "stdin": """foo=; echo $foo
 """,
     "stdout": "\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": 'Tilde within dquotes',
-    "stdin": b"""echo "~"
+    "stdin": """echo "~"
 """,
     "stdout": "~\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "if: elif else",
-    "stdin": b"""
+    "stdin": """
     if false; then
         echo if
     elif false; then

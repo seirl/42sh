@@ -1,6 +1,6 @@
 {
     "desc": "No aliases",
-    "stdin": b"""alias\n
+    "stdin": """alias\n
 """,
     "stdout": "",
 }

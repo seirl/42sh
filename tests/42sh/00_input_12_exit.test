@@ -1,4 +1,4 @@
 {
     "desc": "input exit",
-    "stdin": b"exit\n",
+    "stdin": "exit\n",
 }

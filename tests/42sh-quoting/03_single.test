@@ -1,6 +1,6 @@
 {
     "desc": "Simple quote var",
-    "stdin": b"""echo '$UID'\n
+    "stdin": """echo '$UID'\n
 """,
     "stdout": "$UID\n",
 }

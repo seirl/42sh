@@ -1,5 +1,5 @@
 {
     "desc": "arith: binary operators",
-    "stdin": b"""echo $(( ((4 << 2) * (5 >> 7) + ~88) ))""",
+    "stdin": """echo $(( ((4 << 2) * (5 >> 7) + ~88) ))""",
     "stdout": "-89\n",
 }

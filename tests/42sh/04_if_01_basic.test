@@ -1,6 +1,6 @@
 {
     "desc": "if: basic else",
-    "stdin": b"""if false; then echo yes; else echo false; fi
+    "stdin": """if false; then echo yes; else echo false; fi
 """,
     "stdout": "false\n",
 }

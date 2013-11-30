@@ -1,6 +1,6 @@
 {
     "desc": "break: multi with error",
-    "stdin": b"""
+    "stdin": """
 while true; do
     break 42
 done

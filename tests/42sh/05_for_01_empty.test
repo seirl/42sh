@@ -1,6 +1,6 @@
 {
     "desc": "for: empty",
-    "stdin": b"""
+    "stdin": """
 for i in ; do
     echo i
 done

@@ -1,6 +1,6 @@
 {
     "desc": "break: arg zero",
-    "stdin": b"""
+    "stdin": """
 while true; do
     while true; do
         while true; do

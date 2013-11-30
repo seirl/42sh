@@ -1,7 +1,7 @@
 {
     "desc": "source: no arg",
     "setup": 'echo "iDoNotExist" > script',
-    "stdin": b"""
+    "stdin": """
 source ./script
 """,
     "stderr": ...,

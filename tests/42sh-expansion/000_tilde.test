@@ -1,6 +1,6 @@
 {
     "desc": "Simple tilde",
-    "stdin": b"""echo ~\n
+    "stdin": """echo ~\n
 """,
     "stdout": os.getenv("HOME") + "\n" ,
 }

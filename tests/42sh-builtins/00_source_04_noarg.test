@@ -1,6 +1,6 @@
 {
     "desc": "source: no arg",
-    "stdin": b"""
+    "stdin": """
 source
 """,
     "stderr": ...,

@@ -1,6 +1,6 @@
 {
     "desc": 'Tilde non-existant user',
-    "stdin": b"""echo ~foobartoto
+    "stdin": """echo ~foobartoto
 """,
     "stdout": "~foobartoto\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "Alias in fonctions with param",
-    "stdin": b"""alias foo='echo $1'
+    "stdin": """alias foo='echo $1'
 a () {
     foo
 }

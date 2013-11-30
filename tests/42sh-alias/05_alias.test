@@ -1,6 +1,6 @@
 {
     "desc": "Do not expand alias on the same line",
-    "stdin": b"""alias foo=echo; foo foo\n
+    "stdin": """alias foo=echo; foo foo\n
 """,
     "stdout": """""",
     "stderr": """foo: command not found.\n""",

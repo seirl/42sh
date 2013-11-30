@@ -1,6 +1,6 @@
 {
     "desc": "builtins: break: simple while break without parameter",
-    "stdin": b"""while true ; do echo a ; break ; done
+    "stdin": """while true ; do echo a ; break ; done
 """,
     "stdout": "a\n",
 }

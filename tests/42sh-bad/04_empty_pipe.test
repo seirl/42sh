@@ -1,6 +1,6 @@
 {
     "desc": "bad: empty pipe",
-    "stdin": b"""echo a |""",
+    "stdin": """echo a |""",
     "stdout": "",
     "stderr": ...,
     "retval": 2,

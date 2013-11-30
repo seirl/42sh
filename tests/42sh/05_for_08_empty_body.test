@@ -1,6 +1,6 @@
 {
     "desc": "for: bad empty body",
-    "stdin": b"""
+    "stdin": """
 for i in a b c; do
 done
     """,

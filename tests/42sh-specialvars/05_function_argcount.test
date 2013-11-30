@@ -1,6 +1,6 @@
 {
     "desc": "function: $#",
-    "stding": b"""
+    "stding": """
 a () {
     echo $# $1 $2
 }

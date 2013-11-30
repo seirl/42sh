@@ -1,6 +1,6 @@
 {
     "desc": "arith: nested",
-    "stdin": b"""a=42
+    "stdin": """a=42
 b=10
 echo $(( $((a - 2)) + b ))
 """,

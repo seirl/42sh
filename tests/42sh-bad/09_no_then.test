@@ -1,6 +1,6 @@
 {
     "desc": "bad: no then",
-    "stdin": b"""if true;
+    "stdin": """if true;
         echo i
 fi
 """,

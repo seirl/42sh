@@ -1,6 +1,6 @@
 {
     "desc": "Backslash",
-    "stdin": b"""\\e\\c\\h\\o \\f\\o\\o\n
+    "stdin": """\\e\\c\\h\\o \\f\\o\\o\n
 """,
     "stdout": "foo\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "one pipeline, multiple redirections",
-    "stdin": b"""cat <<EOF
+    "stdin": """cat <<EOF
 hello
 EOF
 """,

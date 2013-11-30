@@ -1,6 +1,6 @@
 {
     "desc": "Simple quoted comment",
-    "stdin": b"""echo '#foobar'\n
+    "stdin": """echo '#foobar'\n
 """,
     "stdout": """#foobar\n""",
 }

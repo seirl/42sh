@@ -1,6 +1,6 @@
 {
     "desc": "function: multiple definition",
-    "stdin": b"""
+    "stdin": """
 a() { echo hello; }
 a() { echo world; }
 a

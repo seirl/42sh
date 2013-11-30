@@ -1,6 +1,6 @@
 {
     "desc": "hello, world!",
-    "stdin": b"""
+    "stdin": """
 case a in
     b)
         echo no

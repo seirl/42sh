@@ -1,6 +1,6 @@
 {
     "desc": "Tilde with invalid username",
-    "stdin": b"""echo ~9foo\n
+    "stdin": """echo ~9foo\n
 """,
     "stdout": "~9foo\n" ,
 }

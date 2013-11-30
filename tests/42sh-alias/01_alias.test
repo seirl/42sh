@@ -1,6 +1,6 @@
 {
     "desc": "Set alias",
-    "stdin": b"""alias foo=bar; alias\n
+    "stdin": """alias foo=bar; alias\n
 """,
     "stdout": """foo='bar'\n""",
 }

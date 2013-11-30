@@ -1,6 +1,6 @@
 {
     "desc": "function: $0...",
-    "stding": b"""
+    "stding": """
 a () {
     echo 1:$1 2:$2
 }

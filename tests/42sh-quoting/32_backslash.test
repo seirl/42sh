@@ -1,6 +1,6 @@
 {
     "desc": "Backslash dquote",
-    "stdin": b"""echo \\"
+    "stdin": """echo \\"
 """,
     "stdout": """"\n""",
 }

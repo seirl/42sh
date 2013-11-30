@@ -1,6 +1,6 @@
 {
     "desc": 'Tilde with quoted username',
-    "stdin": b"""echo ~"root"
+    "stdin": """echo ~"root"
 "
 """,
     "stdout": "~root\n",

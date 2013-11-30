@@ -1,6 +1,6 @@
 {
     "desc": "expand: expand in redirection",
-    "stdin": b"""echo hello > 'a''b'
+    "stdin": """echo hello > 'a''b'
 cat ab
 """,
     "stdout": "hello\n",

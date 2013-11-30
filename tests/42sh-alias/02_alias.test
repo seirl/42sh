@@ -1,6 +1,6 @@
 {
     "desc": "Unset alias",
-    "stdin": b"""alias foo=bar; unalias foo; alias\n
+    "stdin": """alias foo=bar; unalias foo; alias\n
 """,
     "stdout": """""",
 }

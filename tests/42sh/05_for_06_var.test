@@ -1,6 +1,6 @@
 {
     "desc": "for: for use var",
-    "stdin": b"""
+    "stdin": """
 for i in a b c; do
     echo $i
 done

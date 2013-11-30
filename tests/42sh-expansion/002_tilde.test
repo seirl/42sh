@@ -1,6 +1,6 @@
 {
     "desc": "Simple tilde, unset HOME",
-    "stdin": b"""unset HOME; echo ~\n
+    "stdin": """unset HOME; echo ~\n
 """,
     "stdout": os.getenv("HOME") + "\n" ,
 }

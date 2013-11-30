@@ -1,6 +1,6 @@
 {
     "desc": "$? on start",
-    "stdin": b"""echo $?
+    "stdin": """echo $?
 """,
     "stdout": "0\n",
 }

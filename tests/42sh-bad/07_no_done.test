@@ -1,6 +1,6 @@
 {
     "desc": "bad: no do",
-    "stdin": b"""for i in a b c; do
+    "stdin": """for i in a b c; do
         echo i
 """,
     "stdout": "",

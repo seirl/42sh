@@ -1,6 +1,6 @@
 {
     "desc": "arith: var",
-    "stdin": b"""a=42
+    "stdin": """a=42
 echo $((a))
 echo $(($a))
 """,

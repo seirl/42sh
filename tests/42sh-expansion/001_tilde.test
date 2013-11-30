@@ -1,6 +1,6 @@
 {
     "desc": "Simple tilde concat",
-    "stdin": b"""echo ~/tmp/foo.bar\n
+    "stdin": """echo ~/tmp/foo.bar\n
 """,
     "stdout": os.getenv("HOME") + "/tmp/foo.bar\n" ,
 }

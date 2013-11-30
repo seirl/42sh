@@ -1,6 +1,6 @@
 {
     "desc": "one pipeline, multiple redirections",
-    "stdin": b"""echo bar >&2 | cat
+    "stdin": """echo bar >&2 | cat
 """,
     "stderr": "bar\n",
 }

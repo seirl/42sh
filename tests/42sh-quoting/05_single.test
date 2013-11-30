@@ -1,6 +1,6 @@
 {
     "desc": "Simple quote special chars",
-    "stdin": b"""echo '"$\"'\n
+    "stdin": """echo '"$\"'\n
 """,
     "stdout": """"$\"\n""",
 }

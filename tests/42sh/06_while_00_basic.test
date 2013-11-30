@@ -1,6 +1,6 @@
 {
     "desc": "while: basic",
-    "stdin": b"""
+    "stdin": """
 while false; do
     echo fail
 done

@@ -1,6 +1,6 @@
 {
     "desc": "builtins: break: multiple while break",
-    "stdin": b"""while true ; do while true ; do echo a ; break 2 ; done; done
+    "stdin": """while true ; do while true ; do echo a ; break 2 ; done; done
 """,
     "stdout": "a\n",
 }

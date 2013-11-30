@@ -1,6 +1,6 @@
 {
     "desc": "Unset IFS",
-    "stdin": b"""unset IFS; foo='foo bar baz'; for i in lol$foo; do echo $i; done\n
+    "stdin": """unset IFS; foo='foo bar baz'; for i in lol$foo; do echo $i; done\n
 """,
     "stdout": "lolfoo bar baz\n",
 }

@@ -1,6 +1,6 @@
 {
     "desc": "bad: empty case",
-    "stdin": b"""
+    "stdin": """
 case a in
     )
         echo true

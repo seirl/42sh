@@ -1,5 +1,5 @@
 {
     "desc": "arith: simple",
-    "stdin": b"""echo $(( 42 + 42 - 42 ))""",
+    "stdin": """echo $(( 42 + 42 - 42 ))""",
     "stdout": "42\n",
 }

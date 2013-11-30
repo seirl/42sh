@@ -1,6 +1,6 @@
 {
     "desc": 'Quoted tilde',
-    "stdin": b"""echo \~root"
+    "stdin": """echo \~root"
 "
 """,
     "stdout": "~root\n",

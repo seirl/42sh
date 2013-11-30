@@ -1,6 +1,6 @@
 {
     "desc": "break: break inner",
-    "stdin": b"""
+    "stdin": """
 while true; do
     echo a; break; echo b
 done

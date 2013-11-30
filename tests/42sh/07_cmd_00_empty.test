@@ -1,6 +1,6 @@
 {
     "desc": "empty command",
-    "stdin": b"''",
+    "stdin": "''",
     "stderr": ...,
     "retval": 127,
 }
