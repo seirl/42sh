@@ -9,6 +9,7 @@
 #include "readline.h"
 #include "wrapper.h"
 #include "escape_keys.h"
+#include "autocompletion_tools.h"
 
 static s_autocomplete_binaries g_bin =
 {
@@ -16,29 +17,6 @@ static s_autocomplete_binaries g_bin =
     0,
     0
 };
-
-static int is_blank(char c)
-{
-    return c == ' ' || c == '\t';
-}
-
-static int start_word(s_term *term)
-{
-    if (!term->input_index)
-        return 0;
-    int i = term->input_index - 1;
-    while (i >= 0 && !is_blank(term->input->buf[i]))
-        i--;
-    return i + 1;
-}
-
-static size_t end_word(s_term *term)
-{
-    size_t i = term->input_index;
-    while (term->input->buf[i] && !is_blank(term->input->buf[i]))
-        i++;
-    return i;
-}
 
 static void try_enlarge_bins(void)
 {
@@ -59,8 +37,9 @@ static void free_binaries(void)
 {
     if (g_bin.bins)
     {
-        for (int i = 0; g_bin.bins[i]; i++)
+        for (size_t i = 0; g_bin.bins[i]; i++)
         {
+            free(g_bin.bins[i][0]);
             g_bin.bins[i][0] = NULL;
             g_bin.bins[i][1] = NULL;
             free(g_bin.bins[i]);
@@ -75,14 +54,44 @@ static void free_binaries(void)
 
 static void add_paths(s_globr *glob_paths)
 {
+    char *base;
     for (size_t i = 0; i < glob_paths->count; i++)
     {
         g_bin.bins[g_bin.size] = calloc(sizeof (char *), 2);
-        g_bin.bins[g_bin.size][0] = basename(glob_paths->paths[i]);
+        base = basename(glob_paths->paths[i]);
+        g_bin.bins[g_bin.size][0] = strdup(base);
         g_bin.bins[g_bin.size][1] = glob_paths->paths[i];
         g_bin.size++;
         try_enlarge_bins();
     }
+    my_globfree(glob_paths);
+}
+
+static s_string *first_match(s_term *term)
+{
+    size_t start = start_word(term);
+    size_t end = end_word(term);
+    s_string *pat = string_extract(term->input, start, end);
+
+    if (!g_bin.bins)
+        return pat;
+
+    int a = 0;
+    int b = g_bin.size - 1;
+    while (a < b)
+    {
+        int mid = (a + b) / 2;
+        int cmp = strncmp(pat->buf, g_bin.bins[mid][0], pat->len);
+        if (cmp < 0)
+            b = mid - 1;
+        else if (cmp > 0)
+            a = mid + 1;
+        else
+            return string_create_from(g_bin.bins[mid][0]);
+    }
+
+    string_free(pat);
+    return string_create_from(g_bin.bins[a < 0 ? b : a][0]);
 }
 
 static int bins_compare(const void *one, const void *two)
@@ -92,8 +101,7 @@ static int bins_compare(const void *one, const void *two)
     return strcmp(*c_one[0], *c_two[0]);
 }
 
-// TODO: make static
-void replace_word(s_term *term, s_string *word)
+static void replace_word(s_term *term, s_string *word)
 {
     size_t start = start_word(term);
     size_t end = end_word(term);
@@ -123,6 +131,7 @@ void replace_word(s_term *term, s_string *word)
 
 int autocomplete(s_shell *shell, s_term *term)
 {
+    rehash(shell);
     size_t i = term->input_index;
     if (!is_blank(term->input->buf[i]))
         handle_escape_key(shell, term, ESCAPE_F);
@@ -130,10 +139,12 @@ int autocomplete(s_shell *shell, s_term *term)
     if (i && is_blank(term->input->buf[i - 1]))
         return 0;
 
+    s_string *s = first_match(term);
+    replace_word(term, s);
+    string_free(s);
+    free_binaries();
+
     // TODO: remove (debug);
-    //s_string *s = string_create_from("Test.");
-    //replace_word(term, s);
-    //string_free(s);
     // rehash(shell);
     return 0;
 }
@@ -142,18 +153,22 @@ void rehash(s_shell *shell)
 {
     free_binaries();
     try_enlarge_bins();
-    char *folder = strtok(env_get(shell, "PATH"), ":");
+    char *path = strdup(env_get(shell, "PATH"));
+    char *folder = strtok(path, ":");
     while (folder)
     {
         s_string *s_folder = string_create_from(folder);
         string_puts(s_folder, "/*");
         add_paths(my_glob(s_folder->buf, 0));
         folder = strtok(NULL, ":");
+        string_free(s_folder);
     }
     g_bin.bins[g_bin.size] = NULL;
+    free(path);
 
     qsort(g_bin.bins, g_bin.size, sizeof (char **), &bins_compare);
     // TODO: remove (debug)
     //for (size_t i = 0; g_bin.bins[i]; i++)
     //    printf("%s -> %s\n", g_bin.bins[i][0], g_bin.bins[i][1]);
+    fflush(stdout);
 }
