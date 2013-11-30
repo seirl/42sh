@@ -23,7 +23,7 @@
 42sh
 ====
 
-42sh is a shell which try (hard) to be a clone of bash --posix.
+42sh is a shell which tries (hard) to be a clone of bash --posix.
 
 Install
 =======
@@ -80,7 +80,18 @@ Lexer/Parser
 
 Builtins
 --------
+    - alias
+    - break
+    - cd
+    - continue
+    - echo
+    - exec
+    - exit
+    - history
     - set
+    - shopt
+    - source
+    - unalias
     - unset
 
 Env
