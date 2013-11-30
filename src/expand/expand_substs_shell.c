@@ -39,12 +39,13 @@ static s_string *process_stdout(s_string *ret)
             int j;
             for (j = 1; is_blank(ret->buf[i + j]); ++j)
                 continue;
-            string_del_nth(ret, i + 1, j - (ret->buf[i + j] == 0 ? 0 : 1));
+            string_del_nth(ret, i, j - (ret->buf[i + j] == 0 ? 0 : 1));
+            if (ret->buf[i] == '\0')
+                break;
         }
     }
     if (ret->buf[ret->len] == ' ')
-        ret->buf[ret->len] = 0;
-    //ret->len -= 1;
+        ret->buf[ret->len] = '\0';
     return ret;
 }
 

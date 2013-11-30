@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "subshell output processing",
+    "stdin": b"""echo $(echo -n "   a    b        c    ")
+""",
+    "stdout": "a b c\n",
+}
