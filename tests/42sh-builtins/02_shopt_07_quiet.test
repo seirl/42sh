@@ -1,0 +1,7 @@
+{
+    "desc": "shopt quiet arg off",
+    "stdin": """shopt -q xpg_echo
+""",
+    "stdout": """""",
+    "retval": 1
+}

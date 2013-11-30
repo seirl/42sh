@@ -1,0 +1,7 @@
+{
+    "desc": "shopt arg off",
+    "stdin": """shopt xpg_echo
+""",
+    "stdout": """xpg_echo\toff\n""",
+    "retval": 1
+}

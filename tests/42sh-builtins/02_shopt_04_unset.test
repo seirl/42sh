@@ -1,0 +1,7 @@
+{
+    "desc": "shopt unset",
+    "stdin": """shopt expand_aliases; shopt -u expand_aliases; shopt expand_aliases
+""",
+    "stdout": """expand_aliases\ton\nexpand_aliases\toff\n""",
+    "retval": 1
+}

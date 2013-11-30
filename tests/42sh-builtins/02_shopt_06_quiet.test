@@ -1,0 +1,7 @@
+{
+    "desc": "shopt quiet arg on",
+    "stdin": """shopt -q expand_aliases
+""",
+    "stdout": """""",
+    "retval": 0
+}

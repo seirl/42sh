@@ -1,0 +1,7 @@
+{
+    "desc": "shopt arg on",
+    "stdin": """shopt expand_aliases
+""",
+    "stdout": """expand_aliases\ton\n""",
+    "retval": 0
+}

@@ -1,0 +1,7 @@
+{
+    "desc": "shopt quiet",
+    "stdin": """shopt -q
+""",
+    "stdout": """""",
+    "retval": 0
+}

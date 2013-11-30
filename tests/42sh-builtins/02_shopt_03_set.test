@@ -1,0 +1,7 @@
+{
+    "desc": "shopt set",
+    "stdin": """shopt xpg_echo; shopt -s xpg_echo; shopt xpg_echo
+""",
+    "stdout": """xpg_echo\toff\nxpg_echo\ton\n""",
+    "retval": 0
+}
