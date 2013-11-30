@@ -1,0 +1,5 @@
+{
+    "desc": "hello, world!",
+    "stdin": b"$nosuchvar",
+    "retval": 0,
+}

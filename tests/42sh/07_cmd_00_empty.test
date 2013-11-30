@@ -2,6 +2,5 @@
     "desc": "empty command",
     "stdin": b"''",
     "stderr": ...,
-    "reval": 127,
-    "skip": True,
+    "retval": 127,
 }

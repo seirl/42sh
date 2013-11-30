@@ -102,18 +102,26 @@ static void exec_func(s_shell *shell,s_ast_shell_cmd *func_body, char **argv)
     sfree(pos_params);
 }
 
+static int is_first_empty_hack(s_ast_simple_cmd *cmd)
+{
+    return (cmd && cmd->elements && cmd->elements->word
+            && cmd->elements->word->word
+            && cmd->elements->word->word->str->len == 0);
+}
+
 void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
 {
     exec_prefixes(shell, cmd->prefixes);
 
     int len = 0;
+    int first_empty = is_first_empty_hack(cmd);
     char **cmd_argv = elements_to_argv(shell, cmd->elements, &len);
     s_redir_context **contexts = exec_elements_redir(shell, cmd->elements);
     s_ast_shell_cmd *func_body;
     f_handler callback;
     int ret = 0;
 
-    if (cmd_argv && cmd_argv[0])
+    if (cmd_argv && cmd_argv[0] && (cmd_argv[0][0] || first_empty))
     {
         if ((func_body = functions_get(shell, cmd_argv[0])))
             exec_func(shell, func_body, cmd_argv);
@@ -122,6 +130,8 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd)
         else
             ret = exec_prog(shell, cmd_argv, cmd->prefixes);
     }
+    else if (!first_empty && cmd_argv[0] == '\0')
+        ret = 0;
 
     exec_argv_free(cmd_argv);
     restore_redir_contexts(contexts);
