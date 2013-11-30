@@ -29,7 +29,8 @@ static s_string *process_stdout(s_string *ret)
     int i;
     for (i = 0; is_blank(ret->buf[i]); ++i)
         continue;
-    string_del_nth(ret, 0, i);
+    if (i)
+        string_del_nth(ret, 0, i);
     for (i = 0; ret->buf[i]; ++i)
     {
         if (is_blank(ret->buf[i]))
@@ -41,6 +42,9 @@ static s_string *process_stdout(s_string *ret)
             string_del_nth(ret, i + 1, j - (ret->buf[i + j] == 0 ? 0 : 1));
         }
     }
+    if (ret->buf[ret->len] == ' ')
+        ret->buf[ret->len] = 0;
+    //ret->len -= 1;
     return ret;
 }
 

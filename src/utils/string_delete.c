@@ -20,7 +20,7 @@ void string_del_nth(s_string *str, size_t n, size_t len)
         continue;
     for (; i + len <= str->len; i++)
         str->buf[i] = str->buf[i + len];
-    str->len--;
+    str->len -= len;
 }
 
 char *string_release(s_string *s)
