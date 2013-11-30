@@ -38,6 +38,7 @@ static void env_sharp(s_shell *shell)
         snprintf(buf, 6, "%d", i);
         ++i;
     } while (env_get(shell, buf));
+    snprintf(buf, 6, "%d", i - 2);
     env_set(shell, buf, "#");
 }
 
