@@ -131,7 +131,6 @@ static void replace_word(s_term *term, s_string *word)
 
 int autocomplete(s_shell *shell, s_term *term)
 {
-    rehash(shell);
     size_t i = term->input_index;
     if (!is_blank(term->input->buf[i]))
         handle_escape_key(shell, term, ESCAPE_F);
@@ -142,10 +141,7 @@ int autocomplete(s_shell *shell, s_term *term)
     s_string *s = first_match(term);
     replace_word(term, s);
     string_free(s);
-    free_binaries();
 
-    // TODO: remove (debug);
-    // rehash(shell);
     return 0;
 }
 
@@ -167,8 +163,4 @@ void rehash(s_shell *shell)
     free(path);
 
     qsort(g_bin.bins, g_bin.size, sizeof (char **), &bins_compare);
-    // TODO: remove (debug)
-    //for (size_t i = 0; g_bin.bins[i]; i++)
-    //    printf("%s -> %s\n", g_bin.bins[i][0], g_bin.bins[i][1]);
-    fflush(stdout);
 }
