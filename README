@@ -72,6 +72,7 @@ Readline
     - Alt-. basic behaviour
     - Ctrl-w (delete a word)
     - Ctrl-u (delete from beginning to cursor)
+    - HOME and END keys
     - Konami code
     - Programs autocompletion with correction.
 

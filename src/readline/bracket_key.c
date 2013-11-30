@@ -62,8 +62,8 @@ static e_next_action do_down(s_shell * shell, s_term *term)
 e_next_action handle_bracket_key(s_shell *shell, e_bracket_key key,
                                  s_term *term)
 {
-#define X(Name, Char1, Char2, Handler)  \
-        if (key == Name)                \
+#define X(Name, Char1, Char2, Xterm1, Xterm2, Handler)  \
+        if (key == Name)                                \
             return Handler;
 #include "bracket_key.def"
 #undef X
@@ -76,17 +76,17 @@ e_next_action handle_bracket_char(s_shell *shell, s_term *term)
     char c2 = -1;
     if (read(STDIN_FILENO, &c, sizeof (char)) == -1)
         return ERROR;
-#define X(Name, Char1, Char2, Fun)                                \
-    if (c == Char1)                                               \
+#define X(Name, Char1, Char2, Xterm1, Xterm2, Fun)                \
+    if (c == Char1 || c == Xterm1)                                \
     {                                                             \
-        if (Char2 == 0)                                           \
+        if (Char2 == 0 || (c == Xterm1 && Xterm2 == 0))           \
             return handle_bracket_key(shell, Name, term);         \
         else                                                      \
         {                                                         \
             if (c2 == -1)                                         \
                 if (read(STDIN_FILENO, &c2, sizeof (char)) == -1) \
                     return ERROR;                                 \
-            if (c2 == Char2)                                      \
+            if (c2 == Char2 || c2 == Xterm2)                      \
                 return handle_bracket_key(shell, Name, term);     \
         }                                                         \
     }
