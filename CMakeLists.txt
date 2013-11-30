@@ -149,6 +149,7 @@ add_library(readline OBJECT
     src/readline/terminal.c
     src/readline/prompt.c
     src/readline/konami.c
+    src/readline/alt_q.c
 )
 
 add_library(history OBJECT

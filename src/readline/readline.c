@@ -87,7 +87,7 @@ s_string *readline(s_shell *shell, char *prompt)
 
     s_string *s_prompt = string_create_from(env_get(shell, prompt));
     prompt_expand(shell, &s_prompt);
-    printf("%s", s_prompt->buf);
+    printf("%s%s", s_prompt->buf, term->input->buf);
     term->prompt = s_prompt->buf;
     fflush(stdout);
     e_next_action ret;

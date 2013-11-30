@@ -7,6 +7,7 @@
 #include "readline.h"
 #include "wrapper.h"
 #include "konami.h"
+#include "alt_q.h"
 
 static e_next_action do_b(s_shell *shell, s_term *term)
 {

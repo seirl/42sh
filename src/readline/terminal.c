@@ -5,6 +5,7 @@
 #include "terminal.h"
 #include "env.h"
 #include "smalloc.h"
+#include "alt_q.h"
 
 static s_term *get_term_ptr(int set, s_term *new_term)
 {
@@ -33,7 +34,7 @@ static void term_init(s_shell *shell)
     term->termios.c_cc[VMIN] = 1;
     term->termios.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
-    term->backup_input = string_create(0);
+    term->backup_input = alt_q_pop();
     term->input = term->backup_input;
     term->input_index = 0;
     term->hist_current = NULL;

@@ -8,6 +8,7 @@
 #include "shell_private.h"
 #include "smalloc.h"
 #include "string_utils.h"
+#include "alt_q.h"
 
 struct input_state_interactive
 {
@@ -40,6 +41,7 @@ void input_interactive_delete(s_input *input)
 {
     printf("exit\n");
     s_input_state_interactive *state = input->_input_state;
+    alt_q_free();
     string_free(state->buf);
     sfree(state);
 }
