@@ -23,7 +23,7 @@ int builtin_source(s_shell *shell, int argc, char **argv)
     }
     s_parser *parser = shell->parser;
     shell->parser = NULL;
-    shell_eval_file(shell, f, argv[1]);
+    int ret = shell_eval_file(shell, f, argv[1]);
     shell->parser = parser;
-    return 0;
+    return ret;
 }
