@@ -127,6 +127,7 @@ add_library(builtins OBJECT
     src/builtins/b_cd.c
     src/builtins/b_continue.c
     src/builtins/b_echo.c
+    src/builtins/b_export.c
     src/builtins/b_exec.c
     src/builtins/b_exit.c
     src/builtins/b_set.c
