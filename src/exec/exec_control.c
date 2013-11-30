@@ -5,6 +5,8 @@
 
 static void exec_else(s_shell *shell, s_ast_else *else_clause)
 {
+    if (!else_clause)
+        return;
     if (shell->breaks)
     {
         --shell->breaks;
