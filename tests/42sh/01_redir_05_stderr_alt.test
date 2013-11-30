@@ -2,5 +2,4 @@
     "desc": "redir: alt stderr",
     "args": ["-c", "echo >&2 hello >&2"],
     "stderr": "hello\n",
-    "skip": True,
 }
