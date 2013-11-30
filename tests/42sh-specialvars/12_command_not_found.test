@@ -1,0 +1,6 @@
+{
+    "desc": "command not found $? == 127",
+    "stdin": b"""IDONOTEXISTS""",
+    "stderr": ...,
+    "retval": 127,
+}
