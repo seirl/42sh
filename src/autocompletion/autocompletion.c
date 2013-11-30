@@ -68,7 +68,10 @@ static s_string *first_match(s_term *term)
         else if (cmp > 0)
             a = mid + 1;
         else
+        {
+            string_free(pat);
             return string_create_from(g_bin.bins[mid][0]);
+        }
     }
 
     string_free(pat);
