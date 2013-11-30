@@ -11,6 +11,7 @@
 #include "escape_keys.h"
 #include "autocomp_tools.h"
 #include "autocomp_bins.h"
+#include "autocomp_paths.h"
 
 static void replace_word(s_term *term, s_string *word)
 {
@@ -43,6 +44,12 @@ static void replace_word(s_term *term, s_string *word)
     }
 }
 
+static int is_path(s_term *term)
+{
+    size_t start = start_word(term);
+    return (term->input->buf[start] == '.' || term->input->buf[start] == '/');
+}
+
 int autocomplete(s_shell *shell, s_term *term)
 {
     size_t i = term->input_index;
@@ -53,8 +60,10 @@ int autocomplete(s_shell *shell, s_term *term)
         return 0;
 
     s_string *s = NULL;
-    if (is_first_word(term))
+    if (is_first_word(term) && !is_path(term))
         s = autocomp_bins(term);
+    else
+        s = autocomp_paths(term);
     replace_word(term, s);
     string_free(s);
 

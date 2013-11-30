@@ -43,6 +43,13 @@ static void add_paths(s_globr *glob_paths)
     my_globfree(glob_paths);
 }
 
+static int bins_compare(const void *one, const void *two)
+{
+    const char *const *const *c_one = one;
+    const char *const *const *c_two = two;
+    return strcmp(*c_one[0], *c_two[0]);
+}
+
 s_string *autocomp_bins(s_term *term)
 {
     size_t start = start_word(term);
@@ -74,13 +81,6 @@ s_string *autocomp_bins(s_term *term)
         i_ret++;
     string_free(pat);
     return string_create_from(g_bin.bins[i_ret][0]);
-}
-
-static int bins_compare(const void *one, const void *two)
-{
-    const char *const *const *c_one = one;
-    const char *const *const *c_two = two;
-    return strcmp(*c_one[0], *c_two[0]);
 }
 
 void rehash_free(void)

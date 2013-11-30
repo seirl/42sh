@@ -76,6 +76,7 @@ Readline
     - DEL key
     - Konami code
     - Programs autocompletion with correction.
+    - Path completion.
 
 Lexer/Parser
 ------------
