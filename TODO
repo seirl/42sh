@@ -8,8 +8,6 @@ A successful test is considered as a Done item.
 READLINE
 ========
     Done:
-        -
-    Todo:
         - Use PS1
 
 LEXER
@@ -21,12 +19,17 @@ LEXER
 PARSER
 ======
     Todo:
+        - Remove the leaks
+    Done:
         - Handle partial input and report state of the parser to readline
 
 EXPANSION
 =========
     Todo:
-        - All forms of expansion
+        - Investigate why expansion is sometimes called two times in
+          interactive mode
+        - Globbing: */. gives strange results
+        - Handle extglob
 
 EVALUATION
 ==========
@@ -36,8 +39,8 @@ EVALUATION
         - If commands
         - Or, And, While, Until
         - Case, Functions, For, ;
-    Todo:
         - Subshell evaluation
+    Todo:
         - job control
 
 BUILTINS
@@ -45,10 +48,12 @@ BUILTINS
     Todo:
         - Debug break
         - Debug source
+    Done:
         - export
 
 TESTS
 =====
     Todo:
-        - (v08) compare with a posix shell
         - (v08) multithread tests
+    Done:
+        - (v08) compare with a posix shell
