@@ -25,6 +25,7 @@ list_files() {
                 files_stat $f
                 check_25 $f
                 check_last_line $f
+                check_fun_count $f
             fi
         fi
     done
@@ -67,6 +68,18 @@ check_25() {
         #echo -ne "${c:-\n}"
         last="$c"
     done < $1
+}
+
+check_fun_count() {
+    func_count=$(grep -E '^}$' "$1" | wc -l)
+    if [ $func_count -gt 10 ]; then
+        echo "$1: $func_count functions"
+    fi
+    static_count=$(grep -E '^static[^=]*$' "$1" | wc -l)
+    exported=$((func_count - static_count))
+    if [ $exported -gt 5 ]; then
+        echo "$1: $exported exported functions"
+    fi
 }
 
 check_norm() {
