@@ -84,13 +84,13 @@ static int print_char(s_echo_arg arg, char *str, int j)
                 if (escape_table[i][0] == str[j + escaped])
                 {
                     putc(escape_table[i][1], stdout);
-                    break;
+                    return j + escaped;
                 }
             }
         }
-        putc(str[j + escaped], stdout);
+        putc(str[j], stdout);
     }
-    return j + escaped;
+    return j;
 }
 
 static void do_echo(s_echo_arg arg, int argc)
