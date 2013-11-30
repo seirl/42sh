@@ -40,18 +40,21 @@ static int foreach_opt(s_shell *shell, s_opt *opt, int value)
 
 static int print_shopt_argv(s_shell *shell, s_opt *opt)
 {
+    int ret = 0;
     for (unsigned int i = 0; i < opt->trailing_count; ++i)
     {
         char *name = opt_trailing_arg(opt, i);
-        if (shopt_get(shell, name) == -1)
+        int shopt_value = shopt_get(shell, name);
+        if (shopt_value == -1)
         {
             fprintf(stderr, PROGNAME": shopt: %s: "
                     "invalid shell option name\n", opt_trailing_arg(opt, i));
             return 1;
         }
-        printf("%s\t%s\n", name, shopt_get(shell, name) == 1 ? "on" : "off");
+        printf("%s\t%s\n", name, shopt_value == 1 ? "on" : "off");
+        ret |= !shopt_value;
     }
-    return 0;
+    return ret;
 }
 
 int builtin_shopt(s_shell *shell, int argc, char *argv[])
