@@ -129,6 +129,9 @@ def new_test_run_42sh(test, options):
         stdin_buf = test.get('stdin', '').encode()
         stdoutdata, stderrdata = shell.communicate(stdin_buf, timeout)
 
+        retval = test.get('retval', 0)
+        subself.assertEqual(shell.returncode, retval, "return value differ")
+
         if test.get('stderr') == ...:
             subself.assertNotEqual("", stderrdata.decode(), "stderr empty")
         else:
@@ -145,9 +148,6 @@ def new_test_run_42sh(test, options):
 
         if 'custom' in test:
             subself.assertTrue(test['custom'](), "custom check")
-
-        retval = test.get('retval', 0)
-        subself.assertEqual(shell.returncode, retval, "return value differ")
 
     return QDTestCaseShell, test_42sh
 
