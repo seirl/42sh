@@ -1,7 +1,6 @@
 {
+    "type": "diff",
     "desc": "var=#foo",
     "stdin": """foo=%-=$\94@#{}[]/_; echo $foo
 """,
-    "stdout": "%-=$\94@#{}[]/_\n",
-    "skip": True
 }
