@@ -16,7 +16,7 @@ static const s_param shopt_param[] =
 
 static void usage(void)
 {
-    fprintf(stdout, "alias: usage: alias [-p] [name[=value] ... ]\n");
+    fprintf(stderr, "alias: usage: alias [-p] [name[=value] ... ]\n");
 }
 
 static int is_assignment(char *arg)
