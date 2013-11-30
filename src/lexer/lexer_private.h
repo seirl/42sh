@@ -94,8 +94,10 @@ int is_quote(char c);
 int is_token_delimiter(s_lexer *lexer, char c);
 /** @brief check if the current char is an operator */
 int is_operator(char c);
-/** @brief check if the wroking buffer contains an operator (SCL) */
+/** @brief check if the working buffer contains an operator (SCL) */
 int is_valid_operator(s_lexer *lexer, s_string *s);
+/** @brief check if the string is a valid name */
+int is_valid_name(const s_string *s);
 
 // pattern recognition --------------------------------------------------------
 /** @brief check if we have to deal with a comment */

@@ -25,7 +25,8 @@ s_token *lex_look_word(s_lexer *lexer)
 {
     s_token *tok = lex_look_token(lexer);
 
-    if (tok->type == T_WORD && lexer->working_buffer->buf[0] == '(')
+    if (tok->type == T_WORD && lexer->working_buffer->buf[0] == '('
+        && is_valid_name(tok->value.str))
     {
         tok->type = T_FUNCTION_NAME;
         return tok;

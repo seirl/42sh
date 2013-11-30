@@ -7,7 +7,7 @@ s_ast_funcdec *parse_rule_funcdec(s_parser *parser)
     s_ast_shell_cmd *content;
     s_token *tok;
 
-    if (!(tok = lex_word(parser->lexer)))
+    if (!(tok = lex_name(parser->lexer)))
         return NULL;
     name = string_duplicate(tok->value.str);
     token_free(tok);

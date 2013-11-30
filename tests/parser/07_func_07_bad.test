@@ -1,0 +1,6 @@
+{
+    "desc": "rule funcdec: badname",
+    "input": "42sh () { echo yes; }",
+    "stderr": ...,
+    "retval": 1,
+}

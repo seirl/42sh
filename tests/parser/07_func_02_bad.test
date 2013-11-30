@@ -1,5 +1,5 @@
 {
-    "desc": "rule funcdec: bad0",
+    "desc": "rule funcdec: bad body",
     "input": "a () echo yes;",
     "output": "",
     "stderr": ...,
