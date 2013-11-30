@@ -1,0 +1,5 @@
+{
+    "desc": "options: --foo (does not exist)",
+    "args": ["--norc", '-c', 'echo lol'],
+    "stdout": "lol\n",
+}

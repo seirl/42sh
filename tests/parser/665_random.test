@@ -1,19 +1,43 @@
 (
     {
         "desc": "Random",
-        "input": " ".join(random.choice([
+        "input": "".join(random.choice([
+        " ",
+        " ",
+        " ",
+        "\\",
+        "a",
+        "b",
+        "1",
+        "2",
+        ".",
+        ";",
+        "&",
+        "&&",
+        "|",
+        "||",
         "$0",
+        "${",
+        "$((",
+        "))",
         "=",
         "a=",
         "in",
         "for",
         "while",
+        "until",
+        "do",
+        "done",
+        "<",
+        ">",
         "(",
         ")",
+        "]",
+        "[",
         ]) for _ in range(i)),
         "output": '*',
         "stderr": '*',
         "retval": lambda ret: ret != -11
     }
-    for i in range(100)
+    for i in range(300)
 )

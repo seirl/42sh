@@ -1,0 +1,6 @@
+{
+    "desc": "options: --foo (does not exist)",
+    "args": ["--foo"],
+    "stderr": ...,
+    "retval": 2,
+}

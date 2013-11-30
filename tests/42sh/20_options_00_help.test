@@ -1,0 +1,5 @@
+{
+    "desc": "options: --help",
+    "args": ["--help"],
+    "stdout": ...,
+}

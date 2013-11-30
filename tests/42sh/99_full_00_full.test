@@ -31,6 +31,13 @@ done
 until true; do
     echo no
 done
+
+a () {
+    echo hello
+}
+a
+true && false || true
+echo; false; true
 """,
     "stdout": ...,
 }
