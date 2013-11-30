@@ -33,6 +33,10 @@ char **expand_argv(char **argv, int *max_len)
             ret = push_arg(ret, gl->paths[j], &len);
         my_globfree(gl);
     }
+
+    ret = srealloc(ret, sizeof (char *) * (len + 1));
+    ret[len] = NULL;
+
     for (int i = 0; i < *max_len; ++i)
         sfree(argv[i]);
     *max_len = len;

@@ -46,30 +46,48 @@ static int element_redir_list_len(s_ast_element *elt)
     return count;
 }
 
+static s_string *expand_compound_wrap(s_shell *shell,
+                                      s_ast_compound_word *word)
+{
+    s_string *str = expand_compound(shell, word);
+
+    if (!str)
+        return NULL;
+
+    if (str->len == 0
+        && !(word->word->kind == EXPAND_SQUOTE
+            || word->word->kind == EXPAND_DQUOTE))
+    {
+        string_free(str);
+        return NULL;
+    }
+
+    return str;
+}
+
 char **elements_to_argv(s_shell *shell, s_ast_element *element, int *len)
 {
     expand_element(shell, element);
     *len = element_list_len(element);
-    char **cmd_argv = smalloc(sizeof (char *) * (*len + 1));
+    char **cmd_argv = scalloc(*len + 1, sizeof (char *));
     s_string *str = NULL;
+    int pos = 0;
 
-    for (int i = 0; i < *len; ++i)
+    while (element)
     {
-        if (!element->word)
-            element = element->next;
-        else
+        if (element->word)
         {
-            if ((str = expand_compound(shell, element->word)) == NULL)
-                return NULL;
-            cmd_argv[i] = smalloc(sizeof (char) * (str->len + 1));
-            memcpy(cmd_argv[i], str->buf, str->len);
-            cmd_argv[i][str->len] = '\0';
-            string_free(str);
+            if ((str = expand_compound_wrap(shell, element->word)) == NULL)
+            {
+                element = element->next;
+                continue;
+            }
+            cmd_argv[pos++] = string_release(str);
         }
         element = element->next;
     }
+    *len = pos;
     cmd_argv = expand_argv(cmd_argv, len);
-    cmd_argv[*len] = NULL;
     return cmd_argv;
 }
 

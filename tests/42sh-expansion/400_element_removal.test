@@ -1,0 +1,7 @@
+{
+    "type": "42sh",
+    "desc": "Word removal",
+    "stdin": b"""echo $non a $non a
+""",
+    "stdout": "a a\n",
+}
