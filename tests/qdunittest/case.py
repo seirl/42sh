@@ -385,7 +385,7 @@ def new_test_run_diff(test, options):
         qdsh_out, qdsh_err = qdsh.communicate(stdin, options.timeout)
         posix_out, posix_err = posix.communicate(stdin, options.timeout)
 
-        subself.assertBehaveSimilar(posix_out.decode(), qdsh_out.decode(),
+        subself.assertEqual(posix_out.decode(), qdsh_out.decode(),
                             "stdout")
         subself.assertBehaveSimilar(posix_err.decode(), qdsh_err.decode(),
                             "stderr")
