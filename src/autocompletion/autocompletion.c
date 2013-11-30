@@ -14,6 +14,9 @@
 
 static void replace_word(s_term *term, s_string *word)
 {
+    if (!word)
+        return;
+
     size_t start = start_word(term);
     size_t end = end_word(term);
     s_string *new_input = string_create(term->input->len);
@@ -49,7 +52,9 @@ int autocomplete(s_shell *shell, s_term *term)
     if (i && is_blank(term->input->buf[i - 1]))
         return 0;
 
-    s_string *s = autocomp_bins(term);
+    s_string *s = NULL;
+    if (is_first_word(term))
+        s = autocomp_bins(term);
     replace_word(term, s);
     string_free(s);
 

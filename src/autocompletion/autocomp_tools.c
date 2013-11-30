@@ -22,3 +22,11 @@ size_t end_word(s_term *term)
         i++;
     return i;
 }
+
+int is_first_word(s_term *term)
+{
+    int i = 0;
+    while (is_blank(term->input->buf[i]))
+        i++;
+    return i == start_word(term);
+}
