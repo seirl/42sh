@@ -56,11 +56,11 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
         return NULL;
     int i = replace_current_word(shell, value, word);
     if (value[i] == 0)
+    {
+        sfree(value);
         return NULL;
-    --i;
-
+    }
     s_string *buf = string_create(0);
-    ++i;
     for (; value[i]; ++i)
     {
         if (is_ifs(shell, value[i]))
