@@ -14,7 +14,7 @@ int builtin_source(s_shell *shell, int argc, char **argv)
     {
         LOG(WARN, "42sh: %s: filename argument requires\n", argv[0]);
         LOG(WARN, "%s: usage: source filename [arguments]\n", argv[0]);
-        return 1;
+        return 2;
     }
     if (!(f = fopen(argv[1], "r")))
     {

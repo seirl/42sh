@@ -1,0 +1,8 @@
+{
+    "desc": "source: no arg",
+    "stdin": b"""
+source
+""",
+    "stderr": ...,
+    "retval": 2,
+}
