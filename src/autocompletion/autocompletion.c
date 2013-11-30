@@ -33,25 +33,6 @@ static void try_enlarge_bins(void)
     }
 }
 
-static void free_binaries(void)
-{
-    if (g_bin.bins)
-    {
-        for (size_t i = 0; g_bin.bins[i]; i++)
-        {
-            free(g_bin.bins[i][0]);
-            g_bin.bins[i][0] = NULL;
-            g_bin.bins[i][1] = NULL;
-            free(g_bin.bins[i]);
-            g_bin.bins[i] = NULL;
-        }
-        g_bin.size = 0;
-        free(g_bin.bins);
-        g_bin.max_size = 0;
-        g_bin.bins = NULL;
-    }
-}
-
 static void add_paths(s_globr *glob_paths)
 {
     char *base;
@@ -129,6 +110,25 @@ static void replace_word(s_term *term, s_string *word)
     }
 }
 
+void rehash_free(void)
+{
+    if (g_bin.bins)
+    {
+        for (size_t i = 0; g_bin.bins[i]; i++)
+        {
+            free(g_bin.bins[i][0]);
+            g_bin.bins[i][0] = NULL;
+            g_bin.bins[i][1] = NULL;
+            free(g_bin.bins[i]);
+            g_bin.bins[i] = NULL;
+        }
+        g_bin.size = 0;
+        free(g_bin.bins);
+        g_bin.max_size = 0;
+        g_bin.bins = NULL;
+    }
+}
+
 int autocomplete(s_shell *shell, s_term *term)
 {
     size_t i = term->input_index;
@@ -147,7 +147,7 @@ int autocomplete(s_shell *shell, s_term *term)
 
 void rehash(s_shell *shell)
 {
-    free_binaries();
+    rehash_free();
     try_enlarge_bins();
     char *path = strdup(env_get(shell, "PATH"));
     char *folder = strtok(path, ":");

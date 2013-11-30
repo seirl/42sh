@@ -10,7 +10,6 @@
 #include "smalloc.h"
 #include "sighandler.h"
 #include "env.h"
-#include "autocompletion.h"
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +32,6 @@ int main(int argc, char *argv[])
     s_lexer *lexer = lex_create(shell, input, LEX_ALL);
     s_parser *parser = parser_create(lexer);
     shell_setup(shell, parser);
-    rehash(shell);
 
     ret = shell_loop(shell);
 

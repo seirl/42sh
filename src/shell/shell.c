@@ -8,6 +8,7 @@
 #include "smalloc.h"
 #include "xsyscall.h"
 #include "history.h"
+#include "autocompletion.h"
 
 s_shell *shell_new(void)
 {
@@ -35,6 +36,7 @@ void shell_setup(s_shell *shell, s_parser *parser)
 {
     assert(!shell->parser && "There is already a parser setup.");
     shell->parser = parser;
+    rehash(shell);
 }
 
 void shell_delete(s_shell *shell)
@@ -42,6 +44,7 @@ void shell_delete(s_shell *shell)
     if (shell->tmp_fd)
         XCLOSE(10);
     history_close(shell);
+    rehash_free();
     env_free(shell);
     functions_free(shell);
     builtins_free(shell);

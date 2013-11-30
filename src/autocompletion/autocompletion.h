@@ -21,4 +21,9 @@ int autocomplete(s_shell *shell, s_term *term);
 */
 void rehash(s_shell *shell);
 
+/**
+** @brief Free the internal representation of paths.
+*/
+void rehash_free(void);
+
 #endif /* !AUTOCOMPLETION_H */
