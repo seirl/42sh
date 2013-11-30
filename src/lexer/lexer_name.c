@@ -1,5 +1,4 @@
 #include <ctype.h>
-
 #include "lexer_private.h"
 
 int is_valid_name(const s_string *str)

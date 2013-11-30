@@ -76,7 +76,7 @@ void restore_redir_contexts(s_redir_context **contexts)
     sfree(contexts);
 }
 
-static void exec_func(s_shell *shell,s_ast_shell_cmd *func_body, char **argv)
+static void exec_func(s_shell *shell, s_ast_shell_cmd *func_body, char **argv)
 {
     char **pos_params = smalloc(shell->arg_count * sizeof (char *));
     for (int i = 1; i < shell->arg_count; ++i)
