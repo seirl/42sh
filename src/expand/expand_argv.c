@@ -18,7 +18,6 @@ static char **push_arg(char **argv, char *arg, int *len)
     argv[*len - 1] = smalloc(sizeof (char) * str_len);
     memcpy(argv[*len - 1], arg, str_len);
     argv[*len - 1][str_len - 1] = 0;
-    //argv[*len - 1] = strdup(arg);
     return argv;
 }
 
