@@ -19,6 +19,7 @@ int main(int argc, char **argv)
     s_token *tok;
     s_lexer *lexer;
     e_token_type t = T_WORD;
+    int ret = 0;
 
     input = input_string_create(string_create_from(argv[1]), "<INPUT>");
     lexer = lex_create(NULL, input, LEX_ALL);
@@ -27,7 +28,11 @@ int main(int argc, char **argv)
         do {
             tok = lex_token(lexer);
             if (lex_error(lexer) != E_LEX_NO_ERROR)
-                return 1;
+            {
+                ret = 1;
+                token_free(tok);
+                break;
+            }
             token_print(tok);
             t = tok->type;
             token_free(tok);
@@ -62,9 +67,12 @@ int main(int argc, char **argv)
                 return 1;
             }
             if (lex_error(lexer) != E_LEX_NO_ERROR)
-                return 1;
+            {
+                ret = 1;
+                token_free(tok);
+                break;
+            }
             token_print(tok);
-            t = tok->type;
             token_free(tok);
         }
     }
@@ -74,5 +82,5 @@ int main(int argc, char **argv)
 
     smalloc_clean();
 
-    return EXIT_SUCCESS;
+    return ret;
 }
