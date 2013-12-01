@@ -91,6 +91,8 @@ s_string *readline(s_shell *shell, char *prompt)
     printf("%s%s", s_prompt->buf, term->input->buf);
     term->prompt = s_prompt->buf;
     fflush(stdout);
+    for (size_t i = term->input->len; i > term->input_index; i--)
+        my_tputs(tgetstr("le", NULL));
     e_next_action ret;
     while (1)
     {

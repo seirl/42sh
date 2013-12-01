@@ -11,7 +11,7 @@ static e_next_action do_right(s_term *term)
 {
     if (term->input_index < term->input->len)
     {
-        // Move cursor to the left
+        // Move cursor to the right
         my_tputs(tgetstr("nd", NULL));
         term->input_index++;
     }
@@ -23,7 +23,7 @@ static e_next_action do_left(s_term *term)
 {
     if (term->input_index > 0)
     {
-        // Move cursor to the right
+        // Move cursor to the left
         my_tputs(tgetstr("le", NULL));
         term->input_index--;
     }
