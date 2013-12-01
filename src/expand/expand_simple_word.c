@@ -122,7 +122,7 @@ static s_string *tilde_expansion(s_shell *shell, s_string *word)
             if (operator_tilde(shell, word_cpy, ret))
                 continue;
             if (user_tilde(shell, word_cpy, ret))
-                return ret;
+                break;
         }
         string_putc(ret, c);
         prev = c;
