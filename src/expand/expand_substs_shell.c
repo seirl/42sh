@@ -1,3 +1,7 @@
+#ifndef _POSIX_C_SOURCE
+# define _POSIX_C_SOURCE 1
+#endif
+
 #include <stdlib.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -90,7 +94,8 @@ s_string *expand_substs_shell(s_shell *shell, s_string *word)
     //TODO: check fd leaks
     pid_t pid;
     int pipe_fd[2];
-    pipe(pipe_fd);
+    if (pipe(pipe_fd) == -1)
+        return NULL;
     pid = fork();
     if (pid == 0)
         exec_subshell(shell, pipe_fd, word->buf);
