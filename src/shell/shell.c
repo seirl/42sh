@@ -35,7 +35,6 @@ s_shell *shell_new(void)
 
 void shell_setup(s_shell *shell, s_parser *parser)
 {
-    assert(!shell->parser && "There is already a parser setup.");
     shell->parser = parser;
     rehash(shell);
 }

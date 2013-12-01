@@ -18,6 +18,7 @@
 #include "eval.h"
 #include "shell_private.h"
 #include "env.h"
+#include "smalloc.h"
 
 #include "env_private.h"
 
@@ -55,16 +56,13 @@ static s_string *process_stdout(s_string *ret)
 
 static void exec_subshell(s_shell *shell, int pipe_fd[2], char *str)
 {
-    s_shell *sh = shell_duplicate(shell);
-
     close(pipe_fd[0]);
     close(1);
     fcntl(pipe_fd[1], F_DUPFD, 1);
 
-    shell_eval_str(sh, str);
+    shell_eval_str(shell, str);
 
     close(pipe_fd[1]);
-    shell_delete_duplicate(sh);
     exit(0);
 }
 
@@ -91,7 +89,6 @@ static s_string *monitor_subshell(pid_t pid, int pipe_fd[2])
 
 s_string *expand_substs_shell(s_shell *shell, s_string *word)
 {
-    //TODO: check fd leaks
     pid_t pid;
     int pipe_fd[2];
     if (pipe(pipe_fd) == -1)
