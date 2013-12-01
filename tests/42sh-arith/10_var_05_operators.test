@@ -1,0 +1,11 @@
+(
+{
+    "type": "diff",
+    "desc": "arith: operators",
+    "stdin": """a=42
+b=2016
+echo $((b{}a))
+""".format(operator),
+}
+    for operator in "+-/*%"
+)
