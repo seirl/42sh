@@ -38,6 +38,7 @@ a () {
 a
 true && false || true
 echo; false; true
+echo foo > bar
 """,
     "stdout": ...,
 }

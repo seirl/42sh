@@ -57,7 +57,7 @@ int handle_dollar(s_lexer *lexer, char c, char prev)
                 lexer->token_type = T_ARITHM;
         }
         else
-            fill_upto_delim(lexer, '$');
+            fill_upto_delim(lexer, "$\\");
         return 1;
     }
     return 0;

@@ -1,0 +1,13 @@
+(
+{
+    "type": "diff",
+    "desc": "Backslash dollar",
+    "stdin": "hello=world; echo " + input,
+}
+    for input in (
+        r"a$\ ",
+        r"a$\hello ",
+        r"a$hell\o ",
+        r"a$hello$hello ",
+    )
+)

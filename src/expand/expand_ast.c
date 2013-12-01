@@ -38,10 +38,17 @@ static char *expand_word_by_kind(s_shell *shell, s_ast_word *word, int type)
         return string_release(expand_simple_var(shell, word->str));
     if (word->kind == WORD)
     {
-        s_string *w = expand_simple_word(shell, word->str);
-        char *ret = string_release(expand_glob(shell, w));
-        string_free(w);
-        return ret;
+        s_string *e0 = expand_simple_word(shell, word->str);
+        s_string *e1 = expand_glob(shell, e0);
+        // No expansion means no split is necessary
+        if (string_equal(word->str, e0->buf) && string_equal(e0, e1->buf))
+        {
+            string_free(e0);
+            string_free(e1);
+            return NULL;
+        }
+        string_free(e0);
+        return string_release(e1);
     }
     if (type == 1 && word->kind == EXPAND_ARITHM)
         return string_release(expand_arithm(shell, word->str));
