@@ -1,8 +1,11 @@
-Tests
-===============
-    Done:
-        - A skipped test is equivalent to a Todo item in the tests folder.
-        - A successful test is considered as a Done item.
+====
+TODO
+====
+
+Tests as TODO item
+==================
+    - A skipped test is equivalent to a Todo item in the tests folder.
+    - A successful test is considered as a Done item.
 
 READLINE
 ========
@@ -29,6 +32,8 @@ PARSER
         - Handle partial input and report state of the parser to readline
         - On syntax error, give information about line and column.
         - Avoid token leaks.
+    Todo:
+        - Handle line continuation for constrol structures
 
 EXPANSION
 =========
@@ -50,7 +55,7 @@ EVALUATION
         - Subshell evaluation
     Todo:
         - job control
-        - mode debug on dupin/dupout redirections mixed with pipes
+        - debug mode on dupin/dupout redirections mixed with pipes
 
 BUILTINS
 ========
@@ -61,9 +66,10 @@ BUILTINS
         - historry
         - rehash
 
-TESTS
-=====
+TEST SUITE
+==========
     Todo:
         -  multithread tests
     Done:
+        - check with valgrind
         - (v08) compare with a posix shell
