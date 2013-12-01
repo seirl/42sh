@@ -136,6 +136,8 @@ int set_redir(s_shell *shell, s_ast_redirection_list *redir);
 void restore_redir_context(s_redir_context *context);
 /** @brief Restore a redirection context list */
 void restore_redir_contexts(s_redir_context **contexts);
+/** @brief Handles the clobber callback */
+void clobber_handler(s_shell *shell, s_ast_redirection_list *redir, int fd);
 
 // Expansion stubs ------------------------------------------------------------
 

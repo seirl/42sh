@@ -27,15 +27,7 @@ static void exec_redir_write(s_shell *shell,
         return;
     }
     else
-    {
-        if (!shell->tmp_fd)
-            shell->tmp_fd = 1;
-        fcntl(redir->io->io_number, F_DUPFD, 10);
-        XCLOSE(redir->io->io_number);
-        fcntl(10, F_SETFD, FD_CLOEXEC);
-        dup2(fd, redir->io->io_number);
-        XCLOSE(fd);
-    }
+        clobber_handler(shell, redir, fd);
     string_free(filename);
 }
 
@@ -61,7 +53,7 @@ static void exec_redir_read(s_shell *shell,
     string_free(filename);
 }
 
-static void exec_redir_heredoc(s_ast_redirection_list *redir)
+static void exec_redir_heredoc(s_shell *shell, s_ast_redirection_list *redir)
 {
     int fildes[2];
     int i = 0;
@@ -191,9 +183,9 @@ static void exec_redir_type(s_shell *shell, s_ast_redirection_list *redir,
     else if (redir->type == REDIR_READ)             /** <   */
         exec_redir_read(shell, redir, fd);
     else if (redir->type == REDIR_HEREDOC)          /** <<  */
-        exec_redir_heredoc(redir);
+        exec_redir_heredoc(shell, redir);
     else if (redir->type == REDIR_HEREDOC_STRIP)    /** <<- */
-        exec_redir_heredoc(redir);
+        exec_redir_heredoc(shell, redir);
     else if (redir->type == REDIR_DUPLICATE_INPUT)  /** <&  */
         exec_redir_dupin(shell, redir, fd);
     else if (redir->type == REDIR_DUPLICATE_OUTPUT) /** >&  */

@@ -18,3 +18,14 @@ int word_dig_to_fd(s_string *str)
         return -1;
     return fd;
 }
+
+void clobber_handler(s_shell *shell, s_ast_redirection_list *redir, int fd)
+{
+    if (!shell->tmp_fd)
+        shell->tmp_fd = 1;
+    fcntl(redir->io->io_number, F_DUPFD, 10);
+    XCLOSE(redir->io->io_number);
+    fcntl(10, F_SETFD, FD_CLOEXEC);
+    dup2(fd, redir->io->io_number);
+    XCLOSE(fd);
+}
