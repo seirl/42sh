@@ -1,6 +1,7 @@
 {
     "desc": "export: multi export with identifier",
-    "stdin": """export lol=bar lol2=bar2 lol3=bar3 && env | grep lol | cat -e
+    "stdin": """export lol1=bar1 lol2=bar2 lol3=bar3 && env | grep lol | \
+sort -b |cat -e
 """,
-    "stdout": "lol=bar$\nlol2=bar2$\nlol3=bar3$\n",
+    "stdout": "lol1=bar1$\nlol2=bar2$\nlol3=bar3$\n",
 }

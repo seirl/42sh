@@ -1,6 +1,6 @@
 {
     "desc": "export: multi export",
-    "stdin": """export lol lol2 lol3 lol4 && env | grep lol | cat -e
+    "stdin": """export lol lol2 lol3 lol4 && env | grep lol | sort -b | cat -e
 """,
     "stdout": "lol=$\nlol2=$\nlol3=$\nlol4=$\n",
 }
