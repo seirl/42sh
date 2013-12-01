@@ -41,5 +41,6 @@ s_ast_compound_word *parse_compound_word(s_parser *parser)
     tok = lex_look_token(parser->lexer);
     if (tok->concat)
         concat_braces(parser, cw);
+    token_free(tok);
     return cw;
 }
