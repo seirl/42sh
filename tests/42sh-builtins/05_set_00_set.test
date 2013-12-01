@@ -1,0 +1,7 @@
+{
+    "desc": "set",
+    "stdin": """set
+""",
+    "stdout": ...,
+    "retval": 0,
+}
