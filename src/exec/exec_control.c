@@ -112,6 +112,7 @@ static int exec_case_match(s_shell *shell,
         s_string *val = expand_compound(shell, match->word);
         if (!my_fnmatch(val->buf, id->buf))
         {
+            string_free(val);
             exec_ast_list(shell, cmd);
             return 0;
         }
