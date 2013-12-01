@@ -50,6 +50,7 @@ EVALUATION
         - Subshell evaluation
     Todo:
         - job control
+        - mode debug on dupin/dupout redirections mixed with pipes
 
 BUILTINS
 ========
