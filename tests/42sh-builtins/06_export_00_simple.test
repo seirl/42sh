@@ -1,0 +1,6 @@
+{
+    "desc": "export: simple export",
+    "stdin": """export lol && env | grep lol | cat -e
+""",
+    "stdout": "lol=$\n",
+}

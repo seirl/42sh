@@ -1,0 +1,9 @@
+{
+    "desc": "export: multi export with invalid identifiers",
+    "stdin": """export 2 4 =
+""",
+    "stderr": "42sh: export: `2': not a valid identifier\n\
+42sh: export: `4': not a valid identifier\n\
+42sh: export: `=': not a valid identifier\n",
+    "retval": 1,
+}
