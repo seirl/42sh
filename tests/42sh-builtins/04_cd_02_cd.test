@@ -1,8 +1,7 @@
 {
+    "type": "diff",
     "desc": "cd",
     "stdin": """cd /; cd
 pwd
 """,
-    "stdout": os.getenv("HOME") + """\n""",
-    "retval": 0,
 }
