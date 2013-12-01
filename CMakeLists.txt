@@ -234,6 +234,7 @@ add_library(exec OBJECT
     src/exec/exec_program.c
     src/exec/exec_redir.c
     src/exec/exec_redir_utils.c
+    src/exec/exec_redir_utils2.c
     src/exec/exec_utils.c
     src/exec/pipe_utils.c
     src/exec/redir_set.c

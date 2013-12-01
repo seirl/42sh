@@ -42,9 +42,8 @@ static void exec_redir_read(s_shell *shell,
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     string_free(filename);
-    fcntl(redir->io->io_number, F_GETFD);
     fcntl(redir->io->io_number, F_DUPFD, 10);
-    fcntl(redir->io->io_number, F_GETFD);
+    XCLOSE(0);
     fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
@@ -61,16 +60,20 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir)
         fprintf(stderr, "here-document command failed\n");
         return;
     }
-    fildes[0] = 3;
-    fildes[1] = 4;
-    i += pipe(fildes);
-    i += write(4, redir->heredoc->heredoc->buf, redir->heredoc->heredoc->len);
-    XCLOSE(4);
-    fcntl(0, F_DUPFD, 10);
-    XCLOSE(0);
-    fcntl(10, F_SETFD, FD_CLOEXEC);
-    dup2(3, 0);
-    XCLOSE(3);
+    else
+    {
+        fildes[0] = 3;
+        fildes[1] = 4;
+        i += pipe(fildes);
+        i += write(4, redir->heredoc->heredoc->buf,
+                   redir->heredoc->heredoc->len);
+        XCLOSE(4);
+        fcntl(0, F_DUPFD, 10);
+        XCLOSE(0);
+        fcntl(10, F_SETFD, FD_CLOEXEC);
+        dup2(3, 0);
+        XCLOSE(3);
+    }
 }
 
 static void exec_redir_dupout(s_shell *shell,
@@ -80,18 +83,21 @@ static void exec_redir_dupout(s_shell *shell,
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 1;
     s_string *filename = expand_compound(shell, redir->word);
-    fd = word_to_fd(filename, O_CREAT | O_WRONLY | O_TRUNC);
+    fd = word_dig_to_fd(filename);
     if (fd == -1)
-        fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+        LOG(WARN, "42sh: %s: Syntax error: Bad fd number\n", filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
-    string_free(filename);
-    fcntl(redir->io->io_number, F_GETFD);
-    fcntl(redir->io->io_number, F_DUPFD, 10);
-    fcntl(redir->io->io_number, F_GETFD);
-    fcntl(10, F_SETFD, FD_CLOEXEC);
-    dup2(fd, redir->io->io_number);
-    fcntl(fd, F_GETFD);
+    else
+    {
+        string_free(filename);
+        fcntl(redir->io->io_number, F_GETFD);
+        fcntl(redir->io->io_number, F_DUPFD, 10);
+        fcntl(redir->io->io_number, F_GETFD);
+        fcntl(10, F_SETFD, FD_CLOEXEC);
+        dup2(fd, redir->io->io_number);
+        fcntl(fd, F_GETFD);
+    }
 }
 
 static void exec_redir_dupin(s_shell *shell,
@@ -101,13 +107,16 @@ static void exec_redir_dupin(s_shell *shell,
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     s_string *filename = expand_compound(shell, redir->word);
-    fd = word_to_fd(filename, O_RDONLY);
+    fd = word_dig_to_fd(filename);
     if (fd == -1)
-        fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+        LOG(WARN, "42sh: %s: Syntax error: Bad fd number\n", filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
-    string_free(filename);
-    dup2(fd, redir->io->io_number);
+    else
+    {
+        string_free(filename);
+        dup2(fd, redir->io->io_number);
+    }
 }
 
 static void exec_redir_readwrite(s_shell *shell, s_ast_redirection_list *redir,
@@ -120,9 +129,12 @@ static void exec_redir_readwrite(s_shell *shell, s_ast_redirection_list *redir,
                    O_CREAT | O_RDWR | O_APPEND,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
-    string_free(filename);
-    dup2(fd, redir->io->io_number);
-    XCLOSE(fd);
+    else
+    {
+        string_free(filename);
+        dup2(fd, redir->io->io_number);
+        XCLOSE(fd);
+    }
 }
 
 static void exec_redir_writeup(s_shell *shell, s_ast_redirection_list *redir,
@@ -135,12 +147,15 @@ static void exec_redir_writeup(s_shell *shell, s_ast_redirection_list *redir,
                    O_CREAT | O_RDWR | O_TRUNC,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    else
+    {
+        fcntl(redir->io->io_number, F_DUPFD, 10);
+        XCLOSE(redir->io->io_number);
+        fcntl(10, F_SETFD, FD_CLOEXEC);
+        dup2(fd, redir->io->io_number);
+        XCLOSE(fd);
+    }
     string_free(filename);
-    fcntl(redir->io->io_number, F_DUPFD, 10);
-    XCLOSE(redir->io->io_number);
-    fcntl(10, F_SETFD, FD_CLOEXEC);
-    dup2(fd, redir->io->io_number);
-    XCLOSE(fd);
 }
 
 static void exec_redir_type(s_shell *shell, s_ast_redirection_list *redir,

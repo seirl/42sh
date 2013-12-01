@@ -128,6 +128,8 @@ int redir_list_len(s_ast_redirection_list *redir);
 s_redir_context *save_redir_context(s_ast_redirection_list *redir);
 /** @brief Translates a word to a file descriptor if possible */
 int word_to_fd(s_string *str, int mode);
+/** @brief Translates a digits-only word to a file descriptor if possible */
+int word_dig_to_fd(s_string *str);
 /** @brief Apply a redirection list */
 int set_redir(s_shell *shell, s_ast_redirection_list *redir);
 /** @brief Restore a redirection context */
