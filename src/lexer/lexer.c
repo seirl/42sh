@@ -124,6 +124,7 @@ s_token *lex_token(s_lexer *lexer)
             return ret;
         else
         {
+            token_free(ret);
             input_destroy(lexer->sublexer->input);
             lex_delete(lexer->sublexer);
             lexer->sublexer = NULL;
