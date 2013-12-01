@@ -40,7 +40,6 @@ static e_next_action do_ctrl_d(s_term *term)
 
 static e_next_action do_enter(s_term *term)
 {
-    // TODO: return only when not escaped with '\'
     term += 1;
     return RETURN;
 }

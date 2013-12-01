@@ -28,7 +28,6 @@ static s_string *readline_close(s_shell *shell, s_term *term,
                                 e_next_action ret)
 {
     s_string *input = (ret == EOI) ? NULL : string_duplicate(term->input);
-    // TODO: what to do when ret == ERROR ?
     term_close();
     if (input)
         printf("\n");

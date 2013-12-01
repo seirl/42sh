@@ -113,5 +113,4 @@ void prompt_expand(s_shell *shell, s_string **prompt)
 #undef X
         }
     }
-    // TODO *prompt = expand_string(shell, string_duplicate(*prompt), LEX_ALL);
 }
