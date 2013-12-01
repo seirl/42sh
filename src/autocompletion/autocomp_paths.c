@@ -37,7 +37,10 @@ s_string *autocomp_paths(s_term *term)
     for (size_t i = 0; i < glob_paths->count; i++)
         if (!strncmp(glob_paths->paths[i], pat->buf, pat->len))
             if (!is_in(glob_paths->paths[i], '*'))
+            {
                 ret = string_create_from(glob_paths->paths[i]);
+                break;
+            }
 
     if (is_dir(ret))
         string_puts(ret, "/");
