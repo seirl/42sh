@@ -4,8 +4,8 @@
 import random
 import subprocess
 
-binary = ['+', '-', '*']
-unary = ['+', '-']
+binary = ['+', '-', '*', '>>', '<<', '|', '&', '||', '&&', '^']
+unary = ['+', '-', '!', '~']
 
 def gen_arithm(depth):
     if not random.randint(0, depth):
@@ -25,6 +25,6 @@ def gen_arithm_test():
 
     return {
         "desc": "Random arithmetic",
+        "type": "diff",
         "input": "echo $(( {} ))".format(i),
-        "output": '{}'.format(r),
     }
