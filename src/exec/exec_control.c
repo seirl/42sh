@@ -88,10 +88,10 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
         expand_wordlist(shell, values);
         if (shell->breaks && shell->breaks--)
             return;
-        s_string *id = string_duplicate(expand_word(for_cmd->identifier));
-        s_string *value = string_duplicate(expand_compound(shell,
-                                                           values->word));
-        env_set(shell, string_release(value), string_release(id));
+        s_string *id = expand_word(for_cmd->identifier);
+        s_string *value = expand_compound(shell, values->word);
+        env_set(shell, value->buf, id->buf);
+        string_free(value);
         if (shell->breaks && shell->breaks--)
             return;
         else
