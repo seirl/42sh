@@ -1,0 +1,9 @@
+{
+    "type": "diff",
+    "desc": "Simple quote",
+    "stdin": """
+foo=text
+echo '$foo\\\' "$foo\$foo\\\"\``echo bar`\`\"" `echo $foo\\\``
+""",
+}
+

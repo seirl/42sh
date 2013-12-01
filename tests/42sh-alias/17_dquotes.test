@@ -1,0 +1,8 @@
+{
+    "type": "diff",
+    "desc": "Alias with quotes",
+    "stdin": """
+alias "a=echo"
+a foo
+""",
+}

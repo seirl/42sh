@@ -1,0 +1,8 @@
+{
+    "type": "diff",
+    "desc": "Alias starting with backslash",
+    "stdin": """
+alias '\bar=echo'
+\bar \bar
+""",
+}
