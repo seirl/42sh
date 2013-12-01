@@ -60,6 +60,9 @@ everything work on your system, please use:
 Or
     $ make check
 To check for memory leaks
+Or
+    $ make coverage
+To see the code covered by the tests (requires lcov)
 
 Features
 ========
@@ -78,12 +81,13 @@ Readline
     - HOME and END keys
     - DEL key
     - Konami code
-    - Programs autocompletion with correction.
-    - Path completion.
+    - Programs autocompletion with correction
+    - Path completion
 
 Lexer/Parser
 ------------
     - Display locations on parse error
+    - Communicate with readline about incomplet input
 
 Builtins
 --------
@@ -95,6 +99,7 @@ Builtins
     - exec
     - exit
     - history
+    - rehash
     - set
     - shopt
     - source

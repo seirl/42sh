@@ -1,35 +1,43 @@
-TODO from tests
+Tests
 ===============
-
-A skipped test is equivalent to a Todo item in the tests folder.
-
-A successful test is considered as a Done item.
+    Done:
+        - A skipped test is equivalent to a Todo item in the tests folder.
+        - A successful test is considered as a Done item.
 
 READLINE
 ========
     Done:
         - Use PS1
+        - Implement key sequences
+        - Implement many bonus key sequences
+        - Integration with history
+        - Add a konami code
+        - Test leaks with many alt-q alt-h
+        - Test cursor position with many different key sequences
 
 LEXER
 =====
-    Todo:
-        - lex_name
+    Done
+        - fix lex_name
           http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_230
+        - Give position information about tokens.
 
 PARSER
 ======
-    Todo:
-        - Remove the leaks
     Done:
+        - Remove the leaks
         - Handle partial input and report state of the parser to readline
+        - On syntax error, give information about line and column.
+        - Avoid token leaks.
 
 EXPANSION
 =========
     Todo:
-        - Investigate why expansion is sometimes called two times in
-          interactive mode
-        - Globbing: */. gives strange results
         - Handle extglob
+    Done:
+        - Fix multiple call of expansion in interactive mode
+        - Fix */.
+        - Hardened tests.
 
 EVALUATION
 ==========
@@ -45,15 +53,16 @@ EVALUATION
 
 BUILTINS
 ========
-    Todo:
+    Done:
         - Debug break
         - Debug source
-    Done:
         - export
+        - historry
+        - rehash
 
 TESTS
 =====
     Todo:
-        - (v08) multithread tests
+        -  multithread tests
     Done:
         - (v08) compare with a posix shell

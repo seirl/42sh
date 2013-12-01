@@ -19,21 +19,22 @@ DESCRIPTION
 -----------
 
 `42sh` is probably the best SHell on the Internet. `42sh` is an equivalent of
-'bash -posix' meaning that it is intended to be a conformant implementation of
+'bash --posix' meaning that it is intended to be a conformant implementation of
 the SHell and Utilies portion of the IEEE POSIX specification.
 
 Special built-in commands are available, the following are fully fonctionnal:
-- alias: define or display aliases
-- break: exit from while, fr or until loop
-- cd: change the working directory
-- echo: display a line of text
-- exec: execute comands and open, close or copy file descriptors
-- exit: cause the shell to exit
-- history: manipulate the history file
-- set: set options and positional parameters
-- source: evaluate a file or resource as a TCL script
-- unalias: remove alias definition
-- unset: unset options and positional parameters
+    - alias: define or display aliases
+    - break: exit from while, fr or until loop
+    - cd: change the working directory
+    - echo: display a line of text
+    - exec: execute comands and open, close or copy file descriptors
+    - exit: cause the shell to exit
+    - history: manipulate the history file
+    - rehash: rebuild the autocompletion cache
+    - set: set options and positional parameters
+    - source: evaluate a file or resource as a TCL script
+    - unalias: remove alias definition
+    - unset: unset options and positional parameters
 
 OPTIONS
 -------
@@ -71,7 +72,7 @@ BUILTINS
 
 `cd [directory | -]`
     change the working directory
-    The argument is optionnal. If the user doesn’t specify any directory.
+    The argument is optionnal. If the user doesn't specify any directory.
     If no directory operand is given and the *HOME* environment variable is
     set, the *cd* command shall behave as if the parameter was the value of
     the *HOME* environment variable.
@@ -97,8 +98,13 @@ BUILTINS
     The *exit* built-in shall cause the shell to exit with the exit number
     specified by the variable *n*.
 
-`history ?option ?arg arg ...?`
-    manipulate the history file
+`history [-c] [-r filename] [n]`
+    list at most n history entries.
+    If HISTTIMEFORMAT variable is set, it is passed to strftime and the input
+    date of the each entry is listed.
+    If -c is specified, the history for the current session is wiped.
+    If -r is specified, the content of filename is parsed as an history file
+    and the entries are added to the current session history.
 
 `set [options][arguments]`
 `set -o|+o`
@@ -146,7 +152,7 @@ If you find a bug in 42sh, you should report it. But please make sure to run
 the latest version of 42sh available at *http://42sh.greenit-over-the-cloud.fr*
 
 To report a bug, just send a letter or sms to *Dave Null*, with the following
-things:
+informations:
 
   - The version number
   - If you are using FreeBSD or not
