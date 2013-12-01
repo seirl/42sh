@@ -11,7 +11,7 @@
 int builtin_source(s_shell *shell, int argc, char **argv)
 {
     FILE *f = NULL;
-    if (argc < 2 || ((argc == 2) && (!argv[1] || (!strcmp(argv[1], "")))))
+    if (argc < 2 || ((argc == 2) && (!argv[1])))
     {
         LOG(WARN, "42sh: %s: filename argument requires\n", argv[0]);
         LOG(WARN, "%s: usage: source filename [arguments]\n", argv[0]);

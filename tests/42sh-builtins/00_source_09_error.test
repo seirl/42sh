@@ -1,0 +1,8 @@
+{
+    "desc": "source: empty file",
+    "stdin": """
+source ""
+""",
+    "stderr": ...,
+    "retval": 1,
+}
