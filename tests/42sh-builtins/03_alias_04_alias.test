@@ -5,5 +5,4 @@ foo
 """,
     "stdout": """foo\nbar\n""",
     "retval": 0,
-    "skip": True
 }
