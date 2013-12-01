@@ -38,6 +38,7 @@ char **expand_argv(char **argv, int *max_len)
 
     for (int i = 0; i < *max_len; ++i)
         sfree(argv[i]);
+    sfree(argv);
     *max_len = len;
     return ret;
 }
