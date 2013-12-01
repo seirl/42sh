@@ -52,9 +52,7 @@ static int id_valid(char *buf, int len)
 
 static int id_valid_str(s_string *str)
 {
-    int len = str->len;
-    char *buf = string_release(str);
-    return id_valid(buf, len);
+    return id_valid(str->buf, str->len);
 }
 
 static void export_id_noval(s_shell *shell, s_string *str)
@@ -62,6 +60,7 @@ static void export_id_noval(s_shell *shell, s_string *str)
     char *id = string_release(str);
     env_set(shell, "", id);
     setenv(id, "", 1);
+    sfree(id);
 }
 
 static void export_id(s_shell *shell, s_string *str, int index)
@@ -104,7 +103,10 @@ static void export_params(s_shell *shell, int argc, char *argv[])
                 if (id_valid_str(str))
                     export_id_noval(shell, str);
                 else
+                {
                     id_error(shell, argv[i]);
+                    string_free(str);
+                }
             }
             else
                 export_id(shell, str, index);
