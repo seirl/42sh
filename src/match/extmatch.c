@@ -16,16 +16,16 @@ static void strlower(char *str)
 
 int optmatch(const char *pattern, const char *str, e_match_flags flags)
 {
-    char *ns = strdup(str);
-    char *npat = strdup(pattern);
     if (flags & MATCH_NOCASE)
     {
+        char *ns = strdup(str);
+        char *npat = strdup(pattern);
         strlower(ns);
         strlower(npat);
+        int ret = my_fnmatch(npat, ns);
+        free(ns);
+        free(npat);
+        return ret;
     }
-    int ret = 0;
-    ret = my_fnmatch(npat, ns);
-    free(ns);
-    free(npat);
-    return ret;
+    return my_fnmatch(pattern, str);
 }
