@@ -1,4 +1,5 @@
 {
+    "type": "diff",
     "desc": "function: $0...",
     "stding": """
 a () {
@@ -6,6 +7,4 @@ a () {
 }
 a 1 2
 """,
-    "stdout": "1:1 2:2\n",
-    "skip": True,
 }
