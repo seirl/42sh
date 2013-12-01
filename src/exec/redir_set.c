@@ -85,7 +85,9 @@ static void exec_redir_dupout(s_shell *shell,
     s_string *filename = expand_compound(shell, redir->word);
     fd = word_dig_to_fd(filename);
     if (fd == -1)
-        LOG(WARN, "42sh: %s: Syntax error: Bad fd number\n", filename->buf);
+        LOG(WARN,
+            "42sh: %s: Syntax error: Bad fd number. Redirection ignored\n",
+            filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
     else
@@ -109,7 +111,9 @@ static void exec_redir_dupin(s_shell *shell,
     s_string *filename = expand_compound(shell, redir->word);
     fd = word_dig_to_fd(filename);
     if (fd == -1)
-        LOG(WARN, "42sh: %s: Syntax error: Bad fd number\n", filename->buf);
+        LOG(WARN,
+            "42sh: %s: Syntax error: Bad fd number. Redirection ignored\n",
+            filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
     else
