@@ -14,4 +14,3 @@ int is_valid_name(const s_string *str)
     }
     return 1;
 }
-
