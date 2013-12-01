@@ -44,8 +44,6 @@ static int cd_to_dir(s_shell *shell, char *dir)
 static int cd_to_var(s_shell *shell, char *var)
 {
     char *new_dir = env_get(shell, var);
-    if (!strcmp(var, "OLDPWD") && new_dir)
-        fprintf(stdout, "%s\n", new_dir);
 
     if (!new_dir)
     {
