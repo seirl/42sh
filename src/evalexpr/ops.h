@@ -16,6 +16,6 @@ typedef struct op
     long (*eval)(long, long);
 } s_op;
 
-const s_op *get_op(char *c);
+const s_op *get_op(char *c, int unary);
 
 #endif /* !EVAL_OP_H */

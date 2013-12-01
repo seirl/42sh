@@ -36,15 +36,10 @@ long parse(s_opstack *so, s_numstack *sn, char *s)
     const s_op *op = NULL;
     const s_op *last_op = NULL;
     for (char *cs = s; *cs; cs = skip_blank(cs))
-        if ((op = get_op(cs)))
+    {
+        int unary = (cs == s) || (last_op && strcmp(last_op->op, ")"));
+        if ((op = get_op(cs, unary)))
         {
-            if ((cs == s) || (last_op && strcmp(last_op->op, ")")))
-            {
-                if (!strcmp(op->op, "-"))
-                    op = get_op("_");
-                else if (!strcmp(op->op, "+"))
-                    op = get_op("#");
-            }
             shuntingyard(so, sn, op);
             last_op = op;
             cs += strlen(op->op);
@@ -56,6 +51,7 @@ long parse(s_opstack *so, s_numstack *sn, char *s)
         }
         else
             return 0;
+    }
     cleanup(so, sn);
     return sn->nums[0];
 }
