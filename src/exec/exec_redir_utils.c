@@ -67,9 +67,6 @@ int word_to_fd(s_string *str, int mode)
         return -2;
     fd = strtol(str->buf, &endptr, 10);
     if ((endptr != 0) && strcmp("", endptr))
-    {
         fd = open(str->buf, mode);
-        free(endptr);
-    }
     return fd;
 }
