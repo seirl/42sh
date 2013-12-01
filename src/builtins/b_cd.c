@@ -35,6 +35,8 @@ static int cd_to_dir(s_shell *shell, char *dir)
     new_path = getcwd(new_path, SHELL_PATH_MAX);
     setenv("PWD", new_path, 1);
     env_set(shell, new_path, "PWD");
+    sfree(new_path);
+    sfree(curr_dir);
     sfree(dir);
     return 0;
 }
