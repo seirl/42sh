@@ -62,6 +62,18 @@ static e_next_action do_dot(s_shell *shell, s_term *term)
     return CONTINUE;
 }
 
+static e_next_action do_h(s_term *term)
+{
+    size_t input_index = term->input_index;
+    s_string *old_input = term->input;
+    do_alt_q(term, input_index);
+
+    string_puts(term->input, "man ");
+    for (int i = 0; old_input->buf[i] != ' ' && old_input->buf[i] != '\t'; i++)
+        string_putc(term->input, old_input->buf[i]);
+    return RETURN;
+}
+
 e_next_action handle_escape_key(s_shell *shell, s_term *term, e_escape_key key)
 {
 #define X(Name, Code1, Code2, Handler)              \

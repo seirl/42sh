@@ -34,9 +34,8 @@ static void term_init(s_shell *shell)
     term->termios.c_cc[VMIN] = 1;
     term->termios.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSADRAIN, &term->termios);
-    term->backup_input = alt_q_pop();
+    term->backup_input = alt_q_pop(&term->input_index);
     term->input = term->backup_input;
-    term->input_index = 0;
     term->hist_current = NULL;
     term->hist_pos = -1;
     term->prompt = NULL;

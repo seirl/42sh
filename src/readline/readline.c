@@ -61,6 +61,7 @@ void readline_do_print(s_shell *shell, char c)
     // Inform the konami module
     if (c == 'a')
     {
+        // The konami sequence was completed, abort printing.
         if (konami_next(term, KONAMI_A))
             return;
     }

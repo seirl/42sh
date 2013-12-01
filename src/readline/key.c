@@ -18,10 +18,9 @@ e_next_action handle_key(s_shell *shell, s_term *term, char *c)
             return ERROR;
 
         if (*c == '[')
-            handle_bracket_char(shell, term);
+            return handle_bracket_char(shell, term);
         else
-            handle_escape_char(shell, term, *c);
-        return CONTINUE;
+            return handle_escape_char(shell, term, *c);
     }
     return handle_special_char(shell, term, *c);
 }
