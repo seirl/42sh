@@ -51,7 +51,10 @@ void lex_delete(s_lexer *lexer)
     if (lexer->lookahead)
         token_free(lexer->lookahead);
     if (lexer->sublexer)
+    {
+        input_delete(lexer->sublexer->input);
         lex_delete(lexer->sublexer);
+    }
 
     sfree(lexer);
 }
