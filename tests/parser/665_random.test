@@ -1,6 +1,6 @@
 (
     {
-        "desc": "Random",
+        "desc": "Fuzzing {}".format(i),
         "input": "".join(random.choice([
         " ",
         " ",

@@ -17,14 +17,14 @@ def gen_arithm(depth):
     return '{} {} {}'.format(gen_arithm(depth - 1), random.choice(binary),
                                  gen_arithm(depth - 1))
 
-def gen_arithm_test():
+def gen_arithm_test(n):
     random.seed()
     i = gen_arithm(10)
     r = subprocess.check_output(["echo $(( {} ))".format(i)], shell=True)
     r = int(r.strip())
 
     return {
-        "desc": "Random arithmetic",
+        "desc": "Fuzzing {}".format(n),
         "type": "diff",
         "input": "echo $(( {} ))".format(i),
     }
