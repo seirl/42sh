@@ -16,7 +16,7 @@ until	T_UNTIL (0)
 !	T_BANG (0)
 for	T_FOR (0)
 !	T_BANG (0)
-in	T_IN (0)
+in	T_IN (1)
 	T_EOF (0)
 """
 }

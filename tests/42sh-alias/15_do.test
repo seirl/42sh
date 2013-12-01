@@ -1,0 +1,10 @@
+{
+    "type": "diff",
+    "desc": "Alias reserved word",
+    "stdin": """
+alias c=do d=done e=echo
+for for in for for for; c
+    e $for
+d
+""",
+}

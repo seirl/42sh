@@ -29,7 +29,21 @@ s_token *lex_word(s_lexer *lexer)
 
 s_token *lex_name(s_lexer *lexer)
 {
-    return lex_look_token_type(lexer) == T_WORD ? lex_token(lexer) : NULL;
+    s_token *tok = lex_token(lexer);
+
+#define X(Type, Str)        \
+    if (tok->type == Type)  \
+    {                       \
+        tok->type = T_WORD; \
+        return tok;         \
+    }
+#include "res_word.def"
+#undef X
+
+    if (tok->type == T_WORD && is_valid_name(tok->value.str))
+        return tok;
+    token_free(tok);
+    return NULL;
 }
 
 static void check_prefill(s_lexer *lexer)
@@ -71,7 +85,6 @@ static void update_type(s_lexer *lexer, s_token *tok)
 
 static s_token *lex_token_real(s_lexer *lexer)
 {
-
     check_prefill(lexer);
 
     do {
