@@ -1,7 +1,8 @@
 {
-    "type": "diff",
     "desc": "cd",
     "stdin": """cd /; cd
 pwd
 """,
+    "stdout": os.path.realpath(os.getenv("HOME")) + """\n""",
+    "retval": 0,
 }
