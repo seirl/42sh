@@ -97,7 +97,7 @@ static s_globr *glob_loop(const char *pattern, e_match_flags flags,
 {
     unsigned add = (split == pattern) ? 1 : 0;
     char *dirname = calloc(split - pattern + add + 2, sizeof (char));
-    memcpy(dirname, pattern, split - pattern + add + 1);
+    memcpy(dirname, pattern, split - pattern + add);
     char *basename = strdup(split + 1);
     s_globr *dirs;
     if (has_magic(dirname))
