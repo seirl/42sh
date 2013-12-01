@@ -66,7 +66,7 @@ static s_globr *glob_match(s_globr *g, const char *dir, const char *base,
 {
     const char *rdir = dir ? dir : ".";
     DIR *dp = opendir(rdir);
-    size_t l = 1 + (dir ? strlen(rdir) + 1 : 0);
+    size_t l = 2 + (dir ? strlen(rdir) + 1 : 0);
     if (dp != NULL)
     {
         struct dirent *ep;
