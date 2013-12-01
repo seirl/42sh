@@ -34,7 +34,6 @@ s_string *expand(s_shell *shell, const s_ast_compound_word *input)
 static s_string *expand_with_type(s_shell *shell, s_token *tok,
                                   e_lexer_context lcon)
 {
-    //TODO schischi: do while + check !dquote, !squote, remove backslash
     if (lcon == LEX_DQUOTE)
     {
 #define X(Ltok, Atok)                                         \
@@ -76,6 +75,7 @@ s_string *expand_string(s_shell *shell, s_string *str, e_lexer_context lcon)
             string_free(sub);
         token_free(tok);
     } while (t != T_EOF);
+    string_free(sub);
     token_free(tok);
     lex_delete(lexer);
     input_destroy(input);
