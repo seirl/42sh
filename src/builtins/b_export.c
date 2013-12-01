@@ -76,6 +76,8 @@ static void export_id(s_shell *shell, s_string *str, int index)
     {
         env_set(shell, val, id);
         setenv(id, val, 1);
+        sfree(val);
+        sfree(id);
     }
     else
     {
