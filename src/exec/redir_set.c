@@ -30,7 +30,6 @@ static void exec_redir_write(s_shell *shell,
     fcntl(10, F_SETFD, FD_CLOEXEC);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
-    string_free(filename);
 }
 
 static void exec_redir_read(s_shell *shell,
