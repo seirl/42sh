@@ -142,4 +142,5 @@ void exec_case(s_shell *shell, s_ast_case *case_cmd)
     assert(case_cmd && case_cmd->word && case_cmd->clauses);
     s_string *id = expand_compound(shell, case_cmd->word);
     exec_clauses(shell, id, case_cmd->clauses);
+    string_free(id);
 }
