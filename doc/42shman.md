@@ -152,7 +152,7 @@ If you find a bug in 42sh, you should report it. But please make sure to run
 the latest version of 42sh available at *http://42sh.greenit-over-the-cloud.fr*
 
 To report a bug, just send a letter or sms to *Dave Null*, with the following
-informations:
+things:
 
   - The version number
   - If you are using FreeBSD or not
