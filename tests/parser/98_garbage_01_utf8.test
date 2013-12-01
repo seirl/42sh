@@ -1,6 +1,6 @@
 {
     "desc": "garbage: utf-8",
-    "input": "echo ajbk [][ç'' '_'è_çè é ][][][ é()())(ùùù♥♥",
+    "input": "echo ajbk [][ç'' '_'è_çè é ][][][ é()())",
     "stderr": ...,
     "retval": 1,
 }
