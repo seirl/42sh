@@ -70,10 +70,9 @@ s_string *autocomp_bins(s_term *term)
         else if (cmp > 0)
             a = mid + 1;
         else
-        {
             a = mid;
+        if (a == mid)
             break;
-        }
     }
 
     size_t i_ret = a < 0 ? b : a;
