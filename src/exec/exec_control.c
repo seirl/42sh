@@ -83,14 +83,14 @@ void exec_for(s_shell *shell, s_ast_for *for_cmd)
     expand_wordlist(shell, for_cmd->values);
     s_ast_word_list *values = for_cmd->values;
     shell->loops += 1;
-    while (values && expand_compound(shell, values->word))
+    while (values)
     {
         expand_wordlist(shell, values);
         if (shell->breaks && shell->breaks--)
             return;
         s_string *id = string_duplicate(expand_word(for_cmd->identifier));
         s_string *value = string_duplicate(expand_compound(shell,
-                                                          values->word));
+                                                           values->word));
         env_set(shell, string_release(value), string_release(id));
         if (shell->breaks && shell->breaks--)
             return;
@@ -115,6 +115,7 @@ static int exec_case_match(s_shell *shell,
             exec_ast_list(shell, cmd);
             return 0;
         }
+        string_free(val);
         match = match->next;
     }
     return 1;

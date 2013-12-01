@@ -82,6 +82,7 @@ static void exec_redir_dupout(s_shell *shell,
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
+    string_free(filename);
     fcntl(redir->io->io_number, F_GETFD);
     fcntl(redir->io->io_number, F_DUPFD, 10);
     fcntl(redir->io->io_number, F_GETFD);
@@ -102,6 +103,7 @@ static void exec_redir_dupin(s_shell *shell,
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else if (fd == -2)
         XCLOSE(fd); /* FIXME error handling */
+    string_free(filename);
     dup2(fd, redir->io->io_number);
 }
 
@@ -115,6 +117,7 @@ static void exec_redir_readwrite(s_shell *shell, s_ast_redirection_list *redir,
                    O_CREAT | O_RDWR | O_APPEND,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    string_free(filename);
     dup2(fd, redir->io->io_number);
     XCLOSE(fd);
 }
@@ -129,6 +132,7 @@ static void exec_redir_writeup(s_shell *shell, s_ast_redirection_list *redir,
                    O_CREAT | O_RDWR | O_TRUNC,
                    666)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    string_free(filename);
     fcntl(redir->io->io_number, F_DUPFD, 10);
     XCLOSE(redir->io->io_number);
     fcntl(10, F_SETFD, FD_CLOEXEC);
