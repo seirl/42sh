@@ -69,10 +69,8 @@ static void update_type(s_lexer *lexer, s_token *tok)
     lexer->assignment = strcmp(tok->value.str->buf, "=") == 0;
 }
 
-s_token *lex_token(s_lexer *lexer)
+static s_token *lex_token_real(s_lexer *lexer)
 {
-    if (lexer->lookahead)
-        return lex_release_lookahead(lexer);
 
     check_prefill(lexer);
 
@@ -99,4 +97,24 @@ s_token *lex_token(s_lexer *lexer)
     strip_token(ret);
     remove_backslash(lexer, ret);
     return ret;
+}
+
+s_token *lex_token(s_lexer *lexer)
+{
+    if (lexer->lookahead)
+        return lex_release_lookahead(lexer);
+
+    s_token *ret;
+    if (lexer->sublexer)
+    {
+        if ((ret = lex_token(lexer->sublexer))->type != T_EOF)
+            return ret;
+        else
+        {
+            lex_delete(lexer->sublexer);
+            lexer->sublexer = NULL;
+        }
+    }
+
+    return lex_token_real(lexer);
 }

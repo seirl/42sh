@@ -52,6 +52,9 @@ struct lexer
     //! Shell
     s_shell *shell;
 
+    //! Sub lexer used to expand aliases
+    struct lexer *sublexer;
+
     //! Error status
     e_lexer_error error;
 };
@@ -134,7 +137,7 @@ int fill_token(s_lexer *lexer);
 /** @brief remove the useless part of a token */
 void strip_token(s_token *token);
 
-void expand_alias(s_shell *shell, s_token *tok);
+s_token *expand_alias(s_shell *shell, s_lexer *lexer, s_token *tok);
 int update_alias_delimiter(s_lexer *lexer);
 void remove_backslash(s_lexer *lexer, s_token *tok);
 

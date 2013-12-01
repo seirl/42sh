@@ -27,6 +27,7 @@ s_lexer *lex_create(s_shell *shell, s_input *input, e_lexer_context context)
     lexer->prev_delim = 1;
     lexer->assignment = 0;
     lexer->error = E_LEX_NO_ERROR;
+    lexer->sublexer = NULL;
     location_init(&lexer->location);
 
     return lexer;
@@ -49,6 +50,8 @@ void lex_delete(s_lexer *lexer)
     string_free(lexer->working_buffer);
     if (lexer->lookahead)
         token_free(lexer->lookahead);
+    if (lexer->sublexer)
+        lex_delete(lexer->sublexer);
 
     sfree(lexer);
 }
@@ -94,6 +97,6 @@ s_token *lex_release_token(s_lexer *lexer)
     lexer_reset(lexer);
     if (lexer->shell && shopt_get(lexer->shell, "token_print"))
         token_print(tok);
-    expand_alias(lexer->shell, tok);
+    tok = expand_alias(lexer->shell, lexer, tok);
     return tok;
 }
