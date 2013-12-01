@@ -10,7 +10,7 @@ s_string *string_create(size_t size)
 
     if ((s = smalloc(sizeof (s_string))) == NULL)
         return NULL;
-    s->max_len = size ? size : 8;
+    s->max_len = size ? size : 32;
     s->len = 0;
     s->read_pos = 0;
     s->buf = smalloc(s->max_len);
