@@ -23,6 +23,7 @@ static void exec_redir_write(s_shell *shell,
         XCLOSE(fd);
         return;
     }
+    string_free(filename);
     fcntl(redir->io->io_number, F_DUPFD, 10);
     XCLOSE(redir->io->io_number);
     fcntl(10, F_SETFD, FD_CLOEXEC);
@@ -39,6 +40,7 @@ static void exec_redir_read(s_shell *shell,
     s_string *filename = expand_compound(shell, redir->word);
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    string_free(filename);
     fcntl(redir->io->io_number, F_GETFD);
     fcntl(redir->io->io_number, F_DUPFD, 10);
     fcntl(redir->io->io_number, F_GETFD);
