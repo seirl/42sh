@@ -10,6 +10,8 @@ static s_hash_elt *next_bucket(s_hashtbl *h, s_hash_elt *current)
         bucket = h->hash(current->key) % HASHTBL_SIZE + 1;
     while (bucket < HASHTBL_SIZE - 1 && h->bucket[bucket] == NULL)
         ++bucket;
+    if (bucket == HASHTBL_SIZE)
+        return NULL;
     return h->bucket[bucket];
 }
 
