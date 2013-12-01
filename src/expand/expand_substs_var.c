@@ -194,7 +194,10 @@ s_string *expand_substs_var(s_shell *shell, s_string *word)
 
     s_string *varcont = string_create_from(env_get(shell, varname->buf));
     if (!word->buf[i])
+    {
+        string_free(varname);
         return varcont;
+    }
 
     s_string *r = expand_substs_param(shell, word->buf + i, varname, varcont);
 
