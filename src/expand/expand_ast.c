@@ -89,10 +89,12 @@ static s_ast_compound_word *split_word(s_shell *shell, s_ast_word *word,
 s_ast_compound_word *split_compound_word(s_shell *shell,
                                          s_ast_compound_word *cw, int type)
 {
-    //TODO: schischi merge last
     s_ast_compound_word *it;
-    s_ast_compound_word *res = NULL;
+    s_ast_compound_word *ret = NULL;
     for (it = cw; it; it = it->next)
-        res = split_word(shell, it->word, res, type);
-    return res;
+        if (!ret)
+            ret = split_word(shell, it->word, ret, type);
+        else
+            split_word(shell, it->word, ret, type);
+    return ret;
 }
