@@ -23,13 +23,14 @@ static int expand_alias_rec(s_shell *shell, s_token *tok, s_hashtbl *h)
     if (alias)
     {
         // Loop detected
-        if (hashtbl_get(h, tok->value.str))
+        if (hashtbl_get(h, alias))
             return -1;
 
         hashtbl_set(h, alias, alias);
         string_free(tok->value.str);
         tok->value.str = string_duplicate(alias);
-        return expand_alias_rec(shell, tok, h) == -1 ? 0 : 1;
+        int ret = expand_alias_rec(shell, tok, h);
+        return ret == 0 ? 1 : ret;
     }
     return 0;
 }
@@ -41,12 +42,10 @@ s_token *expand_alias(s_shell *shell, s_lexer *lexer, s_token *tok)
         && shopt_get(shell, "expand_aliases"))
     {
         s_hashtbl *h = hashtbl_init(hash_string, cmp_string, NULL, NULL);
-        s_string *word_copy = string_duplicate(tok->value.str);
         aliased = expand_alias_rec(shell, tok, h);
-        string_free(word_copy);
         hashtbl_free(h);
     }
-    if (!aliased)
+    if (aliased != 1)
         return tok;
 
     s_string *input_str = string_duplicate(tok->value.str);
