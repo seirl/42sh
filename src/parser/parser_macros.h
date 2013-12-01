@@ -42,7 +42,6 @@
                 Token->location.line_end,           \
                 Token->location.column_end);        \
         token_free(Token);                          \
-        token_free(Token);                          \
         return 0;                                   \
     } while (0)
 
