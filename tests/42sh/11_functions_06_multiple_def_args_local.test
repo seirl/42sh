@@ -1,0 +1,10 @@
+{
+    "desc": "function: multiple definition with arguments, print local var",
+    "stdin": """
+c=2
+a() { echo $1; }
+a() { c=$1; echo "arg1: $c"; }
+a 5
+""",
+    "stdout": "arg1: 5\n",
+}
