@@ -69,7 +69,12 @@ class QDTestLoader(unittest.TestLoader):
         contain a json structure reprensenting the test."""
         with open(os.path.join(directory, test_filename)) as f:
             random.seed(0)
-            tests = eval(f.read())
+            try:
+                tests = eval(f.read())
+            except:
+                print("Error in {}/{}".format(directory, test_filename))
+                raise
+
             if isinstance(tests, dict):
                 tests = [tests]
 
