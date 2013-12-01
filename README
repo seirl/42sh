@@ -105,10 +105,35 @@ Env
 ---
     - read-only variables
 
+Expansion
+---------
+    - ${var:+word} (alternative expansion)
+    - ${var:-word} (fallback expansion)
+    - ${var:?word} (error expansion)
+    - ${var:=word} (assignment expansion)
+    - ${var%word} (shortest suffix removal)
+    - ${var%%word} (largest suffix removal)
+    - ${var#word} (shortest prefix removal)
+    - ${var##word} (largest prefix removal)
+    - Bracket expansion : echo foo{bar,beer}
+    - dotglob, nullglob and caseglob
+
+Arithmetic
+----------
+    - Unary operators +, -, ~, !
+    - Binary operators **, /, %, *, +, -, <<, >>, &, ^, &, |, &&, ||
+    - Right/left-associative operators (all unaries and **)
+    - Parenthesis
+    - Expansion of vars without a dollar sign : $(( a + 2 ))
+
+Ast-printer
+-----------
+    - Colors !
+
 AUTHORS
 =======
     - Rémi « halfr » Audebert
     - Nassim « nass » Eddequiouaq
-    - Adrien « schischi » Schildknecht
     - Paul « Dettorer » Hervot
     - Antoine « seirl » Pietri
+    - Adrien « schischi » Schildknecht
