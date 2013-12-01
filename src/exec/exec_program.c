@@ -86,23 +86,24 @@ static void exec_func(s_shell *shell, s_ast_shell_cmd *func_body, char **argv)
     char **pos_params = smalloc(shell->arg_count * sizeof (char *));
     for (int i = 1; i < shell->arg_count; ++i)
     {
-        s_string *arg_index = string_itoa(i);
-        char *str_index = string_release(arg_index);
+        char *str_index = string_release(string_itoa(i));
         pos_params[i - 1] = strdup(env_get(shell, str_index));
         env_unset(shell, str_index);
+        sfree(str_index);
+
     }
     for (int i = 1; argv[i]; ++i)
     {
-        s_string *arg_index = string_itoa(i);
-        char *str_index = string_release(arg_index);
+        char *str_index = string_release(string_itoa(i));
         env_set(shell, argv[i], str_index);
+        sfree(str_index);
     }
     exec_shell_cmd(shell, func_body);
     for (int i = 1; i < shell->arg_count; ++i)
     {
-        s_string *arg_index = string_itoa(i);
-        char *str_index = string_release(arg_index);
+        char *str_index = string_release(string_itoa(i));
         env_set(shell, pos_params[i - 1], str_index);
+        sfree(str_index);
     }
     sfree(pos_params);
 }
