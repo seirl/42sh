@@ -14,5 +14,7 @@ int word_dig_to_fd(s_string *str)
     fd = strtol(str->buf, &endptr, 10);
     if ((endptr != 0) && strcmp("", endptr))
         return -1;
+    if (fd > 2)
+        return -1;
     return fd;
 }
