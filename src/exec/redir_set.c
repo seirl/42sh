@@ -13,8 +13,10 @@ static void exec_redir_write(s_shell *shell,
                    O_CREAT | O_WRONLY | O_TRUNC,
                    0644)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
-    if (!clobber)
+    else if (!clobber)
     {
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
         fcntl(redir->io->io_number, F_GETFD);
         fcntl(redir->io->io_number, F_DUPFD, 10);
         fcntl(redir->io->io_number, F_GETFD);
@@ -24,12 +26,17 @@ static void exec_redir_write(s_shell *shell,
         string_free(filename);
         return;
     }
+    else
+    {
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
+        fcntl(redir->io->io_number, F_DUPFD, 10);
+        XCLOSE(redir->io->io_number);
+        fcntl(10, F_SETFD, FD_CLOEXEC);
+        dup2(fd, redir->io->io_number);
+        XCLOSE(fd);
+    }
     string_free(filename);
-    fcntl(redir->io->io_number, F_DUPFD, 10);
-    XCLOSE(redir->io->io_number);
-    fcntl(10, F_SETFD, FD_CLOEXEC);
-    dup2(fd, redir->io->io_number);
-    XCLOSE(fd);
 }
 
 static void exec_redir_read(s_shell *shell,
@@ -41,12 +48,17 @@ static void exec_redir_read(s_shell *shell,
     s_string *filename = expand_compound(shell, redir->word);
     if ((fd = open(filename->buf, O_RDONLY)) == -1)
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
+    else
+    {
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
+        fcntl(redir->io->io_number, F_DUPFD, 10);
+        XCLOSE(0);
+        fcntl(10, F_SETFD, FD_CLOEXEC);
+        dup2(fd, redir->io->io_number);
+        XCLOSE(fd);
+    }
     string_free(filename);
-    fcntl(redir->io->io_number, F_DUPFD, 10);
-    XCLOSE(0);
-    fcntl(10, F_SETFD, FD_CLOEXEC);
-    dup2(fd, redir->io->io_number);
-    XCLOSE(fd);
 }
 
 static void exec_redir_heredoc(s_ast_redirection_list *redir)
@@ -56,12 +68,11 @@ static void exec_redir_heredoc(s_ast_redirection_list *redir)
     if (!redir->io || redir->io->io_number == -2)
         redir->io->io_number = 0;
     if (!redir->heredoc || !redir->heredoc->heredoc)
-    {
         fprintf(stderr, "here-document command failed\n");
-        return;
-    }
     else
     {
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
         fildes[0] = 3;
         fildes[1] = 4;
         i += pipe(fildes);
@@ -92,7 +103,8 @@ static void exec_redir_dupout(s_shell *shell,
         XCLOSE(fd); /* FIXME error handling */
     else
     {
-        string_free(filename);
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
         fcntl(redir->io->io_number, F_GETFD);
         fcntl(redir->io->io_number, F_DUPFD, 10);
         fcntl(redir->io->io_number, F_GETFD);
@@ -100,6 +112,7 @@ static void exec_redir_dupout(s_shell *shell,
         dup2(fd, redir->io->io_number);
         fcntl(fd, F_GETFD);
     }
+    string_free(filename);
 }
 
 static void exec_redir_dupin(s_shell *shell,
@@ -118,9 +131,11 @@ static void exec_redir_dupin(s_shell *shell,
         XCLOSE(fd); /* FIXME error handling */
     else
     {
-        string_free(filename);
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
         dup2(fd, redir->io->io_number);
     }
+    string_free(filename);
 }
 
 static void exec_redir_readwrite(s_shell *shell, s_ast_redirection_list *redir,
@@ -135,10 +150,12 @@ static void exec_redir_readwrite(s_shell *shell, s_ast_redirection_list *redir,
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else
     {
-        string_free(filename);
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
         dup2(fd, redir->io->io_number);
         XCLOSE(fd);
     }
+    string_free(filename);
 }
 
 static void exec_redir_writeup(s_shell *shell, s_ast_redirection_list *redir,
@@ -153,6 +170,8 @@ static void exec_redir_writeup(s_shell *shell, s_ast_redirection_list *redir,
         fprintf(stderr, "Cannot open file: %s.\n", filename->buf);
     else
     {
+        if (!shell->tmp_fd)
+            shell->tmp_fd = 1;
         fcntl(redir->io->io_number, F_DUPFD, 10);
         XCLOSE(redir->io->io_number);
         fcntl(10, F_SETFD, FD_CLOEXEC);
@@ -193,8 +212,6 @@ static void revert_set_redir(s_shell *shell,
         return;
     revert_set_redir(shell, redir->next, fd);
     set_default_io_number(redir);
-    if (!shell->tmp_fd)
-        shell->tmp_fd = 1;
     exec_redir_type(shell, redir, fd);
 }
 
