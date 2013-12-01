@@ -25,7 +25,7 @@ static const char *my_strrchr(const char *haystack, char needle)
     return r;
 }
 
-static int has_magic(const char *pattern)
+int has_magic(const char *pattern)
 {
     const char *magic = "*?[{";
     for (unsigned i = 0; pattern[i]; i++)

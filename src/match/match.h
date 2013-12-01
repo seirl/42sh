@@ -25,6 +25,8 @@ typedef enum match_flags
 
 int optmatch(const char *pattern, const char *str, e_match_flags flags);
 
+int has_magic(const char *pattern);
+
 /**
 ** The glob() function searches for all the pathnames matching pattern
 ** according to the rules used by the shell (see glob(7)).

@@ -27,6 +27,8 @@ static int cmpstringp(const void *s1, const void *s2)
 s_string *expand_glob(s_shell *shell, s_string *word)
 {
     e_match_flags glob_flags = 0;
+    if (!has_magic(word->buf))
+        return string_duplicate(word);
     for (unsigned i = 0; i < sizeof (opt_flags) / sizeof (*opt_flags); i++)
         if (shopt_get(shell, opt_flags[i].opt))
             glob_flags |= opt_flags[i].f;
