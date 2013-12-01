@@ -51,5 +51,6 @@ void alias_print(s_shell *shell)
         printf("%s='%s'\n", array[i]->key, array[i]->value);
         sfree(array[i]);
     }
-    sfree(array);
+    if (array)
+        sfree(array);
 }
