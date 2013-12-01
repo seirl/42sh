@@ -1,0 +1,7 @@
+{
+    "desc": "unalias non-existent",
+    "stdin": """unalias qwerty
+""",
+    "stderr": ...,
+    "retval": 1
+}

@@ -1,0 +1,6 @@
+{
+    "desc": "alias",
+    "stdin": """alias
+""",
+    "retval": 0
+}

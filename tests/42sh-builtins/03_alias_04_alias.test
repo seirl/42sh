@@ -1,0 +1,9 @@
+{
+    "desc": "alias set multiple cmd",
+    "stdin": """alias foo='echo foo && echo bar'
+foo
+""",
+    "stdout": """foo\nbar\n""",
+    "retval": 0,
+    "skip": True
+}

@@ -1,0 +1,9 @@
+{
+    "desc": "unalias",
+    "stdin": """alias foo='ls'
+unalias foo
+alias
+""",
+    "stdout": "",
+    "retval": 0
+}
