@@ -51,7 +51,7 @@ void exec_simple_cmd(s_shell *shell, s_ast_simple_cmd *cmd);
 /** @brief Execute an assignment command */
 void exec_assignment(s_shell *shell, s_ast_assignment *assign);
 /** @brief Execute an argument array */
-void exec_argv(char **argv);
+void exec_argv(s_shell *shell, char **argv);
 /** @brief Execute a program from a argv, a context list and a prefix list */
 int exec_prog(s_shell *shell, char **cmd_argv, s_ast_prefix *prefixes);
 /** @brief Execute a prefix list */

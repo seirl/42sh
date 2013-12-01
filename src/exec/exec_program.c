@@ -8,11 +8,16 @@
 #include "smalloc.h"
 #include "functions.h"
 
-static void exec_exit(void)
+static void exec_exit(s_shell *shell)
 {
     char *new_argv[2];
     new_argv[0] = "exit";
     new_argv[1] = NULL;
+    if (shell->tmp_fd)
+    {
+        shell->tmp_fd = 0;
+        XCLOSE(10);
+    }
     execvp(new_argv[0], new_argv);
 }
 
@@ -26,13 +31,13 @@ static void exec_argv_free(char **cmd_argv)
     sfree(cmd_argv);
 }
 
-void exec_argv(char **argv)
+void exec_argv(s_shell *shell, char **argv)
 {
     assert(argv && argv[0]);
     if (!strcmp(argv[0], "exit"))
     {
         exec_argv_free(argv);
-        exec_exit();
+        exec_exit(shell);
     }
     execvp(argv[0], argv);
     if (errno == ENOENT)
@@ -61,7 +66,7 @@ int exec_prog(s_shell *shell,
     {
         exec_prefixes(shell, prefixes);
         shell->curr_argv = cmd_argv;
-        exec_argv(cmd_argv);
+        exec_argv(shell, cmd_argv);
         assert(0 && "Execution flow corrupted.");
     }
     waitpid(pid, &st, 0);
