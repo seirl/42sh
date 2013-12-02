@@ -18,7 +18,10 @@ static s_ast_compound_word *parse_rule_braces_rec(s_parser *parser)
     {
         tok = lex_look_word(parser->lexer);
         if (!tok)
+        {
+            token_free(tok);
             RETURN_PARSE_UNEXPECTED(parser, lex_look_token(parser->lexer));
+        }
         parser_shift_word(parser);
         cw->word = word_of_token(tok);
         token_free(tok);
