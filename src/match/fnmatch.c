@@ -2,19 +2,6 @@
 #include <ctype.h>
 #include "match.h"
 
-/*
-** On some Linux distributions (looking at you, Ubuntu...),
-** strchr() segfaults...
-*/
-static const char *my_strchr(const char *haystack, char needle)
-{
-    while (*haystack && *haystack != needle)
-        haystack++;
-    if (*haystack == needle)
-        return haystack;
-    return NULL;
-}
-
 static const struct sclasses
 {
     char *name;
@@ -81,25 +68,6 @@ static int match_range(const char **range, const char c)
     return (negation) ? !r : r;
 }
 
-static int match_brace(const char *p, const char *str)
-{
-    const char *end = my_strchr(p, '}');
-    if (!end)
-        return 0;
-    int r = 0;
-    for (const char *cur = p; cur < end;)
-    {
-        const char *end_cur = my_strchr(cur, ',');
-        if (!end_cur)
-            end_cur = end;
-        size_t len_cur = end_cur - cur;
-        r = r || ((!strncmp(cur, str, len_cur) &&
-            !my_fnmatch(end + 1, str + len_cur)));
-        cur += len_cur + 1;
-    }
-    return r;
-}
-
 int my_fnmatch(const char *p, const char *str)
 {
     for (; *str; str++, p++)
@@ -111,8 +79,6 @@ int my_fnmatch(const char *p, const char *str)
             if (!match_range(&p, *str))
                 return 1;
         }
-        else if (*p == '{')
-            return !match_brace(p + 1, str);
         else if (*p == '\\')
         {
             if (*++p != *str)
